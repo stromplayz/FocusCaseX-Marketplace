@@ -1,0 +1,37 @@
+# Examination behavior — edit any line and re-render
+sections:
+  - demographics
+  - past-records
+  - case-history
+  - presenting-complaints
+  - symptom-analysis
+  - ocular-history
+  - systemic-history
+  - family-history
+  - birth-development
+  - social-lifestyle
+  - allergy-meds
+  - vision
+  - refraction-objective
+  - refraction-subjective
+  - motility-cover
+  - bv-function
+  - sensory-stereopsis
+  - bv
+  - pupils
+  - adnexa
+  - tear-film
+  - anterior
+  - iop-tonometry
+  - gonioscopy
+  - posterior
+  - special-tests
+  - vitals
+  - dispensing
+  - plan
+normals: true
+quick-chips: true
+quick-screen: true
+delta-auto: true
+register-exam: true
+panel-examctx: true

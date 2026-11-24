@@ -1,0 +1,33 @@
+{
+  "id": "neubrutalist",
+  "name": "Neubrutalist",
+  "builtin": false,
+  "vars": {
+    "bg": "#fdf3e7",
+    "bgSidebar": "#f7e8d8",
+    "bgPanel": "#fffdf7",
+    "text": "#1a1a1a",
+    "textMuted": "#6b6259",
+    "accent": "#ff90e8",
+    "accentForeground": "#1a1a1a",
+    "border": "#1a1a1a",
+    "radius": "10px",
+    "density": "cozy",
+    "borderWidth": "2px",
+    "shadow": "sharp",
+    "buttonStyle": "soft",
+    "cardStyle": "outlined",
+    "fontBody": "rounded",
+    "fontHeading": "rounded",
+    "fontMono": "mono",
+    "headingWeight": "800",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Playful neo-brutalism — candy surfaces, thick ink borders, punchy accent.",
+  "tags": [
+    "statement",
+    "playful",
+    "light"
+  ]
+}

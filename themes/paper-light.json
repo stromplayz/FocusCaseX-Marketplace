@@ -1,0 +1,32 @@
+{
+  "id": "paper-light",
+  "name": "Paper Light",
+  "builtin": false,
+  "vars": {
+    "bg": "#f7f5f0",
+    "bgSidebar": "#efece4",
+    "bgPanel": "#fbfaf6",
+    "text": "#2d2a24",
+    "textMuted": "#6f6a5e",
+    "accent": "#3a7d5d",
+    "accentForeground": "#ffffff",
+    "border": "#dedace",
+    "radius": "10px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "soft",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "system",
+    "fontHeading": "system",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Bright clinical surfaces with a warm paper undertone.",
+  "tags": [
+    "light",
+    "clinical"
+  ]
+}

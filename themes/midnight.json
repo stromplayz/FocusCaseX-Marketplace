@@ -1,0 +1,32 @@
+{
+  "id": "midnight",
+  "name": "Midnight",
+  "builtin": false,
+  "vars": {
+    "bg": "#05070d",
+    "bgSidebar": "#070a12",
+    "bgPanel": "#0a0e18",
+    "text": "#d5e2ef",
+    "textMuted": "#6b7f95",
+    "accent": "#22d3ee",
+    "accentForeground": "#05070d",
+    "border": "#16202f",
+    "radius": "10px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "raised",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "system",
+    "fontHeading": "geometric",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Deep-space dark with an electric cyan pulse.",
+  "tags": [
+    "dark",
+    "focus"
+  ]
+}

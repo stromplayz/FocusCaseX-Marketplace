@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The catalog API — For developers — FocusCaseX Marketplace</title>
+<meta name="description" content="The FocusCaseX marketplace API is plain static files — catalog.json, releases.json, api/core.json and api/registry.json — plus deterministic FCX-XXXXXX install codes and fcx://install deep links. No auth, no rate limits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* api page glue — layout only. */
+  .head-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+  .endpoint-row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 12px; padding: 14px 16px; margin-top: 18px;
+  }
+  .endpoint-row code { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); }
+  .endpoint-row .ep-tag {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--blue); background: var(--blue-soft);
+    padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+  }
+  .doc-note { font-size: 12.3px; color: var(--ink-3); margin-top: 10px; max-width: 680px; line-height: 1.55; }
+  .doc-note code { font-family: var(--font-mono); font-size: 11.8px; }
+  .fence.with-copy { padding-right: 88px; }
+  .fence.wrap-cmd { white-space: pre-wrap; overflow-wrap: anywhere; }
+  section[id] { scroll-margin-top: 76px; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+
+  <div class="wrap">
+    <div class="page-head">
+      <p class="kicker">For developers</p>
+      <h1>The catalog API</h1>
+      <p class="lede">The marketplace is plain static files — every FocusCaseX client reads the same JSON you see below.</p>
+      <p class="explain">No database, no auth, no rate limits. <strong>Just files on GitHub Pages.</strong></p>
+      <div class="head-actions">
+        <a class="btn primary small" href="catalog.json">Open catalog.json</a>
+        <a class="btn small" href="api/registry.json">Open api/registry.json</a>
+        <a class="btn small" href="releases.json">Open releases.json</a>
+        <a class="btn small" href="https://github.com/stromplayz/FocusCaseX" target="_blank" rel="noopener">Browse the repo</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="endpoints">
+    <div class="wrap">
+      <h2>Endpoints</h2>
+      <p class="muted" style="margin:12px 0 24px; max-width:620px;">Every path below is a real file at the site root. Point any HTTP client at them, or just open them in a browser.</p>
+      <dl class="factbox">
+        <div class="fact"><dt><code>catalog.json</code></dt><dd>The full catalog — a marketplace header, the snippets list and 71 items across the four kinds</dd></div>
+        <div class="fact"><dt><code>api/core.json</code></dt><dd>Current core version, minimum app version, announcement and featured picks</dd></div>
+        <div class="fact"><dt><code>api/registry.json</code></dt><dd>The generated index every client merges at boot</dd></div>
+        <div class="fact"><dt><code>releases.json</code></dt><dd>The app release feed — version, versionCode, core and notes for every build</dd></div>
+        <div class="fact"><dt><code>themes/&lt;id&gt;.json</code></dt><dd>Theme palettes — the <code>vars</code> each theme applies to the workspace</dd></div>
+        <div class="fact"><dt><code>templates/&lt;id&gt;.md</code></dt><dd>Template bodies — raw markdown, fetched and rendered on demand</dd></div>
+        <div class="fact"><dt><code>plugins/&lt;id&gt;/</code></dt><dd>Extension sources — <code>manifest.json</code> plus <code>main.js</code> per folder</dd></div>
+        <div class="fact"><dt><code>capsules/&lt;id&gt;/</code></dt><dd>Capsule layers — <code>spec.mdui</code>, <code>style.css</code> and <code>logic.mdui</code>, varying by capsule</dd></div>
+        <div class="fact"><dt><code>snippets/&lt;id&gt;.css</code></dt><dd>Small CSS snippets, referenced by the <code>snippets</code> list in catalog.json</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="shape">
+    <div class="wrap">
+      <h2>The shape of an item</h2>
+      <p class="muted" style="margin:12px 0 24px; max-width:620px;">One real entry from <code>catalog.json</code>, trimmed for the page. Every item carries the same fields:</p>
+      <div class="fence wrap-cmd with-copy" id="shape-fence"><button class="copy-btn" type="button" data-copy='{
+  "id": "plugin:note-templates",
+  "kind": "plugin",
+  "name": "Note Templates",
+  "tagline": "Inserts a dated checklist template at the end of the active note with one command.",
+  "author": "FocusCaseX originals",
+  "version": "1.0.0",
+  "category": "Writing",
+  "tags": ["plugin", "writing"],
+  "icon": "FileText",
+  "released": "2026-01-24",
+  "verified": true,
+  "featured": false,
+  "meta": { "pluginId": "note-templates" }
+}'>Copy</button><code>{
+  "id": "plugin:note-templates",
+  "kind": "plugin",
+  "name": "Note Templates",
+  "tagline": "Inserts a dated checklist template at the end of the active note with one command.",
+  "author": "FocusCaseX originals",
+  "version": "1.0.0",
+  "category": "Writing",
+  "tags": ["plugin", "writing"],
+  "icon": "FileText",
+  "released": "2026-01-24",
+  "verified": true,
+  "featured": false,
+  "meta": { "pluginId": "note-templates" }
+}</code></div>
+      <p class="doc-note">Trimmed for the page — the real entry also carries a longer <code>description</code> and the <code>meta</code>/<code>files</code> block pointing at the item's sources. <code>kind</code> is one of <code>plugin</code> (Extensions), <code>capsule</code>, <code>theme</code> or <code>template</code>, and <code>verified</code> marks items reviewed and published by CaseX Labs.</p>
+    </div>
+  </section>
+
+  <section class="section" id="codes">
+    <div class="wrap">
+      <h2>Install codes</h2>
+      <p class="muted" style="margin:12px 0 8px; max-width:680px;">Every item id maps to a short, deterministic install code — <strong>FCX-XXXXXX</strong>. It is a 32-bit FNV-1a hash of the item id, rendered as six characters from an alphabet with no look-alikes: the digits <code>0</code>/<code>1</code> and the letters <code>O</code>, <code>I</code>, <code>L</code> never appear.</p>
+      <p style="margin:14px 0 0; max-width:680px;">Same id, same code, everywhere — there is no lookup table to keep in sync. The identical algorithm runs inside the app, so a code typed under <strong>Settings → Marketplace → Install by code</strong> always resolves to the same item. Codes are accepted with or without the <code>FCX-</code> prefix.</p>
+      <div class="endpoint-row">
+        <span class="ep-tag">Example</span>
+        <code>plugin:optomize</code>
+        <span aria-hidden="true">→</span>
+        <code>FCX-84QQJD</code>
+        <button class="chip" type="button" data-copy="FCX-84QQJD">Copy code</button>
+        <span class="muted small">Type it in the app and Optomize opens with its confirm dialog.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="deep-links">
+    <div class="wrap">
+      <h2>Deep links</h2>
+      <p class="muted" style="margin:12px 0 8px; max-width:680px;">Install buttons on this site use a deep link. On a device with FocusCaseX installed, the browser hands the link straight to the app — <strong>the app shows the item and asks the user to confirm the install</strong>. Nothing installs without that tap.</p>
+      <div class="fence with-copy"><button class="copy-btn" type="button" data-copy="fcx://install?id=plugin%3Aoptomize">Copy</button><code>fcx://install?id=plugin%3Aoptomize</code></div>
+      <p class="doc-note">The id is URL-encoded — the colon becomes <code>%3A</code>. If no app answers the link (FocusCaseX not installed, or the browser blocked the hand-off), the site falls back to a panel with the install code above.</p>
+    </div>
+  </section>
+
+  <section class="section" id="updates">
+    <div class="wrap">
+      <h2>How updates work</h2>
+      <p style="margin:14px 0 0; max-width:680px;">At boot, the app fetches <code>catalog.json</code> and merges the generated index in <code>api/registry.json</code>, so the Android app, the hosted workspace and this site all read the same list of items.</p>
+      <p style="margin:14px 0 0; max-width:680px;">Version checks compare the installed build against the newest entry in <code>releases.json</code>; the current core version and its minimum app version live in <code>api/core.json</code>.</p>
+      <p style="margin:14px 0 0; max-width:680px;">The index is rebuilt by <code>scripts/build-registry.mjs</code> on every push. CI re-runs the script, validates that the catalog and core files still parse, and fails the build if a committed index is stale.</p>
+    </div>
+  </section>
+
+  <section class="section" id="publishing">
+    <div class="wrap">
+      <h2>Publishing</h2>
+      <p class="muted" style="margin:12px 0 24px; max-width:620px;">There is no toolchain to learn. If the files exist and the JSON parses, the change ships.</p>
+      <ol class="steps" style="max-width:620px;">
+        <li><span>Fork the repository, or open a branch on your copy.</span></li>
+        <li><span>Commit your assets: a new entry in <code>catalog.json</code> plus the files it points to — <code>plugins/&lt;id&gt;/</code>, <code>capsules/&lt;id&gt;/</code>, <code>themes/&lt;id&gt;.json</code> or <code>templates/&lt;id&gt;.md</code>.</span></li>
+        <li><span>CI validates the catalog and the index, and GitHub Pages serves the change — it is live the moment the push lands.</span></li>
+      </ol>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:30px;">
+        <a class="btn primary small" href="catalog.json">Open catalog.json</a>
+        <a class="btn small" href="api/registry.json">Open api/registry.json</a>
+        <a class="btn small" href="/install/">See how install works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="mcp" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="cta-band">
+        <div style="flex:1;min-width:260px;">
+          <h2>Building for agents instead?</h2>
+          <p>FocusCaseX hosts its own MCP server — approved agents can search clinic pages, read records and file drafts. The connection command and the documented tool list live on the MCP &amp; Automation page.</p>
+        </div>
+        <a class="btn blue-on-dark" href="/mcp/">MCP &amp; Automation</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/demos-capsules.js"></script>
+<script src="assets/demos-extensions.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  // active: null — the header nav has no "api" item, so nothing is highlighted.
+  // ready() wires every [data-copy] on the page itself.
+  FCX.ready({ active: null }).catch(function () { /* file:// preview: chrome stays off */ });
+</script>
+</body>
+</html>

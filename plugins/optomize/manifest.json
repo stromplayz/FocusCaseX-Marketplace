@@ -1,0 +1,9 @@
+{
+  "id": "optomize",
+  "name": "Optomize",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Optometry EMR suite — compose markdown case files in the sidebar, store every follow-up visit as compact ∆-deltas (only changed values like ∆iop:OD=16 are written, the rest resolve from the prior visit) and clone a matched patient's profile with pattern=MR plus history-only deltas. Saves visits into a Bases database.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

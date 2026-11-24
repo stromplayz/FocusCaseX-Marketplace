@@ -1,0 +1,13 @@
+/* FocusCaseX snippet — bigger-headings
+ * Scales note headings up in the reading view and the editor.
+ * h1 1.6em / h2 1.35em relative to a slightly enlarged body base.
+ */
+.fcx-snippet-bigger-headings .fcx-prose {
+  font-size: calc(var(--fcx-font-size, 15.5px) + 2px);
+}
+.fcx-snippet-bigger-headings .fcx-prose h1 {
+  font-size: 1.6em;
+}
+.fcx-snippet-bigger-headings .fcx-prose h2 {
+  font-size: 1.35em;
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pastel-pop",
+  "name": "Pastel Pop",
+  "builtin": false,
+  "vars": {
+    "bg": "#fdf1f6",
+    "bgSidebar": "#f5e3ef",
+    "bgPanel": "#ffffff",
+    "text": "#3f2a3a",
+    "textMuted": "#7d6577",
+    "accent": "#c2367b",
+    "accentForeground": "#ffffff",
+    "border": "#ecd7e4",
+    "radius": "18px",
+    "density": "cozy",
+    "borderWidth": "2px",
+    "shadow": "soft",
+    "buttonStyle": "pill",
+    "cardStyle": "raised",
+    "fontBody": "rounded",
+    "fontHeading": "rounded",
+    "fontMono": "mono",
+    "headingWeight": "800",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Candy-counter pastels — bubblegum surfaces, pill buttons, not a sharp edge in sight.",
+  "tags": [
+    "light",
+    "pastel",
+    "playful"
+  ]
+}

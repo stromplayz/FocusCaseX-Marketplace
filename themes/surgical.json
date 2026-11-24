@@ -1,0 +1,33 @@
+{
+  "id": "surgical",
+  "name": "Surgical",
+  "builtin": false,
+  "vars": {
+    "bg": "#0b1410",
+    "bgSidebar": "#0e1a15",
+    "bgPanel": "#12211b",
+    "text": "#d8e8df",
+    "textMuted": "#728d80",
+    "accent": "#4fd8a4",
+    "accentForeground": "#0a1f16",
+    "border": "#1d3329",
+    "radius": "6px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "none",
+    "buttonStyle": "soft",
+    "cardStyle": "flat",
+    "fontBody": "system",
+    "fontHeading": "grotesk",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Theater greens — deep green-tinted dark with a mint pulse for on-call focus.",
+  "tags": [
+    "dark",
+    "clinical",
+    "green"
+  ]
+}

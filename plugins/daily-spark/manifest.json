@@ -1,0 +1,9 @@
+{
+  "id": "daily-spark",
+  "name": "Daily Spark",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Greets the vault with a hello toast.",
+  "author": "you",
+  "isSample": false
+}

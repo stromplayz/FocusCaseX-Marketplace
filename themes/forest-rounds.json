@@ -1,0 +1,33 @@
+{
+  "id": "forest-rounds",
+  "name": "Forest Rounds",
+  "builtin": false,
+  "vars": {
+    "bg": "#111a14",
+    "bgSidebar": "#15211a",
+    "bgPanel": "#1a2820",
+    "text": "#dfe8dc",
+    "textMuted": "#8aa08b",
+    "accent": "#96b061",
+    "accentForeground": "#182415",
+    "border": "#2b3d2f",
+    "radius": "8px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "soft",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "humanist",
+    "fontHeading": "humanist",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Deep pine panels and moss green — a calm walk in the woods between patients.",
+  "tags": [
+    "dark",
+    "nature",
+    "calm"
+  ]
+}

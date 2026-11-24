@@ -1,0 +1,33 @@
+{
+  "id": "terminal",
+  "name": "Terminal",
+  "builtin": false,
+  "vars": {
+    "bg": "#0a110a",
+    "bgSidebar": "#0d150d",
+    "bgPanel": "#101a10",
+    "text": "#b5e0b5",
+    "textMuted": "#6d9c6d",
+    "accent": "#3fe081",
+    "accentForeground": "#06170b",
+    "border": "#1f3d26",
+    "radius": "0px",
+    "density": "compact",
+    "borderWidth": "1px",
+    "shadow": "none",
+    "buttonStyle": "outline",
+    "cardStyle": "outlined",
+    "fontBody": "mono",
+    "fontHeading": "mono",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "uppercase",
+    "tracking": "wide"
+  },
+  "description": "Green phosphor CRT console — mono everywhere, square corners, pure signal.",
+  "tags": [
+    "dark",
+    "retro",
+    "mono"
+  ]
+}

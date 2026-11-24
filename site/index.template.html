@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FocusCaseX Marketplace — extensions, capsules, themes & templates</title>
+    <meta
+      name="description"
+      content="The public FocusCaseX Marketplace: browse and install extensions, capsules, themes and templates — and read the static JSON API every FocusCaseX client uses for updates."
+    />
+    <meta name="theme-color" content="#059669" />
+    <style>
+      /* ---------- design tokens — clean, professional, no sci-fi ---------- */
+      :root {
+        --bg: #fafafa;
+        --surface: #ffffff;
+        --ink: #0f172a;
+        --muted: #5f6b7d;
+        --line: #e4e8ee;
+        --line-strong: #d4dae3;
+        --accent: #059669;
+        --accent-ink: #ffffff;
+        --accent-soft: #ecfdf5;
+        --accent-line: #a7f3d0;
+        --shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+        --shadow-lift: 0 6px 20px -6px rgba(15, 23, 42, 0.14);
+        --radius: 12px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+        --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      }
+      html.dark {
+        --bg: #0c0e13;
+        --surface: #12151c;
+        --ink: #e8ebf1;
+        --muted: #97a1b2;
+        --line: #232833;
+        --line-strong: #2e3440;
+        --accent: #34d399;
+        --accent-ink: #05201a;
+        --accent-soft: rgba(52, 211, 153, 0.1);
+        --accent-line: rgba(52, 211, 153, 0.35);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --shadow-lift: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font: 15px/1.6 var(--font);
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      button { font-family: inherit; }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+      .icon { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+      /* ---------- header ---------- */
+      .topbar {
+        position: sticky; top: 0; z-index: 40;
+        background: color-mix(in srgb, var(--surface) 88%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar-row { display: flex; align-items: center; gap: 16px; height: 62px; }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+      .brand-mark {
+        width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center;
+        background: var(--accent); color: var(--accent-ink);
+      }
+      .brand-mark .icon { width: 18px; height: 18px; stroke-width: 2.2; }
+      .brand-name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; white-space: nowrap; }
+      .brand-name small { display: block; font-weight: 500; font-size: 11px; color: var(--muted); letter-spacing: 0; }
+      .top-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+      .top-nav a {
+        color: var(--muted); font-size: 13.5px; font-weight: 550; padding: 7px 12px; border-radius: 8px;
+      }
+      .top-nav a:hover { color: var(--ink); background: var(--accent-soft); text-decoration: none; }
+      .icon-btn {
+        width: 36px; height: 36px; display: grid; place-items: center; border-radius: 9px;
+        border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer;
+      }
+      .icon-btn:hover { color: var(--ink); border-color: var(--line-strong); }
+      .gh-btn {
+        display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px;
+        border-radius: 9px; border: 1px solid var(--line); background: var(--surface);
+        color: var(--ink); font-size: 13.5px; font-weight: 600; white-space: nowrap;
+      }
+      .gh-btn:hover { border-color: var(--line-strong); text-decoration: none; box-shadow: var(--shadow); }
+
+      /* ---------- hero ---------- */
+      .hero { padding: 64px 0 40px; }
+      .eyebrow {
+        display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px;
+        border: 1px solid var(--accent-line); background: var(--accent-soft);
+        color: var(--accent); font-size: 12.5px; font-weight: 650;
+      }
+      .eyebrow .icon { width: 13px; height: 13px; }
+      h1 {
+        font-size: clamp(30px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.025em;
+        margin: 18px 0 14px; font-weight: 780; max-width: 760px;
+      }
+      h1 em { font-style: normal; color: var(--accent); }
+      .lede { color: var(--muted); font-size: 16.5px; max-width: 680px; margin: 0; }
+      .hero-cta { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 9px; height: 44px; padding: 0 20px;
+        border-radius: 10px; font-size: 14.5px; font-weight: 650; border: 1px solid transparent; cursor: pointer;
+      }
+      .btn.primary { background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
+      .btn.primary:hover { filter: brightness(1.05); text-decoration: none; box-shadow: var(--shadow-lift); }
+      .btn.ghost { background: var(--surface); border-color: var(--line-strong); color: var(--ink); }
+      .btn.ghost:hover { text-decoration: none; box-shadow: var(--shadow); }
+      .hero-stats {
+        margin-top: 34px; display: flex; flex-wrap: wrap; gap: 0;
+        border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+        box-shadow: var(--shadow); overflow: hidden;
+      }
+      .stat { padding: 16px 24px; border-right: 1px solid var(--line); min-width: 130px; flex: 1; }
+      .stat:last-child { border-right: 0; }
+      .stat b { display: block; font-size: 21px; font-weight: 760; letter-spacing: -0.02em; }
+      .stat span { font-size: 12.5px; color: var(--muted); }
+
+      /* ---------- sections ---------- */
+      section { padding: 44px 0; border-top: 1px solid var(--line); }
+      .sec-head { margin-bottom: 22px; }
+      h2 { font-size: 23px; letter-spacing: -0.02em; margin: 0 0 6px; font-weight: 730; }
+      .sub { color: var(--muted); margin: 0; max-width: 700px; font-size: 14.5px; }
+
+      /* ---------- category tiles ---------- */
+      .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+      .tile {
+        display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        cursor: pointer; text-align: left; color: var(--ink); transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+      }
+      .tile:hover { border-color: var(--accent-line); box-shadow: var(--shadow-lift); transform: translateY(-1px); }
+      .tile-ic {
+        width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0;
+        background: var(--accent-soft); color: var(--accent);
+      }
+      .tile-name { font-weight: 650; font-size: 13.5px; line-height: 1.3; }
+      .tile-count { font-size: 12px; color: var(--muted); }
+
+      /* ---------- catalog toolbar ---------- */
+      .toolbar {
+        display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+        padding: 12px; border: 1px solid var(--line); border-radius: var(--radius);
+        background: var(--surface); box-shadow: var(--shadow); margin-bottom: 16px;
+        position: sticky; top: 74px; z-index: 30;
+      }
+      .search {
+        display: flex; align-items: center; gap: 9px; flex: 1 1 220px; min-width: 200px;
+        height: 38px; padding: 0 12px; border: 1px solid var(--line); border-radius: 9px;
+        background: var(--bg); color: var(--muted);
+      }
+      .search:focus-within { border-color: var(--accent); }
+      .search input {
+        border: 0; outline: 0; background: transparent; color: var(--ink);
+        font-size: 14px; width: 100%; font-family: inherit;
+      }
+      .search input::placeholder { color: var(--muted); }
+      .tabs { display: flex; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 9px; padding: 3px; }
+      .tabs button {
+        height: 30px; padding: 0 13px; border: 0; background: transparent; border-radius: 7px;
+        color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+      }
+      .tabs button:hover { color: var(--ink); }
+      .tabs button.active { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); border: 1px solid var(--line); }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+      .chips button {
+        height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line);
+        background: var(--surface); color: var(--muted); font-size: 12.5px; font-weight: 600; cursor: pointer;
+      }
+      .chips button:hover { color: var(--ink); border-color: var(--line-strong); }
+      .chips button.active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .select {
+        height: 38px; padding: 0 30px 0 12px; border: 1px solid var(--line); border-radius: 9px;
+        background: var(--surface); color: var(--ink); font-size: 13px; font-weight: 600;
+        appearance: none; cursor: pointer;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat; background-position: right 10px center;
+      }
+      .result-line { display: flex; align-items: baseline; gap: 10px; margin: 2px 2px 14px; }
+      .result-line strong { font-size: 14px; }
+      .result-line span { color: var(--muted); font-size: 13px; }
+
+      /* ---------- cards ---------- */
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 14px; }
+      .card {
+        display: flex; flex-direction: column; gap: 10px; padding: 18px;
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        cursor: pointer; text-align: left; color: var(--ink); min-width: 0;
+        transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+        font-family: inherit; line-height: inherit; font-size: inherit;
+      }
+      .card:hover { border-color: var(--accent-line); box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+      .card-top { display: flex; align-items: center; gap: 11px; }
+      .card-ic {
+        width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0;
+        background: var(--accent-soft); color: var(--accent);
+      }
+      .card-ic .icon { width: 19px; height: 19px; }
+      .card-title-row { min-width: 0; flex: 1; }
+      .card-name { font-weight: 680; font-size: 15px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 6px; min-width: 0; }
+      .card-name .name-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .verified { color: var(--accent); display: inline-flex; }
+      .kind-row { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+      .kind-badge {
+        font-size: 10.5px; font-weight: 720; letter-spacing: 0.06em; text-transform: uppercase;
+        padding: 2px 8px; border-radius: 999px; border: 1px solid transparent;
+      }
+      .kb-plugin { color: #4f46e5; background: #eef2ff; border-color: #e0e7ff; }
+      .kb-capsule { color: #0f766e; background: #f0fdfa; border-color: #ccfbf1; }
+      .kb-theme { color: #be123c; background: #fff1f2; border-color: #ffe4e6; }
+      .kb-template { color: #b45309; background: #fffbeb; border-color: #fef3c7; }
+      html.dark .kb-plugin { color: #a5b4fc; background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.3); }
+      html.dark .kb-capsule { color: #5eead4; background: rgba(20, 184, 166, 0.12); border-color: rgba(20, 184, 166, 0.3); }
+      html.dark .kb-theme { color: #fda4af; background: rgba(244, 63, 94, 0.12); border-color: rgba(244, 63, 94, 0.3); }
+      html.dark .kb-template { color: #fcd34d; background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.3); }
+      .featured-badge {
+        font-size: 10.5px; font-weight: 720; letter-spacing: 0.06em; text-transform: uppercase;
+        padding: 2px 8px; border-radius: 999px; color: var(--accent); background: var(--accent-soft);
+        border: 1px solid var(--accent-line); display: inline-flex; align-items: center; gap: 4px;
+      }
+      .featured-badge .icon { width: 11px; height: 11px; }
+      .card-tag {
+        color: var(--muted); font-size: 13.5px; margin: 0;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        min-height: 40px;
+      }
+      .card-meta {
+        margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line);
+        display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12.5px; flex-wrap: wrap;
+      }
+      .card-meta .m { display: inline-flex; align-items: center; gap: 5px; }
+      .card-meta .icon { width: 13px; height: 13px; }
+      .stars { display: inline-flex; align-items: center; gap: 4px; }
+      .stars .icon { width: 13px; height: 13px; }
+      .stars .filled-star { fill: #f59e0b; stroke: #f59e0b; }
+      .stars .empty-star { stroke: var(--line-strong); }
+      .stars.positive { color: #b45309; font-weight: 650; }
+      .empty {
+        padding: 44px 20px; text-align: center; color: var(--muted);
+        border: 1px dashed var(--line-strong); border-radius: var(--radius);
+      }
+
+      /* ---------- steps ---------- */
+      .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+      .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+      .step .n {
+        width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center;
+        background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 750;
+      }
+      .step h3 { margin: 12px 0 6px; font-size: 15px; font-weight: 680; }
+      .step p { margin: 0; color: var(--muted); font-size: 13.5px; }
+
+      /* ---------- api ---------- */
+      .endpoints { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+      .endpoint { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+      .endpoint .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 720; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+      .endpoint .tag.mandatory { color: var(--accent); }
+      .endpoint .tag .icon { width: 13px; height: 13px; }
+      .code-row { display: flex; align-items: center; gap: 8px; }
+      .endpoint code {
+        font-family: var(--mono); font-size: 12px; color: var(--ink);
+        background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px;
+        display: block; overflow-x: auto; white-space: nowrap; flex: 1; min-width: 0;
+      }
+      .copy-btn {
+        width: 32px; height: 32px; display: grid; place-items: center; flex-shrink: 0;
+        border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--muted); cursor: pointer;
+      }
+      .copy-btn:hover { color: var(--ink); border-color: var(--line-strong); }
+      .copy-btn.done { color: var(--accent); border-color: var(--accent-line); }
+      .endpoint p { margin: 0; color: var(--muted); font-size: 13.5px; }
+
+      /* ---------- faq ---------- */
+      .faq { display: grid; gap: 10px; max-width: 780px; }
+      .faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 18px; box-shadow: var(--shadow); }
+      .faq summary { cursor: pointer; font-weight: 650; font-size: 14.5px; padding: 12px 0; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .faq summary::-webkit-details-marker { display: none; }
+      .faq summary::after { content: "+"; color: var(--muted); font-size: 18px; font-weight: 500; }
+      .faq details[open] summary::after { content: "–"; }
+      .faq details p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+      .faq details code { font-family: var(--mono); font-size: 12.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+
+      /* ---------- modal ---------- */
+      .modal-backdrop {
+        position: fixed; inset: 0; background: rgba(10, 14, 20, 0.5); z-index: 60;
+        display: none; align-items: flex-start; justify-content: center; padding: 6vh 16px;
+        overflow-y: auto;
+      }
+      .modal-backdrop.open { display: flex; }
+      .modal {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+        max-width: 660px; width: 100%; box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.35);
+        padding: 26px; position: relative; animation: pop 0.18s ease-out;
+      }
+      @keyframes pop { from { opacity: 0; transform: translateY(8px) scale(0.985); } to { opacity: 1; transform: none; } }
+      .modal-close { position: absolute; top: 14px; right: 14px; }
+      .modal-head { display: flex; gap: 14px; align-items: flex-start; padding-right: 40px; }
+      .modal-head .card-ic { width: 46px; height: 46px; }
+      .modal-head .card-ic .icon { width: 22px; height: 22px; }
+      .modal h3 { margin: 0 0 4px; font-size: 20px; letter-spacing: -0.02em; }
+      .modal .tagline { color: var(--muted); font-size: 14px; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+      .modal .desc { color: var(--ink); font-size: 14.5px; margin: 16px 0 0; white-space: pre-line; }
+      .meta-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 18px;
+      }
+      .meta-cell { background: var(--bg); border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; }
+      .meta-cell span { display: block; font-size: 11px; color: var(--muted); font-weight: 650; text-transform: uppercase; letter-spacing: 0.05em; }
+      .meta-cell b { font-size: 13.5px; font-weight: 650; word-break: break-word; }
+      .install-box { margin-top: 18px; border: 1px solid var(--accent-line); background: var(--accent-soft); border-radius: var(--radius); padding: 16px; }
+      .install-box h4 { margin: 0 0 8px; font-size: 13.5px; color: var(--accent); }
+      .install-box ol { margin: 0; padding-left: 20px; color: var(--ink); font-size: 13.5px; }
+      .install-box li { margin: 3px 0; }
+      .file-list { margin-top: 14px; }
+      .file-list span { display: block; font-size: 11px; color: var(--muted); font-weight: 650; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+      .file-list code {
+        display: inline-block; font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+        background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; margin: 0 6px 6px 0;
+      }
+
+      /* ---------- footer ---------- */
+      footer { border-top: 1px solid var(--line); margin-top: 8px; padding: 30px 0 48px; color: var(--muted); font-size: 13.5px; }
+      .foot-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; justify-content: space-between; }
+      .foot-links { display: flex; gap: 16px; flex-wrap: wrap; }
+      .status-line { font-size: 12.5px; margin-top: 16px; }
+      .status-line b { color: var(--accent); font-weight: 650; }
+
+      @media (max-width: 720px) {
+        .hero { padding: 44px 0 30px; }
+        .top-nav a { display: none; }
+        .stat { min-width: 45%; border-bottom: 1px solid var(--line); }
+        .toolbar { position: static; }
+        section { padding: 34px 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ================= header ================= -->
+    <div class="topbar">
+      <div class="wrap topbar-row">
+        <div class="brand">
+          <div class="brand-mark" id="brand-mark"></div>
+          <div class="brand-name">
+            FocusCaseX Marketplace
+            <small>the public extension hub</small>
+          </div>
+        </div>
+        <nav class="top-nav">
+          <a href="#catalog">Catalog</a>
+          <a href="#categories">Categories</a>
+          <a href="#install">Install</a>
+          <a href="#api">API</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <button class="icon-btn" id="theme-btn" title="Toggle dark mode" aria-label="Toggle dark mode"></button>
+        <a class="gh-btn" href="https://github.com/stromplayz/FocusCaseX" target="_blank" rel="noopener">
+          <span id="gh-ic"></span> GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- ================= hero ================= -->
+    <header class="hero wrap">
+      <span class="eyebrow"><span id="eyebrow-ic"></span> Published on GitHub Pages · free & open</span>
+      <h1>Everything your clinic workspace needs — <em>browse before you install</em></h1>
+      <p class="lede">
+        Extensions, capsules, themes and templates for FocusCaseX, published as a clean public catalog.
+        The same catalog powers the in-app Marketplace and the update system — what you see here is exactly what the app pulls.
+      </p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#catalog"><span id="cta-ic-1"></span> Browse the catalog</a>
+        <a class="btn ghost" href="#api"><span id="cta-ic-2"></span> API documentation</a>
+      </div>
+      <div class="hero-stats" id="hero-stats">
+        <div class="stat"><b id="stat-all">…</b><span>published items</span></div>
+        <div class="stat"><b id="stat-plugin">…</b><span>extensions</span></div>
+        <div class="stat"><b id="stat-capsule">…</b><span>capsules</span></div>
+        <div class="stat"><b id="stat-theme">…</b><span>themes</span></div>
+        <div class="stat"><b id="stat-template">…</b><span>templates</span></div>
+        <div class="stat"><b id="stat-core">…</b><span>core version</span></div>
+      </div>
+    </header>
+
+    <!-- ================= categories ================= -->
+    <section class="wrap" id="categories">
+      <div class="sec-head">
+        <h2>Browse by category</h2>
+        <p class="sub">Pick a lane — every tile filters the catalog below.</p>
+      </div>
+      <div class="tiles" id="tiles"></div>
+    </section>
+
+    <!-- ================= catalog ================= -->
+    <section class="wrap" id="catalog">
+      <div class="sec-head">
+        <h2>Catalog</h2>
+        <p class="sub">Search, filter and sort everything published here. Click any card for details and install steps.</p>
+      </div>
+      <div class="toolbar">
+        <label class="search">
+          <span id="search-ic"></span>
+          <input id="search" type="search" placeholder="Search by name, description or tag…" aria-label="Search the catalog" />
+        </label>
+        <div class="tabs" id="kind-tabs">
+          <button data-kind="all" class="active">All</button>
+          <button data-kind="plugin">Extensions</button>
+          <button data-kind="capsule">Capsules</button>
+          <button data-kind="theme">Themes</button>
+          <button data-kind="template">Templates</button>
+        </div>
+        <div class="chips" id="cat-chips"></div>
+        <select class="select" id="sort" aria-label="Sort items">
+          <option value="featured">Featured first</option>
+          <option value="downloads">Most installed</option>
+          <option value="rating">Highest rated</option>
+          <option value="released">Recently updated</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+      <div class="result-line">
+        <strong id="result-count">…</strong>
+        <span id="result-hint"></span>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" style="display: none;">Nothing matches that search — try a different word or clear the filters.</div>
+    </section>
+
+    <!-- ================= install ================= -->
+    <section class="wrap" id="install">
+      <div class="sec-head">
+        <h2>Install in three steps</h2>
+        <p class="sub">Everything installs inside the FocusCaseX app — this site is the catalog and the delivery network.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="n">1</div>
+          <h3>Open the Marketplace</h3>
+          <p>In FocusCaseX, tap the Marketplace button in the sidebar footer — the in-app store reads this same catalog.</p>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <h3>Find the item</h3>
+          <p>Search by name or browse by kind and category. Cards show the version, author and install count.</p>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <h3>Install</h3>
+          <p>One tap pulls the files straight from this site onto your device. Manage everything later under Settings → Extensions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= api ================= -->
+    <section class="wrap" id="api">
+      <div class="sec-head">
+        <h2>API &amp; update system</h2>
+        <p class="sub">
+          This site is also a static, versioned JSON API. Every FocusCaseX client reads it on boot —
+          the app never depends on a private repo for updates.
+        </p>
+      </div>
+      <div class="endpoints">
+        <div class="endpoint">
+          <span class="tag mandatory"><span id="ep-ic-1"></span> core · fetched every boot</span>
+          <div class="code-row">
+            <code>GET https://stromplayz.github.io/FocusCaseX/api/core.json</code>
+            <button class="copy-btn" data-copy="https://stromplayz.github.io/FocusCaseX/api/core.json" title="Copy URL" aria-label="Copy URL"><span class="c-ic"></span></button>
+          </div>
+          <p>The mandatory core config: version, feature flags, the announcement and the list of core plugin files the in-app updater pulls after the user confirms.</p>
+        </div>
+        <div class="endpoint">
+          <span class="tag"><span id="ep-ic-2"></span> registry · the catalog</span>
+          <div class="code-row">
+            <code>GET https://stromplayz.github.io/FocusCaseX/api/registry.json</code>
+            <button class="copy-btn" data-copy="https://stromplayz.github.io/FocusCaseX/api/registry.json" title="Copy URL" aria-label="Copy URL"><span class="c-ic"></span></button>
+          </div>
+          <p>Every published item with metadata and a files map. The app merges it into its in-app Marketplace and drives install / update badges from remote versions.</p>
+        </div>
+        <div class="endpoint">
+          <span class="tag"><span id="ep-ic-3"></span> assets · pulled on demand</span>
+          <div class="code-row">
+            <code>GET …/plugins/core-ui/main.js · …/capsules/ui-exam/spec.mdui</code>
+            <button class="copy-btn" data-copy="https://stromplayz.github.io/FocusCaseX/plugins/core-ui/main.js" title="Copy URL" aria-label="Copy URL"><span class="c-ic"></span></button>
+          </div>
+          <p>Raw files fetched only when an install or update needs them. Publish here and every client can pull it — nothing is bundled into an app release.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= faq ================= -->
+    <section class="wrap" id="faq">
+      <div class="sec-head">
+        <h2>FAQ</h2>
+        <p class="sub">Short answers to the questions clinics actually ask.</p>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is everything here free?</summary>
+          <p>Yes. Every listing is published as a static file on GitHub Pages and installs at no cost. The marketplace is part of the open FocusCaseX ecosystem.</p>
+        </details>
+        <details>
+          <summary>Do I need this website to install anything?</summary>
+          <p>No — the whole catalog is inside the app under Marketplace. This site is the browsable, shareable mirror of it and the delivery network the app downloads from.</p>
+        </details>
+        <details>
+          <summary>How do updates reach my device?</summary>
+          <p>On boot the app checks <code>api/core.json</code> and the registry. If the mandatory core moved forward, you get a confirmation prompt before anything downloads; regular items show update badges in the in-app Marketplace.</p>
+        </details>
+        <details>
+          <summary>What are capsules vs extensions vs templates?</summary>
+          <p><b>Extensions</b> add commands, panels and behavior. <b>Capsules</b> are building blocks — ready-made UI pieces like the appointment board or patient directory that render inside your pages. <b>Themes</b> restyle the workspace. <b>Templates</b> are clinical markdown starters (intake forms, letters, workups).</p>
+        </details>
+        <details>
+          <summary>How does an item get published here?</summary>
+          <p>Items are generated from <code>catalog.json</code> in the FocusCaseX-Marketplace repository and synced from the main repo by a publish script. The registry you see is regenerated on every sync.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ================= footer ================= -->
+    <footer>
+      <div class="wrap">
+        <div class="foot-row">
+          <div>
+            <b style="color: var(--ink);">FocusCaseX Marketplace</b>
+            <p style="margin: 6px 0 0; max-width: 520px;">
+              The public side of the FocusCaseX ecosystem — the clinical app lives in the main repository,
+              extensions and the mandatory core live here, so clinics always see what's published and clients
+              always pull the newest layer.
+            </p>
+          </div>
+          <div class="foot-links">
+            <a href="https://github.com/stromplayz/FocusCaseX">Main repo</a>
+            <a href="https://github.com/stromplayz/FocusCaseX">Marketplace repo</a>
+            <a href="api/registry.json">registry.json</a>
+            <a href="catalog.json">catalog.json</a>
+          </div>
+        </div>
+        <p class="status-line" id="status">registry: loading…</p>
+      </div>
+    </footer>
+
+    <!-- ================= detail modal ================= -->
+    <div class="modal-backdrop" id="modal-backdrop">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+        <button class="icon-btn modal-close" id="modal-close" aria-label="Close details"></button>
+        <div class="modal-head">
+          <div class="card-ic" id="modal-ic"></div>
+          <div style="min-width: 0;">
+            <h3 id="modal-name">…</h3>
+            <p class="tagline" id="modal-tagline">…</p>
+            <div class="kind-row" id="modal-badges"></div>
+          </div>
+        </div>
+        <p class="desc" id="modal-desc"></p>
+        <div class="meta-grid" id="modal-meta"></div>
+        <div class="install-box">
+          <h4>How to install</h4>
+          <ol>
+            <li>Open <b>FocusCaseX</b> and tap <b>Marketplace</b> in the sidebar footer.</li>
+            <li>Search for <b id="modal-install-name">…</b>.</li>
+            <li>Tap <b>Install</b> — the files pull from this site and the item activates.</li>
+            <li>Manage it anytime under <b>Settings → Extensions</b>.</li>
+          </ol>
+        </div>
+        <div class="file-list" id="modal-files"></div>
+      </div>
+    </div>
+
+    <script>
+      /* inline lucide icon data — generated by scripts/build-site.mjs (no CDN needed) */
+      var ICONS = /*__LUCIDE_ICONS__*/ {};
+
+      /* ---------------- tiny icon renderer ---------------- */
+      function icon(name, cls) {
+        var node = ICONS[name] || ICONS.PackageOpen || [];
+        var inner = node
+          .map(function (p) {
+            var attrs = Object.keys(p.attrs || {})
+              .map(function (k) { return k + '="' + p.attrs[k] + '"'; })
+              .join(" ");
+            return "<" + p.tag + " " + attrs + "></" + p.tag + ">";
+          })
+          .join("");
+        return '<svg class="icon ' + (cls || "") + '" viewBox="0 0 24 24" aria-hidden="true">' + inner + "</svg>";
+      }
+
+      /* static decorative icons */
+      document.getElementById("brand-mark").innerHTML = icon("GitFork");
+      document.getElementById("gh-ic").innerHTML = icon("Github");
+      document.getElementById("eyebrow-ic").innerHTML = icon("ShieldCheck");
+      document.getElementById("cta-ic-1").innerHTML = icon("Search");
+      document.getElementById("cta-ic-2").innerHTML = icon("BookOpen");
+      document.getElementById("search-ic").innerHTML = icon("Search");
+      document.getElementById("ep-ic-1").innerHTML = icon("ShieldCheck");
+      document.getElementById("ep-ic-2").innerHTML = icon("Layers");
+      document.getElementById("ep-ic-3").innerHTML = icon("PackageOpen");
+      document.getElementById("theme-btn").innerHTML = icon("Moon");
+
+      /* ---------------- theme ---------------- */
+      (function () {
+        var btn = document.getElementById("theme-btn");
+        function apply(dark) {
+          document.documentElement.classList.toggle("dark", dark);
+          btn.innerHTML = icon(dark ? "Sun" : "Moon");
+          try { localStorage.setItem("fcx-market-theme", dark ? "dark" : "light"); } catch (e) {}
+        }
+        var saved = null;
+        try { saved = localStorage.getItem("fcx-market-theme"); } catch (e) {}
+        apply(saved ? saved === "dark" : window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        btn.addEventListener("click", function () { apply(!document.documentElement.classList.contains("dark")); });
+      })();
+
+      /* ---------------- marketplace state ---------------- */
+      var KIND_META = {
+        plugin: { label: "Extension", plural: "extensions", icon: "Puzzle", kind: "Extensions" },
+        capsule: { label: "Capsule", plural: "capsules", icon: "Layers", kind: "Capsules" },
+        theme: { label: "Theme", plural: "themes", icon: "Palette", kind: "Themes" },
+        template: { label: "Template", plural: "templates", icon: "LayoutTemplate", kind: "Templates" },
+      };
+      var KIND_ORDER = ["plugin", "capsule", "theme", "template"];
+
+      var state = { items: [], kind: "all", category: "all", q: "", sort: "featured" };
+
+      function esc(s) {
+        return String(s == null ? "" : s)
+          .replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+      }
+      function fmtCount(n) {
+        n = Number(n) || 0;
+        return n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : String(n);
+      }
+      function fmtDate(s) {
+        return String(s || "").slice(0, 10);
+      }
+      function itemIcon(it) {
+        return icon(it.icon || (KIND_META[it.kind] && KIND_META[it.kind].icon) || "PackageOpen");
+      }
+
+      /* ---------- category tiles ---------- */
+      function renderTiles() {
+        var tiles = [];
+        for (var k = 0; k < KIND_ORDER.length; k++) {
+          var kind = KIND_ORDER[k];
+          var meta = KIND_META[kind];
+          var byCat = {};
+          var cats = [];
+          var items = state.items.filter(function (i) { return i.kind === kind; });
+          for (var j = 0; j < items.length; j++) {
+            var c = items[j].category || "General";
+            if (!byCat[c]) { byCat[c] = { name: c, count: 0 }; cats.push(byCat[c]); }
+            byCat[c].count++;
+          }
+          tiles.push({ kind: kind, category: "all", name: "All " + meta.plural, count: items.length, icon: meta.icon });
+          cats.sort(function (a, b) { return b.count - a.count || a.name.localeCompare(b.name); });
+          for (var m = 0; m < cats.length; m++) {
+            tiles.push({ kind: kind, category: cats[m].name, name: meta.kind + " · " + cats[m].name, count: cats[m].count, icon: meta.icon });
+          }
+        }
+        var html = tiles
+          .map(function (t) {
+            return (
+              '<button class="tile" data-kind="' + t.kind + '" data-category="' + esc(t.category) + '">' +
+              '<span class="tile-ic">' + icon(t.icon) + "</span>" +
+              "<span><span class='tile-name'>" + esc(t.name) + "</span>" +
+              "<span class='tile-count' style='display:block'>" + t.count + " item" + (t.count === 1 ? "" : "s") + "</span></span>" +
+              "</button>"
+            );
+          })
+          .join("");
+        document.getElementById("tiles").innerHTML = html;
+      }
+
+      /* ---------- category chips (contextual per kind) ---------- */
+      function renderChips() {
+        var chipsEl = document.getElementById("cat-chips");
+        var cats = {};
+        var pool = state.items.filter(function (i) { return state.kind === "all" || i.kind === state.kind; });
+        for (var i = 0; i < pool.length; i++) {
+          var c = pool[i].category || "General";
+          cats[c] = (cats[c] || 0) + 1;
+        }
+        var names = Object.keys(cats).sort(function (a, b) { return (cats[b] - cats[a]) || a.localeCompare(b); });
+        var html = '<button data-cat="all" class="' + (state.category === "all" ? "active" : "") + '">All categories</button>';
+        for (var j = 0; j < names.length; j++) {
+          var n = names[j];
+          html += '<button data-cat="' + esc(n) + '" class="' + (state.category === n ? "active" : "") + '">' + esc(n) + " · " + cats[n] + "</button>";
+        }
+        chipsEl.innerHTML = html;
+        chipsEl.style.display = names.length > 1 ? "flex" : "none";
+      }
+
+      /* ---------- filtering + sorting ---------- */
+      function visibleItems() {
+        var q = state.q.trim().toLowerCase();
+        var list = state.items.filter(function (i) {
+          if (state.kind !== "all" && i.kind !== state.kind) return false;
+          if (state.category !== "all" && (i.category || "General") !== state.category) return false;
+          if (!q) return true;
+          var hay = (i.name + " " + (i.tagline || "") + " " + (i.description || "") + " " + (i.tags || []).join(" ") + " " + (i.author || "")).toLowerCase();
+          return hay.indexOf(q) !== -1;
+        });
+        var sort = state.sort;
+        list.sort(function (a, b) {
+          if (sort === "name") return String(a.name).localeCompare(String(b.name));
+          if (sort === "downloads") return (b.downloads || 0) - (a.downloads || 0);
+          if (sort === "rating") return (b.rating || 0) - (a.rating || 0);
+          if (sort === "released") return String(b.released || "").localeCompare(String(a.released || ""));
+          /* featured first, then downloads */
+          return (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || (b.downloads || 0) - (a.downloads || 0);
+        });
+        return list;
+      }
+
+      function stars(it) {
+        var r = Number(it.rating) || 0;
+        if (!r) return "";
+        var full = Math.round(r);
+        var out = "";
+        for (var i = 0; i < 5; i++) {
+          out += icon("Star", i < full ? "filled-star" : "empty-star");
+        }
+        return '<span class="stars ' + (full >= 4 ? "positive" : "") + '" title="' + r.toFixed(1) + ' rating">' + out + " " + r.toFixed(1) + "</span>";
+      }
+
+      /* ---------- catalog grid ---------- */
+      function renderGrid() {
+        var list = visibleItems();
+        document.getElementById("result-count").textContent = list.length + (list.length === 1 ? " item" : " items");
+        var hint = [];
+        if (state.kind !== "all") hint.push(KIND_META[state.kind].plural);
+        if (state.category !== "all") hint.push(state.category);
+        if (state.q.trim()) hint.push('matching "' + state.q.trim() + '"');
+        document.getElementById("result-hint").textContent = hint.length ? "· " + hint.join(" · ") : "· all kinds";
+        document.getElementById("empty").style.display = list.length ? "none" : "block";
+
+        document.getElementById("grid").innerHTML = list
+          .map(function (i) {
+            var meta = KIND_META[i.kind] || { label: i.kind };
+            var badges =
+              '<span class="kind-badge kb-' + esc(i.kind) + '">' + esc(meta.label) + "</span>" +
+              (i.category ? '<span class="kind-badge" style="background:var(--bg);border-color:var(--line);color:var(--muted)">' + esc(i.category) + "</span>" : "") +
+              (i.featured ? '<span class="featured-badge">' + icon("Sparkles") + "Featured</span>" : "");
+            return (
+              '<button class="card" data-id="' + esc(i.id) + '">' +
+              '<span class="card-top">' +
+              '<span class="card-ic">' + itemIcon(i) + "</span>" +
+              '<span class="card-title-row">' +
+              '<span class="card-name"><span class="name-text">' + esc(i.name) + "</span>" +
+              (i.verified ? '<span class="verified" title="Verified publisher">' + icon("ShieldCheck") + "</span>" : "") +
+              "</span>" +
+              '<span class="kind-row">' + badges + "</span>" +
+              "</span></span>" +
+              "<p class='card-tag'>" + esc(i.tagline || i.description || "") + "</p>" +
+              '<span class="card-meta">' +
+              '<span class="m">' + icon("PackageOpen") + "v" + esc(i.version || "1.0") + "</span>" +
+              '<span class="m">' + icon("Download") + fmtCount(i.downloads) + "</span>" +
+              stars(i) +
+              "</span>" +
+              "</button>"
+            );
+          })
+          .join("");
+      }
+
+      /* ---------- detail modal ---------- */
+      function metaCell(label, value) {
+        return '<div class="meta-cell"><span>' + esc(label) + "</span><b>" + (value || "—") + "</b></div>";
+      }
+      function openModal(it) {
+        var meta = KIND_META[it.kind] || { label: it.kind };
+        document.getElementById("modal-ic").innerHTML = itemIcon(it);
+        document.getElementById("modal-name").textContent = it.name;
+        document.getElementById("modal-tagline").textContent = it.tagline || "";
+        document.getElementById("modal-badges").innerHTML =
+          '<span class="kind-badge kb-' + esc(it.kind) + '">' + esc(meta.label) + "</span>" +
+          (it.category ? '<span class="kind-badge" style="background:var(--bg);border-color:var(--line);color:var(--muted)">' + esc(it.category) + "</span>" : "") +
+          (it.featured ? '<span class="featured-badge">' + icon("Sparkles") + "Featured</span>" : "");
+        var descText = it.description || it.tagline || "No longer description published for this item.";
+        /* avoid printing the same text twice — hide the head tagline when the
+           description already starts with it */
+        var same = !!it.tagline && descText.indexOf(it.tagline) === 0;
+        document.getElementById("modal-tagline").style.display = same ? "none" : "";
+        document.getElementById("modal-desc").textContent = descText;
+        document.getElementById("modal-install-name").textContent = it.name;
+        document.getElementById("modal-meta").innerHTML =
+          metaCell("Version", esc(it.version || "1.0")) +
+          metaCell("Author", esc(it.author || "—")) +
+          metaCell("Released", esc(fmtDate(it.released))) +
+          metaCell("Installs", esc(fmtCount(it.downloads))) +
+          (Number(it.rating) ? metaCell("Rating", Number(it.rating).toFixed(1) + " / 5") : "") +
+          ((it.tags && it.tags.length) ? metaCell("Tags", esc((it.tags || []).join(", "))) : "");
+        var files = it.files || {};
+        var keys = Object.keys(files);
+        document.getElementById("modal-files").innerHTML = keys.length
+          ? "<span>Published files</span>" + keys.map(function (k) { return "<code>" + esc(files[k]) + "</code>"; }).join("")
+          : "";
+        document.getElementById("modal-backdrop").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        document.getElementById("modal-backdrop").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      document.getElementById("modal-close").innerHTML = icon("X");
+      document.getElementById("modal-close").addEventListener("click", closeModal);
+      document.getElementById("modal-backdrop").addEventListener("click", function (e) {
+        if (e.target === this) closeModal();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeModal();
+      });
+
+      /* ---------- interactions ---------- */
+      document.getElementById("tiles").addEventListener("click", function (e) {
+        var tile = e.target.closest(".tile");
+        if (!tile) return;
+        state.kind = tile.getAttribute("data-kind");
+        state.category = tile.getAttribute("data-category");
+        syncToolbar();
+        renderAll();
+        document.getElementById("catalog").scrollIntoView({ behavior: "smooth" });
+      });
+      document.getElementById("kind-tabs").addEventListener("click", function (e) {
+        var btn = e.target.closest("button");
+        if (!btn) return;
+        state.kind = btn.getAttribute("data-kind");
+        state.category = "all";
+        syncToolbar();
+        renderAll();
+      });
+      document.getElementById("cat-chips").addEventListener("click", function (e) {
+        var btn = e.target.closest("button");
+        if (!btn) return;
+        state.category = btn.getAttribute("data-cat");
+        renderAll();
+      });
+      document.getElementById("sort").addEventListener("change", function () {
+        state.sort = this.value;
+        renderAll();
+      });
+      document.getElementById("search").addEventListener("input", function () {
+        state.q = this.value;
+        renderAll();
+      });
+      document.getElementById("grid").addEventListener("click", function (e) {
+        var card = e.target.closest(".card");
+        if (!card) return;
+        var id = card.getAttribute("data-id");
+        var it = state.items.filter(function (i) { return i.id === id; })[0];
+        if (it) openModal(it);
+      });
+
+      function syncToolbar() {
+        var tabs = document.querySelectorAll("#kind-tabs button");
+        for (var i = 0; i < tabs.length; i++) {
+          tabs[i].classList.toggle("active", tabs[i].getAttribute("data-kind") === state.kind);
+        }
+      }
+      function renderAll() {
+        renderChips();
+        renderGrid();
+      }
+
+      /* copy buttons */
+      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.innerHTML = icon("Copy");
+        btn.addEventListener("click", function () {
+          var text = btn.getAttribute("data-copy");
+          function done() {
+            btn.classList.add("done");
+            btn.innerHTML = icon("Check");
+            setTimeout(function () {
+              btn.classList.remove("done");
+              btn.innerHTML = icon("Copy");
+            }, 1400);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, done);
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = text; document.body.appendChild(ta); ta.select();
+            try { document.execCommand("copy"); } catch (e) {}
+            document.body.removeChild(ta);
+            done();
+          }
+        });
+      });
+
+      /* ---------------- boot ---------------- */
+      fetch("api/registry.json", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (reg) {
+          state.items = reg.items || [];
+          var counts = reg.counts || {};
+          function count(kind) {
+            return String(counts[kind] || state.items.filter(function (i) { return i.kind === kind; }).length);
+          }
+          document.getElementById("stat-all").textContent = String(counts.all || state.items.length);
+          document.getElementById("stat-plugin").textContent = count("plugin");
+          document.getElementById("stat-capsule").textContent = count("capsule");
+          document.getElementById("stat-theme").textContent = count("theme");
+          document.getElementById("stat-template").textContent = count("template");
+          document.getElementById("stat-core").textContent = "v" + (reg.coreVersion || "—");
+          document.getElementById("status").innerHTML =
+            "registry: <b>live</b> · schema " + esc(reg.schema || "") + " · generated " + esc(fmtDate(reg.generatedAt)) + " · served from GitHub Pages";
+          renderTiles();
+          renderAll();
+        })
+        .catch(function () {
+          document.getElementById("status").textContent = "registry: failed to load (open this page over http(s), not file://)";
+          document.getElementById("result-count").textContent = "—";
+        });
+    </script>
+  </body>
+</html>

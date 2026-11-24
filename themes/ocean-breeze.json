@@ -1,0 +1,33 @@
+{
+  "id": "ocean-breeze",
+  "name": "Ocean Breeze",
+  "builtin": false,
+  "vars": {
+    "bg": "#edf6f5",
+    "bgSidebar": "#e2efed",
+    "bgPanel": "#f7fcfb",
+    "text": "#16332f",
+    "textMuted": "#52766f",
+    "accent": "#14b8a6",
+    "accentForeground": "#0d2b27",
+    "border": "#cfe5e1",
+    "radius": "10px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "soft",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "system",
+    "fontHeading": "geometric",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Aqua-tinted light with fresh teal — a sea breeze through the clinic.",
+  "tags": [
+    "light",
+    "teal",
+    "fresh"
+  ]
+}

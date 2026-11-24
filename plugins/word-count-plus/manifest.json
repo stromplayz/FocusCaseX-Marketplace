@@ -1,0 +1,9 @@
+{
+  "id": "word-count-plus",
+  "name": "Word Count Plus",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Shows a live statusbar counter with words, characters and sentences for the active note.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

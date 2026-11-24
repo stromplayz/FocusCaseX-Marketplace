@@ -1,0 +1,9 @@
+{
+  "id": "core-ui",
+  "name": "Core UI",
+  "version": "2.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "The Update v2 payload — core-UI customization through the plugin system: sidebar, panels, tabs and settings chrome restyled with live toggles.",
+  "author": "FocusCaseX originals",
+  "isSample": false
+}

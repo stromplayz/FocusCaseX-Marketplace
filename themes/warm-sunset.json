@@ -1,0 +1,33 @@
+{
+  "id": "warm-sunset",
+  "name": "Warm Sunset",
+  "builtin": false,
+  "vars": {
+    "bg": "#1a1210",
+    "bgSidebar": "#221713",
+    "bgPanel": "#261a15",
+    "text": "#f3e4d8",
+    "textMuted": "#a88d7c",
+    "accent": "#f5a524",
+    "accentForeground": "#2a1810",
+    "border": "#3a2a20",
+    "radius": "12px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "raised",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "rounded",
+    "fontHeading": "rounded",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Dusk-brown surfaces with an amber glow for late-evening charting.",
+  "tags": [
+    "dark",
+    "warm",
+    "evening"
+  ]
+}

@@ -1,0 +1,3522 @@
+
+/* ==== §0 · TOKENS & STAGE PALETTE — the only color literals in the file ===
+   Status hues are intentional, documented colors (Tailwind v4 oklch values):
+   they drive the pipeline palette in light AND dark themes. Everything else
+   in all three layers reads theme tokens or these --appt-* aliases. */
+& {
+  --appt-ok: oklch(0.696 0.17 162.48);      /* emerald-500 — done / money-in */
+  --appt-warn: oklch(0.705 0.213 47.604);   /* orange-500 — unpaid / attention */
+  --appt-bad: oklch(0.637 0.237 25.331);    /* red-500 — no-show / danger */
+  --appt-info: oklch(0.746 0.16 232.661);   /* sky-500 — arrived / money tint */
+  --appt-teal: oklch(0.704 0.14 182.503);   /* teal-500 — counselling */
+  --appt-violet: oklch(0.606 0.25 292.717); /* violet-500 — in-exam / UPI */
+  --appt-amber: oklch(0.769 0.188 70.08);   /* amber-500 — optics / "other" */
+}
+.cx-appt-stage--booked      { --stage: var(--accent-live, var(--primary)); }
+.cx-appt-stage--arrived     { --stage: var(--appt-info); }
+.cx-appt-stage--in-exam     { --stage: var(--appt-violet); }
+.cx-appt-stage--counselling { --stage: var(--appt-teal); }
+.cx-appt-stage--optics      { --stage: var(--appt-amber); }
+.cx-appt-stage--billing     { --stage: var(--appt-warn); }
+.cx-appt-stage--done        { --stage: var(--appt-ok); }
+.cx-appt-stage--no-show     { --stage: var(--appt-bad); }
+.cx-appt-stage--cancelled   { --stage: var(--muted-foreground); }
+
+/* ==== §1 · BOARD SHELL, TOOLBAR, SEARCH & VIEW TABS ====================== */
+.cx-appt-board {
+  color: var(--foreground);
+  font-size: 14px;
+  min-width: 0;
+}
+/* sticky toolbar: frosted strip with a hairline bottom border */
+.cx-appt-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 6px;
+  padding: 8px 4px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  background: color-mix(in oklab, var(--background) 85%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+/* toolbar search field — pill input, ≥44px on phones (16px = no iOS zoom) */
+.cx-appt-search {
+  appearance: none;
+  flex: 1 1 9rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--foreground);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.cx-appt-search::placeholder { color: var(--muted-foreground); }
+.cx-appt-search:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--ring, var(--primary)) 55%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring, var(--primary)) 22%, transparent);
+}
+/* toolbar actions cluster (Book a visit / walk-in CTAs) */
+.cx-appt-toolbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cx-appt-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  padding: 3px;
+  border-radius: var(--radius-md);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cx-appt-tabs::-webkit-scrollbar { display: none; }
+.cx-appt-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  min-height: 44px;
+  padding: 6px 12px;
+  border-radius: calc(var(--radius-md) - 2px);
+  white-space: nowrap;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.cx-appt-tab:hover { color: var(--foreground); }
+.cx-appt-tab--active {
+  background: var(--background);
+  color: var(--foreground);
+}
+/* mobile (≤719px): the day/week/month switcher hides — a phone is a day
+   book (the board pins the view to "day"); week and month are desk tools */
+@media (max-width: 719px) {
+  .cx-appt-tabs { display: none; }
+}
+/* "n booked today" — the toolbar's single counter */
+.cx-appt-count {
+  margin: 0 0 0 auto;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+.cx-appt-count-num {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-weight: 700;
+}
+
+/* ==== §2 · SECTIONS, DAY HEADS, WEEK PILLS, MONTH GRID =================== */
+.cx-appt-section {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.cx-appt-section--week { gap: 12px; }
+.cx-appt-section--month { gap: 8px; }
+/* sticky day/time group header — tucks under the mini pulse bar on phones */
+.cx-appt-dayhead {
+  position: sticky;
+  top: 36px;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  margin: 0;
+  padding: 6px 4px;
+  background: color-mix(in oklab, var(--background) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+/* week view: one snap-scrolling row of day pills */
+.cx-appt-weekrow {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-block: 4px;
+  scrollbar-width: none;
+}
+.cx-appt-weekrow::-webkit-scrollbar { display: none; }
+.cx-appt-weekpill {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  display: flex;
+  min-width: 3.25rem;
+  min-height: 56px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 6px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.cx-appt-weekpill:hover {
+  border-color: color-mix(in oklab, var(--accent-live, var(--primary)) 40%, transparent);
+}
+.cx-appt-weekpill[aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+.cx-appt-weekpill[aria-current="date"] {
+  box-shadow: inset 0 0 0 1px var(--accent-live, var(--primary));
+}
+/* month nav */
+.cx-appt-monthnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.cx-appt-monthlabel { font-size: 14px; font-weight: 600; }
+.cx-appt-monthtoday { margin-left: auto; }
+/* month grid: 7 columns, 44px cells on phones */
+.cx-appt-monthgrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+.cx-appt-cell {
+  position: relative;
+  display: flex;
+  min-height: 44px;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 4px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.cx-appt-cell:hover {
+  border-color: color-mix(in oklab, var(--accent-live, var(--primary)) 40%, transparent);
+}
+.cx-appt-cell--today { box-shadow: inset 0 0 0 1px var(--accent-live, var(--primary)); }
+.cx-appt-cell--has,
+.cx-appt-cell--live {
+  border-color: color-mix(in oklab, var(--accent-live, var(--primary)) 35%, transparent);
+  background: color-mix(in oklab, var(--accent-live, var(--primary)) 7%, transparent);
+}
+.cx-appt-cell--done {
+  border-color: color-mix(in oklab, var(--appt-ok) 40%, transparent);
+  background: color-mix(in oklab, var(--appt-ok) 7%, transparent);
+}
+/* fully-paid day marker — a tiny emerald dot in the cell corner */
+.cx-appt-cell--paid::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--appt-ok);
+}
+.cx-appt-cell-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+.cx-appt-cell-num { font-size: 11px; font-weight: 700; }
+.cx-appt-cell--today .cx-appt-cell-num {
+  color: color-mix(in oklab, var(--accent-live, var(--primary)) 72%, var(--foreground));
+}
+.cx-appt-cellblank {
+  min-height: 44px;
+  border-color: transparent;
+  background: transparent;
+  cursor: default;
+}
+.cx-appt-calhint {
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+/* ==== §3 · SHARED BUTTONS · FOCUS RING · TAP RULES ======================= */
+/* ghost icon button (day/month navigation) */
+.cx-appt-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  border-radius: calc(var(--radius-md) - 2px);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.cx-appt-iconbtn:hover { background: var(--muted); color: var(--foreground); }
+.cx-appt-iconbtn-icon { width: 16px; height: 16px; }
+/* small bordered chip button ("Today", "Book a visit") */
+.cx-btn.cx-appt-chipbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.cx-btn.cx-appt-chipbtn:hover { background: var(--muted); color: var(--foreground); }
+.cx-btn.cx-appt-chipbtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cx-appt-btnicon { width: 14px; height: 14px; flex-shrink: 0; }
+/* keyboard focus everywhere inside the capsule — 2px ring, offset 2px */
+.cx-appt-board :focus-visible,
+.cx-appt-panel :focus-visible,
+.cx-appt-sheet-backdrop :focus-visible {
+  outline: 2px solid var(--ring, var(--primary));
+  outline-offset: 2px;
+}
+/* tap hygiene: no focus tap flash, no double-tap zoom on any control */
+.cx-appt-board button,
+.cx-appt-board a,
+.cx-appt-board input,
+.cx-appt-board select,
+.cx-appt-board textarea,
+.cx-appt-board [role="menuitem"],
+.cx-appt-panel button,
+.cx-appt-panel input,
+.cx-appt-panel select,
+.cx-appt-panel textarea,
+.cx-appt-sheet-backdrop button,
+.cx-appt-sheet-backdrop input,
+.cx-appt-sheet-backdrop select,
+.cx-appt-sheet-backdrop textarea {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* press feedback on the big tap-first controls (forms/board layers add more) */
+.cx-appt-tab:active,
+.cx-appt-iconbtn:active,
+.cx-btn.cx-appt-chipbtn:active,
+.cx-appt-weekpill:active,
+.cx-appt-cell:active,
+.cx-appt-status-trigger:active {
+  transform: scale(0.97);
+}
+
+/* ==== §4 · DAY NAV ======================================================= */
+.cx-appt-daynav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.cx-appt-date {
+  min-height: 44px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 16px; /* ≥16px: no iOS focus zoom */
+  color: var(--foreground);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-md) - 2px);
+}
+.cx-appt-daymeta {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+/* ==== §5 · BOOKING CARDS ================================================= */
+/* the day book: single column on phones, auto-fill grid from 900px */
+.cx-appt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+@media (min-width: 900px) {
+  .cx-appt-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+    align-items: start;
+    gap: 12px;
+  }
+}
+/* card: --stage (set by state/stage classes) paints the left edge */
+.cx-appt-card {
+  margin: 0;
+  padding: 12px;
+  min-width: 0;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+  box-shadow: inset 3px 0 0 0 var(--stage, transparent);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+.cx-appt-card:hover {
+  border-color: color-mix(in oklab, var(--accent-live, var(--primary)) 30%, transparent);
+}
+.cx-appt-card-main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 0;
+}
+/* time column: bold mono chip + optional shared-slot badge */
+.cx-appt-timewrap {
+  display: flex;
+  width: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.cx-appt-time {
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 70%, transparent);
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
+  color: color-mix(in oklab, var(--foreground) 80%, transparent);
+}
+.cx-appt-sharedchip {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--muted-foreground);
+}
+/* who + why column */
+.cx-appt-who {
+  min-width: 0;
+  flex: 1;
+}
+.cx-appt-who-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 6px;
+  row-gap: 4px;
+}
+.cx-appt-patient {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+/* invisible ≥44px touch extension around the text-only patient link */
+.cx-appt-patient::before {
+  content: "";
+  position: absolute;
+  inset: -12px -8px;
+  border-radius: var(--radius-md);
+}
+.cx-appt-patient--static { cursor: default; }
+.cx-appt-patient-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+.cx-appt-patient:hover .cx-appt-patient-name { text-decoration: underline; }
+.cx-appt-patient-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.cx-appt-patient:hover .cx-appt-patient-icon,
+.cx-appt-patient:focus-visible .cx-appt-patient-icon { opacity: 1; }
+.cx-appt-type {
+  font-size: 13px;
+  color: color-mix(in oklab, var(--foreground) 80%, transparent);
+}
+/* quiet "phone · with · reason" line */
+.cx-appt-detail {
+  margin: 2px 0 0;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+.cx-appt-detail-icon { width: 10px; height: 10px; flex-shrink: 0; }
+.cx-appt-detail-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* right side: status + actions, wrapped flush-right on wide cards */
+.cx-appt-side {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+}
+.cx-appt-unset {
+  padding: 0 4px;
+  color: color-mix(in oklab, var(--muted-foreground) 50%, transparent);
+}
+/* empty day — dashed state with a shortcut to booking */
+.cx-appt-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 32px 16px;
+  border: 1px dashed color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-lg);
+}
+.cx-appt-empty-text {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+/* front-desk note saved on the row (Notes column) */
+.cx-appt-noteline {
+  margin: 8px 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 50%, transparent);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.cx-appt-noteline-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent-live, var(--primary));
+}
+.cx-appt-noteline-text { min-width: 0; overflow-wrap: anywhere; }
+
+/* ==== §6 · STAGE PILL & STATUS DROPDOWN (statusDropdown logic) =========== */
+.cx-appt-stage {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--stage, var(--muted-foreground)) 72%, var(--foreground));
+  background: color-mix(in oklab, var(--stage, var(--muted-foreground)) 12%, transparent);
+}
+.cx-appt-status { position: relative; flex-shrink: 0; }
+.cx-appt-status-trigger {
+  display: inline-flex;
+  min-height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+  color: color-mix(in oklab, var(--stage, var(--muted-foreground)) 72%, var(--foreground));
+  background: color-mix(in oklab, var(--stage, var(--muted-foreground)) 12%, transparent);
+}
+.cx-appt-status-trigger--unset {
+  color: var(--muted-foreground);
+  background: var(--muted);
+}
+.cx-appt-status-icon { width: 12px; height: 12px; flex-shrink: 0; }
+.cx-appt-status-label { white-space: nowrap; }
+.cx-appt-status-caret { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.6; }
+
+/* ==== §7 · cx-appt-MENU — shared jump / maintenance menu ==================
+   Phones: a fixed bottom-sheet list (like the forms layer's sheets).
+   ≥720px: an anchored popover — right-aligned under .cx-appt-more,
+   centered under a .cx-appt-stepwrap dot. */
+.cx-appt-menu {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-height: 65vh;
+  max-height: 65dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 10px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 1rem 1rem 0 0;
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow: 0 -12px 40px color-mix(in oklab, var(--foreground) 22%, transparent);
+}
+.cx-appt-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.35;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.cx-appt-menu-item svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+.cx-appt-menu-item:hover,
+.cx-appt-menu-item:active,
+.cx-appt-menu-item:focus-visible {
+  background: var(--muted);
+  color: var(--foreground);
+}
+.cx-appt-menu-item:active { transform: scale(0.98); }
+.cx-appt-menu-item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.cx-appt-menu-item--danger {
+  color: color-mix(in oklab, var(--destructive) 78%, var(--foreground));
+}
+.cx-appt-menu-item--danger svg { color: inherit; }
+.cx-appt-menu-item--danger:hover,
+.cx-appt-menu-item--danger:focus-visible {
+  background: color-mix(in oklab, var(--destructive) 10%, transparent);
+  color: color-mix(in oklab, var(--destructive) 78%, var(--foreground));
+}
+.cx-appt-menu-sep {
+  height: 1px;
+  margin: 4px 6px;
+  flex-shrink: 0;
+  background: var(--border);
+}
+/* wrapper hooks (kept from the previous board; the ⋯ trigger lives here) */
+.cx-appt-more { position: relative; flex-shrink: 0; }
+
+/* ==== §8 · DESKTOP TABLET (≥720px) — shell breathes ====================== */
+@media (min-width: 720px) {
+  .cx-appt-toolbar { column-gap: 12px; row-gap: 8px; padding: 8px 4px; }
+  .cx-appt-search { flex-basis: 12rem; min-height: 36px; font-size: 13px; }
+  .cx-appt-tab { min-height: 32px; font-size: 13px; padding: 4px 12px; }
+  .cx-appt-iconbtn { width: 28px; height: 28px; }
+  .cx-btn.cx-appt-chipbtn { min-height: 28px; padding: 0 12px; }
+  .cx-appt-date { min-height: 28px; font-size: 12px; }
+  .cx-appt-status-trigger { min-height: 28px; padding: 0 8px; }
+  .cx-appt-dayhead { top: 0; }
+  .cx-appt-weekpill { min-width: 3.5rem; min-height: 64px; }
+  .cx-appt-cell { min-height: 56px; }
+  .cx-appt-cellblank { min-height: 56px; }
+  /* cards switch to the row layout: time column left, actions right */
+  .cx-appt-card-main {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    column-gap: 12px;
+    row-gap: 8px;
+  }
+  .cx-appt-timewrap {
+    width: 56px;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .cx-appt-time { width: 100%; padding: 4px; }
+  .cx-appt-side { margin-left: auto; justify-content: flex-end; gap: 2px; }
+  /* menus become anchored popovers (14rem minimum, per the desktop contract) */
+  .cx-appt-menu {
+    position: absolute;
+    inset: auto;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 14rem;
+    max-width: min(16rem, calc(100vw - 32px));
+    max-height: 60vh;
+    padding: 4px;
+    border-bottom: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px color-mix(in oklab, var(--foreground) 14%, transparent);
+  }
+  .cx-appt-more .cx-appt-menu { right: 0; }
+  .cx-appt-stepwrap .cx-appt-menu {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .cx-appt-menu-item { padding: 6px 8px; }
+}
+/* touch devices carrying the desktop layout (tablets ≥720px) keep the 44px
+   tap contract — the compact sizes above are for fine pointers only */
+@media (min-width: 720px) and (pointer: coarse) {
+  .cx-appt-search { min-height: 44px; font-size: 16px; }
+  .cx-appt-tab { min-height: 44px; }
+  .cx-appt-iconbtn { width: 44px; height: 44px; }
+  .cx-btn.cx-appt-chipbtn { min-height: 44px; }
+  .cx-appt-date { min-height: 44px; font-size: 16px; }
+  .cx-appt-status-trigger { min-height: 44px; }
+}
+/* fine-pointer desktop: the compact sizes stay, but every shrunk button gets
+   an invisible ::after so its hit area still reaches ≥44px (<input> can't
+   carry pseudo-elements — the mouse keeps its 28–36px input bounds) */
+@media (min-width: 720px) and (pointer: fine) {
+  .cx-appt-iconbtn,
+  .cx-appt-tab,
+  .cx-btn.cx-appt-chipbtn { position: relative; }
+  .cx-appt-iconbtn::after,
+  .cx-btn.cx-appt-chipbtn::after {
+    content: "";
+    position: absolute;
+    inset: -8px -2px;
+  }
+  .cx-appt-tab::after {
+    content: "";
+    position: absolute;
+    inset: -6px -2px;
+  }
+  /* room for the tab extension: no vertical scroll in the tab strip */
+  .cx-appt-tabs { padding-block: 6px; }
+}
+
+/* ==== §9 · DESKTOP (≥1024px) — everything breathes ======================== */
+@media (min-width: 1024px) {
+  .cx-appt-toolbar { padding: 10px 4px; }
+  .cx-appt-section { gap: 12px; }
+  .cx-appt-card { padding: 16px; border-radius: var(--radius-xl); }
+  .cx-appt-cell { min-height: 72px; }
+  .cx-appt-cellblank { min-height: 72px; }
+  .cx-appt-empty { padding: 48px 24px; }
+}
+
+/* ==== §10 · REDUCED MOTION ================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .cx-appt-tab,
+  .cx-appt-iconbtn,
+  .cx-btn.cx-appt-chipbtn,
+  .cx-appt-card,
+  .cx-appt-patient-icon,
+  .cx-appt-status-trigger,
+  .cx-appt-weekpill,
+  .cx-appt-cell,
+  .cx-appt-search,
+  .cx-appt-menu-item {
+    transition: none;
+  }
+  .cx-appt-tab:active,
+  .cx-appt-iconbtn:active,
+  .cx-btn.cx-appt-chipbtn:active,
+  .cx-appt-weekpill:active,
+  .cx-appt-cell:active,
+  .cx-appt-status-trigger:active,
+  .cx-appt-stepwrap .cx-appt-menu {
+    transform: none;
+  }
+  /* a transform-anchored centered menu would jump without the transform */
+  .cx-appt-stepwrap .cx-appt-menu { left: 0; }
+}
+
+
+/* ==== §B1 · STATUS PULSE ==================================================
+   .cx-appt-pulse is the root card (day label + strip + funnel). The strip is
+   a snap scroller of stat tiles on phones; ≥720px the strip itself becomes
+   an auto-fit grid — tiles are pixel-identical in both layouts. The mini bar
+   is a sticky mobile summary that rides above the cards while scrolling. */
+.cx-appt-pulsewrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.cx-appt-pulse {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+}
+.cx-appt-pulse > .cx-appt-pulse-label {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  white-space: normal;
+}
+.cx-appt-pulse-strip {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  margin-inline: -4px;
+  padding-block: 0.25rem;
+  padding-inline: 4px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.cx-appt-pulse-strip::-webkit-scrollbar { display: none; }
+.cx-appt-pulse-tile {
+  position: relative;
+  scroll-snap-align: start;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 9rem;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+button.cx-appt-pulse-tile { cursor: pointer; }
+button.cx-appt-pulse-tile:active { transform: scale(0.97); }
+.cx-appt-pulse-tile:hover {
+  border-color: color-mix(in oklab, var(--stage, var(--accent-live, var(--primary))) 40%, transparent);
+}
+/* filter-active tile */
+.cx-appt-pulse-tile--sel {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+}
+/* semantic tints — each sets --stage, consumers read it */
+.cx-appt-pulse-tile--done  { --stage: var(--appt-ok); }
+.cx-appt-pulse-tile--warn  { --stage: var(--appt-warn); }
+.cx-appt-pulse-tile--money { --stage: var(--appt-info); }
+.cx-appt-pulse-tile--done,
+.cx-appt-pulse-tile--warn,
+.cx-appt-pulse-tile--money {
+  border-color: color-mix(in oklab, var(--stage) 35%, var(--border));
+  background: color-mix(in oklab, var(--stage) 8%, var(--card));
+}
+.cx-appt-pulse-num {
+  max-width: 100%;
+  overflow: hidden;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+  white-space: nowrap;
+  color: var(--foreground);
+}
+.cx-appt-pulse-tile--done .cx-appt-pulse-num,
+.cx-appt-pulse-tile--warn .cx-appt-pulse-num,
+.cx-appt-pulse-tile--money .cx-appt-pulse-num {
+  color: color-mix(in oklab, var(--stage) 72%, var(--foreground));
+}
+.cx-appt-pulse-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+}
+.cx-appt-pulse-sub {
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted-foreground);
+}
+/* the Done tile's slim progress bar — a native <progress>, fill = --stage */
+.cx-appt-pulse-bar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted) 80%, transparent);
+  overflow: hidden;
+  color: var(--stage, var(--appt-ok));
+}
+.cx-appt-pulse-bar::-webkit-progress-bar { background: transparent; }
+.cx-appt-pulse-bar::-webkit-progress-value {
+  background: var(--stage, var(--appt-ok));
+  border-radius: 999px;
+}
+.cx-appt-pulse-bar::-moz-progress-bar {
+  background: var(--stage, var(--appt-ok));
+  border-radius: 999px;
+}
+/* keyed sr-only live summary (aria-live announces through it) */
+.cx-appt-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* sticky mini bar — mobile only (≥720px hides it) */
+.cx-appt-pulse-mini {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 36px;
+  margin: 0;
+  padding: 8px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: color-mix(in oklab, var(--background) 90%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  box-shadow: 0 2px 10px color-mix(in oklab, var(--foreground) 6%, transparent);
+}
+.cx-appt-pulse-mini::-webkit-scrollbar { display: none; }
+.cx-appt-pulse-mini .cx-appt-pulse-num { font-size: 12px; }
+.cx-appt-pulse-mini .cx-appt-pulse-label { font-size: 9px; }
+
+/* ==== §B2 · STAGE FUNNEL ==================================================
+   One pill chip per configured stage with its live count. data-zero="true"
+   (empty stage) dims the chip; --sel marks the active filter. */
+.cx-appt-funnel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-block: 2px;
+  scrollbar-width: none;
+}
+.cx-appt-funnel::-webkit-scrollbar { display: none; }
+.cx-appt-funnel-chip {
+  scroll-snap-align: start;
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 4px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+.cx-appt-funnel-chip:hover {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+  color: var(--foreground);
+}
+.cx-appt-funnel-chip--sel {
+  border-color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: color-mix(in oklab, var(--primary) 72%, var(--foreground));
+  font-weight: 600;
+}
+.cx-appt-funnel-chip[data-zero="true"] { opacity: 0.45; }
+/* invisible touch extension → ≥44px around the 40px chip */
+.cx-appt-funnel-chip::after {
+  content: "";
+  position: absolute;
+  inset: -2px 0;
+  border-radius: 999px;
+}
+.cx-appt-funnel-chip:active { transform: scale(0.97); }
+.cx-appt-funnel-chip .cx-appt-pulse-num {
+  min-width: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted) 80%, transparent);
+  font-size: 10.5px;
+  text-align: center;
+  color: inherit;
+}
+.cx-appt-funnel .cx-appt-pulse-sub { flex: 0 0 auto; }
+
+/* ==== §B3 · WORKFLOW STEPPER =============================================
+   One labelled dot per configured stage. The NEXT dot advances one tap; any
+   other dot opens the shared cx-appt-menu. The 12px visual dot sits inside a
+   padded pill button whose ::after stretches the hit area to ≥44px. */
+.cx-appt-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  row-gap: 8px;
+  margin-top: 10px;
+}
+.cx-appt-steps--muted { opacity: 0.55; }
+.cx-appt-stepwrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+/* connector line between neighbouring dots */
+.cx-appt-stepwrap + .cx-appt-stepwrap::before {
+  content: "";
+  width: 10px;
+  height: 2px;
+  margin: 0 1px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--border) 85%, transparent);
+}
+.cx-appt-stepwrap:has(> .cx-appt-step--done) + .cx-appt-stepwrap::before {
+  background: color-mix(in oklab, var(--stage, var(--appt-ok)) 55%, transparent);
+}
+.cx-appt-step {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 7px 10px 7px 8px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+/* the visual 12px dot */
+.cx-appt-step::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 2px solid color-mix(in oklab, var(--stage, var(--muted-foreground)) 45%, var(--border));
+  background: var(--card);
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+/* invisible touch extension → ≥44px around the whole pill */
+.cx-appt-step::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 999px;
+}
+.cx-appt-step svg { width: 12px; height: 12px; flex-shrink: 0; }
+.cx-appt-step:hover { color: var(--foreground); }
+.cx-appt-step:hover::before { border-color: var(--stage, var(--primary)); }
+.cx-appt-step:active { transform: scale(0.97); }
+/* completed stage: filled dot */
+.cx-appt-step--done {
+  color: color-mix(in oklab, var(--foreground) 78%, transparent);
+}
+.cx-appt-step--done::before {
+  border-color: var(--stage, var(--appt-ok));
+  background: var(--stage, var(--appt-ok));
+}
+.cx-appt-step--done svg {
+  color: color-mix(in oklab, var(--stage, var(--appt-ok)) 72%, var(--foreground));
+}
+/* current stage: ring + slow pulse (disabled under reduced motion) */
+.cx-appt-step--live {
+  color: color-mix(in oklab, var(--stage, var(--foreground)) 72%, var(--foreground));
+}
+.cx-appt-step--live::before {
+  border-color: var(--stage, var(--primary));
+  background: color-mix(in oklab, var(--stage, var(--primary)) 25%, var(--card));
+  animation: cx-appt-step-pulse 1.8s ease-out infinite;
+}
+/* next stage: accent outline, the one-tap advance */
+.cx-appt-step--next {
+  border-color: color-mix(in oklab, var(--stage, var(--primary)) 55%, var(--border));
+  background: color-mix(in oklab, var(--stage, var(--primary)) 8%, transparent);
+  color: color-mix(in oklab, var(--stage, var(--primary)) 72%, var(--foreground));
+}
+.cx-appt-step--next:hover {
+  background: color-mix(in oklab, var(--stage, var(--primary)) 14%, transparent);
+}
+@keyframes cx-appt-step-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--stage, var(--primary)) 30%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 8px transparent; }
+}
+
+/* ==== §B4 · ACTION BAR + STATUS CHIPS ==================================== */
+.cx-appt-act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 10px;
+  min-width: 0;
+}
+.cx-appt-act-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+.cx-appt-act-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+.cx-appt-act-btn:active { transform: scale(0.97); }
+.cx-appt-act-btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+.cx-appt-act-btn--primary:hover {
+  background: color-mix(in oklab, var(--primary) 88%, var(--foreground));
+}
+/* money actions — emerald cash tint */
+.cx-appt-act-btn--pay {
+  border-color: color-mix(in oklab, var(--appt-ok) 45%, var(--border));
+  background: color-mix(in oklab, var(--appt-ok) 12%, transparent);
+  color: color-mix(in oklab, var(--appt-ok) 72%, var(--foreground));
+}
+.cx-appt-act-btn--pay:hover {
+  background: color-mix(in oklab, var(--appt-ok) 20%, transparent);
+}
+/* destructive outline (cancel / no-show / remove) */
+.cx-appt-act-btn--danger {
+  border-color: color-mix(in oklab, var(--destructive) 50%, var(--border));
+  background: transparent;
+  color: color-mix(in oklab, var(--destructive) 80%, var(--foreground));
+}
+.cx-appt-act-btn--danger:hover {
+  background: color-mix(in oklab, var(--destructive) 10%, transparent);
+}
+.cx-appt-act-btn--ghost {
+  background: transparent;
+  border-color: color-mix(in oklab, var(--border) 80%, transparent);
+  color: var(--muted-foreground);
+}
+.cx-appt-act-btn--ghost:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+/* status chips — small pills with per-variant tints */
+.cx-appt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  white-space: nowrap;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+.cx-appt-chip--unreg {
+  background: color-mix(in oklab, var(--appt-warn) 14%, transparent);
+  color: color-mix(in oklab, var(--appt-warn) 70%, var(--foreground));
+}
+.cx-appt-chip--unpaid {
+  background: color-mix(in oklab, var(--destructive) 12%, transparent);
+  color: color-mix(in oklab, var(--destructive) 78%, var(--foreground));
+}
+.cx-appt-chip--paid {
+  background: color-mix(in oklab, var(--appt-ok) 12%, transparent);
+  color: color-mix(in oklab, var(--appt-ok) 72%, var(--foreground));
+}
+/* the MR chip is a button — invisible touch extension keeps it ≥44px */
+.cx-appt-chip--mr {
+  position: relative;
+  padding: 4px 10px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  background: color-mix(in oklab, var(--accent-live, var(--primary)) 12%, transparent);
+  color: color-mix(in oklab, var(--accent-live, var(--primary)) 72%, var(--foreground));
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.cx-appt-chip--mr::before {
+  content: "";
+  position: absolute;
+  inset: -10px -8px;
+  border-radius: 999px;
+}
+.cx-appt-chip--mr:hover {
+  background: color-mix(in oklab, var(--accent-live, var(--primary)) 20%, transparent);
+}
+.cx-appt-chip--mr:active { transform: scale(0.97); }
+
+/* ==== §B5 · MOBILE DOCK — Book · Walk-in · Today ========================= */
+.cx-appt-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 9;
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px 4px calc(8px + env(safe-area-inset-bottom, 0px));
+  background: color-mix(in oklab, var(--background) 92%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+.cx-appt-dock-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+.cx-appt-dock-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+.cx-appt-dock-btn:hover { background: var(--muted); }
+.cx-appt-dock-btn:active { transform: scale(0.97); }
+
+/* ==== §B6 · CARD STATE TINTS =============================================
+   The board sets --done/--live/--warn/--cancelled/--noshow; each maps to a
+   --stage hue → base map's card left edge + a faint wash. Ended visits stay
+   neutral (an ended visit is no color at all) / red for no-shows. */
+.cx-appt-card--done {
+  --stage: var(--appt-ok);
+  background: color-mix(in oklab, var(--appt-ok) 6%, color-mix(in oklab, var(--card) 45%, transparent));
+}
+.cx-appt-card--live {
+  --stage: var(--accent-live, var(--primary));
+  background: color-mix(in oklab, var(--accent-live, var(--primary)) 6%, color-mix(in oklab, var(--card) 45%, transparent));
+}
+.cx-appt-card--warn {
+  --stage: var(--appt-warn);
+  background: color-mix(in oklab, var(--appt-warn) 6%, color-mix(in oklab, var(--card) 45%, transparent));
+}
+.cx-appt-card--cancelled { --stage: var(--muted-foreground); }
+.cx-appt-card--noshow {
+  --stage: var(--appt-bad);
+  background: color-mix(in oklab, var(--appt-bad) 5%, color-mix(in oklab, var(--card) 45%, transparent));
+}
+
+/* ==== §B7 · RESCHEDULE + NOTE COMPOSE (inside the maintenance menu) ====== */
+.cx-appt-reschedule,
+.cx-appt-notecompose {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 8px 2px 2px;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+.cx-appt-reschedule .cx-input,
+.cx-appt-reschedule textarea,
+.cx-appt-notecompose .cx-input,
+.cx-appt-notecompose textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 16px; /* ≥16px: no iOS focus zoom */
+  line-height: 1.4;
+  color: var(--foreground);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.cx-appt-notecompose textarea,
+.cx-appt-notecompose .cx-input {
+  min-height: 64px;
+  resize: vertical;
+}
+.cx-appt-reschedule .cx-input:focus,
+.cx-appt-reschedule textarea:focus,
+.cx-appt-notecompose .cx-input:focus,
+.cx-appt-notecompose textarea:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--ring, var(--primary)) 55%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring, var(--primary)) 22%, transparent);
+}
+
+/* ==== §B8 · MISSING BOOK ================================================= */
+.cx-appt-missing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 40px 16px;
+  border: 1px dashed color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+.cx-appt-missing-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--muted-foreground);
+}
+.cx-appt-missing-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.cx-appt-missing-sub {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.cx-appt-missing-btn { min-height: 44px; }
+
+/* ==== §B9 · ≥720px — TABLET/DESKTOP PROMOTION ============================ */
+@media (min-width: 720px) {
+  /* pulse: the strip becomes an auto-fit grid; tiles identical */
+  .cx-appt-pulse { gap: 8px; padding: 12px 14px; }
+  .cx-appt-pulse-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.5rem;
+    margin-inline: 0;
+    padding-block: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+  .cx-appt-pulse-tile { min-width: 0; flex: initial; }
+  .cx-appt-pulse-num { font-size: 15px; }
+  .cx-appt-pulse-mini { display: none; }
+  .cx-appt-dock { display: none; }
+  .cx-appt-funnel { flex-wrap: wrap; overflow: visible; }
+  .cx-appt-funnel-chip { flex: 0 1 auto; }
+  .cx-appt-steps { flex: 0 0 auto; }
+  .cx-appt-act { justify-content: flex-start; }
+  .cx-appt-reschedule .cx-input,
+  .cx-appt-reschedule textarea,
+  .cx-appt-notecompose .cx-input,
+  .cx-appt-notecompose textarea { font-size: 13px; }
+}
+
+/* ==== §B10 · ≥1024px — DESKTOP BREATHING ================================= */
+@media (min-width: 1024px) {
+  .cx-appt-pulse { padding: 14px 16px; }
+  .cx-appt-pulse-num { font-size: 16px; }
+  .cx-appt-act { gap: 0.5rem 0.625rem; }
+}
+
+/* ==== §B11 · REDUCED MOTION ============================================== */
+@media (prefers-reduced-motion: reduce) {
+  .cx-appt-pulse-tile,
+  .cx-appt-funnel-chip,
+  .cx-appt-funnel-chip::after,
+  .cx-appt-step,
+  .cx-appt-step::before,
+  .cx-appt-act-btn,
+  .cx-appt-chip--mr,
+  .cx-appt-dock-btn,
+  .cx-appt-card,
+  .cx-appt-reschedule .cx-input,
+  .cx-appt-reschedule textarea,
+  .cx-appt-notecompose .cx-input,
+  .cx-appt-notecompose textarea {
+    transition: none;
+  }
+  .cx-appt-step--live::before { animation: none; }
+  .cx-appt-step:active,
+  .cx-appt-act-btn:active,
+  .cx-appt-chip--mr:active,
+  .cx-appt-dock-btn:active,
+  .cx-appt-pulse-tile:active,
+  .cx-appt-funnel-chip:active,
+  .cx-appt-menu-item:active {
+    transform: none;
+  }
+}
+
+/* ==== §B12 · ROW ANATOMY — the patients-directory day book ================
+   The day list reads EXACTLY like the patient directory (§P5 of the
+   patients map): one flat single-column list of bordered rows, each row
+   = avatar disc · name + MR stack · meta chips · status pills · right
+   action cell, with the work (stepper, action bar, note, composers)
+   collapsed into an inline expansion. Same geometry, same touch pads,
+   same hover language — only the accent token and the stage edge differ.
+   Loaded AFTER the base map, so these rules win every tie (including
+   the base ≥900px card grid, re-flattened below). */
+.cx-appt-list {
+  gap: 6px;
+}
+@media (min-width: 900px) {
+  .cx-appt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+.cx-appt-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  padding: 10px;
+}
+.cx-appt-rowmain {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+/* invisible ≥44px touch extension around the identity zone */
+.cx-appt-rowmain::before {
+  content: "";
+  position: absolute;
+  inset: -10px -8px;
+  border-radius: var(--radius-md);
+}
+/* initials avatar — a soft live-accent tinted disc (patients: §P5) */
+.cx-appt-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent-live, var(--primary)) 25%, transparent);
+  background: color-mix(in oklab, var(--accent-live, var(--primary)) 14%, var(--card));
+  color: color-mix(in oklab, var(--accent-live, var(--primary)) 72%, var(--foreground));
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.cx-appt-avatar svg { width: 16px; height: 16px; }
+/* name + MR stack — spans inherit, packs re-weight the whole stack */
+.cx-appt-id {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.cx-appt-id > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.cx-appt-id > span + span {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+/* meta chips — same pill geometry as the patients meta line */
+.cx-appt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
+}
+.cx-appt-meta .cx-appt-time {
+  width: auto; /* the base ≥720 timewrap column rule must not apply here */
+  padding: 2px 8px;
+  font-size: 11px;
+}
+.cx-appt-meta .cx-appt-chip {
+  max-width: 13rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* row chevron — rides the identity line's right edge, rotates when open */
+.cx-appt-chev {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--muted-foreground);
+  transition: transform 150ms ease;
+}
+.cx-appt-rowmain[aria-expanded="true"] .cx-appt-chev { transform: rotate(180deg); }
+/* right action cell: Exam · ⋯ (patients §P5 actions geometry) */
+.cx-appt-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+.cx-appt-actions .cx-appt-iconbtn { color: var(--muted-foreground); }
+.cx-appt-actions .cx-appt-iconbtn:hover { background: var(--muted); color: var(--foreground); }
+/* the inline work expansion — patients §P7 detail pane geometry */
+.cx-appt-expand {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--muted) 30%, transparent);
+}
+.cx-appt-expand .cx-appt-steps-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-width: 0;
+}
+.cx-appt-expand .cx-appt-steps { flex: 0 1 auto; }
+.cx-appt-expand .cx-appt-act { flex: 1 1 auto; }
+.cx-appt-expand .cx-appt-noteline { margin: 0; }
+.cx-appt-expand .cx-appt-reschedule,
+.cx-appt-expand .cx-appt-notecompose {
+  margin-top: 0;
+  padding: 8px 2px 2px;
+}
+
+
+
+/* ==== §F1 · SHEETS — backdrop + card =====================================
+   Fixed overlay rendered INSIDE the capsule DOM subtree (no portals — the
+   scoped stylesheet only reaches capsule descendants). Base = bottom sheet
+   on phones; ≥720px promotes to the centered dialog. The backdrop dims via
+   a theme fog + blur. */
+.cx-appt-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  background: color-mix(in oklab, var(--background) 55%, transparent);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: cx-appt-dim 160ms ease;
+}
+@keyframes cx-appt-dim {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.cx-appt-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  /* bottom sheet never swallows the whole screen: ≤88dvh, body scrolls */
+  max-height: 88vh;
+  max-height: 88dvh;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 1rem 1rem 0 0;
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 14px;
+  box-shadow: 0 -16px 48px color-mix(in oklab, var(--foreground) 24%, transparent);
+  animation: cx-appt-sheet-up 200ms ease;
+}
+@keyframes cx-appt-sheet-up {
+  from { opacity: 0.6; transform: translateY(18%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cx-appt-sheet-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* JS adds --mobile below 720px — same look as the base; kept for clarity */
+.cx-appt-sheet--mobile { /* base IS the bottom sheet */ }
+@media (min-width: 720px) {
+  .cx-appt-sheet-backdrop {
+    align-items: center;
+    padding: 24px;
+  }
+  .cx-appt-sheet,
+  .cx-appt-sheet--mobile {
+    width: min(30rem, 100%);
+    max-width: none;
+    max-height: min(80vh, calc(100vh - 48px));
+    max-height: min(80dvh, calc(100dvh - 48px));
+    border-bottom: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 24px 64px color-mix(in oklab, var(--foreground) 26%, transparent);
+    animation-name: cx-appt-sheet-in;
+  }
+}
+
+/* ==== §F2 · SHEET CHROME — handle, header, body, footer ================== */
+/* drag-handle pill — visual affordance on the bottom sheet only */
+.cx-appt-sheet-handle {
+  display: block;
+  flex-shrink: 0;
+  width: 36px;
+  height: 4px;
+  margin: 8px auto 0;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--foreground) 24%, transparent);
+}
+.cx-appt-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  flex-shrink: 0;
+}
+.cx-appt-sheet-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.cx-appt-sheet-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+.cx-appt-sheet-sub {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.cx-appt-sheet-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: -6px -10px -6px auto;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.cx-appt-sheet-close:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+.cx-appt-sheet-close:active { transform: scale(0.97); }
+.cx-appt-sheet-close-icon { width: 18px; height: 18px; }
+.cx-appt-sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+/* sticky footer: flex column keeps it pinned while the body scrolls */
+.cx-appt-sheet-footer {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  background: color-mix(in oklab, var(--muted) 30%, transparent);
+  flex-shrink: 0;
+}
+.cx-appt-sheet-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+}
+.cx-appt-sheet-footer .cx-btn {
+  flex: 1;
+  min-height: 44px;
+}
+.cx-appt-sheet-primary { font-size: 14px; }
+
+/* ==== §F3 · SHEET CONTROLS — labels, fields, segments, checks ============ */
+.cx-appt-sheetform {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.cx-appt-sheet-label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.cx-appt-sheet-label-note {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+.cx-appt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.cx-appt-field-label { font-size: 12px; font-weight: 600; }
+.cx-appt-field-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+/* inline validation */
+.cx-appt-error,
+.cx-appt-err {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--destructive);
+}
+/* input pinning — 16px font + 44px height everywhere (no iOS focus zoom) */
+.cx-appt-sheetform .cx-input,
+.cx-appt-sheetform .cx-select,
+.cx-appt-form .cx-input,
+.cx-appt-form .cx-select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.cx-appt-sheetform .cx-input::placeholder,
+.cx-appt-form .cx-input::placeholder {
+  color: color-mix(in oklab, var(--muted-foreground) 80%, transparent);
+}
+.cx-appt-sheetform .cx-input:focus,
+.cx-appt-sheetform .cx-select:focus,
+.cx-appt-form .cx-input:focus,
+.cx-appt-form .cx-select:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--ring, var(--primary)) 55%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring, var(--primary)) 22%, transparent);
+}
+.cx-appt-sheetform .cx-select,
+.cx-appt-form .cx-select { cursor: pointer; }
+/* segmented chips (panel slots / visit types / payment methods) */
+.cx-appt-seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+.cx-appt-seg-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+.cx-appt-seg-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.cx-appt-seg-btn:hover {
+  border-color: color-mix(in oklab, var(--foreground) 25%, var(--border));
+}
+.cx-appt-seg-btn:active { transform: scale(0.97); }
+.cx-appt-seg-btn--on {
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  border-color: color-mix(in oklab, var(--primary) 50%, var(--border));
+  color: color-mix(in oklab, var(--primary) 75%, var(--foreground));
+  font-weight: 600;
+}
+.cx-appt-seg-btn--taken {
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+  color: var(--muted-foreground);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.cx-appt-seg-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+/* walk-in / cash checkboxes — 44px row, 18px box */
+.cx-appt-checkrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 4px 0;
+}
+.cx-appt-check {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+}
+.cx-appt-check-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.cx-appt-check-note {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+/* ==== §F4 · SLOT CHIPS · OPTION CHIPS · PAYMENT ========================== */
+/* quick slot chips 09:00–18:00 */
+.cx-appt-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cx-appt-slot {
+  min-width: 60px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+.cx-appt-slot:hover {
+  border-color: color-mix(in oklab, var(--foreground) 25%, var(--border));
+}
+.cx-appt-slot:active { transform: scale(0.97); }
+.cx-appt-slot--selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 700;
+}
+.cx-appt-slot--taken {
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+  color: var(--muted-foreground);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.cx-appt-slot--taken:not(:disabled) { border-style: dashed; }
+.cx-appt-slot:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+/* generic option chips — frames, lenses, outcome, sex, visit type */
+.cx-appt-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cx-appt-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+.cx-appt-opt:hover {
+  border-color: color-mix(in oklab, var(--foreground) 25%, var(--border));
+}
+.cx-appt-opt:active { transform: scale(0.97); }
+.cx-appt-opt[aria-pressed="true"],
+.cx-appt-opt[aria-checked="true"] {
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+  font-weight: 600;
+}
+/* free-add row (frame brands) */
+.cx-appt-addrow {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.cx-appt-addrow .cx-input { flex: 1; }
+.cx-appt-addbtn { min-height: 44px; padding: 0 14px; }
+/* payment — due box, method chips, amount, quick adds, danger zone */
+.cx-appt-duebox {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--muted) 30%, transparent);
+}
+.cx-appt-duebox-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: var(--muted-foreground);
+}
+.cx-appt-duebox-value {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.cx-appt-pay-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cx-appt-pay-method {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+.cx-appt-pay-method svg { width: 15px; height: 15px; flex-shrink: 0; }
+.cx-appt-pay-method:hover {
+  border-color: color-mix(in oklab, var(--foreground) 25%, var(--border));
+}
+.cx-appt-pay-method:active { transform: scale(0.97); }
+.cx-appt-pay-method[aria-pressed="true"],
+.cx-appt-pay-method[aria-checked="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+.cx-appt-amount { font-size: 16px; font-weight: 600; }
+.cx-appt-quickadds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.cx-appt-quickadd {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+.cx-appt-quickadd:hover {
+  color: var(--foreground);
+  border-color: color-mix(in oklab, var(--foreground) 25%, var(--border));
+}
+.cx-appt-quickadd:active { transform: scale(0.97); }
+/* danger zone — the destructive "mark as due / unpaid" */
+.cx-appt-danger {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px dashed color-mix(in oklab, var(--border) 90%, transparent);
+}
+.cx-appt-danger .cx-btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+/* ==== §F5 · RIGHT PANEL — the front-desk rail (BookingPanel) ============= */
+/* the surface root itself carries .cx-appt-panel next to cx-root, so root
+   rules are addressed with & (the scoper concatenates it) */
+&.cx-appt-panel {
+  color: var(--foreground);
+}
+.cx-appt-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+}
+.cx-appt-panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 40%, transparent);
+}
+.cx-appt-panel-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.cx-appt-panel-sub {
+  margin-left: 4px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+.cx-appt-panel-off-text {
+  margin: 0;
+  padding: 8px 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.625;
+  color: var(--muted-foreground);
+}
+.cx-appt-panel-open { width: 100%; }
+/* compact variant — narrower paddings, tighter rhythm */
+&.cx-appt-panel--compact .cx-appt-panel-body { gap: 8px; }
+.cx-appt-panel--compact .cx-appt-panel-section { padding: 10px; gap: 8px; }
+.cx-appt-panel--compact .cx-appt-form,
+.cx-appt-panel--compact .cx-appt-sheetform { gap: 8px; }
+/* WHO / WHEN / WHAT fieldsets inside the quick-book form */
+.cx-appt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.cx-appt-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: var(--radius-lg);
+}
+.cx-appt-group-title {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+.cx-appt-quick {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cx-appt-quickbook {
+  flex: 1;
+  width: 100%;
+  min-height: 44px;
+}
+/* "Booked ✓" confirmation line after a successful quick book */
+.cx-appt-lastbook {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--appt-ok, var(--muted-foreground)) 12%, transparent);
+  color: color-mix(in oklab, var(--appt-ok, var(--muted-foreground)) 72%, var(--foreground));
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.cx-appt-lastbook .cx-appt-btnicon { width: 14px; height: 14px; }
+
+/* ==== §F6 · A11Y · MOTION · SMALL PHONES · SAFE AREA ===================== */
+/* narrow phones: very short pairs stack */
+@media (max-width: 359px) {
+  .cx-appt-field-pair { grid-template-columns: 1fr; }
+}
+/* respect reduced-motion: no sheet/backdrop animation, no transitions */
+@media (prefers-reduced-motion: reduce) {
+  .cx-appt-sheet-backdrop,
+  .cx-appt-sheet,
+  .cx-appt-sheet--mobile,
+  .cx-appt-sheet-close,
+  .cx-appt-slot,
+  .cx-appt-opt,
+  .cx-appt-pay-method,
+  .cx-appt-quickadd,
+  .cx-appt-seg-btn,
+  .cx-appt-sheetform .cx-input,
+  .cx-appt-form .cx-input {
+    animation: none;
+    transition: none;
+  }
+  .cx-appt-sheet-close:active,
+  .cx-appt-slot:active,
+  .cx-appt-opt:active,
+  .cx-appt-pay-method:active,
+  .cx-appt-quickadd:active,
+  .cx-appt-seg-btn:active {
+    transform: none;
+  }
+}
+/* iOS bottom safe area when a sheet ships without a footer */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .cx-appt-sheet--mobile:not(:has(.cx-appt-sheet-footer)) .cx-appt-sheet-body {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
+  }
+}
+/* ≥1024px — dialogs breathe */
+@media (min-width: 1024px) {
+  .cx-appt-sheet-backdrop { padding: 32px; }
+  .cx-appt-sheet-header { padding: 16px 20px 12px; }
+  .cx-appt-sheet-body { padding: 16px 20px 24px; gap: 14px; }
+  .cx-appt-sheet-footer { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); }
+  .cx-appt-panel-section { padding: 14px; }
+  .cx-appt-group { padding: 12px; }
+}
+
+/* Brutalist — applied from the Marketplace style packs.
+   Built-in defaults + Brutalist skin (skin wins the cascade). */
+/* — Brutalist skin: radius 0, 2px ink borders, uppercase type,
+     hard shadows off, monochrome + the app's one accent — */
+
+& {
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  font-weight: 450;
+}
+
+/* surfaces — heavy ink frame, no rounding, no shadows */
+& .cx-card,
+& .cx-cli-kpi,
+& .cx-cli-tile,
+& .cx-appt-card,
+& .cx-appt-weekday,
+& .cx-appt-tile {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--card);
+}
+
+& .cx-cli-kpi:hover,
+& .cx-cli-tile:hover,
+& .cx-appt-card:hover {
+  box-shadow: 4px 4px 0 0 color-mix(in oklab, var(--foreground) 28%, transparent);
+}
+
+/* type — uppercase, tracked, loud */
+& .cx-title,
+& .cx-cli-kpi-label,
+& .cx-cli-kpi-value,
+& .cx-cli-tile-label,
+& .cx-cli-tile-value,
+& .cx-appt-panel-title,
+& .cx-appt-time,
+& .cx-appt-tile-num {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+& .cx-label,
+& .cx-cli-kpi-top,
+& .cx-cli-section > .cx-label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* chips — square stamps */
+& .cx-chip,
+& .cx-triage .cx-chip,
+& .cx-cli-range,
+& .cx-appt-tab {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+& .cx-chip--muted,
+& .cx-cli-range {
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+& .cx-chip--ok,
+& .cx-chip--warn,
+& .cx-chip--err,
+& .cx-chip--info {
+  background: transparent;
+}
+
+/* buttons — squared slabs */
+& .cx-btn,
+& .cx-appt-iconbtn,
+& .cx-appt-chipbtn {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: none;
+}
+
+& .cx-btn:hover,
+& .cx-appt-iconbtn:hover,
+& .cx-appt-chipbtn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+& .cx-btn--primary,
+& .cx-appt-submit {
+  border-radius: 0;
+  background: var(--primary);
+  border-color: var(--foreground);
+  color: var(--primary-foreground);
+}
+
+& .cx-btn--ghost {
+  border-color: transparent;
+  background: transparent;
+}
+
+& .cx-btn--ghost:hover {
+  border-color: var(--foreground);
+  background: var(--card);
+  color: var(--foreground);
+}
+
+/* inputs & tables */
+& .cx-input,
+& .cx-select,
+& .cx-cli-date-input,
+& .cx-appt-mrinput {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+}
+
+& .cx-table th {
+  border-bottom: 2px solid var(--foreground);
+}
+
+& .cx-table td {
+  border-bottom: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+
+/* dropdown menus & day strip keep their structure, gain the frame */
+& [class*="-menu"] {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  box-shadow: 6px 6px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+
+& .cx-appt-toolbar {
+  border-bottom: 2px solid var(--foreground);
+}
+
+& .cx-appt-daynav,
+& .cx-appt-weekstrip {
+  border-radius: 0;
+}
+
+& .cx-appt-cal,
+& .cx-cli-chart {
+  border-radius: 0;
+}
+
+& .cx-cli-kpis,
+& .cx-cli-kpis--clinical {
+  gap: 10px;
+}
+
+/* — front-desk rebuild (appointment v2): the same ink frame on the new
+     pulse tiles, funnel chips, stepper dots, payment chips, sheets and
+     right-panel rows. Surfaces/type/radius only — layout rules above and
+     in the defaults stay untouched (never set widths/flex here). — */
+
+/* pulse tiles + panel rows: 2px ink frame, square, loud mono numbers */
+& .cx-appt-pulse,
+& .cx-appt-next,
+& .cx-appt-pick-row,
+& .cx-appt-due-row {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& button.cx-appt-pulse:hover {
+  border-color: var(--foreground);
+  background: var(--muted);
+}
+& .cx-appt-pulse-num,
+& .cx-appt-funnel-num,
+& .cx-appt-pay-amt,
+& .cx-appt-due-amt,
+& .cx-appt-pulse-value {
+  font-weight: 800;
+}
+
+/* labels + titles join the uppercase stamp system */
+& .cx-appt-pulse-label,
+& .cx-appt-funnel-label,
+& .cx-appt-pay-label,
+& .cx-appt-sheet-title,
+& .cx-appt-duebox-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* square everything the rebuild added: funnel chips, counts, stepper
+   dots + connectors, pay chips, slot/method chips, sheet chrome */
+& .cx-appt-funnel-step,
+& .cx-appt-funnel-num,
+& .cx-appt-funnel-sep,
+& .cx-appt-pay,
+& .cx-appt-btn-counsel,
+& .cx-appt-btn-register,
+& .cx-appt-opt,
+& .cx-appt-pay-method,
+& .cx-appt-slot,
+& .cx-appt-quickadd,
+& .cx-appt-visitor,
+& .cx-appt-group-count,
+& .cx-appt-noteline,
+& .cx-appt-step,
+& .cx-appt-stepwrap + .cx-appt-stepwrap::before,
+& .cx-appt-pulse-bar,
+& .cx-appt-sheet,
+& .cx-appt-sheet--mobile,
+& .cx-appt-sheet-close,
+& .cx-appt-sheet-handle,
+& .cx-flow-pay,
+& .cx-bil-pay,
+& .cx-bil-pay-btn,
+& .cx-bil-pay-menu,
+& .cx-bil-pulse {
+  border-radius: 0;
+}
+& .cx-appt-stepwrap + .cx-appt-stepwrap::before {
+  background: var(--foreground);
+}
+
+/* funnel + payment chips: hue survives as the outline, wash gone */
+& .cx-appt-funnel-step,
+& .cx-appt-pay {
+  border-width: 1.5px;
+  border-style: solid;
+  background: transparent;
+}
+& .cx-appt-pay {
+  border-color: var(--pay, var(--foreground));
+}
+& .cx-appt-funnel-step--live {
+  background: transparent;
+  color: var(--stage, var(--foreground));
+}
+
+/* contextual buttons: solid slabs */
+& .cx-appt-btn-counsel {
+  border: 2px solid var(--foreground);
+  background: var(--accent-live);
+}
+& .cx-appt-btn-register {
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  color: var(--foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+& .cx-appt-due-cash {
+  border-radius: 0;
+  border: 2px solid var(--cx-ok, currentColor);
+  background: transparent;
+}
+
+/* booking slots + payment methods: square ink-framed inputs */
+& .cx-appt-slot,
+& .cx-appt-pay-method,
+& .cx-appt-segment {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+
+/* sheets: hard pane — blur off, ink frame, offset slab shadow */
+& .cx-appt-sheet-backdrop {
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-appt-sheet {
+  border: 2px solid var(--foreground);
+  box-shadow: 8px 8px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-appt-sheet-header,
+& .cx-appt-sheet-footer {
+  border-color: var(--foreground);
+}
+& .cx-appt-sheet--mobile {
+  box-shadow: none;
+}
+& .cx-appt-sheet-handle {
+  background: var(--foreground);
+}
+& .cx-appt-sheet-close:hover {
+  border-radius: 0;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* the stage jump menu never matched the [class*="-menu"] catch — frame it */
+& .cx-appt-stepmenu {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  box-shadow: 6px 6px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+& .cx-appt-morepanel .cx-input,
+& .cx-appt-morepanel-note {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+}
+& .cx-appt-noteline {
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+& .cx-appt-missing {
+  border: 2px dashed var(--foreground);
+  border-radius: 0;
+}
+
+/* keyboard parity with the defaults' focus-visible rules */
+& .cx-appt-pulse:focus-visible,
+& .cx-appt-funnel-step:focus-visible,
+& .cx-appt-step:focus-visible,
+& .cx-appt-pay:focus-visible,
+& .cx-appt-btn-counsel:focus-visible,
+& .cx-appt-btn-register:focus-visible,
+& .cx-appt-sheet-close:focus-visible,
+& .cx-appt-slot:focus-visible,
+& .cx-appt-pay-method:focus-visible,
+& .cx-appt-opt:focus-visible,
+& .cx-appt-pulse-row:focus-visible,
+& .cx-appt-due-cash:focus-visible,
+& .cx-appt-group-toggle:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+/* — patient directory (patients v1): the pulse tiles, toolbar, rows, cards,
+     detail panes, sheets and dock take the same square ink frame. Surfaces,
+     type and radius only — layout rules above and in the defaults stay
+     untouched (never set widths/flex here). — */
+
+/* board shell + head: uppercase title, tracked sub */
+& .cx-pat-board,
+& .cx-pat-head {
+  border-radius: 0;
+}
+& .cx-pat-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-pat-sub {
+  letter-spacing: 0.06em;
+}
+/* every container joins the square system */
+& .cx-pat-pulsewrap,
+& .cx-pat-chips,
+& .cx-pat-list,
+& .cx-pat-meta,
+& .cx-pat-actions,
+& .cx-pat-cards,
+& .cx-pat-detail-grid,
+& .cx-pat-timeline,
+& .cx-pat-field {
+  border-radius: 0;
+}
+
+& .cx-pat-toolbar {
+  border-bottom: 2px solid var(--foreground);
+}
+
+/* pulse tiles + sticky minibar: 2px ink frame, square, loud mono numbers */
+& .cx-pat-pulse,
+& .cx-pat-tile,
+& .cx-pat-minibar {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& button.cx-pat-tile:hover {
+  background: var(--muted);
+}
+& .cx-pat-tile--sel {
+  border-color: var(--foreground);
+  box-shadow: inset 0 0 0 1px var(--foreground);
+  background: var(--card);
+}
+/* semantic tiles: the hue survives as the outline, wash gone */
+& .cx-pat-tile--warn {
+  border-color: var(--cx-warn, var(--foreground));
+  background: transparent;
+}
+& .cx-pat-tile--err {
+  border-color: var(--cx-err, var(--foreground));
+  background: transparent;
+}
+& .cx-pat-tile-value {
+  font-weight: 800;
+}
+& .cx-pat-tile-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* funnel minichips: square stamps, selection inverts to the ink stamp */
+& .cx-pat-minichip {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-minichip--sel {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* toolbar controls: framed search, stamps, square segment, register slab */
+& .cx-pat-search {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-pat-chip {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-chip--sel {
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-pat-viewseg {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-pat-segbtn {
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+& .cx-pat-segbtn--sel {
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-pat-register {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-register:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* rows: ink rules, square avatar, tags as stamps, squared icon buttons */
+& .cx-pat-row {
+  border-radius: 0;
+}
+& .cx-pat-row--today {
+  border-color: var(--foreground);
+}
+& .cx-pat-row--overdue {
+  border-color: var(--cx-err, var(--foreground));
+}
+& .cx-pat-avatar {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--muted);
+  font-weight: 800;
+}
+& .cx-pat-id {
+  font-weight: 800;
+}
+& .cx-pat-tag {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+& .cx-pat-tag--ok {
+  border-color: var(--cx-ok, var(--foreground));
+  color: var(--cx-ok, var(--foreground));
+}
+& .cx-pat-tag--warn {
+  border-color: var(--cx-warn, var(--foreground));
+  color: var(--cx-warn, var(--foreground));
+}
+& .cx-pat-tag--err {
+  border-color: var(--cx-err, var(--foreground));
+  color: var(--cx-err, var(--foreground));
+}
+& .cx-pat-tag--info {
+  border-color: var(--accent-live, var(--foreground));
+  color: var(--accent-live, var(--foreground));
+}
+& .cx-pat-tag--muted {
+  border-color: color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+  color: var(--muted-foreground);
+}
+& .cx-pat-iconbtn {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: none;
+}
+& .cx-pat-iconbtn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* cards: heavy ink frame, offset slab shadow on hover */
+& .cx-pat-card {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-pat-card:hover {
+  box-shadow: 4px 4px 0 0 color-mix(in oklab, var(--foreground) 28%, transparent);
+}
+& .cx-pat-card-head,
+& .cx-pat-card-body,
+& .cx-pat-card-foot {
+  border-color: var(--foreground);
+}
+
+/* detail pane + vitals + timeline: framed panes, uppercase labels, loud numbers */
+& .cx-pat-detail {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-pat-vital {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+& .cx-pat-vital-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-pat-vital-value {
+  font-weight: 800;
+}
+& .cx-pat-tl-row {
+  border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-pat-detail-actions {
+  border-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+
+/* sheets: hard pane — blur off, ink frame, offset slab shadow */
+& .cx-pat-backdrop {
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-pat-sheet {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-pat-sheet--mobile {
+  box-shadow: none;
+}
+& .cx-pat-sheet-header,
+& .cx-pat-sheet-body,
+& .cx-pat-sheet-actions,
+& .cx-pat-sheet-footer {
+  border-color: var(--foreground);
+}
+& .cx-pat-sheet-handle {
+  background: var(--foreground);
+}
+& .cx-pat-sheet-title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-pat-sheet-sub {
+  letter-spacing: 0.04em;
+}
+& .cx-pat-sheet-close:hover {
+  border-radius: 0;
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-pat-field-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-pat-field-input {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-pat-field-error {
+  color: var(--cx-err, var(--foreground));
+}
+
+/* dock: square ink-framed slabs */
+& .cx-pat-dock {
+  border-radius: 0;
+  background: var(--card);
+  border-color: var(--foreground);
+}
+& .cx-pat-dock-btn {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-dock-btn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* compact right panel (cx-pat-panel root): the frames survive at small size */
+&.cx-pat-panel .cx-pat-pulse,
+&.cx-pat-panel .cx-pat-tile {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+}
+&.cx-pat-panel .cx-pat-vital-value {
+  font-weight: 800;
+}
+
+/* — examination (exam v1): the full workup board takes the square ink
+     frame — steps rail, section cards, fields, OD/OS eye heads, the Rx
+     table, duochrome halves as 2px semantic outlines, review, picker and
+     the sticky save bar. Surfaces, type and color only — layout rules
+     above and in the defaults stay untouched (never set widths/flex/
+     display/position here). — */
+
+/* board: loud uppercase head, tabular numerals for the VA/IOP/Rx values */
+& .cx-exam-board { font-variant-numeric: tabular-nums; }
+& .cx-exam-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-exam-sub {
+  letter-spacing: 0.05em;
+}
+
+/* context strip + identity: ink-framed strip, square avatar, stamp badges */
+& .cx-exam-context {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-exam-context-id [data-avatar] {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 800;
+}
+& .cx-exam-context-id strong,
+& .cx-exam-context-id b {
+  font-weight: 800;
+}
+& .cx-exam-badge {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-exam-badge--new {
+  border: 1.5px solid var(--exam-accent, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-badge--fup {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 40%, transparent);
+  background: transparent;
+  color: var(--muted-foreground);
+}
+& .cx-exam-bookstrip {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: inset 3px 0 0 0 var(--exam-accent, var(--foreground));
+}
+& .cx-exam-bookchip {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* progress: square track (the side steps menu was removed) */
+& .cx-exam-progressbar,
+& .cx-exam-progressfill {
+  border-radius: 0;
+}
+
+/* sections + normals bar: square section cards, uppercase heads, stamps */
+& .cx-exam-section {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-exam-section-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-exam-section-sub {
+  letter-spacing: 0.04em;
+}
+& .cx-exam-section-head {
+  border-bottom: 2px solid var(--foreground);
+  padding-bottom: 4px;
+}
+& .cx-exam-normals-btn {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-normals-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-normalchip {
+  border: 1.5px solid var(--cx-ok, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-normalchip:hover {
+  background: var(--muted);
+}
+& .cx-exam-normalchip[aria-pressed="true"] {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+
+/* fields: 2px ink inputs, uppercase labels, square chips, loud units */
+& .cx-exam-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-exam-input,
+& .cx-exam-select,
+& .cx-exam-textarea {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-chip {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-chip:hover {
+  background: var(--muted);
+}
+& .cx-exam-chip--sel {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-exam-unit {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+& .cx-exam-error {
+  color: var(--cx-err, var(--destructive));
+  font-weight: 700;
+}
+
+/* eye grid: OD/OS identity as 1.5px semantic outlines, wash gone */
+& .cx-exam-eyerow + .cx-exam-eyerow {
+  border-top-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-eyehead {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-eyehead--od {
+  border-color: var(--exam-od, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-eyehead--os {
+  border-color: var(--exam-os, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+
+/* rx table + final: heavy ink frame, ink rules, square summary slab */
+& .cx-exam-rxtable {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-rxrow + .cx-exam-rxrow {
+  border-top-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-rxcell + .cx-exam-rxcell {
+  border-left-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-rx-final {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+
+/* duochrome: the red/green semantics survive as 2px outlines, wash gone */
+& .cx-exam-duochrome {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-duochrome-half {
+  border-radius: 0;
+}
+& .cx-exam-duochrome-half--red {
+  border: 2px solid var(--cx-err, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-duochrome-half--green {
+  border: 2px solid var(--cx-ok, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-duochrome-btn {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+& .cx-exam-duochrome-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-duochrome-btn--sel {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+
+/* review: square cards, slab hover, missing as an err outline stamp */
+& .cx-exam-review-card {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-review-card:hover {
+  border-color: var(--foreground);
+  box-shadow: 4px 4px 0 0 color-mix(in oklab, var(--foreground) 28%, transparent);
+}
+& .cx-exam-review-title {
+  letter-spacing: 0.08em;
+}
+& .cx-exam-review-missing {
+  border: 1.5px solid var(--cx-err, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--cx-err, var(--foreground));
+  text-transform: uppercase;
+}
+
+/* footer save bar: solid square pane, ink frame, uppercase slabs */
+& .cx-exam-footer {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-exam-save {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-save--secondary {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-save--secondary:hover {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* picker + misc: square rows, dashed empties, hue-as-outline warnings */
+& .cx-exam-picker-row {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-picker-row:hover {
+  border-color: var(--foreground);
+  background: var(--muted);
+}
+& .cx-exam-picker-empty,
+& .cx-exam-empty {
+  border: 2px dashed var(--foreground);
+  border-radius: 0;
+}
+& .cx-exam-warning {
+  border: 1.5px solid var(--cx-warn, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-infobar {
+  border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  border-radius: 0;
+  background: var(--card);
+}
+
+/* compact examctx panel: the frames survive, paddings tighten */
+&.cx-exam-panel .cx-exam-context {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  padding: 6px 8px;
+}
+&.cx-exam-panel .cx-exam-section {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  padding: 8px;
+}
+&.cx-exam-panel .cx-exam-footer {
+  padding: 6px 8px;
+}
+
+/* — exam v2 rebuild (EXV2-B10): the grid chiprows, fieldgroups, comp
+     family, stepper, table family, rx VA row-group, vaquick strip, mini
+     context and sign line join the same ink system. Surfaces, type and
+     color only — the sanctioned length tokens below are the ONLY geometry
+     the pack tunes (never set widths/flex/display/position/grid here). — */
+& {
+  --cx-grid-gap: 12px; /* chunkier field grid for the loud square fields */
+}
+
+/* chiprows: the v2 grid strips get a hairline ink frame so the scroll
+   bounds read; the tiny flag rows (OD/OS, +, −, ∆) go loud like every
+   chip here */
+& .cx-exam-chiprow {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 35%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+& .cx-exam-chiprow--tiny .cx-exam-chip {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* fieldgroups: 2px ink sub-cards, uppercase micro-titles */
+& .cx-exam-fieldgroup {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-fieldgroup-title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+/* composite fields: square ink tags — comp/comp-slot carry no chrome of
+   their own and ride the shared input framing above */
+& .cx-exam-comp-tag {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* stepper: square slab buttons inside a 2px frame; no squish on tap */
+& .cx-exam-stepper {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-stepper-btn {
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-weight: 800;
+}
+& .cx-exam-stepper-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-stepper-btn:active {
+  transform: none;
+}
+
+/* table family (medications / procedures): 2px frame, square rows, dashed
+   ink add-row; the micro-type header goes uppercase-tracked */
+& .cx-exam-table {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-table-head {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+}
+& .cx-exam-table-row {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 45%, transparent);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-table-row--add {
+  border: 1.5px dashed var(--foreground);
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+& .cx-exam-table-row--add:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* rx variants (--noVA/--kera) re-track in the defaults; the pack's job is
+   the pinned OD/OS eye column: opaque card so the phone scroll never
+   shows through the sticky stamps */
+& .cx-exam-rxcell--eye {
+  background: var(--card);
+}
+
+/* VA row-group under the rx table: square OD/OS stamps (hues ride
+   --exam-od/--exam-os); rxva-eye is a display:contents union — untouched */
+& .cx-exam-rxva-tag {
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+/* vaquick strip: hairline ink frame, square */
+& .cx-exam-vaquick {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 35%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+
+/* missing-dx review card: the warn bar survives as a hard inset stamp */
+& .cx-exam-review-card--missing {
+  box-shadow: inset 3px 0 0 0 var(--cx-warn, var(--foreground));
+}
+
+/* mini context strip: tighter but still square-framed */
+& .cx-exam-context--mini {
+  border-radius: 0;
+  padding: 4px 8px;
+}
+
+/* signature line: heavier ink rule under the signing input */
+& .cx-exam-sign > .cx-exam-input {
+  border-bottom: 1.5px solid var(--foreground);
+}
+
+/* keyboard parity with the defaults' focus-visible rules */
+& .cx-exam-stepper-btn:focus-visible,
+& .cx-exam-table-row--add:focus-visible,
+& .cx-exam-chip:focus-visible,
+& .cx-exam-normalchip:focus-visible,
+& .cx-exam-normals-btn:focus-visible,
+& .cx-exam-duochrome-btn:focus-visible,
+& .cx-exam-review-card:focus-visible,
+& .cx-exam-picker-row:focus-visible,
+& .cx-exam-save:focus-visible,
+& .cx-exam-save--secondary:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  & .cx-exam-context {
+    padding: 8px 10px;
+  }
+  & .cx-exam-section {
+    padding: 10px;
+  }
+  & .cx-exam-bookstrip {
+    padding: 6px 8px;
+  }
+  & .cx-exam-duochrome {
+    padding: 8px;
+  }
+  & .cx-exam-review-card {
+    padding: 8px 10px;
+  }
+  & .cx-exam-footer {
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  /* the pack's hover slab points off-screen on the phone — drop it */
+  & .cx-exam-review-card:hover {
+    box-shadow: none;
+  }
+}
+
+/* keyboard parity with the defaults' focus-visible rules */
+& .cx-pat-tile:focus-visible,
+& .cx-pat-minichip:focus-visible,
+& .cx-pat-chip:focus-visible,
+& .cx-pat-segbtn:focus-visible,
+& .cx-pat-register:focus-visible,
+& .cx-pat-row-main:focus-visible,
+& .cx-pat-iconbtn:focus-visible,
+& .cx-pat-tl-row:focus-visible,
+& .cx-pat-sheet-close:focus-visible,
+& .cx-pat-dock-btn:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  & .cx-grid,
+  & .cx-cli-kpis,
+  & .cx-cli-kpis--clinical,
+  & .cx-appt-form-grid {
+    grid-template-columns: 1fr;
+  }
+  & .cx-btn,
+  & .cx-input,
+  & .cx-select {
+    min-height: 40px;
+  }
+  & .cx-card,
+  & .cx-cli-kpi,
+  & .cx-appt-card {
+    padding: 12px;
+  }
+  & .cx-chip {
+    white-space: normal;
+  }
+  /* the pack's slab shadow points off-screen on the bottom sheet */
+  & .cx-appt-sheet,
+  & .cx-appt-stepmenu {
+    box-shadow: none;
+  }
+  & .cx-appt-pulse,
+  & .cx-appt-next {
+    padding: 10px;
+  }
+  & .cx-pat-pulse,
+  & .cx-pat-tile {
+    padding: 10px;
+  }
+  & .cx-pat-card {
+    padding: 12px;
+  }
+  /* the pack's slab shadow points off-screen on the bottom sheet */
+  & .cx-pat-sheet {
+    box-shadow: none;
+  }
+}
+
+/* ---- appointment day book rows — patients-directory parity -------------
+   The day list shares the patient rows' anatomy (avatar · id stack ·
+   chips · pills · action cell · inline work expansion), so it takes the
+   same ink treatment: square frames, stamp pills, loud id stack. */
+& .cx-appt-card {
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: 0;
+}
+/* rows hover like patient rows — border tint only, no slab shadow */
+& .cx-appt-card:hover {
+  box-shadow: inset 3px 0 0 0 var(--stage, transparent);
+  border-color: color-mix(in oklab, var(--accent-live, var(--primary)) 30%, var(--foreground));
+}
+& .cx-appt-rowmain { border-radius: 0; }
+& .cx-appt-avatar {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--muted);
+  font-weight: 800;
+}
+& .cx-appt-id { font-weight: 800; }
+& .cx-appt-id > span + span {
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+& .cx-appt-meta .cx-appt-time,
+& .cx-appt-meta .cx-appt-chip,
+& .cx-appt-sharedchip {
+  border-radius: 0;
+  border: 1.5px solid color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+  background: transparent;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+& .cx-appt-chip--unpaid,
+& .cx-appt-chip--paid {
+  border-color: currentColor;
+  color: color-mix(in oklab, currentColor 85%, var(--foreground));
+  background: transparent;
+}
+& .cx-appt-stage {
+  border-radius: 0;
+  border: 1.5px solid var(--stage, var(--foreground));
+  background: transparent;
+  color: color-mix(in oklab, var(--stage, var(--foreground)) 80%, var(--foreground));
+  text-transform: uppercase;
+}
+& .cx-appt-iconbtn {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+}
+& .cx-appt-iconbtn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-appt-expand {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}

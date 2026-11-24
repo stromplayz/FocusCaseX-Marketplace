@@ -1,0 +1,9 @@
+{
+  "id": "focuscasex-sbl",
+  "name": "FocusCaseX SBL",
+  "version": "1.2.0",
+  "minAppVersion": "1.0.0",
+  "description": "Sidebar-Left clinical layout — replaces Files/Bases/EMR clutter with a Clinic navigator (Dashboard, Appointments, Patients, Exams, Prescriptions, Reports) and live Booked/Done/Patients/Revenue stats. Dashboard pages render a full clinical UI: range-aware KPIs + revenue chart, an appointment→checkout workflow tracker and Today's patients with scrollable tabs. Ships its own CSS. v1.2.0: content aligned with the v3 workspace pages — installs the exact sidebar the hosted site runs.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

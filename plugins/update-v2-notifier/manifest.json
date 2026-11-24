@@ -1,0 +1,10 @@
+{
+  "id": "update-v2-notifier",
+  "name": "Update Notifier",
+  "version": "2.2.1",
+  "minAppVersion": "1.0.0",
+  "description": "Pixel-art announcement banner for the workspace \u2014 quick patches, Extensions and Modes announced with a one-tap core updater and a PATCH READY status chip.",
+  "author": "FocusCaseX originals",
+  "isSample": true,
+  "core": true
+}

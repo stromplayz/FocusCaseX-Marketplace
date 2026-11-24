@@ -1,0 +1,33 @@
+{
+  "id": "stationery",
+  "name": "Stationery",
+  "builtin": false,
+  "vars": {
+    "bg": "#faf7f1",
+    "bgSidebar": "#f1ece1",
+    "bgPanel": "#fffdf8",
+    "text": "#2b241a",
+    "textMuted": "#6f6754",
+    "accent": "#a14e2c",
+    "accentForeground": "#ffffff",
+    "border": "#e0d8c6",
+    "radius": "4px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "soft",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "editorial",
+    "fontHeading": "editorial",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "wide"
+  },
+  "description": "Fine cream paper with sepia-ink accents and a quiet editorial serif — a notebook for charts.",
+  "tags": [
+    "light",
+    "serif",
+    "minimal"
+  ]
+}

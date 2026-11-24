@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to install — FocusCaseX Marketplace</title>
+<meta name="description" content="Install any FocusCaseX add-on three ways: search inside the app, type its install code, or tap Install on this site and let the browser hand it to the app. Free, offline after install, remove any time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Page-local layout only — composes with the design system. */
+  .kind { margin-top: 48px; }
+  .kind:first-child { margin-top: 34px; }
+  .kind-head { display: flex; align-items: flex-start; gap: 14px; }
+  .kind-head .tile {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--card-soft, var(--blue-soft)); color: var(--card-c, var(--blue));
+  }
+  .kind-head .tile svg { width: 20px; height: 20px; }
+  .kind-head h2 { font-size: 22px; }
+  .kind-one { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+  .kind-feel { margin-top: 14px; max-width: 640px; }
+  .kind .steps { margin-top: 14px; }
+  .ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 26px; }
+  .way {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .way .way-num {
+    font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .12em;
+    color: var(--blue);
+  }
+  .way h3 { font-size: 17px; }
+  .way p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; }
+  .way .steps { margin-top: 4px; }
+  #browser { scroll-margin-top: 76px; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap-narrow">
+
+    <section class="page-head">
+      <div class="kicker">Install guide</div>
+      <h1>How to install</h1>
+      <p class="lede">Three ways in — all free, all one tap.</p>
+      <p class="explain">Everything lives inside FocusCaseX. This page shows you the doors.</p>
+    </section>
+
+    <section class="section-tight">
+      <div class="ways">
+        <div class="way">
+          <span class="way-num">WAY 1 — IN THE APP</span>
+          <h3>Search the Marketplace</h3>
+          <p>The full catalog ships inside the app. Open it, find it, tap Install.</p>
+          <ol class="steps">
+            <li><span>Open <strong>FocusCaseX</strong> → <strong>Settings</strong> → <strong>Marketplace</strong>.</span></li>
+            <li><span>Search, or browse <strong>Extensions</strong>, <strong>Capsules</strong>, <strong>Themes</strong>, <strong>Templates</strong>.</span></li>
+            <li><span>Tap <strong>Install</strong> — it appears in your workspace right away.</span></li>
+          </ol>
+        </div>
+        <div class="way">
+          <span class="way-num">WAY 2 — BY CODE</span>
+          <h3>Type the install code</h3>
+          <p>Every add-on carries a short code (each item page shows it). Type it in the app and the item opens with its confirm dialog.</p>
+          <ol class="steps">
+            <li><span>Copy the code from any item page here — it looks like <strong>FCX-XXXXXX</strong>.</span></li>
+            <li><span>In the app: <strong>Settings → Marketplace → Install by code</strong>.</span></li>
+            <li><span>Type or paste it, confirm the item, tap <strong>Install</strong>.</span></li>
+          </ol>
+          <form class="code-input" data-code-form style="margin-top: 6px;">
+            <input data-code-input type="text" placeholder="FCX-XXXXXX" aria-label="Install code" autocomplete="off" spellcheck="false">
+            <button class="btn primary small" type="submit" style="min-height:44px;">Open</button>
+          </form>
+          <div class="code-msg">Works with any code from the catalog — try one from an item page.</div>
+        </div>
+        <div class="way" id="browser">
+          <span class="way-num">WAY 3 — FROM THIS SITE</span>
+          <h3>Tap Install, confirm in the app</h3>
+          <p>On any item page, the install button hands the add-on straight to the FocusCaseX app on this device — the app asks you to confirm, then installs it. Nothing to download.</p>
+          <ol class="steps">
+            <li><span>Open an item page and tap <strong>Install — open the app</strong>.</span></li>
+            <li><span>Your browser opens FocusCaseX and shows the item with a <strong>confirm dialog</strong>.</span></li>
+            <li><span>Tap <strong>Install</strong> there — done. (Needs FocusCaseX installed on this device.)</span></li>
+          </ol>
+          <p style="font-size:12px;color:var(--ink-3);margin-top:6px;">If the app isn't on the device, a fallback panel shows the install code instead — type it in the app later (Way 2).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 style="margin-bottom: 4px;">What each kind does</h2>
+      <div id="kind-list"></div>
+    </section>
+
+    <section class="section-tight">
+      <h2>Remove any time</h2>
+      <p style="margin-top: 12px; max-width: 640px;"><strong>Settings → Marketplace → Installed</strong> → tap Remove. Installing or removing never touches your patient records.</p>
+    </section>
+
+    <section class="section-tight">
+      <h2 style="margin-bottom: 6px;">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Is everything here really free?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Yes. Every add-on installs at no cost, and there is nothing to buy anywhere in FocusCaseX.</div>
+        </details>
+        <details>
+          <summary>Do I need this website to install anything?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">No — the full catalog is inside the app under Marketplace. This site is for browsing ahead of time, previewing items live, and sharing links with your team.</div>
+        </details>
+        <details>
+          <summary>Will it work offline, like the rest of FocusCaseX?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Yes. Once installed, add-ons work on your device with no internet, same as your records.</div>
+        </details>
+        <details>
+          <summary>Who makes these — can I trust them?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Most are built and reviewed by the CaseX team; the shield badge means reviewed. Every item shows its author, version and last-update date.</div>
+        </details>
+        <details>
+          <summary>What's the difference between extensions, capsules and templates?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Extensions add features, capsules are ready-made page sections, themes change the look, and templates are pre-written clinical notes and forms.</div>
+        </details>
+        <details>
+          <summary>The browser button didn't open the app — now what?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">The app may not be installed on that device, or the browser blocked the hand-off. The fallback panel gives you the install code — type it under Settings → Marketplace → Install by code, or just search for the item by name.</div>
+        </details>
+        <details>
+          <summary>Can my AI assistant install add-ons for me?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">It can find them for you — connect your agent through <a href="/mcp/" style="color:var(--blue);font-weight:500;">MCP &amp; Automation</a> and ask it to sweep the marketplace. The install itself stays a one-tap human decision.</div>
+        </details>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/demos-capsules.js"></script>
+<script src="assets/demos-extensions.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  function hydrateIcons() {
+    document.querySelectorAll("[data-icon]").forEach((el) => {
+      el.innerHTML = FCX.icon(el.getAttribute("data-icon"), Number(el.getAttribute("data-size")) || 16);
+    });
+  }
+
+  // The four kinds: labels, icons and one-liners come straight from FCX.KINDS.
+  const FEEL = {
+    plugin: {
+      feel: "An extension switches on the moment you install it — a new button in your toolbar, an extra panel beside your notes, a quick reference one tap away. You never leave the page you were on; the feature simply appears where you already work.",
+      steps: [
+        `Settings → <strong>Marketplace</strong> → the <strong>Extensions</strong> tab.`,
+        `Tap <strong>Install</strong> — the tool switches on immediately.`,
+      ],
+    },
+    capsule: {
+      feel: "A capsule is a ready-made section — an appointment board, a visit history, a patient summary. Paste its short block into any clinic page and the section renders right there, styled exactly like the rest of FocusCaseX. It feels like the page was built that way from the start.",
+      steps: [
+        `Install the capsule, then open any clinic page.`,
+        `Paste its <strong>two-line block</strong> (shown on every capsule's detail page) — the section renders right in the page.`,
+      ],
+    },
+    theme: {
+      feel: "A theme changes every surface at once — backgrounds, panels, tables, calendars. Choose one and the whole workspace restyles in a single tap, so it is easy to try a few and keep the one that is easiest on your eyes during a long clinic day.",
+      steps: [
+        `Settings → <strong>Appearance</strong> → <strong>Themes</strong>.`,
+        `Tap the theme — every surface restyles instantly; tap <strong>Default</strong> to go back.`,
+      ],
+    },
+    template: {
+      feel: "A template is a pre-written clinical note or form — a new patient intake, a refraction note, a recall letter. Pick one when you create a page and it lands as a finished note with sensible headings; you only fill in the findings. It feels like a colleague already started the paperwork for you.",
+      steps: [
+        `Install the template.`,
+        `Create a new page and pick the template — it lands as a ready note you can edit.`,
+      ],
+    },
+  };
+
+  function renderKinds() {
+    document.getElementById("kind-list").innerHTML = FCX.KIND_ORDER.map((kind) => {
+      const k = FCX.KINDS[kind];
+      const f = FEEL[kind];
+      return `
+<article class="kind" style="--card-c:${k.c};--card-soft:${k.soft}">
+  <div class="kind-head">
+    <span class="tile" aria-hidden="true">${FCX.icon(k.icon, 20)}</span>
+    <div>
+      <h2>${FCX.esc(k.label)}</h2>
+      <p class="kind-one">${FCX.esc(k.one)}</p>
+    </div>
+  </div>
+  <p class="kind-feel">${f.feel}</p>
+  <ol class="steps">${f.steps.map((s) => `<li><span>${s}</span></li>`).join("")}</ol>
+</article>`;
+    }).join("");
+  }
+
+  function fallbackChrome() {
+    // Only reachable if the catalog could not load (e.g. file:// preview).
+    const header = document.getElementById("site-header");
+    const footer = document.getElementById("site-footer");
+    if (header && !header.firstChild) {
+      const nav = FCX.KIND_ORDER.map((k) =>
+        `<a href="${FCX.KINDS[k].page}">${FCX.esc(FCX.KINDS[k].label)}</a>`).join("");
+      header.innerHTML = `
+<div class="top"><div class="top-inner">
+  <a class="brand" href="/marketplace/">${FCX.icon("Stethoscope", 20)}<span>FocusCaseX <span class="brand-market">Marketplace</span></span></a>
+  <nav class="nav">${nav}</nav>
+</div></div>`;
+    }
+    if (footer && !footer.firstChild) {
+      footer.innerHTML = `
+<div class="foot"><div class="wrap foot-inner">
+  <div>
+    <div class="foot-brand">${FCX.icon("Stethoscope", 17)} FocusCaseX Marketplace</div>
+    <div class="foot-status">Free add-ons for FocusCaseX · maintained by CaseX Labs</div>
+  </div>
+  <div class="foot-links">
+    <a href="/install/">Install guide</a>
+    <a href="/marketplace/">Home</a>
+  </div>
+</div></div>`;
+    }
+  }
+
+  FCX.ready({ active: "marketplace" }).then(() => {
+    hydrateIcons();
+    renderKinds();
+    FCX.wireDeepLinks(document);
+  }).catch(() => {
+    // The guide itself needs no catalog data — only the chrome does.
+    hydrateIcons();
+    renderKinds();
+    fallbackChrome();
+  });
+</script>
+</body>
+</html>

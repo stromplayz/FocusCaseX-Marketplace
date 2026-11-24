@@ -1,0 +1,9 @@
+{
+  "id": "heading-numbering",
+  "name": "Heading Numbering",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Auto-numbers H2/H3 headings in the reading view using an injected CSS counter (cleaned up on unload).",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

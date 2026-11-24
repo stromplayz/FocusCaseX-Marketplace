@@ -1,0 +1,33 @@
+{
+  "id": "high-contrast",
+  "name": "High Contrast",
+  "builtin": false,
+  "vars": {
+    "bg": "#000000",
+    "bgSidebar": "#0a0a0a",
+    "bgPanel": "#101010",
+    "text": "#ffffff",
+    "textMuted": "#c8c8c8",
+    "accent": "#ffd400",
+    "accentForeground": "#000000",
+    "border": "#8a8a8a",
+    "radius": "4px",
+    "density": "comfortable",
+    "borderWidth": "2px",
+    "shadow": "none",
+    "buttonStyle": "outline",
+    "cardStyle": "outlined",
+    "fontBody": "system",
+    "fontHeading": "system",
+    "fontMono": "mono",
+    "headingWeight": "800",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Accessibility-first: maximum contrast ink, bold focus rings, big borders.",
+  "tags": [
+    "dark",
+    "accessibility",
+    "a11y"
+  ]
+}

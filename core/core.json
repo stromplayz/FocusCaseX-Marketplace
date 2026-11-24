@@ -1,0 +1,110 @@
+{
+  "schema": "fcx.market.core.v1",
+  "version": "2.2.4",
+  "updatedAt": "2026-11-23T09:00:00.000Z",
+  "minAppVersion": "1.0.0",
+  "flags": {
+    "showAnnouncements": true,
+    "coreAutoPull": false,
+    "marketplaceSync": true
+  },
+  "announcement": {
+    "id": "core-v2-2-4-2026-11",
+    "title": "Official news: the hosted Clinic sidebar now ships in the core",
+    "body": "Every fresh workspace now opens with the exact Clinic navigator the hosted site runs — Dashboard, Appointments, Patients, Exams, Prescriptions, Reports with the live Booked / Done / Patients / Revenue strip. The full clinical extension line-up comes pre-enabled, and the workspace never loses a registration write even when the picked folder misbehaves. Pull once; no app redeploy needed.",
+    "level": "update",
+    "action": {
+      "label": "DOWNLOAD UPDATE V2.2.4",
+      "kind": "core-pull"
+    }
+  },
+  "featured": {
+    "capsule": "capsule:ui-appointment",
+    "plugin": "plugin:quick-actions-v2",
+    "theme": "theme:blueprint",
+    "template": "template:refraction-note"
+  },
+  "autoEnableCapsules": [],
+  "endpoints": {
+    "registry": "api/registry.json",
+    "core": "api/core.json",
+    "repo": "https://github.com/stromplayz/FocusCaseX"
+  },
+  "corePlugins": [
+    {
+      "id": "focuscasex-sbl",
+      "version": "1.2.0",
+      "files": {
+        "manifest": "plugins/focuscasex-sbl/manifest.json",
+        "main": "plugins/focuscasex-sbl/main.js"
+      },
+      "enable": true
+    },
+    {
+      "id": "core-ui",
+      "version": "2.0.0",
+      "files": {
+        "manifest": "plugins/core-ui/manifest.json",
+        "main": "plugins/core-ui/main.js"
+      },
+      "enable": true
+    },
+    {
+      "id": "update-v2-notifier",
+      "version": "2.2.1",
+      "files": {
+        "manifest": "plugins/update-v2-notifier/manifest.json",
+        "main": "plugins/update-v2-notifier/main.js"
+      },
+      "enable": true
+    },
+    {
+      "id": "quick-actions-v2",
+      "version": "2.1.0",
+      "files": {
+        "manifest": "plugins/quick-actions-v2/manifest.json",
+        "main": "plugins/quick-actions-v2/main.js"
+      },
+      "enable": true
+    },
+    {
+      "id": "core-settings",
+      "version": "2.2.3",
+      "files": {
+        "manifest": "plugins/core-settings/manifest.json",
+        "main": "plugins/core-settings/main.js"
+      },
+      "enable": true
+    },
+    {
+      "id": "core-pages",
+      "version": "2.4.2",
+      "files": {
+        "manifest": "plugins/core-pages/manifest.json",
+        "main": "plugins/core-pages/main.js"
+      },
+      "enable": true
+    },
+    {
+      "id": "core-cmds",
+      "version": "1.0.0",
+      "files": {
+        "manifest": "plugins/core-cmds/manifest.json",
+        "main": "plugins/core-cmds/main.js"
+      },
+      "enable": true
+    },
+    {
+      "id": "core-modes",
+      "version": "1.0.0",
+      "files": {
+        "manifest": "plugins/core-modes/manifest.json",
+        "main": "plugins/core-modes/main.js"
+      },
+      "enable": true
+    }
+  ],
+  "coreCss": [
+    "core/core.css"
+  ]
+}

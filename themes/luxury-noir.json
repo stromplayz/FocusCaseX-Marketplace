@@ -1,0 +1,33 @@
+{
+  "id": "luxury-noir",
+  "name": "Luxury Noir",
+  "builtin": false,
+  "vars": {
+    "bg": "#0d0b08",
+    "bgSidebar": "#12100b",
+    "bgPanel": "#1a160f",
+    "text": "#f0e7d3",
+    "textMuted": "#a2937a",
+    "accent": "#d4af37",
+    "accentForeground": "#171208",
+    "border": "#4a3d22",
+    "radius": "3px",
+    "density": "comfortable",
+    "borderWidth": "1px",
+    "shadow": "raised",
+    "buttonStyle": "outline",
+    "cardStyle": "glass",
+    "fontBody": "grotesk",
+    "fontHeading": "editorial",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "wide"
+  },
+  "description": "Black-tie noir — champagne ink and gold leaf, serif headlines behind glass panels.",
+  "tags": [
+    "dark",
+    "elegant",
+    "serif"
+  ]
+}

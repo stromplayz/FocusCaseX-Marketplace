@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add-on details — FocusCaseX Marketplace</title>
+<meta name="description" content="Details and install steps for every free FocusCaseX add-on — extensions, capsules, themes and note templates. Preview it live, then install it in one tap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* item.html page glue — layout only. */
+  .detail-aside > * + * { margin-top: 18px; }
+  .detail-aside .factbox dd a { color: var(--blue); font-weight: 500; }
+  #install { scroll-margin-top: 76px; }
+  .gap-t { margin-top: 12px; }
+  .swatch-row { padding: 16px 2px 4px; }
+  .swatch-row .sw { width: 30px; height: 30px; border-radius: 9px; }
+  .detail-more { margin-top: 76px; }
+  /* At very narrow widths the injected topbar cannot fit 360px; this page
+     has its own mobile install bar, so drop the topbar button there. */
+  @media (max-width: 400px) {
+    #topbar-install { display: none !important; }
+  }
+
+  /* --- live preview section: full width, directly under the title --- */
+  .pv-section { margin-top: 28px; }
+  .pv-top { display: flex; align-items: center; margin-bottom: 14px; }
+  .pv-tag {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .14em; color: var(--blue);
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: 999px; padding: 4px 11px;
+  }
+  .pv-tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+  /* --- capsule "Copy embed block" quick action, next to the install card --- */
+  .embed-cta { width: 100%; justify-content: center; }
+  .embed-note { margin-top: 9px; font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+
+  /* --- not-found actions row --- */
+  .nf-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* --- desktop sticky mini-bar: icon + name + install code + Install.
+     Parks flush under the persistent 60px sticky topbar (61px incl. its
+     border) so it never covers site navigation; hidden below 860px. --- */
+  .mini-bar {
+    display: block;
+    position: fixed; top: 61px; left: 0; right: 0; z-index: 45;
+    background: rgba(255, 255, 255, .93);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 8px 24px rgba(10, 12, 24, .07);
+    transform: translateY(-120%);
+    transition: transform .24s ease, visibility .24s;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .mini-bar.show { transform: translateY(0); visibility: visible; pointer-events: auto; }
+  .mini-inner {
+    max-width: 1180px; margin: 0 auto; padding: 8px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .mini-tile {
+    width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--card-soft, var(--blue-soft)); color: var(--card-c, var(--blue));
+  }
+  .mini-name {
+    flex: 1; min-width: 0;
+    font-family: var(--font-display); font-weight: 600; font-size: 14px;
+    letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .mini-code {
+    font-size: 12px; font-weight: 600; letter-spacing: .1em;
+    background: var(--paper); border: 1.5px dashed var(--blue-line);
+    border-radius: 9px; padding: 6px 11px; white-space: nowrap;
+  }
+  .mini-bar .btn { white-space: nowrap; }
+  @media (max-width: 860px) { .mini-bar { display: none !important; } }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div id="page"></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/demos-capsules.js"></script>
+<script src="assets/demos-extensions.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  /* FocusCaseX Marketplace — universal item detail page (?id=kind:id).
+     Renders one of four per-kind layouts from the shared catalog, with a
+     tagged live preview for every kind and a browser → app install hand-off. */
+  (function () {
+    "use strict";
+
+    const page = document.getElementById("page");
+
+    /* Singular kind labels for the detail head — browse pages use the
+       plural KINDS labels; a single item is "Extension", never "plugin". */
+    const KIND_ONE = { plugin: "Extension", capsule: "Capsule", theme: "Theme", template: "Template" };
+
+    function factRow(label, valueHtml) {
+      return '<div class="fact"><dt>' + label + "</dt><dd>" + valueHtml + "</dd></div>";
+    }
+
+    /* Full cleaned description (FCX.cleanCopy) → escaped paragraphs. */
+    function descParagraphs(text) {
+      const t = FCX.cleanCopy(text).replace(/\s+/g, " ").trim();
+      if (!t) return "";
+      const sents = (t.match(/[^.!?]+[.!?]+["')\]]?|[^.!?]+$/g) || [t])
+        .map((s) => s.trim()).filter(Boolean);
+      const chunks = [];
+      for (let i = 0; i < sents.length; i += 3) chunks.push(sents.slice(i, i + 3));
+      if (chunks.length > 1 && chunks[chunks.length - 1].length === 1) {
+        const last = chunks.pop();
+        const prev = chunks.pop();
+        const mid = Math.max(1, prev.length - 1);
+        chunks.push(prev.slice(0, mid));
+        chunks.push(prev.slice(mid).concat(last));
+      }
+      return chunks.map((c) => "<p>" + FCX.esc(c.join(" ")) + "</p>").join("");
+    }
+
+    /* ----------------------------- not found ----------------------------- */
+    function renderNotFound() {
+      document.title = "Not found — FocusCaseX Marketplace";
+      const tasks = FCX.KIND_ORDER.map((k) => {
+        const kk = FCX.KINDS[k];
+        return '<a class="task" href="' + kk.page + '">' + FCX.icon(kk.icon, 15) +
+          "<span>" + FCX.esc(kk.label) + "</span>" + FCX.icon("ArrowRight", 14) + "</a>";
+      }).join("");
+      page.innerHTML =
+        '<div class="wrap"><div class="error-page">' +
+        "<h1>Add-on not found</h1>" +
+        '<p class="lede">The link may be old — everything in the catalog is one tap away.</p>' +
+        '<div class="tasks">' + tasks + "</div>" +
+        '<div class="nf-actions">' +
+        '<button class="btn primary" type="button" id="nf-search">' + FCX.icon("Search", 15) +
+        "<span>Search the catalog</span></button>" +
+        '<a class="btn" href="/marketplace/">Go home</a>' +
+        "</div></div></div>";
+      const sb = document.getElementById("nf-search");
+      if (sb) sb.addEventListener("click", () => FCX.openSearch());
+    }
+
+    /* ------------------------- per-kind live previews ------------------------- */
+    /* Bordered shell with a mono LIVE PREVIEW tag and one honesty caption. */
+    async function previewSectionHtml(item) {
+      const note = (text) =>
+        '<div class="preview-note">' + FCX.icon("Eye", 14) + "<span>" + text + "</span></div>";
+      const shell =
+        '<section class="pv-section" id="preview">' +
+        '<div class="preview-shell pv-shell">' +
+        '<div class="pv-top"><span class="pv-tag"><i></i>LIVE PREVIEW</span></div>';
+
+      if (item.kind === "theme") {
+        const vars = await FCX.fetchThemeVars(item);
+        return shell +
+          FCX.themePreviewHtml(vars) +
+          '<div class="swatch-row">' + FCX.swatchesHtml(vars) + "</div>" +
+          note("Painted with the theme's real variables.") +
+          "</div></section>";
+      }
+      if (item.kind === "capsule") {
+        const demo = FCX.demoForCapsule((item.meta && item.meta.capsuleId) || item.id)
+          /* demos carry their own honesty footer — drop it so the shell
+             caption below is the single, exact note. */
+          .replace(/<div class="(?:fcxd-cap|db-caption)">[\s\S]*?<\/div>/g, "");
+        return shell + demo + note("Sample data — your version reads your real records, offline.") +
+          "</div></section>";
+      }
+      if (item.kind === "plugin") {
+        const demo = FCX.extensionPreviewHtml(item)
+          .replace(/<div class="(?:ext-panel|fcxe-foot)">[\s\S]*?<\/div>/g, "");
+        return shell + demo +
+          note("Simulated with sample data — the real tool runs in your workspace.") +
+          "</div></section>";
+      }
+      /* template — render the real note body */
+      let body = "";
+      try { body = await FCX.fetchTemplateBody(item); } catch (e) { body = ""; }
+      body = String(body || "").trim();
+      return shell +
+        '<div class="md-preview">' + FCX.renderMd(body || "A ready clinical page — open it in your workspace and edit like any note.") + "</div>" +
+        note("The actual note body — this exact page appears in your workspace.") +
+        "</div></section>";
+    }
+
+    /* ------------------------ desktop sticky mini-bar ------------------------ */
+    /* Shows icon + name + install code + Install once the install card in
+       the aside has scrolled past the top of the viewport. */
+    function mountMiniBar(item) {
+      const code = FCX.installCode(item.id);
+      const bar = document.createElement("div");
+      bar.className = "mini-bar";
+      bar.innerHTML =
+        '<div class="mini-inner">' +
+        '<span class="mini-tile" style="' + FCX.tileStyle(item.kind) + '">' + FCX.icon(item.icon, 15) + "</span>" +
+        '<span class="mini-name">' + FCX.esc(item.name) + "</span>" +
+        '<button class="chip mini-code" type="button" data-copy="' + FCX.esc(code) + '" title="Copy install code">' + FCX.esc(code) + "</button>" +
+        '<button class="btn small primary" type="button" data-open-app="' + FCX.esc(item.id) + '">' +
+        FCX.icon("Download", 14) + "<span>Install</span></button>" +
+        "</div>";
+      document.body.appendChild(bar);
+      FCX.wireCopyButtons(bar);
+      FCX.wireDeepLinks(bar);
+      const anchor = document.getElementById("install");
+      if (!anchor) return;
+      /* show once the install card's top edge has scrolled above the
+         viewport. A passive scroll check (rather than an observer) keeps
+         this exact and cheap — one rect read per scroll event. */
+      let queued = false;
+      const update = () => {
+        queued = false;
+        bar.classList.toggle("show", anchor.getBoundingClientRect().top < 0);
+      };
+      const onScroll = () => {
+        if (!queued) { queued = true; setTimeout(update, 80); }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      update();
+    }
+
+    /* ----------------------------- found item ---------------------------- */
+    async function renderItem(item) {
+      const k = FCX.KINDS[item.kind];
+      const kindOne = KIND_ONE[item.kind] || k.label;
+      document.title = item.name + " — FocusCaseX Marketplace";
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc && (item.tagline || item.description)) {
+        metaDesc.setAttribute("content", FCX.cleanCopy(item.tagline || item.description).slice(0, 155));
+      }
+
+      /* --- head --- */
+      const upd = FCX.fmtDate(item.released);
+      const subParts = [
+        '<span class="kindchip" style="--chip-c:' + k.c + ';--chip-soft:' + k.soft + '">' + FCX.esc(kindOne) + "</span>",
+      ];
+      if (item.verified) {
+        subParts.push('<span class="vshield" title="Reviewed and published by CaseX Labs">' +
+          FCX.icon("ShieldCheck", 14) + "<span>Verified</span></span>");
+      }
+      subParts.push("<span>" + FCX.esc(item.author) + "</span>");
+      if (item.category) subParts.push("<span>" + FCX.esc(item.category) + "</span>");
+      if (upd) subParts.push("<span>Updated " + upd + "</span>");
+      if (item.version) subParts.push("<span>v" + FCX.esc(item.version) + "</span>");
+
+      /* --- main column --- */
+      const desc = FCX.cleanCopy(item.description || item.tagline || "").trim();
+      let main = "<h2>What it does</h2>";
+      main += desc
+        ? descParagraphs(desc)
+        : "<p>This add-on doesn't have a full description yet — see the install steps alongside.</p>";
+
+      if (item.kind === "capsule") {
+        const embedText = FCX.embedFence((item.meta && item.meta.capsuleId) || item.id);
+        main += "<h2>Add it to any page</h2>" +
+          '<div class="fence">' + FCX.esc(embedText) +
+          '<button class="copy-btn" type="button" data-copy="' + FCX.esc(embedText) + '">Copy</button></div>' +
+          '<p class="gap-t">Paste this block into any clinic page — the section renders right where you put it.</p>';
+      }
+
+      else if (item.kind === "theme") {
+        main += "<h2>How it applies</h2><p>In FocusCaseX, open Settings → Appearance → Themes and tap " +
+          FCX.esc(item.name) + ". Every surface restyles instantly — backgrounds, panels, text, borders and accent — " +
+          "and clears back to the native look whenever you want.</p>";
+      }
+
+      else if (item.kind === "template") {
+        const folder = (item.meta && item.meta.defaultFolder) || "";
+        main += "<h2>Where it lands</h2>";
+        if (folder) {
+          main += "<p>The note is created in a folder chosen for it:</p>" +
+            '<div class="folder-row">' +
+            '<button class="chip" type="button" data-copy="' + FCX.esc(folder) + '">' +
+            FCX.icon("FileCode", 13) + "<span>" + FCX.esc(folder) + "</span></button>" +
+            '<span class="small muted">You can move it anywhere later.</span></div>';
+        } else {
+          main += "<p>The note lands in your workspace — you can move it to any folder later.</p>";
+        }
+      }
+
+      else if (item.kind === "plugin") {
+        let def = null;
+        try {
+          const defPath = item.files && item.files.manifest;
+          if (defPath) {
+            const res = await fetch(defPath, { cache: "no-cache" });
+            if (res.ok) def = await res.json();
+          }
+        } catch (e) { def = null; }
+        if (def && typeof def === "object") {
+          const apis = (Array.isArray(def.apis) && def.apis.length) ? def.apis
+            : (Array.isArray(def.permissions) && def.permissions.length) ? def.permissions : [];
+          let facts = "";
+          if (apis.length) {
+            facts += factRow("Works with", FCX.esc(apis.map((a) => {
+              const s = String(a == null ? "" : a).trim();
+              const t = s.replace(/^[a-z]+:/i, "").replace(/[-_.]+/g, " ").trim() || s;
+              return t.charAt(0).toUpperCase() + t.slice(1);
+            }).filter(Boolean).join(", ")));
+          } else if (def.minAppVersion) {
+            facts += factRow("Works with", "FocusCaseX " + FCX.esc(String(def.minAppVersion)) + " and newer");
+          }
+          const ver = def.version || item.version;
+          if (ver) facts += factRow("Version", FCX.esc(String(ver)));
+          if (facts) main += '<h2>Under the hood</h2><dl class="factbox">' + facts + "</dl>";
+        }
+        const pid = (item.meta && item.meta.pluginId) || item.id.replace(/^plugin:/, "");
+        main += '<h2>View source</h2><a class="btn small" target="_blank" rel="noopener" ' +
+          'href="https://github.com/stromplayz/FocusCaseX/tree/main/plugins/' +
+          encodeURIComponent(pid) + '">' + FCX.icon("Github", 15) + "<span>View on GitHub</span></a>";
+      }
+
+      /* --- aside: install card, capsule embed quick action, facts, share --- */
+      let factRows = factRow("Author", FCX.esc(item.author));
+      factRows += factRow("Kind", '<a href="' + k.page + '">' + FCX.esc(kindOne) + "</a>");
+      if (item.category) factRows += factRow("Category", FCX.esc(item.category));
+      if (item.version) factRows += factRow("Version", FCX.esc(item.version));
+      if (upd) factRows += factRow("Updated", upd);
+      factRows += factRow("Install code", '<span style="font-family:var(--font-mono);letter-spacing:.08em;">' + FCX.esc(FCX.installCode(item.id)) + "</span>");
+
+      const shareUrl = "https://stromplayz.github.io/FocusCaseX/marketplace/item/?id=" +
+        encodeURIComponent(item.id);
+      const embedBtn = item.kind === "capsule"
+        ? '<div><button class="btn embed-cta" type="button" data-copy-embed="' +
+          FCX.esc((item.meta && item.meta.capsuleId) || item.id) + '">' +
+          FCX.icon("Copy", 15) + "<span>Copy embed block</span></button>" +
+          '<p class="embed-note">Copies the capsule block — paste it into any clinic page.</p></div>'
+        : "";
+      const aside =
+        '<aside class="detail-aside" id="install">' + FCX.installCardHtml(item) + embedBtn +
+        '<dl class="factbox">' + factRows + "</dl>" +
+        '<div><button class="chip" type="button" data-copy="' + FCX.esc(shareUrl) + '">' +
+        FCX.icon("Link", 13) + "<span>Copy link</span></button></div>" +
+        "</aside>";
+
+      /* --- related --- */
+      const related = FCX.related(item, 3)
+        .map((r) => FCX.cardHtml(r)).join("");
+
+      /* --- assemble: head → live preview (full width) → body → related --- */
+      const preview = await previewSectionHtml(item);
+      page.innerHTML =
+        '<div class="wrap">' +
+        '<a class="back" href="' + k.page + '">' + FCX.icon("ArrowLeft", 15) +
+        "<span>Back to " + FCX.esc(k.label) + "</span></a>" +
+        '<div class="detail-head">' +
+        '<span class="tile" style="' + FCX.tileStyle(item.kind) + '">' + FCX.icon(item.icon, 24) + "</span>" +
+        '<div class="detail-title"><h1>' + FCX.esc(item.name) + "</h1>" +
+        '<div class="detail-sub">' + subParts.join('<span class="dot"></span>') + "</div>" +
+        "</div></div>" +
+        preview +
+        '<div class="detail-body"><div class="detail-main">' + main + "</div>" + aside + "</div>" +
+        '<div class="detail-more"><h2>More like this</h2><div class="grid">' + related + "</div></div>" +
+        "</div>";
+
+      FCX.wireCopyButtons(page);
+      FCX.wireDeepLinks(page);
+      const grid = page.querySelector(".detail-more .grid");
+      if (grid) FCX.wireGrid(grid);
+
+      /* --- desktop sticky mini-bar (hidden under 860px) --- */
+      mountMiniBar(item);
+
+      /* --- mobile install bar: the Install button hands off to the app --- */
+      if (!document.querySelector(".mob-bar")) {
+        const bar = document.createElement("div");
+        bar.className = "mob-bar";
+        bar.innerHTML = '<span class="mob-name">' + FCX.esc(item.name) + "</span>" +
+          '<button class="btn small primary" type="button" data-open-app="' + FCX.esc(item.id) + '">Install</button>';
+        document.body.appendChild(bar);
+        FCX.wireDeepLinks(bar);
+      }
+    }
+
+    /* ------------------------------- boot -------------------------------- */
+    FCX.ready({ active: "marketplace" }).then(() => {
+      let raw = FCX.getParam("id") || "";
+      try { raw = decodeURIComponent(raw); } catch (e) { /* keep raw value */ }
+      const item = raw ? FCX.byId(raw) : null;
+      if (!item) { renderNotFound(); return; }
+      renderItem(item).catch(renderNotFound);
+    });
+  })();
+</script>
+</body>
+</html>

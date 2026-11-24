@@ -1,0 +1,33 @@
+{
+  "id": "brutalist",
+  "name": "Brutalist",
+  "builtin": false,
+  "vars": {
+    "bg": "#e8e6e1",
+    "bgSidebar": "#dcd9d2",
+    "bgPanel": "#f4f2ee",
+    "text": "#111111",
+    "textMuted": "#555555",
+    "accent": "#ff3b00",
+    "accentForeground": "#111111",
+    "border": "#111111",
+    "radius": "0px",
+    "density": "cozy",
+    "borderWidth": "2px",
+    "shadow": "sharp",
+    "buttonStyle": "sharp",
+    "cardStyle": "outlined",
+    "fontBody": "grotesk",
+    "fontHeading": "grotesk",
+    "fontMono": "mono",
+    "headingWeight": "900",
+    "headingTransform": "uppercase",
+    "tracking": "wide"
+  },
+  "description": "Raw concrete surfaces, hard offset shadows, square everything.",
+  "tags": [
+    "statement",
+    "light",
+    "sharp"
+  ]
+}

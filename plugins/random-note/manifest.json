@@ -1,0 +1,9 @@
+{
+  "id": "random-note",
+  "name": "Random Note",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Roll the dice: a ribbon icon and command that jump to a uniformly random note in your vault.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

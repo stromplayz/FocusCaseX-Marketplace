@@ -1,0 +1,32 @@
+{
+  "id": "sepia",
+  "name": "Sepia",
+  "builtin": false,
+  "vars": {
+    "bg": "#f0e6d6",
+    "bgSidebar": "#e7dcc8",
+    "bgPanel": "#f6efe2",
+    "text": "#43382a",
+    "textMuted": "#74664f",
+    "accent": "#a85a30",
+    "accentForeground": "#ffffff",
+    "border": "#d6c7ac",
+    "radius": "12px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "soft",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "editorial",
+    "fontHeading": "editorial",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Warm reading-room tones for long charting sessions.",
+  "tags": [
+    "light",
+    "warm"
+  ]
+}

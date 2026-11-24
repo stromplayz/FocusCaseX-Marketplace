@@ -1,0 +1,33 @@
+{
+  "id": "nordic-fjord",
+  "name": "Nordic Fjord",
+  "builtin": false,
+  "vars": {
+    "bg": "#eff1f0",
+    "bgSidebar": "#e4e8e6",
+    "bgPanel": "#f7f8f8",
+    "text": "#233030",
+    "textMuted": "#5d6d70",
+    "accent": "#527186",
+    "accentForeground": "#ffffff",
+    "border": "#d5dbd9",
+    "radius": "4px",
+    "density": "comfortable",
+    "borderWidth": "1px",
+    "shadow": "none",
+    "buttonStyle": "outline",
+    "cardStyle": "outlined",
+    "fontBody": "grotesk",
+    "fontHeading": "grotesk",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Misted Scandinavian minimalism — pale cool surfaces, dusty blue-gray accents.",
+  "tags": [
+    "light",
+    "minimal",
+    "cool"
+  ]
+}

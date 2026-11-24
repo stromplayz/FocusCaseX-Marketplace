@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FocusCaseX Marketplace — free add-ons for your clinic workspace</title>
+<meta name="description" content="71 free add-ons for FocusCaseX — appointment boards, refraction notes, themes and more. Preview every one live on this site, then install it in one tap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+
+  <!-- 1. HERO — black band, electric blue headline, live theme preview -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div>
+          <div class="kicker">Marketplace · free add-ons for eye care</div>
+          <h1>See every add-on <span class="hl">live</span>.<br>Install it in one tap.</h1>
+          <p class="lede">Boards, notes, tools and looks for your FocusCaseX workspace — appointment day-books, recall boards, refraction notes, themes. Every one is previewed live right here with its real colors and layout, then installs in one tap. Built for optometry practices; free.</p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#kinds" style="min-height:48px;">Browse the catalog</a>
+            <a class="btn dark-ghost" href="/mcp/" style="min-height:48px;">Connect AI agents</a>
+            <button class="btn dark-ghost" id="hero-search" type="button" aria-label="Search the catalog" style="min-height:48px;">
+              <span data-icon="Search" data-icon-size="15"></span>
+              <span>Search</span>
+            </button>
+          </div>
+          <div class="hero-stats">
+            <div><b>71</b><span>add-ons</span></div>
+            <div><b>4</b><span>kinds</span></div>
+            <div><b>100%</b><span>free</span></div>
+            <div><b>0</b><span>setup steps</span></div>
+          </div>
+        </div>
+        <div class="hero-preview">
+          <div class="device">
+            <div class="device-head">
+              <span></span><span></span><span></span>
+              <span class="device-label" id="hero-theme-label">focuscasex / workspace</span>
+            </div>
+            <div id="hero-device"></div>
+          </div>
+          <div class="hero-dots" id="hero-dots" role="tablist" aria-label="Preview a theme"></div>
+          <div class="hero-caption">Live preview — <b id="hero-theme-name">Blueprint</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1b. MOTION BANNER — cinematic clinic loop under the hero -->
+  <section class="section" style="padding-top:0;">
+    <figure class="motion-shell">
+      <div class="motion-frame">
+        <video autoplay muted loop playsinline poster="assets/motion/hero-banner.jpg">
+          <source src="assets/motion/hero-banner.mp4" type="video/mp4">
+        </video>
+      </div>
+      <figcaption>Your clinic, in motion — registrations to refraction to recalls</figcaption>
+    </figure>
+  </section>
+
+  <!-- 2. TASK ROW -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="wrap">
+      <div class="kicker">Start with what your clinic does most</div>
+      <div class="tasks">
+        <a class="task" href="/marketplace/capsules/"><span data-icon="CalendarDays" data-icon-size="15"></span>Track my appointments</a>
+        <a class="task" href="/marketplace/item/?id=capsule:ui-appointment"><span data-icon="Receipt" data-icon-size="15"></span>Run the front-desk day</a>
+        <a class="task" href="/marketplace/templates/"><span data-icon="BookOpen" data-icon-size="15"></span>Write clinical notes faster</a>
+        <a class="task" href="/marketplace/item/?id=capsule:ui-recalls"><span data-icon="BellRing" data-icon-size="15"></span>Never miss a follow-up</a>
+        <a class="task" href="/marketplace/themes/"><span data-icon="Palette" data-icon-size="15"></span>Change how it looks</a>
+        <a class="task" href="/marketplace/extensions/"><span data-icon="Puzzle" data-icon-size="15"></span>Add new features</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. KIND ENTRY CARDS -->
+  <section class="section" id="kinds" style="scroll-margin-top:76px;">
+    <div class="wrap">
+      <div class="kicker">Browse the catalog</div>
+      <div class="entries" id="entries"></div>
+    </div>
+  </section>
+
+  <!-- 4. LIVE PREVIEW SHOWCASE -->
+  <section class="section" style="background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="wrap">
+      <div class="intro">
+        <div>
+          <div class="kicker">Live preview</div>
+          <h2>See it before you install it.</h2>
+        </div>
+        <div class="tabs" id="showcase-tabs"></div>
+      </div>
+      <div id="showcase-stage"></div>
+    </div>
+  </section>
+
+  <!-- 5. STAFF PICKS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="intro">
+        <div>
+          <div class="kicker">Staff picks</div>
+          <h2>Hand-picked by the CaseX team.</h2>
+        </div>
+      </div>
+      <div class="grid" id="picks-grid"></div>
+    </div>
+  </section>
+
+  <!-- 6. CODE + DEEP LINK BAND -->
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="entries" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="entry" style="gap: 12px;">
+          <span class="tile"><span data-icon="KeyRound" data-icon-size="19"></span></span>
+          <h3>Have a code?</h3>
+          <p>Every add-on carries a short code. Type it here to jump straight to it — or type it inside the app under <b>Settings → Marketplace → Install by code</b>.</p>
+          <form class="code-input" data-code-form style="margin-top: 4px;">
+            <input data-code-input type="text" placeholder="FCX-XXXXXX" aria-label="Install code" autocomplete="off" spellcheck="false">
+            <button class="btn primary small" type="submit" style="min-height:44px;">Open</button>
+          </form>
+          <div class="code-msg">Try it — open any item page to see its code.</div>
+        </div>
+        <div class="entry" style="gap: 12px;">
+          <span class="tile"><span data-icon="MonitorSmartphone" data-icon-size="19"></span></span>
+          <h3>Install straight from your browser</h3>
+          <p>Tap <b>Install</b> on any item page and your browser hands it to the FocusCaseX app on this device — the app asks you to confirm, then installs it. No forms, no files to download.</p>
+          <div class="deep-actions" style="margin-top: 4px;">
+            <a class="btn small" href="/install/#browser">How it works</a>
+            <a class="btn small primary" href="/marketplace/item/?id=plugin:optomize">Try it on an item</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. MCP BAND (black) -->
+  <section class="band">
+    <div class="wrap section">
+      <div class="kicker">MCP &amp; Automation</div>
+      <h2>Your records, your AI agents —<br>with permission, not luck.</h2>
+      <p class="lede" style="margin-top: 14px;">FocusCaseX hosts its own MCP server. Connect Claude, Cursor or any MCP agent and it can read your clinic notes, search the EMR and draft new pages — but only after you approve the connection and issue it a token. Revoke any time.</p>
+      <div class="band-grid">
+        <div class="band-card">
+          <span class="bc-ic"><span data-icon="ShieldCheck" data-icon-size="18"></span></span>
+          <h3>Approval first</h3>
+          <p>Every agent asks before it gets in. You approve the connection inside the app and FocusCaseX issues it a personal access token.</p>
+        </div>
+        <div class="band-card">
+          <span class="bc-ic"><span data-icon="Workflow" data-icon-size="18"></span></span>
+          <h3>Scoped tools</h3>
+          <p>Agents can list, read, search and create notes — plus browse the marketplace. No silent edits, no deletes, nothing beyond the tools you see documented.</p>
+        </div>
+        <div class="band-card">
+          <span class="bc-ic"><span data-icon="ScrollText" data-icon-size="18"></span></span>
+          <h3>Full log, one-tap revoke</h3>
+          <p>Every call is recorded with time, agent and tool. Under <b>Settings → MCP &amp; Automation</b> you can revoke a token the moment something looks off.</p>
+        </div>
+      </div>
+      <div class="hero-cta" style="margin-top: 34px;">
+        <a class="btn blue-on-dark" href="/mcp/" style="min-height:48px;">Explore MCP &amp; Automation</a>
+        <button class="chip" type="button" data-copy="claude mcp add --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header &quot;Authorization: Bearer &lt;your-token&gt;&quot;"><span data-icon="Terminal" data-icon-size="13"></span><span>claude mcp add focuscasex …</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. TRUST ROW -->
+  <section class="section">
+    <div class="wrap">
+      <div class="trust">
+        <div class="t-item">
+          <span data-icon="BadgeCheck"></span>
+          <div>
+            <b>Reviewed by CaseX Labs</b>
+            <span>Every add-on is built and reviewed before it lands here.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="WifiOff"></span>
+          <div>
+            <b>Works offline</b>
+            <span>After install, add-ons run on your device with no internet — like the rest of FocusCaseX.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="ShieldCheck"></span>
+          <div>
+            <b>Your records stay on your device</b>
+            <span>Installing or removing an add-on never touches your patient records.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CTA BAND -->
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="cta-band">
+        <div style="flex:1;min-width:260px;">
+          <h2>Set up your clinic's workspace in minutes, not weeks.</h2>
+          <p>Pick the boards, notes and look your front desk needs — see each one live here, then install it in one tap.</p>
+        </div>
+        <a class="btn blue-on-dark" href="#kinds">Browse the catalog</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/demos-capsules.js"></script>
+<script src="assets/demos-extensions.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  (function () {
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Paint static icons immediately (independent of the catalog).
+    document.querySelectorAll("[data-icon]").forEach(function (el) {
+      var size = parseInt(el.getAttribute("data-icon-size") || "16", 10);
+      el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
+    });
+
+    // Motion banner: respect prefers-reduced-motion — drop autoplay, hold on the poster.
+    var motionVideo = document.querySelector(".motion-shell video");
+    if (motionVideo && reduceMotion) {
+      motionVideo.removeAttribute("autoplay");
+      motionVideo.pause();
+    }
+
+    document.getElementById("hero-search").addEventListener("click", function () {
+      FCX.openSearch();
+    });
+
+    FCX.ready({ active: "marketplace" }).then(function () {
+      /* --- kind entry cards --- */
+      var counts = {};
+      FCX.items.forEach(function (it) { counts[it.kind] = (counts[it.kind] || 0) + 1; });
+      document.getElementById("entries").innerHTML = FCX.KIND_ORDER.map(function (kind) {
+        var k = FCX.KINDS[kind];
+        return '<a class="entry" href="' + k.page + '" style="--entry-c: ' + k.c + '">' +
+          '<span class="entry-count">' + (counts[kind] || 0) + '</span>' +
+          '<span class="tile">' + FCX.icon(k.icon, 19) + '</span>' +
+          '<h3>' + FCX.esc(k.label) + '</h3>' +
+          '<p>' + FCX.esc(k.one) + '</p>' +
+          '<span class="go">Browse ' + FCX.esc(k.label) + ' ' + FCX.icon("ArrowRight", 14) + '</span>' +
+        '</a>';
+      }).join("");
+
+      /* --- hero: live theme cycle with real theme variables --- */
+      var HERO_THEMES = ["blueprint", "paper-light", "midnight"];
+      var heroVars = [], heroIdx = 0, heroTimer = null;
+      var dotsEl = document.getElementById("hero-dots");
+
+      function paintHero(i) {
+        heroIdx = i;
+        var v = heroVars[i];
+        if (!v) return;
+        document.getElementById("hero-device").innerHTML = FCX.themePreviewHtml(v);
+        var it = FCX.byId("theme:" + HERO_THEMES[i]);
+        document.getElementById("hero-theme-name").textContent = it ? it.name : "";
+        dotsEl.querySelectorAll("button").forEach(function (b, bi) {
+          b.classList.toggle("on", bi === i);
+          b.setAttribute("aria-selected", bi === i ? "true" : "false");
+        });
+      }
+      function startHero() {
+        if (heroTimer || reduceMotion || heroVars.length < 2) return;
+        heroTimer = setInterval(function () { paintHero((heroIdx + 1) % heroVars.length); }, 4600);
+      }
+      function stopHero() { if (heroTimer) { clearInterval(heroTimer); heroTimer = null; } }
+
+      Promise.all(HERO_THEMES.map(function (id) { return FCX.fetchThemeVars(FCX.byId("theme:" + id)); }))
+        .then(function (all) {
+          heroVars = all;
+          dotsEl.innerHTML = HERO_THEMES.map(function (_id, i) {
+            return '<button type="button" role="tab" aria-label="Preview theme ' + (i + 1) + '"></button>';
+          }).join("");
+          dotsEl.querySelectorAll("button").forEach(function (b, i) {
+            b.addEventListener("click", function () { stopHero(); paintHero(i); startHero(); });
+          });
+          paintHero(0);
+          startHero();
+          var prev = document.querySelector(".hero-preview");
+          if (prev) {
+            prev.addEventListener("mouseenter", stopHero);
+            prev.addEventListener("mouseleave", startHero);
+          }
+        });
+
+      /* --- live preview showcase --- */
+      var tabsEl = document.getElementById("showcase-tabs");
+      var stageEl = document.getElementById("showcase-stage");
+      var SHOWCASE = [
+        { id: "themes", label: "Themes", count: FCX.items.filter(function (i) { return i.kind === "theme"; }).length },
+        { id: "capsules", label: "Capsules", count: FCX.items.filter(function (i) { return i.kind === "capsule"; }).length },
+        { id: "extensions", label: "Extensions", count: FCX.items.filter(function (i) { return i.kind === "plugin"; }).length },
+        { id: "templates", label: "Templates", count: FCX.items.filter(function (i) { return i.kind === "template"; }).length },
+      ];
+
+      function paneShell(inner, note, link) {
+        return '<div style="display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:26px;align-items:start;" class="showcase-grid">' +
+          '<div class="preview-shell">' + inner + '</div>' +
+          '<div>' + note + link + '</div>' +
+          '</div>';
+      }
+
+      var THEMES_ROTATE = ["blueprint", "paper-light", "midnight", "terminal"];
+      function themesPane() {
+        var seg = '<div class="seg" style="margin-bottom:14px;" id="theme-seg">' +
+          THEMES_ROTATE.map(function (id, i) {
+            var it = FCX.byId("theme:" + id);
+            return '<button type="button" data-theme="' + id + '"' + (i === 0 ? ' class="on"' : '') + '>' + FCX.esc(it ? it.name : id) + '</button>';
+          }).join("") + '</div>';
+        return paneShell(
+          '<div id="theme-stage"></div>' + seg,
+          '<div class="kicker">Themes · 22 of them</div>' +
+          '<h3 style="font-size:19px;">Flip through real themes, right here.</h3>' +
+          '<p style="margin-top:10px;color:var(--ink-2);font-size:13.8px;line-height:1.6;">Every theme below the stage carries its real color swatches, and the preview repaints with each theme\'s actual variables — so "does this look good for my clinic?" is answerable before installing, not after.</p>' +
+          '<a class="btn small primary" href="/marketplace/themes/" style="margin-top:16px;">Browse all 22 themes</a>'
+        );
+      }
+      function bindThemesPane() {
+        var stage = document.getElementById("theme-stage");
+        function paint(id) {
+          FCX.fetchThemeVars(FCX.byId("theme:" + id)).then(function (v) {
+            stage.innerHTML = FCX.themePreviewHtml(v) +
+              '<div class="preview-note" style="margin-top:12px;">' + FCX.swatchesHtml(v) + '<span style="margin-left:6px;">bg · panel · text · accent · border</span></div>';
+          });
+        }
+        paint(THEMES_ROTATE[0]);
+        document.getElementById("theme-seg").querySelectorAll("[data-theme]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            document.getElementById("theme-seg").querySelectorAll("[data-theme]").forEach(function (x) { x.classList.remove("on"); });
+            b.classList.add("on");
+            paint(b.getAttribute("data-theme"));
+          });
+        });
+      }
+
+      function capsulesPane() {
+        return paneShell(
+          FCX.demoForCapsule("ui-appointment"),
+          '<div class="kicker" style="color:var(--k-capsule);">Capsule · Appointment board</div>' +
+          '<h3 style="font-size:19px;">The front-desk day book, running.</h3>' +
+          '<p style="margin-top:10px;color:var(--ink-2);font-size:13.8px;line-height:1.6;">Live stats, walk-ins, payment chips, stage stepper — this is the actual layout the capsule renders on your page, fed with sample data. Your version reads your real appointments.</p>' +
+          '<a class="btn small primary" href="/marketplace/item/?id=capsule:ui-appointment" style="margin-top:16px;">Open the Appointment board</a>'
+        );
+      }
+
+      function extensionsPane() {
+        var opt = FCX.byId("plugin:optomize");
+        return paneShell(
+          FCX.extensionPreviewHtml(opt || { name: "Optomize", icon: "ScanEye" }),
+          '<div class="kicker">Extension · Optomize</div>' +
+          '<h3 style="font-size:19px;">A new tool where you already work.</h3>' +
+          '<p style="margin-top:10px;color:var(--ink-2);font-size:13.8px;line-height:1.6;">Extensions add buttons, panels and workflows to the workspace — compose refraction case files, track visit changes with compact change markers, clone patient profiles. Install and the tool simply appears.</p>' +
+          '<a class="btn small primary" href="/marketplace/item/?id=plugin:optomize" style="margin-top:16px;">Open Optomize</a>'
+        );
+      }
+
+      function templatesPane() {
+        FCX.fetchTemplateBody(FCX.byId("template:patient-intake")).then(function (body) {
+          var inner = '<div class="md-preview">' + FCX.renderMd(body || "A ready clinical note — history, medications, goals and consent.") + '</div>';
+          document.getElementById("tpl-stage").innerHTML = inner;
+        });
+        return paneShell(
+          '<div id="tpl-stage"></div>' +
+          '<div class="preview-note">' + FCX.icon("FileText", 14) + '<span>The actual note body — this exact page appears in your workspace.</span></div>',
+          '<div class="kicker" style="color:var(--k-template);">Template · Patient intake</div>' +
+          '<h3 style="font-size:19px;">Notes that start half-written.</h3>' +
+          '<p style="margin-top:10px;color:var(--ink-2);font-size:13.8px;line-height:1.6;">Pre-built clinical forms: intake sheets, refraction notes, consent checklists. Install one and it lands as a ready page — drop the MR into the frontmatter and the patient header resolves itself.</p>' +
+          '<a class="btn small primary" href="/marketplace/item/?id=template:patient-intake" style="margin-top:16px;">Open Patient intake</a>'
+        );
+      }
+
+      function renderShowcase(id) {
+        if (id === "themes") { stageEl.innerHTML = themesPane(); bindThemesPane(); }
+        else if (id === "capsules") { stageEl.innerHTML = capsulesPane(); }
+        else if (id === "extensions") { stageEl.innerHTML = extensionsPane(); }
+        else { stageEl.innerHTML = templatesPane(); }
+      }
+      FCX.renderTabs(tabsEl, SHOWCASE, "themes", renderShowcase);
+      renderShowcase("themes");
+
+      /* --- staff picks --- */
+      var picks = FCX.items.filter(function (it) { return it.featured; });
+      var rec = FCX.recommendOrder(FCX.items);
+      for (var i = 0; picks.length < 6 && i < rec.length; i++) {
+        if (picks.indexOf(rec[i]) === -1) picks.push(rec[i]);
+      }
+      picks = FCX.recommendOrder(picks.slice(0, 6));
+      var grid = document.getElementById("picks-grid");
+      grid.innerHTML = picks.map(function (it) { return FCX.cardHtml(it); }).join("");
+      FCX.wireGrid(grid);
+      FCX.wireDeepLinks(document);
+    });
+  })();
+</script>
+<style>
+  /* Motion banner — page-scoped */
+  .motion-shell {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--dark);
+    box-shadow: var(--shadow-2);
+  }
+  .motion-frame { aspect-ratio: 1600 / 640; border-radius: 17px 17px 0 0; }
+  .motion-shell video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: inherit;
+  }
+  .motion-shell figcaption {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 11px 16px 13px;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 720px) {
+    .motion-shell { width: calc(100% - 36px); }
+    .motion-shell figcaption { font-size: 10.5px; }
+  }
+
+  @media (max-width: 860px) {
+    .showcase-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+</body>
+</html>

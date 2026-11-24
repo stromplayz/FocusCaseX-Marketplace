@@ -1,0 +1,9 @@
+{
+  "id": "tag-summary",
+  "name": "Tag Summary",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "A plugin view listing every #tag in the vault with note counts; opens via command or ribbon.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

@@ -1,0 +1,9 @@
+{
+  "id": "utility-panel",
+  "name": "Utility Panel",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "A clinical utility dock for the right panel — spherical equivalent, toric transposition, age from DOB, IOP with CCT correction, Snellen conversions, vertex power, presbyopia adds, keratometry, Prentice's rule, Rx summary and quick reference cards.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

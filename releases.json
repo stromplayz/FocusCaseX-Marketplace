@@ -1,0 +1,92 @@
+{
+  "schema": "fcx.market.releases.v1",
+  "updatedAt": "2026-11-22T20:45:00.000Z",
+  "app": {
+    "name": "FocusCaseXDroid",
+    "repo": "stromplayz/FocusCaseX",
+    "catalogUrl": "https://stromplayz.github.io/FocusCaseX/catalog.json"
+  },
+  "releases": [
+    {
+      "version": "2.5.0",
+      "versionCode": 27,
+      "core": "2.2.3",
+      "date": "2026-11-22",
+      "apk": "FocusCaseX-v2.5.0.apk",
+      "notes": [
+        "The seasonal snowfall / string-lights layer is retired — the workspace stays calm under every theme",
+        "Update prompts no longer re-announce what the build already ships (fresh installs seed the applied core version from the bundle)",
+        "Patient registration + booking writes surface the EXACT folder refusal reason instead of a vague vault error",
+        "Folder writes retry three times with both stream modes before reporting, and flip the dashboard to the re-attach card on repeated SAF failures",
+        "Devices on the clinic Wi-Fi show their MODEL name (SM-A145F, Pixel 6…) even before signing in — visitor presence via the public /api/host/presence endpoint",
+        "Per-device Force logout with a confirmation dialog in the Android dashboard; visitors can be dismissed from the list",
+        "The bundled web app is the current v3 workspace build — left sidebar, examination, snippets all match the hosted site",
+        "FocusCaseX SBL (Sidebar-Left) updated to 1.2.0 — installs the exact sidebar the hosted site runs",
+        "App version 2.5.0 · core 2.2.3 · versionCode 27"
+      ]
+    },
+    {
+      "version": "2.4.1",
+      "versionCode": 26,
+      "core": "2.2.2",
+      "date": "2026-11-22",
+      "apk": "FocusCaseX-v2.4.1.apk",
+      "notes": [
+        "Duplicate FocusCaseX folders fixed: identity marker (.fcx/identity.json), anti-nesting root resolution, duplicate healing",
+        "Heal safety: duplicate folders are merged fully before deletion; the folder question also runs on restored sessions"
+      ]
+    },
+    {
+      "version": "2.4.0",
+      "versionCode": 25,
+      "core": "2.2.2",
+      "date": "2026-11-22",
+      "apk": "FocusCaseX-v2.4.0.apk",
+      "notes": [
+        "Offline-proof login, extension folder permissions, Core Pages (concrete pages as real files)",
+        "Official News page + device presence on Android"
+      ]
+    },
+    {
+      "version": "2.3.1",
+      "versionCode": 24,
+      "core": "2.2.2",
+      "date": "2026-11-22",
+      "apk": "FocusCaseX-v2.3.apk",
+      "notes": [
+        "Vault always available offline — built-in app-storage workspace, no folder gate"
+      ]
+    },
+    {
+      "version": "2.3.0",
+      "versionCode": 23,
+      "core": "2.2.2",
+      "date": "2026-11-22",
+      "apk": "FocusCaseX-v2.3.apk",
+      "notes": [
+        "Brutalist launcher: splash, landing, sign-in, storage dashboard",
+        "One-time folder grant, keep-hosting notification, parallel LAN host, Open Web"
+      ]
+    },
+    {
+      "version": "2.2.0",
+      "versionCode": 22,
+      "core": "2.2.0",
+      "date": "2026-11-22",
+      "apk": "FocusCaseX-v2.2.apk",
+      "notes": [
+        "Login gate + hosted workspace + Android APK + quick patches"
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "versionCode": 21,
+      "core": "2.1.0",
+      "date": "2026-11-21",
+      "apk": null,
+      "notes": [
+        "core/ folder, quick actions rework, update settings + marketplace sync"
+      ]
+    }
+  ]
+}

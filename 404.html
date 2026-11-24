@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>FocusCaseX has moved</title>
+<script>
+(function () {
+  try {
+    var p = location.pathname.replace(/^\/FocusCaseX-Marketplace\/?/, "/");
+    /* Deep links to the old flat pages map onto the new site root; the
+       new site's own 404 page takes it from there if the path is gone. */
+    location.replace(
+      "https://stromplayz.github.io/FocusCaseX" +
+      (p.charAt(0) === "/" ? p : "/" + p) + location.search + location.hash
+    );
+  } catch (e) {
+    location.replace("https://stromplayz.github.io/FocusCaseX/");
+  }
+})();
+</script>
+</head>
+<body style="font-family:system-ui,-apple-system,sans-serif;background:#05070c;color:#e8eefc;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:24px">
+<p>This FocusCaseX address has moved.<br><a style="color:#2f7cff" href="https://stromplayz.github.io/FocusCaseX/">stromplayz.github.io/FocusCaseX</a> — redirecting…</p>
+</body>
+</html>

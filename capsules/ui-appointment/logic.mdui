@@ -1,0 +1,26 @@
+# Appointment board behavior — edit any line and re-render
+status-dropdown: true
+stats: true
+actions:
+  - register
+  - counsel
+  - bill
+  - pay
+  - view
+views:
+  - day
+  - week
+  - month
+shared-slots: true
+stages:
+  - booked
+  - arrived
+  - in-exam
+  - counselling
+  - optics
+  - billing
+  - done
+counselling: true
+payments: true
+walk-in: true
+quick-register: true

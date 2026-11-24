@@ -1,0 +1,9 @@
+{
+  "id": "focuslinks-navigation",
+  "name": "Focuslinks Navigation",
+  "version": "1.1.0",
+  "minAppVersion": "1.0.0",
+  "description": "Owns the LEFT sidebar with a pure clinical navigator (Appointments, Examination, Recalls, Billing, Patients, Prescriptions, Reports, Cohorts) \u2014 v1.1.0 adds the sidebar-ownership guard: when FocusCaseX SBL (the hosted Clinic sidebar) is active, Focuslinks stands down so the workspace never stacks two navigators. Ships its own CSS.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

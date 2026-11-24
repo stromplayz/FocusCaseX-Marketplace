@@ -1,0 +1,11 @@
+/* FocusCaseX snippet — compact-sidebar
+ * Tightens sidebar paddings so more tree rows fit on screen.
+ */
+.fcx-snippet-compact-sidebar aside .fcx-tree-row {
+  height: 34px;
+}
+.fcx-snippet-compact-sidebar aside .fcx-sidebar-pad {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+}

@@ -1,0 +1,15 @@
+{
+  "id": "core-pages",
+  "name": "Core Pages",
+  "version": "2.4.2",
+  "minAppVersion": "1.0.0",
+  "description": "Concrete pages that live as markdown files — a Pages section in the sidebar where every page is a real pages/<name>.md file in the vault folder, created through the permission-gated ctx.fs bridge.",
+  "author": "FocusCaseX originals",
+  "isSample": false,
+  "core": true,
+  "permissions": {
+    "folders": [
+      "pages"
+    ]
+  }
+}

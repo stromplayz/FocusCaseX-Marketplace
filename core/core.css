@@ -1,0 +1,71 @@
+/* ==========================================================================
+   FocusCaseX — the Core layer CSS (core v2.1, pulled from the marketplace)
+   ==========================================================================
+   This file is the mandatory core stylesheet: the core-updater concatenates
+   every file in core.json's `coreCss` array, injects it as the `core layer`
+   (<style data-fcx-core-css>) and persists it across boots. It activates
+   under `html.fcx-core-on` so the stock app stays untouched until a core
+   is pulled — and the class is set by the updater the moment v2.1 lands.
+
+   Token-driven only (no raw hex): every color resolves a theme variable,
+   so the layer restyles the default chrome — sidebar, panels, tabs, the
+   launcher — without breaking any theme a user picked.
+   ========================================================================== */
+
+html.fcx-core-on {
+  /* v2.1 flag — downstream core CSS and plugins can feature-detect */
+}
+
+/* ---- chrome seams: a quiet accent line on the app's side rails ---------- */
+html.fcx-core-on aside.fcx-chrome {
+  position: relative;
+}
+html.fcx-core-on aside.fcx-chrome::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent-live, var(--accent));
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+}
+html.fcx-core-on aside.fcx-chrome[data-side="right"]::before,
+html.fcx-core-on aside[aria-label="Note metadata"].fcx-chrome::before,
+html.fcx-core-on aside[aria-label="Collapsed note metadata"].fcx-chrome::before {
+  left: 0;
+  right: auto;
+}
+
+/* ---- quick actions launcher (the v2.1 feature) -------------------------- */
+html.fcx-core-on .fcx-qa-card {
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+html.fcx-core-on .fcx-qa-card:hover {
+  box-shadow: inset 2px 0 0 0 var(--accent-live, var(--accent));
+}
+html.fcx-core-on .fcx-qa-card:focus-visible {
+  outline: 2px solid var(--accent-live, var(--accent));
+  outline-offset: 1px;
+}
+
+/* ---- banner strip: keep stacked banners tight and aligned --------------- */
+html.fcx-core-on .fcx-banner-strip {
+  border-bottom: 1px solid var(--border);
+}
+
+/* ---- keyboard focus polish across the chrome ---------------------------- */
+html.fcx-core-on .fcx-chrome :focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent-live, var(--accent)) 70%, transparent);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.fcx-core-on .fcx-qa-card {
+    transition: none;
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pastel-soft",
+  "name": "Pastel Soft",
+  "builtin": false,
+  "vars": {
+    "bg": "#f5f3fa",
+    "bgSidebar": "#edeaf6",
+    "bgPanel": "#fbfaff",
+    "text": "#3a3550",
+    "textMuted": "#6f6c86",
+    "accent": "#7a68b8",
+    "accentForeground": "#ffffff",
+    "border": "#ddd8ea",
+    "radius": "16px",
+    "density": "comfortable",
+    "borderWidth": "1px",
+    "shadow": "soft",
+    "buttonStyle": "pill",
+    "cardStyle": "raised",
+    "fontBody": "rounded",
+    "fontHeading": "rounded",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Lavender and mint pastels with pill buttons — the gentlest chart in the cabinet.",
+  "tags": [
+    "light",
+    "pastel",
+    "rounded"
+  ]
+}

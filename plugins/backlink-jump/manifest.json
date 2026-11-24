@@ -1,0 +1,9 @@
+{
+  "id": "backlink-jump",
+  "name": "Backlink Jump",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Cycles through notes whose [[wiki links]] point at the active note, one command per hop.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

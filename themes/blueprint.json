@@ -1,0 +1,33 @@
+{
+  "id": "blueprint",
+  "name": "Blueprint",
+  "builtin": false,
+  "vars": {
+    "bg": "#101d2c",
+    "bgSidebar": "#132333",
+    "bgPanel": "#16293a",
+    "text": "#dbe7f0",
+    "textMuted": "#86a2b8",
+    "accent": "#4cc9e8",
+    "accentForeground": "#08131c",
+    "border": "#2b4a63",
+    "radius": "0px",
+    "density": "compact",
+    "borderWidth": "1px",
+    "shadow": "none",
+    "buttonStyle": "outline",
+    "cardStyle": "outlined",
+    "fontBody": "geometric",
+    "fontHeading": "geometric",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "uppercase",
+    "tracking": "wide"
+  },
+  "description": "Drafting-table cyanotype — slate-blue field, cyan linework, uppercase technical labels.",
+  "tags": [
+    "dark",
+    "technical",
+    "cool"
+  ]
+}

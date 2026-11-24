@@ -1,0 +1,1725 @@
+/* ui-flow — Workflow tracker (CxS-1 default)
+   Includes the shared patient-row + triage classes also used by
+   ui-today — keep the shared block in sync across the two sheets. */
+@keyframes cx-fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* — completion bar — */
+.cx-flow-progress {
+  margin-bottom: 16px;
+}
+.cx-flow-cap {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+.cx-flow-cap-pct {
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.cx-flow-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--muted);
+  overflow: hidden;
+}
+.cx-flow-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--accent-live) 55%, transparent), var(--accent-live));
+  transition: width 0.5s ease;
+}
+
+/* — stage pipeline — */
+.cx-flow-pipeline {
+  margin-top: 0; /* gap comes from .cx-flow-progress' margin-bottom */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.cx-flow-stage {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cx-flow-sep {
+  width: 14px;
+  height: 14px;
+  color: color-mix(in oklab, var(--muted-foreground) 60%, transparent);
+}
+.cx-flow-stage-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--background) 40%, transparent);
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.cx-flow-stage-btn:hover {
+  border-color: color-mix(in oklab, var(--accent-live) 40%, transparent);
+}
+.cx-flow-stage-btn--on {
+  border-color: color-mix(in oklab, var(--accent-live) 60%, transparent);
+  background: color-mix(in oklab, var(--accent-live) 10%, transparent);
+  color: var(--accent-live);
+}
+.cx-flow-stage-icon {
+  width: 14px;
+  height: 14px;
+}
+.cx-flow-count {
+  min-width: 20px;
+  border-radius: 999px;
+  padding: 0 6px;
+  text-align: center;
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+.cx-flow-count--live {
+  background: color-mix(in oklab, var(--accent-live) 15%, transparent);
+  color: var(--accent-live);
+}
+.cx-flow-pipeline .cx-chip-icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* — expanded stage list — */
+.cx-flow-open {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: cx-fade-up 0.18s ease-out both;
+}
+.cx-flow-open-cap {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+}
+
+/* — shared patient row (also in ui-today's sheet) — */
+.cx-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--background) 40%, transparent);
+  padding: 10px 12px;
+  transition: border-color 0.15s ease;
+}
+.cx-person:hover {
+  border-color: color-mix(in oklab, var(--accent-live) 50%, transparent);
+}
+.cx-person-main {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+.cx-person-time {
+  width: 36px;
+  flex-shrink: 0;
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted-foreground);
+}
+.cx-person-avatar {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  background: color-mix(in oklab, var(--accent-live) 14%, transparent);
+  color: var(--accent-live);
+}
+.cx-person-body {
+  display: block;
+  min-width: 0;
+  flex: 1;
+}
+.cx-person-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cx-person-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+.cx-person-wait {
+  flex-shrink: 0;
+}
+.cx-person-wait .cx-chip-icon {
+  width: 10px;
+  height: 10px;
+}
+.cx-person-meta {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px;
+  color: var(--muted-foreground);
+}
+.cx-person-mr {
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.cx-person-new {
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 600;
+}
+.cx-person-fee {
+  flex-shrink: 0;
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+.cx-person-caret {
+  display: none;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.cx-person-menu {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cx-person-menu:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+.cx-person-menu-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* — shared triage line (also in ui-today's sheet) — */
+.cx-triage {
+  margin-top: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  line-height: 16px;
+}
+.cx-triage-dx {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cx-triage-chip {
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.cx-triage-last {
+  color: var(--muted-foreground);
+}
+.cx-triage .cx-chip {
+  font-size: 10px;
+  line-height: 16px;
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .cx-person-main {
+    gap: 12px;
+  }
+  .cx-person-time {
+    width: 44px;
+  }
+  .cx-person-fee {
+    font-size: 12px;
+  }
+  .cx-person-caret {
+    display: block;
+  }
+  .cx-person:hover .cx-person-caret {
+    opacity: 1;
+  }
+}
+@media (max-width: 640px) {
+  .cx-flow-progress {
+    margin-bottom: 12px;
+  }
+  .cx-person {
+    padding: 9px 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cx-flow-open {
+    animation: none;
+  }
+  .cx-flow-fill {
+    transition: none;
+  }
+}
+
+/* — payment chip on optics/billing rows (CX-A4, new-workflow) —
+   Paid methods take the ok tint, unpaid takes the warn tint; the row
+   itself gets a soft warn wash while money is still due. */
+.cx-flow-pay {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  border: 1px solid color-mix(in oklab, var(--cx-ok) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--cx-ok) 12%, transparent);
+  padding: 0 6px;
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 18px;
+  color: var(--cx-ok);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.cx-flow-pay--cash,
+.cx-flow-pay--card,
+.cx-flow-pay--upi,
+.cx-flow-pay--other {
+  border-color: color-mix(in oklab, var(--cx-ok) 45%, transparent);
+  background: color-mix(in oklab, var(--cx-ok) 12%, transparent);
+  color: var(--cx-ok);
+}
+.cx-flow-pay--unpaid {
+  border-color: color-mix(in oklab, var(--cx-warn) 50%, transparent);
+  background: color-mix(in oklab, var(--cx-warn) 12%, transparent);
+  color: var(--cx-warn);
+}
+.cx-person--unpaid {
+  border-color: color-mix(in oklab, var(--cx-warn) 55%, transparent);
+  background: color-mix(in oklab, var(--cx-warn) 7%, transparent);
+}
+
+/* — collapsed cancelled line (CX-A4, new-workflow) —
+   Cancelled bookings leave the funnel; one dashed line holds them. */
+.cx-flow-cancel {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cx-flow-cancel-btn {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 6px;
+  border: 1px dashed color-mix(in oklab, var(--cx-err) 45%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cx-err);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.cx-flow-cancel-btn:hover {
+  background: color-mix(in oklab, var(--cx-err) 8%, transparent);
+}
+.cx-flow-cancel-btn:focus-visible,
+.cx-flow-pay:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent-live) 60%, transparent);
+  outline-offset: 2px;
+}
+.cx-flow-cancel-icon {
+  width: 12px;
+  height: 12px;
+}
+.cx-flow-cancel-caret {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.15s ease;
+}
+.cx-flow-cancel-caret--open {
+  transform: rotate(180deg);
+}
+.cx-flow-cancel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .cx-flow-pay {
+    font-size: 9px;
+    line-height: 16px;
+    padding: 0 5px;
+  }
+  .cx-flow-cancel {
+    margin-top: 8px;
+  }
+}
+
+/* — responsive (CX-A8): phones —
+   The pipeline reads as one horizontal lane (scroll + edge fade) instead
+   of wrapping into cramped rows; every stage button keeps a 44px touch
+   height; expanded stage lists stay single-column by construction. */
+@media (max-width: 640px) {
+  .cx-flow-pipeline {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: -4px;
+    padding: 0 4px 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cx-flow-pipeline::-webkit-scrollbar {
+    display: none;
+  }
+  .cx-flow-pipeline {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent);
+    mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent);
+  }
+  .cx-flow-stage {
+    flex-shrink: 0;
+  }
+  .cx-flow-stage-btn {
+    flex-shrink: 0;
+    min-height: 44px;
+    padding: 6px 12px;
+  }
+  .cx-flow-sep {
+    flex-shrink: 0;
+  }
+  .cx-person-menu {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Brutalist — applied from the Marketplace style packs.
+   Built-in defaults + Brutalist skin (skin wins the cascade). */
+/* — Brutalist skin: radius 0, 2px ink borders, uppercase type,
+     hard shadows off, monochrome + the app's one accent — */
+
+& {
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  font-weight: 450;
+}
+
+/* surfaces — heavy ink frame, no rounding, no shadows */
+& .cx-card,
+& .cx-cli-kpi,
+& .cx-cli-tile,
+& .cx-appt-card,
+& .cx-appt-weekday,
+& .cx-appt-tile {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--card);
+}
+
+& .cx-cli-kpi:hover,
+& .cx-cli-tile:hover,
+& .cx-appt-card:hover {
+  box-shadow: 4px 4px 0 0 color-mix(in oklab, var(--foreground) 28%, transparent);
+}
+
+/* type — uppercase, tracked, loud */
+& .cx-title,
+& .cx-cli-kpi-label,
+& .cx-cli-kpi-value,
+& .cx-cli-tile-label,
+& .cx-cli-tile-value,
+& .cx-appt-panel-title,
+& .cx-appt-time,
+& .cx-appt-tile-num {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+& .cx-label,
+& .cx-cli-kpi-top,
+& .cx-cli-section > .cx-label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* chips — square stamps */
+& .cx-chip,
+& .cx-triage .cx-chip,
+& .cx-cli-range,
+& .cx-appt-tab {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+& .cx-chip--muted,
+& .cx-cli-range {
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+& .cx-chip--ok,
+& .cx-chip--warn,
+& .cx-chip--err,
+& .cx-chip--info {
+  background: transparent;
+}
+
+/* buttons — squared slabs */
+& .cx-btn,
+& .cx-appt-iconbtn,
+& .cx-appt-chipbtn {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: none;
+}
+
+& .cx-btn:hover,
+& .cx-appt-iconbtn:hover,
+& .cx-appt-chipbtn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+& .cx-btn--primary,
+& .cx-appt-submit {
+  border-radius: 0;
+  background: var(--primary);
+  border-color: var(--foreground);
+  color: var(--primary-foreground);
+}
+
+& .cx-btn--ghost {
+  border-color: transparent;
+  background: transparent;
+}
+
+& .cx-btn--ghost:hover {
+  border-color: var(--foreground);
+  background: var(--card);
+  color: var(--foreground);
+}
+
+/* inputs & tables */
+& .cx-input,
+& .cx-select,
+& .cx-cli-date-input,
+& .cx-appt-mrinput {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+}
+
+& .cx-table th {
+  border-bottom: 2px solid var(--foreground);
+}
+
+& .cx-table td {
+  border-bottom: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+
+/* dropdown menus & day strip keep their structure, gain the frame */
+& [class*="-menu"] {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  box-shadow: 6px 6px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+
+& .cx-appt-toolbar {
+  border-bottom: 2px solid var(--foreground);
+}
+
+& .cx-appt-daynav,
+& .cx-appt-weekstrip {
+  border-radius: 0;
+}
+
+& .cx-appt-cal,
+& .cx-cli-chart {
+  border-radius: 0;
+}
+
+& .cx-cli-kpis,
+& .cx-cli-kpis--clinical {
+  gap: 10px;
+}
+
+/* — front-desk rebuild (appointment v2): the same ink frame on the new
+     pulse tiles, funnel chips, stepper dots, payment chips, sheets and
+     right-panel rows. Surfaces/type/radius only — layout rules above and
+     in the defaults stay untouched (never set widths/flex here). — */
+
+/* pulse tiles + panel rows: 2px ink frame, square, loud mono numbers */
+& .cx-appt-pulse,
+& .cx-appt-next,
+& .cx-appt-pick-row,
+& .cx-appt-due-row {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& button.cx-appt-pulse:hover {
+  border-color: var(--foreground);
+  background: var(--muted);
+}
+& .cx-appt-pulse-num,
+& .cx-appt-funnel-num,
+& .cx-appt-pay-amt,
+& .cx-appt-due-amt,
+& .cx-appt-pulse-value {
+  font-weight: 800;
+}
+
+/* labels + titles join the uppercase stamp system */
+& .cx-appt-pulse-label,
+& .cx-appt-funnel-label,
+& .cx-appt-pay-label,
+& .cx-appt-sheet-title,
+& .cx-appt-duebox-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* square everything the rebuild added: funnel chips, counts, stepper
+   dots + connectors, pay chips, slot/method chips, sheet chrome */
+& .cx-appt-funnel-step,
+& .cx-appt-funnel-num,
+& .cx-appt-funnel-sep,
+& .cx-appt-pay,
+& .cx-appt-btn-counsel,
+& .cx-appt-btn-register,
+& .cx-appt-opt,
+& .cx-appt-pay-method,
+& .cx-appt-slot,
+& .cx-appt-quickadd,
+& .cx-appt-visitor,
+& .cx-appt-group-count,
+& .cx-appt-noteline,
+& .cx-appt-step,
+& .cx-appt-stepwrap + .cx-appt-stepwrap::before,
+& .cx-appt-pulse-bar,
+& .cx-appt-sheet,
+& .cx-appt-sheet--mobile,
+& .cx-appt-sheet-close,
+& .cx-appt-sheet-handle,
+& .cx-flow-pay,
+& .cx-bil-pay,
+& .cx-bil-pay-btn,
+& .cx-bil-pay-menu,
+& .cx-bil-pulse {
+  border-radius: 0;
+}
+& .cx-appt-stepwrap + .cx-appt-stepwrap::before {
+  background: var(--foreground);
+}
+
+/* funnel + payment chips: hue survives as the outline, wash gone */
+& .cx-appt-funnel-step,
+& .cx-appt-pay {
+  border-width: 1.5px;
+  border-style: solid;
+  background: transparent;
+}
+& .cx-appt-pay {
+  border-color: var(--pay, var(--foreground));
+}
+& .cx-appt-funnel-step--live {
+  background: transparent;
+  color: var(--stage, var(--foreground));
+}
+
+/* contextual buttons: solid slabs */
+& .cx-appt-btn-counsel {
+  border: 2px solid var(--foreground);
+  background: var(--accent-live);
+}
+& .cx-appt-btn-register {
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  color: var(--foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+& .cx-appt-due-cash {
+  border-radius: 0;
+  border: 2px solid var(--cx-ok, currentColor);
+  background: transparent;
+}
+
+/* booking slots + payment methods: square ink-framed inputs */
+& .cx-appt-slot,
+& .cx-appt-pay-method,
+& .cx-appt-segment {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+
+/* sheets: hard pane — blur off, ink frame, offset slab shadow */
+& .cx-appt-sheet-backdrop {
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-appt-sheet {
+  border: 2px solid var(--foreground);
+  box-shadow: 8px 8px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-appt-sheet-header,
+& .cx-appt-sheet-footer {
+  border-color: var(--foreground);
+}
+& .cx-appt-sheet--mobile {
+  box-shadow: none;
+}
+& .cx-appt-sheet-handle {
+  background: var(--foreground);
+}
+& .cx-appt-sheet-close:hover {
+  border-radius: 0;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* the stage jump menu never matched the [class*="-menu"] catch — frame it */
+& .cx-appt-stepmenu {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  box-shadow: 6px 6px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+& .cx-appt-morepanel .cx-input,
+& .cx-appt-morepanel-note {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+}
+& .cx-appt-noteline {
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+& .cx-appt-missing {
+  border: 2px dashed var(--foreground);
+  border-radius: 0;
+}
+
+/* keyboard parity with the defaults' focus-visible rules */
+& .cx-appt-pulse:focus-visible,
+& .cx-appt-funnel-step:focus-visible,
+& .cx-appt-step:focus-visible,
+& .cx-appt-pay:focus-visible,
+& .cx-appt-btn-counsel:focus-visible,
+& .cx-appt-btn-register:focus-visible,
+& .cx-appt-sheet-close:focus-visible,
+& .cx-appt-slot:focus-visible,
+& .cx-appt-pay-method:focus-visible,
+& .cx-appt-opt:focus-visible,
+& .cx-appt-pulse-row:focus-visible,
+& .cx-appt-due-cash:focus-visible,
+& .cx-appt-group-toggle:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+/* — patient directory (patients v1): the pulse tiles, toolbar, rows, cards,
+     detail panes, sheets and dock take the same square ink frame. Surfaces,
+     type and radius only — layout rules above and in the defaults stay
+     untouched (never set widths/flex here). — */
+
+/* board shell + head: uppercase title, tracked sub */
+& .cx-pat-board,
+& .cx-pat-head {
+  border-radius: 0;
+}
+& .cx-pat-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-pat-sub {
+  letter-spacing: 0.06em;
+}
+/* every container joins the square system */
+& .cx-pat-pulsewrap,
+& .cx-pat-chips,
+& .cx-pat-list,
+& .cx-pat-meta,
+& .cx-pat-actions,
+& .cx-pat-cards,
+& .cx-pat-detail-grid,
+& .cx-pat-timeline,
+& .cx-pat-field {
+  border-radius: 0;
+}
+
+& .cx-pat-toolbar {
+  border-bottom: 2px solid var(--foreground);
+}
+
+/* pulse tiles + sticky minibar: 2px ink frame, square, loud mono numbers */
+& .cx-pat-pulse,
+& .cx-pat-tile,
+& .cx-pat-minibar {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& button.cx-pat-tile:hover {
+  background: var(--muted);
+}
+& .cx-pat-tile--sel {
+  border-color: var(--foreground);
+  box-shadow: inset 0 0 0 1px var(--foreground);
+  background: var(--card);
+}
+/* semantic tiles: the hue survives as the outline, wash gone */
+& .cx-pat-tile--warn {
+  border-color: var(--cx-warn, var(--foreground));
+  background: transparent;
+}
+& .cx-pat-tile--err {
+  border-color: var(--cx-err, var(--foreground));
+  background: transparent;
+}
+& .cx-pat-tile-value {
+  font-weight: 800;
+}
+& .cx-pat-tile-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* funnel minichips: square stamps, selection inverts to the ink stamp */
+& .cx-pat-minichip {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-minichip--sel {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* toolbar controls: framed search, stamps, square segment, register slab */
+& .cx-pat-search {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-pat-chip {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-chip--sel {
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-pat-viewseg {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-pat-segbtn {
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+& .cx-pat-segbtn--sel {
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-pat-register {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-register:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* rows: ink rules, square avatar, tags as stamps, squared icon buttons */
+& .cx-pat-row {
+  border-radius: 0;
+}
+& .cx-pat-row--today {
+  border-color: var(--foreground);
+}
+& .cx-pat-row--overdue {
+  border-color: var(--cx-err, var(--foreground));
+}
+& .cx-pat-avatar {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--muted);
+  font-weight: 800;
+}
+& .cx-pat-id {
+  font-weight: 800;
+}
+& .cx-pat-tag {
+  border-radius: 0;
+  border: 1.5px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+& .cx-pat-tag--ok {
+  border-color: var(--cx-ok, var(--foreground));
+  color: var(--cx-ok, var(--foreground));
+}
+& .cx-pat-tag--warn {
+  border-color: var(--cx-warn, var(--foreground));
+  color: var(--cx-warn, var(--foreground));
+}
+& .cx-pat-tag--err {
+  border-color: var(--cx-err, var(--foreground));
+  color: var(--cx-err, var(--foreground));
+}
+& .cx-pat-tag--info {
+  border-color: var(--accent-live, var(--foreground));
+  color: var(--accent-live, var(--foreground));
+}
+& .cx-pat-tag--muted {
+  border-color: color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+  color: var(--muted-foreground);
+}
+& .cx-pat-iconbtn {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: none;
+}
+& .cx-pat-iconbtn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* cards: heavy ink frame, offset slab shadow on hover */
+& .cx-pat-card {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-pat-card:hover {
+  box-shadow: 4px 4px 0 0 color-mix(in oklab, var(--foreground) 28%, transparent);
+}
+& .cx-pat-card-head,
+& .cx-pat-card-body,
+& .cx-pat-card-foot {
+  border-color: var(--foreground);
+}
+
+/* detail pane + vitals + timeline: framed panes, uppercase labels, loud numbers */
+& .cx-pat-detail {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-pat-vital {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+& .cx-pat-vital-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-pat-vital-value {
+  font-weight: 800;
+}
+& .cx-pat-tl-row {
+  border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-pat-detail-actions {
+  border-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+
+/* sheets: hard pane — blur off, ink frame, offset slab shadow */
+& .cx-pat-backdrop {
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-pat-sheet {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 0 color-mix(in oklab, var(--foreground) 25%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-pat-sheet--mobile {
+  box-shadow: none;
+}
+& .cx-pat-sheet-header,
+& .cx-pat-sheet-body,
+& .cx-pat-sheet-actions,
+& .cx-pat-sheet-footer {
+  border-color: var(--foreground);
+}
+& .cx-pat-sheet-handle {
+  background: var(--foreground);
+}
+& .cx-pat-sheet-title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-pat-sheet-sub {
+  letter-spacing: 0.04em;
+}
+& .cx-pat-sheet-close:hover {
+  border-radius: 0;
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-pat-field-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-pat-field-input {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-pat-field-error {
+  color: var(--cx-err, var(--foreground));
+}
+
+/* dock: square ink-framed slabs */
+& .cx-pat-dock {
+  border-radius: 0;
+  background: var(--card);
+  border-color: var(--foreground);
+}
+& .cx-pat-dock-btn {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+& .cx-pat-dock-btn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* compact right panel (cx-pat-panel root): the frames survive at small size */
+&.cx-pat-panel .cx-pat-pulse,
+&.cx-pat-panel .cx-pat-tile {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+}
+&.cx-pat-panel .cx-pat-vital-value {
+  font-weight: 800;
+}
+
+/* — examination (exam v1): the full workup board takes the square ink
+     frame — steps rail, section cards, fields, OD/OS eye heads, the Rx
+     table, duochrome halves as 2px semantic outlines, review, picker and
+     the sticky save bar. Surfaces, type and color only — layout rules
+     above and in the defaults stay untouched (never set widths/flex/
+     display/position here). — */
+
+/* board: loud uppercase head, tabular numerals for the VA/IOP/Rx values */
+& .cx-exam-board { font-variant-numeric: tabular-nums; }
+& .cx-exam-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-exam-sub {
+  letter-spacing: 0.05em;
+}
+
+/* context strip + identity: ink-framed strip, square avatar, stamp badges */
+& .cx-exam-context {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-exam-context-id [data-avatar] {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 800;
+}
+& .cx-exam-context-id strong,
+& .cx-exam-context-id b {
+  font-weight: 800;
+}
+& .cx-exam-badge {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-exam-badge--new {
+  border: 1.5px solid var(--exam-accent, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-badge--fup {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 40%, transparent);
+  background: transparent;
+  color: var(--muted-foreground);
+}
+& .cx-exam-bookstrip {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: inset 3px 0 0 0 var(--exam-accent, var(--foreground));
+}
+& .cx-exam-bookchip {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* progress: square track (the side steps menu was removed) */
+& .cx-exam-progressbar,
+& .cx-exam-progressfill {
+  border-radius: 0;
+}
+
+/* sections + normals bar: square section cards, uppercase heads, stamps */
+& .cx-exam-section {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-exam-section-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-exam-section-sub {
+  letter-spacing: 0.04em;
+}
+& .cx-exam-section-head {
+  border-bottom: 2px solid var(--foreground);
+  padding-bottom: 4px;
+}
+& .cx-exam-normals-btn {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-normals-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-normalchip {
+  border: 1.5px solid var(--cx-ok, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-normalchip:hover {
+  background: var(--muted);
+}
+& .cx-exam-normalchip[aria-pressed="true"] {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+
+/* fields: 2px ink inputs, uppercase labels, square chips, loud units */
+& .cx-exam-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-exam-input,
+& .cx-exam-select,
+& .cx-exam-textarea {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-chip {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-chip:hover {
+  background: var(--muted);
+}
+& .cx-exam-chip--sel {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-exam-unit {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+& .cx-exam-error {
+  color: var(--cx-err, var(--destructive));
+  font-weight: 700;
+}
+
+/* eye grid: OD/OS identity as 1.5px semantic outlines, wash gone */
+& .cx-exam-eyerow + .cx-exam-eyerow {
+  border-top-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-eyehead {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-eyehead--od {
+  border-color: var(--exam-od, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-eyehead--os {
+  border-color: var(--exam-os, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+
+/* rx table + final: heavy ink frame, ink rules, square summary slab */
+& .cx-exam-rxtable {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-rxrow + .cx-exam-rxrow {
+  border-top-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-rxcell + .cx-exam-rxcell {
+  border-left-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-rx-final {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+
+/* duochrome: the red/green semantics survive as 2px outlines, wash gone */
+& .cx-exam-duochrome {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-duochrome-half {
+  border-radius: 0;
+}
+& .cx-exam-duochrome-half--red {
+  border: 2px solid var(--cx-err, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-duochrome-half--green {
+  border: 2px solid var(--cx-ok, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-duochrome-btn {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+& .cx-exam-duochrome-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-duochrome-btn--sel {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+
+/* review: square cards, slab hover, missing as an err outline stamp */
+& .cx-exam-review-card {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-review-card:hover {
+  border-color: var(--foreground);
+  box-shadow: 4px 4px 0 0 color-mix(in oklab, var(--foreground) 28%, transparent);
+}
+& .cx-exam-review-title {
+  letter-spacing: 0.08em;
+}
+& .cx-exam-review-missing {
+  border: 1.5px solid var(--cx-err, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--cx-err, var(--foreground));
+  text-transform: uppercase;
+}
+
+/* footer save bar: solid square pane, ink frame, uppercase slabs */
+& .cx-exam-footer {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-exam-save {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-save--secondary {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-save--secondary:hover {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* picker + misc: square rows, dashed empties, hue-as-outline warnings */
+& .cx-exam-picker-row {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-picker-row:hover {
+  border-color: var(--foreground);
+  background: var(--muted);
+}
+& .cx-exam-picker-empty,
+& .cx-exam-empty {
+  border: 2px dashed var(--foreground);
+  border-radius: 0;
+}
+& .cx-exam-warning {
+  border: 1.5px solid var(--cx-warn, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-infobar {
+  border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  border-radius: 0;
+  background: var(--card);
+}
+
+/* compact examctx panel: the frames survive, paddings tighten */
+&.cx-exam-panel .cx-exam-context {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  padding: 6px 8px;
+}
+&.cx-exam-panel .cx-exam-section {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  padding: 8px;
+}
+&.cx-exam-panel .cx-exam-footer {
+  padding: 6px 8px;
+}
+
+/* — exam v2 rebuild (EXV2-B10): the grid chiprows, fieldgroups, comp
+     family, stepper, table family, rx VA row-group, vaquick strip, mini
+     context and sign line join the same ink system. Surfaces, type and
+     color only — the sanctioned length tokens below are the ONLY geometry
+     the pack tunes (never set widths/flex/display/position/grid here). — */
+& {
+  --cx-grid-gap: 12px; /* chunkier field grid for the loud square fields */
+}
+
+/* chiprows: the v2 grid strips get a hairline ink frame so the scroll
+   bounds read; the tiny flag rows (OD/OS, +, −, ∆) go loud like every
+   chip here */
+& .cx-exam-chiprow {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 35%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+& .cx-exam-chiprow--tiny .cx-exam-chip {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* fieldgroups: 2px ink sub-cards, uppercase micro-titles */
+& .cx-exam-fieldgroup {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-fieldgroup-title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+/* composite fields: square ink tags — comp/comp-slot carry no chrome of
+   their own and ride the shared input framing above */
+& .cx-exam-comp-tag {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* stepper: square slab buttons inside a 2px frame; no squish on tap */
+& .cx-exam-stepper {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-stepper-btn {
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-weight: 800;
+}
+& .cx-exam-stepper-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-stepper-btn:active {
+  transform: none;
+}
+
+/* table family (medications / procedures): 2px frame, square rows, dashed
+   ink add-row; the micro-type header goes uppercase-tracked */
+& .cx-exam-table {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-table-head {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+}
+& .cx-exam-table-row {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 45%, transparent);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-table-row--add {
+  border: 1.5px dashed var(--foreground);
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+& .cx-exam-table-row--add:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* rx variants (--noVA/--kera) re-track in the defaults; the pack's job is
+   the pinned OD/OS eye column: opaque card so the phone scroll never
+   shows through the sticky stamps */
+& .cx-exam-rxcell--eye {
+  background: var(--card);
+}
+
+/* VA row-group under the rx table: square OD/OS stamps (hues ride
+   --exam-od/--exam-os); rxva-eye is a display:contents union — untouched */
+& .cx-exam-rxva-tag {
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+/* vaquick strip: hairline ink frame, square */
+& .cx-exam-vaquick {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 35%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+
+/* missing-dx review card: the warn bar survives as a hard inset stamp */
+& .cx-exam-review-card--missing {
+  box-shadow: inset 3px 0 0 0 var(--cx-warn, var(--foreground));
+}
+
+/* mini context strip: tighter but still square-framed */
+& .cx-exam-context--mini {
+  border-radius: 0;
+  padding: 4px 8px;
+}
+
+/* signature line: heavier ink rule under the signing input */
+& .cx-exam-sign > .cx-exam-input {
+  border-bottom: 1.5px solid var(--foreground);
+}
+
+/* keyboard parity with the defaults' focus-visible rules */
+& .cx-exam-stepper-btn:focus-visible,
+& .cx-exam-table-row--add:focus-visible,
+& .cx-exam-chip:focus-visible,
+& .cx-exam-normalchip:focus-visible,
+& .cx-exam-normals-btn:focus-visible,
+& .cx-exam-duochrome-btn:focus-visible,
+& .cx-exam-review-card:focus-visible,
+& .cx-exam-picker-row:focus-visible,
+& .cx-exam-save:focus-visible,
+& .cx-exam-save--secondary:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  & .cx-exam-context {
+    padding: 8px 10px;
+  }
+  & .cx-exam-section {
+    padding: 10px;
+  }
+  & .cx-exam-bookstrip {
+    padding: 6px 8px;
+  }
+  & .cx-exam-duochrome {
+    padding: 8px;
+  }
+  & .cx-exam-review-card {
+    padding: 8px 10px;
+  }
+  & .cx-exam-footer {
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  /* the pack's hover slab points off-screen on the phone — drop it */
+  & .cx-exam-review-card:hover {
+    box-shadow: none;
+  }
+}
+
+/* keyboard parity with the defaults' focus-visible rules */
+& .cx-pat-tile:focus-visible,
+& .cx-pat-minichip:focus-visible,
+& .cx-pat-chip:focus-visible,
+& .cx-pat-segbtn:focus-visible,
+& .cx-pat-register:focus-visible,
+& .cx-pat-row-main:focus-visible,
+& .cx-pat-iconbtn:focus-visible,
+& .cx-pat-tl-row:focus-visible,
+& .cx-pat-sheet-close:focus-visible,
+& .cx-pat-dock-btn:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  & .cx-grid,
+  & .cx-cli-kpis,
+  & .cx-cli-kpis--clinical,
+  & .cx-appt-form-grid {
+    grid-template-columns: 1fr;
+  }
+  & .cx-btn,
+  & .cx-input,
+  & .cx-select {
+    min-height: 40px;
+  }
+  & .cx-card,
+  & .cx-cli-kpi,
+  & .cx-appt-card {
+    padding: 12px;
+  }
+  & .cx-chip {
+    white-space: normal;
+  }
+  /* the pack's slab shadow points off-screen on the bottom sheet */
+  & .cx-appt-sheet,
+  & .cx-appt-stepmenu {
+    box-shadow: none;
+  }
+  & .cx-appt-pulse,
+  & .cx-appt-next {
+    padding: 10px;
+  }
+  & .cx-pat-pulse,
+  & .cx-pat-tile {
+    padding: 10px;
+  }
+  & .cx-pat-card {
+    padding: 12px;
+  }
+  /* the pack's slab shadow points off-screen on the bottom sheet */
+  & .cx-pat-sheet {
+    box-shadow: none;
+  }
+}
+
+/* ---- appointment day book rows — patients-directory parity -------------
+   The day list shares the patient rows' anatomy (avatar · id stack ·
+   chips · pills · action cell · inline work expansion), so it takes the
+   same ink treatment: square frames, stamp pills, loud id stack. */
+& .cx-appt-card {
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: 0;
+}
+/* rows hover like patient rows — border tint only, no slab shadow */
+& .cx-appt-card:hover {
+  box-shadow: inset 3px 0 0 0 var(--stage, transparent);
+  border-color: color-mix(in oklab, var(--accent-live, var(--primary)) 30%, var(--foreground));
+}
+& .cx-appt-rowmain { border-radius: 0; }
+& .cx-appt-avatar {
+  border-radius: 0;
+  border: 2px solid var(--foreground);
+  background: var(--muted);
+  font-weight: 800;
+}
+& .cx-appt-id { font-weight: 800; }
+& .cx-appt-id > span + span {
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+& .cx-appt-meta .cx-appt-time,
+& .cx-appt-meta .cx-appt-chip,
+& .cx-appt-sharedchip {
+  border-radius: 0;
+  border: 1.5px solid color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+  background: transparent;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+& .cx-appt-chip--unpaid,
+& .cx-appt-chip--paid {
+  border-color: currentColor;
+  color: color-mix(in oklab, currentColor 85%, var(--foreground));
+  background: transparent;
+}
+& .cx-appt-stage {
+  border-radius: 0;
+  border: 1.5px solid var(--stage, var(--foreground));
+  background: transparent;
+  color: color-mix(in oklab, var(--stage, var(--foreground)) 80%, var(--foreground));
+  text-transform: uppercase;
+}
+& .cx-appt-iconbtn {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+}
+& .cx-appt-iconbtn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-appt-expand {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}

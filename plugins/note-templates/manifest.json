@@ -1,0 +1,9 @@
+{
+  "id": "note-templates",
+  "name": "Note Templates",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Inserts a dated checklist template at the end of the active note with one command.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

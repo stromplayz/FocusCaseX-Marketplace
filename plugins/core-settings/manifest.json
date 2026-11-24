@@ -1,0 +1,10 @@
+{
+  "id": "core-settings",
+  "name": "Core Settings",
+  "version": "2.2.3",
+  "minAppVersion": "1.0.0",
+  "description": "Owns the settings surface - chrome polish, sticky navigation and tighter rows. The seasonal snowfall layer was retired in v2.2.3.",
+  "author": "FocusCaseX originals",
+  "isSample": false,
+  "core": true
+}

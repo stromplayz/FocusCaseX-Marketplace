@@ -1,0 +1,33 @@
+{
+  "id": "mono-paper",
+  "name": "Monochrome Paper",
+  "builtin": false,
+  "vars": {
+    "bg": "#fafafa",
+    "bgSidebar": "#f1f1f1",
+    "bgPanel": "#ffffff",
+    "text": "#141414",
+    "textMuted": "#6e6e6e",
+    "accent": "#141414",
+    "accentForeground": "#ffffff",
+    "border": "#e0e0e0",
+    "radius": "6px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "none",
+    "buttonStyle": "outline",
+    "cardStyle": "outlined",
+    "fontBody": "editorial",
+    "fontHeading": "editorial",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Ink-on-paper light mode — pure grayscale with crisp hairlines.",
+  "tags": [
+    "light",
+    "monochrome",
+    "minimal"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "core-cmds",
+  "name": "Core Commands",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Owns the user commands surface — every live command (built-ins plus each extension's contributions) listed, filterable and one-tap runnable from Settings.",
+  "author": "FocusCaseX originals",
+  "isSample": false,
+  "core": true
+}

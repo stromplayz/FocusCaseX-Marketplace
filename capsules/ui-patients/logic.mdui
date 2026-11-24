@@ -1,0 +1,21 @@
+# Patient directory behavior — edit any line and re-render
+stats: true
+search: true
+groups:
+  - all
+  - today
+  - recalls
+  - recent
+  - new
+sorts:
+  - last-visit
+  - name
+  - mr
+  - visits
+views:
+  - rows
+  - cards
+register: true
+book: true
+call: true
+detail: true

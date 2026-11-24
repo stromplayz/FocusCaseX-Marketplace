@@ -1,0 +1,33 @@
+{
+  "id": "graphite",
+  "name": "Graphite",
+  "builtin": false,
+  "vars": {
+    "bg": "#16181a",
+    "bgSidebar": "#1a1d20",
+    "bgPanel": "#1f2326",
+    "text": "#e4e7e9",
+    "textMuted": "#8b9298",
+    "accent": "#4d7884",
+    "accentForeground": "#ffffff",
+    "border": "#2e3438",
+    "radius": "6px",
+    "density": "compact",
+    "borderWidth": "1px",
+    "shadow": "none",
+    "buttonStyle": "soft",
+    "cardStyle": "flat",
+    "fontBody": "system",
+    "fontHeading": "grotesk",
+    "fontMono": "mono",
+    "headingWeight": "600",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Neutral graphite gray with a restrained steel-teal accent — the quiet workhorse.",
+  "tags": [
+    "dark",
+    "neutral",
+    "professional"
+  ]
+}

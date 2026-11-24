@@ -1,0 +1,9 @@
+{
+  "id": "essential-diagrams",
+  "name": "Essential Diagrams",
+  "version": "1.2.0",
+  "minAppVersion": "1.0.0",
+  "description": "Clinical-atlas eye diagrams for the Examination workup \u2014 tap-to-select anterior segment (surface, cornea & iris, lacrimal drainage) and fundus (posterior pole, retinal periphery) views for OD and OS, label each finding, and add the labeled results straight into the exam note.",
+  "author": "FocusCaseX originals",
+  "isSample": true
+}

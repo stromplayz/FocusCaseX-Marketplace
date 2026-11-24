@@ -1,0 +1,10 @@
+{
+  "id": "core-modes",
+  "name": "Core Modes",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Owns the mode system — Clinical and Developer modes with their own extension bundles: switching a mode enables that mode's extensions, and snippets stay a developer-mode surface.",
+  "author": "FocusCaseX originals",
+  "isSample": false,
+  "core": true
+}

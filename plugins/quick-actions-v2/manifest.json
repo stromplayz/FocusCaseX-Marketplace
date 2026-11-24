@@ -1,0 +1,10 @@
+{
+  "id": "quick-actions-v2",
+  "name": "Quick Actions v2",
+  "version": "2.1.0",
+  "minAppVersion": "1.0.0",
+  "description": "The Update v2.1 payload — completes the quick actions launcher with the clinical EMR set (examination, recalls, billing) through ctx.registerQuickAction. Auto-enabled with the core.",
+  "author": "FocusCaseX Marketplace",
+  "isSample": true,
+  "core": true
+}

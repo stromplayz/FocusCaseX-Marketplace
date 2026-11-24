@@ -1,0 +1,4040 @@
+
+
+/* ==== §P0 · ROOT TOKENS & BOARD SHELL ===================================== */
+& {
+  /* the root is the NAMED container — every @container cxexam query in
+     this sheet measures the pane the board actually occupies (PLAN-C §1) */
+  container: cxexam / inline-size;
+  --exam-accent: var(--accent-live, var(--primary)); /* live / sel hue */
+  --exam-od: var(--exam-accent);                     /* right-eye tint  */
+  --exam-os: var(--cx-ok);                           /* left-eye tint   */
+  /* length tokens — the ONLY pack-tunable geometry (contract §hard-constraints).
+     Tier overrides live in §P10 on the token CONSUMERS (a container query
+     cannot style its own container, so the root keeps the mobile-first base). */
+  --cx-chipw: 5.5rem;             /* chiprow min track (88px default — full option labels stay readable) */
+  --cx-chip-rows: 3;              /* chiprow visible-row cap (M; T+ = 2)   */
+  --cx-rx-eye: 2.75rem;           /* rx table eye column (44px)            */
+  --cx-rx-num: 5.5rem;            /* rx SPH/CYL/AXIS — fits "−12.75" (EXV2-FIX) */
+  --cx-rx-va: minmax(10rem, 1fr); /* rx table VA column                    */
+  --cx-sec-pad: 12px;             /* section padding (block)               */
+  --cx-sec-pad-x: 12px;           /* section padding (inline)              */
+  --cx-grid-gap: 10px;            /* field grid gap                        */
+  --cx-row-gap: 8px;              /* section inner row gap                 */
+}
+.cx-exam-board {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  color: var(--foreground);
+  font-size: 14px;
+}
+.cx-exam-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10px;
+  row-gap: 2px;
+  min-width: 0;
+}
+.cx-exam-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+.cx-exam-sub {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+/* ==== context strip — who · new/∆ badge · today's book row ================ */
+.cx-exam-context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+}
+/* identity zone: [data-avatar] initials disc · name · MR · age/sex · phone */
+.cx-exam-context-id {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.cx-exam-context-id [data-avatar] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 25%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--exam-accent) 14%, var(--card));
+  color: color-mix(in oklab, var(--exam-accent) 72%, var(--foreground));
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.cx-exam-context-id strong,
+.cx-exam-context-id b {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+/* ExamBoard wraps name + meta in an unclassed div — tight min-width-0
+   stack so long names ellipsis instead of blowing the strip */
+.cx-exam-context-id > div:not([class]) {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.cx-exam-context-id strong,
+.cx-exam-context-id b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cx-exam-context-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 6px;
+  row-gap: 2px;
+  min-width: 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+/* D/W scroll collapse — ExamBoard toggles --mini when the sentinel before
+   the first section leaves the viewport (PLAN-C §6). Absence of the
+   observer changes nothing: the strip just stays full. */
+.cx-exam-context--mini {
+  gap: 4px 8px;
+  padding: 6px 10px;
+}
+.cx-exam-context--mini .cx-exam-bookstrip { display: none; }
+.cx-exam-context--mini .cx-exam-context-meta { display: none; }
+.cx-exam-context--mini .cx-exam-context-id [data-avatar] {
+  width: 28px;
+  height: 28px;
+  font-size: 10.5px;
+}
+/* NEW baseline vs ∆ follow-up — new runs hot (accent), fup reads info */
+.cx-exam-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.cx-exam-badge--new {
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 32%, transparent);
+  background: color-mix(in oklab, var(--exam-accent) 12%, transparent);
+  color: color-mix(in oklab, var(--exam-accent) 74%, var(--foreground));
+}
+.cx-exam-badge--fup {
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+/* today's book row strip — quiet, with an accent left edge */
+.cx-exam-bookstrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 35%, transparent);
+  box-shadow: inset 2px 0 0 0 var(--exam-accent);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+.cx-exam-bookchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  color: color-mix(in oklab, var(--foreground) 82%, transparent);
+}
+
+/* ==== §P1 · SECTION RAIL — the sticky spine (EXV2-R2) ======================
+   The footer <select> pager is GONE. Section navigation is a horizontal,
+   sticky, frosted rail pinned at the top of the board: every step of the
+   spine is one tap away at EVERY tier (the old pager only served M/T, and
+   a native dropdown hides the spine + progress entirely). Each tab carries
+   its number — or ✓ once done — plus a data-state of done | part | todo
+   (dashed ring = started but hard-required fields missing). The track
+   scrolls horizontally on narrow panes (scrollbar hidden, fade-masked
+   edges) and ExamBoard keeps the active tab centered; scroll-spy and j/k
+   stay in sync at D/W. The thin progressbar/progressfill below stay shared
+   with the footer. */
+.cx-exam-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  min-width: 0;
+  margin-top: 2px;
+  padding: 5px;
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 22px color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+.cx-exam-tabs-track {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+}
+.cx-exam-tabs-track::-webkit-scrollbar { display: none; }
+.cx-exam-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 12px 0 8px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+.cx-exam-tab:hover {
+  background: color-mix(in oklab, var(--muted) 62%, transparent);
+  color: var(--foreground);
+}
+.cx-exam-tab:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--ring, var(--exam-accent)) 70%, transparent);
+  outline-offset: 2px;
+}
+/* active tab — accent pill; the scroll flow (D/W) and the swap (M/T) agree */
+.cx-exam-tab--on {
+  background: color-mix(in oklab, var(--exam-accent) 13%, transparent);
+  border-color: color-mix(in oklab, var(--exam-accent) 34%, transparent);
+  color: color-mix(in oklab, var(--exam-accent) 72%, var(--foreground));
+}
+/* number / ✓ badge — state carries through data-state on the tab */
+.cx-exam-tab-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 21px;
+  height: 21px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 10.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: inherit;
+}
+.cx-exam-tab[data-state="part"] .cx-exam-tab-num {
+  border-style: dashed;
+  border-color: color-mix(in oklab, var(--exam-accent) 52%, transparent);
+  color: color-mix(in oklab, var(--exam-accent) 72%, var(--foreground));
+}
+.cx-exam-tab[data-state="done"] .cx-exam-tab-num {
+  border-color: color-mix(in oklab, var(--exam-accent) 44%, transparent);
+  background: color-mix(in oklab, var(--exam-accent) 17%, var(--card));
+}
+.cx-exam-tab--on[data-state="done"] .cx-exam-tab-num {
+  background: color-mix(in oklab, var(--exam-accent) 24%, var(--card));
+}
+.cx-exam-tab-label { min-width: 0; overflow: hidden; }
+/* compact panel embed — the rail shrinks with its pane */
+&.cx-exam-panel .cx-exam-tabs { padding: 4px; box-shadow: none; }
+&.cx-exam-panel .cx-exam-tab { min-height: 30px; font-size: 11.5px; padding: 0 10px 0 7px; }
+&.cx-exam-panel .cx-exam-tab-num { width: 18px; height: 18px; font-size: 9.5px; }
+.cx-exam-progressbar {
+  height: 4px;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--border) 55%, transparent);
+}
+/* the fill is a 100%-width block scaled by the data-pct table (§P2b) —
+   transform keeps the 4px track layout-stable while it animates */
+.cx-exam-progressfill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--exam-accent);
+  transform-origin: left center;
+  transform: scaleX(0); /* no data-pct → nothing recorded yet */
+  transition: transform 250ms ease;
+}
+
+/* ==== §P2b · PROGRESS — data-pct stepped width (generated) =================
+   One exact rule per value the board emits (0..100, rounded integers).
+   scaleX over the full-width fill: layout-stable, transition-animated,
+   reduced-motion-flattened (§P13). The footer progressbar is the only
+   consumer since the side steps menu was removed. Keep in step with
+   ExamBoard; keep pure over 0..100. */
+.cx-exam-progressfill[data-pct="0"] { transform: scaleX(0.00); }
+.cx-exam-progressfill[data-pct="1"] { transform: scaleX(0.01); }
+.cx-exam-progressfill[data-pct="2"] { transform: scaleX(0.02); }
+.cx-exam-progressfill[data-pct="3"] { transform: scaleX(0.03); }
+.cx-exam-progressfill[data-pct="4"] { transform: scaleX(0.04); }
+.cx-exam-progressfill[data-pct="5"] { transform: scaleX(0.05); }
+.cx-exam-progressfill[data-pct="6"] { transform: scaleX(0.06); }
+.cx-exam-progressfill[data-pct="7"] { transform: scaleX(0.07); }
+.cx-exam-progressfill[data-pct="8"] { transform: scaleX(0.08); }
+.cx-exam-progressfill[data-pct="9"] { transform: scaleX(0.09); }
+.cx-exam-progressfill[data-pct="10"] { transform: scaleX(0.10); }
+.cx-exam-progressfill[data-pct="11"] { transform: scaleX(0.11); }
+.cx-exam-progressfill[data-pct="12"] { transform: scaleX(0.12); }
+.cx-exam-progressfill[data-pct="13"] { transform: scaleX(0.13); }
+.cx-exam-progressfill[data-pct="14"] { transform: scaleX(0.14); }
+.cx-exam-progressfill[data-pct="15"] { transform: scaleX(0.15); }
+.cx-exam-progressfill[data-pct="16"] { transform: scaleX(0.16); }
+.cx-exam-progressfill[data-pct="17"] { transform: scaleX(0.17); }
+.cx-exam-progressfill[data-pct="18"] { transform: scaleX(0.18); }
+.cx-exam-progressfill[data-pct="19"] { transform: scaleX(0.19); }
+.cx-exam-progressfill[data-pct="20"] { transform: scaleX(0.20); }
+.cx-exam-progressfill[data-pct="21"] { transform: scaleX(0.21); }
+.cx-exam-progressfill[data-pct="22"] { transform: scaleX(0.22); }
+.cx-exam-progressfill[data-pct="23"] { transform: scaleX(0.23); }
+.cx-exam-progressfill[data-pct="24"] { transform: scaleX(0.24); }
+.cx-exam-progressfill[data-pct="25"] { transform: scaleX(0.25); }
+.cx-exam-progressfill[data-pct="26"] { transform: scaleX(0.26); }
+.cx-exam-progressfill[data-pct="27"] { transform: scaleX(0.27); }
+.cx-exam-progressfill[data-pct="28"] { transform: scaleX(0.28); }
+.cx-exam-progressfill[data-pct="29"] { transform: scaleX(0.29); }
+.cx-exam-progressfill[data-pct="30"] { transform: scaleX(0.30); }
+.cx-exam-progressfill[data-pct="31"] { transform: scaleX(0.31); }
+.cx-exam-progressfill[data-pct="32"] { transform: scaleX(0.32); }
+.cx-exam-progressfill[data-pct="33"] { transform: scaleX(0.33); }
+.cx-exam-progressfill[data-pct="34"] { transform: scaleX(0.34); }
+.cx-exam-progressfill[data-pct="35"] { transform: scaleX(0.35); }
+.cx-exam-progressfill[data-pct="36"] { transform: scaleX(0.36); }
+.cx-exam-progressfill[data-pct="37"] { transform: scaleX(0.37); }
+.cx-exam-progressfill[data-pct="38"] { transform: scaleX(0.38); }
+.cx-exam-progressfill[data-pct="39"] { transform: scaleX(0.39); }
+.cx-exam-progressfill[data-pct="40"] { transform: scaleX(0.40); }
+.cx-exam-progressfill[data-pct="41"] { transform: scaleX(0.41); }
+.cx-exam-progressfill[data-pct="42"] { transform: scaleX(0.42); }
+.cx-exam-progressfill[data-pct="43"] { transform: scaleX(0.43); }
+.cx-exam-progressfill[data-pct="44"] { transform: scaleX(0.44); }
+.cx-exam-progressfill[data-pct="45"] { transform: scaleX(0.45); }
+.cx-exam-progressfill[data-pct="46"] { transform: scaleX(0.46); }
+.cx-exam-progressfill[data-pct="47"] { transform: scaleX(0.47); }
+.cx-exam-progressfill[data-pct="48"] { transform: scaleX(0.48); }
+.cx-exam-progressfill[data-pct="49"] { transform: scaleX(0.49); }
+.cx-exam-progressfill[data-pct="50"] { transform: scaleX(0.50); }
+.cx-exam-progressfill[data-pct="51"] { transform: scaleX(0.51); }
+.cx-exam-progressfill[data-pct="52"] { transform: scaleX(0.52); }
+.cx-exam-progressfill[data-pct="53"] { transform: scaleX(0.53); }
+.cx-exam-progressfill[data-pct="54"] { transform: scaleX(0.54); }
+.cx-exam-progressfill[data-pct="55"] { transform: scaleX(0.55); }
+.cx-exam-progressfill[data-pct="56"] { transform: scaleX(0.56); }
+.cx-exam-progressfill[data-pct="57"] { transform: scaleX(0.57); }
+.cx-exam-progressfill[data-pct="58"] { transform: scaleX(0.58); }
+.cx-exam-progressfill[data-pct="59"] { transform: scaleX(0.59); }
+.cx-exam-progressfill[data-pct="60"] { transform: scaleX(0.60); }
+.cx-exam-progressfill[data-pct="61"] { transform: scaleX(0.61); }
+.cx-exam-progressfill[data-pct="62"] { transform: scaleX(0.62); }
+.cx-exam-progressfill[data-pct="63"] { transform: scaleX(0.63); }
+.cx-exam-progressfill[data-pct="64"] { transform: scaleX(0.64); }
+.cx-exam-progressfill[data-pct="65"] { transform: scaleX(0.65); }
+.cx-exam-progressfill[data-pct="66"] { transform: scaleX(0.66); }
+.cx-exam-progressfill[data-pct="67"] { transform: scaleX(0.67); }
+.cx-exam-progressfill[data-pct="68"] { transform: scaleX(0.68); }
+.cx-exam-progressfill[data-pct="69"] { transform: scaleX(0.69); }
+.cx-exam-progressfill[data-pct="70"] { transform: scaleX(0.70); }
+.cx-exam-progressfill[data-pct="71"] { transform: scaleX(0.71); }
+.cx-exam-progressfill[data-pct="72"] { transform: scaleX(0.72); }
+.cx-exam-progressfill[data-pct="73"] { transform: scaleX(0.73); }
+.cx-exam-progressfill[data-pct="74"] { transform: scaleX(0.74); }
+.cx-exam-progressfill[data-pct="75"] { transform: scaleX(0.75); }
+.cx-exam-progressfill[data-pct="76"] { transform: scaleX(0.76); }
+.cx-exam-progressfill[data-pct="77"] { transform: scaleX(0.77); }
+.cx-exam-progressfill[data-pct="78"] { transform: scaleX(0.78); }
+.cx-exam-progressfill[data-pct="79"] { transform: scaleX(0.79); }
+.cx-exam-progressfill[data-pct="80"] { transform: scaleX(0.80); }
+.cx-exam-progressfill[data-pct="81"] { transform: scaleX(0.81); }
+.cx-exam-progressfill[data-pct="82"] { transform: scaleX(0.82); }
+.cx-exam-progressfill[data-pct="83"] { transform: scaleX(0.83); }
+.cx-exam-progressfill[data-pct="84"] { transform: scaleX(0.84); }
+.cx-exam-progressfill[data-pct="85"] { transform: scaleX(0.85); }
+.cx-exam-progressfill[data-pct="86"] { transform: scaleX(0.86); }
+.cx-exam-progressfill[data-pct="87"] { transform: scaleX(0.87); }
+.cx-exam-progressfill[data-pct="88"] { transform: scaleX(0.88); }
+.cx-exam-progressfill[data-pct="89"] { transform: scaleX(0.89); }
+.cx-exam-progressfill[data-pct="90"] { transform: scaleX(0.90); }
+.cx-exam-progressfill[data-pct="91"] { transform: scaleX(0.91); }
+.cx-exam-progressfill[data-pct="92"] { transform: scaleX(0.92); }
+.cx-exam-progressfill[data-pct="93"] { transform: scaleX(0.93); }
+.cx-exam-progressfill[data-pct="94"] { transform: scaleX(0.94); }
+.cx-exam-progressfill[data-pct="95"] { transform: scaleX(0.95); }
+.cx-exam-progressfill[data-pct="96"] { transform: scaleX(0.96); }
+.cx-exam-progressfill[data-pct="97"] { transform: scaleX(0.97); }
+.cx-exam-progressfill[data-pct="98"] { transform: scaleX(0.98); }
+.cx-exam-progressfill[data-pct="99"] { transform: scaleX(0.99); }
+.cx-exam-progressfill[data-pct="100"] { transform: scaleX(1.00); }
+
+
+/* ==== §P3 · SECTION FRAMES + NORMALS BAR + FIELDGROUPS ====================
+   One bordered card per workup section; padding/gap come from the §P0
+   length tokens so packs densify per tier without touching layout props.
+   scroll-margin-top keeps jump-backs clear of the D/W sticky steps col. */
+.cx-exam-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-row-gap);
+  min-width: 0;
+  padding: var(--cx-sec-pad) var(--cx-sec-pad-x);
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+  scroll-margin-top: 8px;
+  animation: cx-exam-rise 180ms ease;
+}
+.cx-exam-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+  min-width: 0;
+}
+.cx-exam-section-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--foreground);
+}
+.cx-exam-section-sub {
+  margin: 0;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+.cx-exam-normals {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.cx-exam-normals-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 4px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+.cx-exam-normals-btn:hover {
+  border-color: color-mix(in oklab, var(--exam-accent) 45%, var(--border));
+  color: var(--foreground);
+}
+.cx-exam-normals-btn:active { transform: scale(0.97); }
+/* per-field normal chips — ok-tinted quick fills; pressed = filled */
+.cx-exam-normalchip {
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 4px 12px;
+  border: 1px solid color-mix(in oklab, var(--cx-ok) 30%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--cx-ok) 9%, transparent);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: color-mix(in oklab, var(--cx-ok) 74%, var(--foreground));
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+.cx-exam-normalchip:hover {
+  border-color: color-mix(in oklab, var(--cx-ok) 55%, var(--border));
+  color: color-mix(in oklab, var(--cx-ok) 88%, var(--foreground));
+}
+.cx-exam-normalchip:active { transform: scale(0.97); }
+.cx-exam-normalchip[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--cx-ok) 16%, transparent);
+  color: color-mix(in oklab, var(--cx-ok) 88%, var(--foreground));
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--cx-ok) 45%, transparent);
+}
+/* fieldgroup — bordered sub-card for grouped blocks (spectacles order,
+   cycloplegic Rx, peds birth history, anterior/posterior graded groups).
+   data-empty="true" (builder-set) mutes the group until any field is used;
+   hover/focus-within unmutes so the controls stay discoverable. */
+.cx-exam-fieldgroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-row-gap);
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 22%, transparent);
+  transition: opacity 150ms ease;
+}
+.cx-exam-fieldgroup-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+}
+.cx-exam-fieldgroup[data-empty="true"] { opacity: 0.55; }
+.cx-exam-fieldgroup[data-empty="true"]:hover,
+.cx-exam-fieldgroup[data-empty="true"]:focus-within { opacity: 1; }
+
+/* ==== §P4 · FIELD GRIDS & FIELDS ==========================================
+   Grids are 1-col at the mobile-first base; --2/--3/--4 promote in §P10
+   (T: 2-col, D+: 3/4-col) and --pairs puts OD/OS pair blocks side by side
+   from Tier D. Inputs are 44px tall with a 16px font at the base (no iOS
+   focus zoom); T drops to 34/13 and D/W to 32 (§P10), coarse re-raises. */
+.cx-exam-grid,
+.cx-exam-grid--2,
+.cx-exam-grid--3,
+.cx-exam-grid--4,
+.cx-exam-grid--pairs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--cx-grid-gap);
+  min-width: 0;
+}
+.cx-exam-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.cx-exam-field--wide { grid-column: 1 / -1; }
+.cx-exam-label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--foreground);
+}
+.cx-exam-help {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+.cx-exam-input,
+.cx-exam-select {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--foreground);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.cx-exam-select { cursor: pointer; }
+.cx-exam-textarea {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  min-height: 88px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--foreground);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.cx-exam-input::placeholder,
+.cx-exam-textarea::placeholder {
+  color: color-mix(in oklab, var(--muted-foreground) 80%, transparent);
+}
+.cx-exam-input:focus,
+.cx-exam-select:focus,
+.cx-exam-textarea:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--ring, var(--primary)) 55%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring, var(--primary)) 22%, transparent);
+}
+/* num suffix — ExamField/ExamEyePair wrap input + unit in an UNCLASSED
+   div (their only bare div), so the row is laid out via > div:not([class]):
+   unit beside the input, both wrapping together when the cell is narrow */
+.cx-exam-field > div:not([class]),
+.cx-exam-eyecell > div:not([class]) {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 4px 8px;
+  min-width: 0;
+}
+.cx-exam-field > div:not([class]) > .cx-exam-input,
+.cx-exam-field > div:not([class]) > .cx-exam-select {
+  flex: 1 1 7rem;
+  width: auto;
+  min-width: 0;
+}
+.cx-exam-eyecell > div:not([class]) > .cx-exam-input,
+.cx-exam-eyecell > div:not([class]) > .cx-exam-select {
+  flex: 1 1 5rem;
+  width: auto;
+  min-width: 0;
+}
+/* required-miss state: aria-invalid on the control or an error <p> sibling */
+.cx-exam-input[aria-invalid="true"],
+.cx-exam-select[aria-invalid="true"],
+.cx-exam-textarea[aria-invalid="true"],
+.cx-exam-field:has(> .cx-exam-error) > .cx-exam-input,
+.cx-exam-field:has(> .cx-exam-error) > .cx-exam-select,
+.cx-exam-field:has(> .cx-exam-error) > .cx-exam-textarea {
+  border-color: color-mix(in oklab, var(--cx-err) 55%, var(--border));
+}
+/* the unit suffix itself — muted, tabular, pinned beside its input */
+.cx-exam-unit {
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  color: var(--muted-foreground);
+}
+.cx-exam-error {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--destructive);
+}
+
+/* ---- chip + chiprow family (the ONE chip strip; v1 flex chips DELETED) --- */
+.cx-exam-chip {
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 4px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+.cx-exam-chip:hover {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+  color: var(--foreground);
+}
+.cx-exam-chip:active { transform: scale(0.97); }
+.cx-exam-chip--sel {
+  border-color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: color-mix(in oklab, var(--primary) 72%, var(--foreground));
+  font-weight: 600;
+}
+/* §P4a — the ONE chip strip. Grid, not flex-wrap: deterministic columns,
+   equal tracks, no pill soup. Row cap bounds pathological option lists
+   (--free lifts it for short sets; --tiny densifies flag chips). */
+.cx-exam-chiprow {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--cx-chipw), 1fr));
+  gap: 4px;
+  min-width: 0;
+  /* 42px/row estimate: covers occasional 2-line wrapped labels without
+     clipping them at the scroll bound (EXV4 — readable chips) */
+  max-height: calc(var(--cx-chip-rows) * 2.625rem + (var(--cx-chip-rows) - 1) * 4px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+/* doubled class compounds the specificity so --free survives the §P10
+   tier row-caps (same-specificity source order would bury it) */
+.cx-exam-chiprow.cx-exam-chiprow--free { --cx-chip-rows: 6; }   /* short option lists show all */
+.cx-exam-chiprow.cx-exam-chiprow--tiny { --cx-chipw: 3.25rem; } /* flags: OD/OS, +, −, ∆        */
+/* the chip button inside a track: fills it, wraps at word boundaries —
+   NO ellipsis, NO line clamp: a clipped option the user cannot read is a
+   tap hazard (EXV4). Capped strips scroll instead of cutting text. */
+.cx-exam-chiprow .cx-exam-chip {
+  display: block;
+  width: 100%;
+  min-height: 2.125rem;
+  padding: 2px 6px;
+  text-align: center;
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* ---- comp family — inline composite mini-input row (sph/cyl/axis, K1/K2)
+   where a full rx table would be wrong (mobile eyecells, quick pairs) ----- */
+.cx-exam-comp {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
+}
+.cx-exam-comp-slot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1 1 6.5rem;
+  min-width: 0;
+  min-height: 44px;
+}
+.cx-exam-eyecell .cx-exam-comp,
+.cx-exam-eyecell .cx-exam-comp-slot { flex: 1 1 100%; }
+.cx-exam-comp-slot > .cx-exam-input,
+.cx-exam-comp > .cx-exam-input {
+  flex: 1 1 3rem;
+  width: auto;
+  min-width: 0;
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+.cx-exam-comp-tag {
+  flex: 0 0 auto;
+  min-width: 2.5rem;
+  padding: 2px 5px;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 45%, transparent);
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+/* ---- stepper — −/value/+ stepped numeric (axis, ADD, IOP, CDR, NPC) ------ */
+.cx-exam-stepper {
+  display: inline-flex;
+  align-items: stretch;
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--background);
+}
+/* corners rounded on the buttons (no overflow-hidden — the fine-pointer
+   hit extensions must not clip) */
+.cx-exam-stepper-btn:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+.cx-exam-stepper-btn:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+.cx-exam-stepper-btn {
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 2.75rem;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.cx-exam-stepper-btn:hover { background: color-mix(in oklab, var(--muted) 50%, transparent); }
+.cx-exam-stepper-btn:active { transform: scale(0.97); }
+.cx-exam-stepper > .cx-exam-input {
+  flex: 1 1 auto;
+  width: 4.5rem; /* "−12.75" at 16px ≈ 62px — the old 3.5rem clipped it */
+  min-width: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+.cx-exam-stepper > .cx-exam-input:focus { border-radius: 0; }
+
+/* ---- table family — generic grid-table (medications, procedures) ---------
+   M: stacked cards (head hidden, cells flow); T+: shared 5-track grid
+   (§P10) with a micro-type header strip, per §4.8. */
+.cx-exam-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+}
+.cx-exam-table-head { display: none; }
+.cx-exam-table-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--background) 60%, transparent);
+}
+.cx-exam-table-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.cx-exam-table-cell > .cx-exam-input,
+.cx-exam-table-cell > .cx-exam-select {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+}
+.cx-exam-table-row--add {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px dashed color-mix(in oklab, var(--border) 80%, transparent);
+  border-radius: var(--radius-md);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+.cx-exam-table-row--add:hover {
+  border-color: color-mix(in oklab, var(--exam-accent) 45%, var(--border));
+  color: var(--foreground);
+}
+
+/* ---- sign — examiner signature line (Plan) ------------------------------- */
+.cx-exam-sign {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  min-width: 0;
+}
+.cx-exam-sign > .cx-exam-input {
+  flex: 1 1 12rem;
+  width: auto;
+  min-width: 0;
+  min-height: 40px;
+  padding: 4px 2px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 90%, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  font-size: 14px;
+}
+
+/* ==== §P5 · EYE GRID + VAQUICK ============================================
+   Every OD/OS pair. Stays 2-col at EVERY tier (v1 rule — OD/OS side by
+   side is the clinical mental model); M only compresses gaps/heads.
+   Tints: --od = live accent, --os = ok hue. */
+/* FIX (EXV2-FIX): the grid STACKS its .cx-exam-eyerow children — the eyes'
+   2-col template lives on .cx-exam-eyerow. The old repeat(2,…) parked the
+   single eyerow in column 1, halving every eyecell (65px at 390 → 24px
+   composite inputs; 162px at T). One track = the eyerow owns the width. */
+.cx-exam-eyegrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px 10px;
+  min-width: 0;
+}
+.cx-exam-eyerow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 10px;
+  min-width: 0;
+}
+.cx-exam-eyerow + .cx-exam-eyerow {
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in oklab, var(--border) 45%, transparent);
+}
+.cx-exam-eyerow > .cx-exam-label { grid-column: 1 / -1; }
+.cx-exam-eyecol {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.cx-exam-eyecell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  min-height: 44px;
+}
+.cx-exam-eyecol > .cx-exam-label,
+.cx-exam-eyecell > .cx-exam-label { font-size: 11px; }
+.cx-exam-eyecell .cx-exam-input,
+.cx-exam-eyecell .cx-exam-select { width: 100%; }
+/* eye headers — OD/OS must read at a glance, tokens only */
+.cx-exam-eyehead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  min-height: 28px;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.cx-exam-eyehead--od {
+  border-color: color-mix(in oklab, var(--exam-od) 32%, var(--border));
+  background: color-mix(in oklab, var(--exam-od) 10%, var(--card));
+  color: color-mix(in oklab, var(--exam-od) 74%, var(--foreground));
+}
+.cx-exam-eyehead--os {
+  border-color: color-mix(in oklab, var(--exam-os) 32%, var(--border));
+  background: color-mix(in oklab, var(--exam-os) 10%, var(--card));
+  color: color-mix(in oklab, var(--exam-os) 74%, var(--foreground));
+}
+/* vaquick — the shared quick-VA strip under a VA eye pair (Vision). One
+   row: the OU/OD/OS scope toggle (a chiprow--tiny of 3 chips, PLAN-B §2.1)
+   in the left slot + one shared value chiprow. Per-eye chiprow fallbacks
+   inside eyecells are already compacted by the chiprow rules. */
+.cx-exam-vaquick {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 25%, transparent);
+}
+/* FIX (EXV2-FIX): the value chiprow takes its own full-width flex line
+   (basis 100% never fits beside the scope strip → it always wraps) and a
+   3rem min track so the 10-chip VA set stays ONE row at the T-tier pane
+   (740px container) and ≤3 rows at M. The scope strip is content-sized
+   with an EXPLICIT 3-track template — the old "flex: 0 0 auto" auto-fill
+   grid had an indefinite width, resolved to 1 track and wrapped OU/OD/OS
+   into 3 rows. */
+.cx-exam-vaquick > .cx-exam-chiprow {
+  flex: 1 1 100%;
+  min-width: 0;
+  max-width: none;
+  --cx-chipw: 3rem;
+}
+.cx-exam-vaquick > .cx-exam-chiprow--tiny {
+  flex: 0 0 auto;
+  max-width: none;
+  width: max-content;
+  grid-template-columns: repeat(3, minmax(0, auto));
+}
+
+
+/* ==== §P6 · RX TABLE GEOMETRY =============================================
+   CSS-grid, table-less, ARIA roles kept. Every row (header + OD + OS)
+   shares ONE track template via the --cx-rx-* tokens so columns always
+   align without flex hacks (v1's flex-grow row is DELETED). The M-tier
+   table is its own scroll container (overflow-x below) so the sticky eye
+   column works regardless of the host's overflow. */
+.cx-exam-rxtable {
+  --cx-rx-eye: 2.75rem;           /* 44px eye col            */
+  --cx-rx-num: 5.5rem;            /* 88px SPH/CYL/AXIS — fits "−12.75" (EXV2-FIX) */
+  --cx-rx-va: minmax(10rem, 1fr); /* VA cell                 */
+  display: grid;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+}
+.cx-exam-rxrow {
+  display: grid;
+  grid-template-columns: var(--cx-rx-eye) repeat(3, var(--cx-rx-num)) var(--cx-rx-va);
+  align-items: center;
+  min-width: 0;
+  min-width: 26rem; /* M: 5 tracks must not squeeze — the table scrolls */
+}
+.cx-exam-rxrow + .cx-exam-rxrow {
+  border-top: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+}
+.cx-exam-rxcell { padding: 6px 8px; min-width: 0; }
+.cx-exam-rxcell + .cx-exam-rxcell {
+  border-left: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+}
+/* eye column: sticky while the M table scrolls; keeps OD/OS language.
+   ADDITIVE STICKY (PLAN-C §6.2): static fallback first. */
+.cx-exam-rxcell--eye {
+  position: static;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklab, var(--card) 94%, transparent);
+  border-right: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+  border-left: 0;
+}
+/* header row = first row (muted strip, uppercase micro-type) */
+.cx-exam-rxrow:first-child {
+  background: color-mix(in oklab, var(--muted) 40%, transparent);
+}
+.cx-exam-rxrow:first-child .cx-exam-rxcell {
+  padding: 6px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+/* the Rx numerals: mono, centered, tabular, never re-spaced (heights
+   follow the global control-height tiers — 44 M / 34 T / 32 D) */
+.cx-exam-rxcell .cx-exam-input {
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+/* variants — same geometry, different tracks (§3.3) */
+.cx-exam-rxtable--noVA .cx-exam-rxrow {
+  grid-template-columns: var(--cx-rx-eye) repeat(3, var(--cx-rx-num));
+}
+.cx-exam-rxtable--kera .cx-exam-rxrow {
+  grid-template-columns: var(--cx-rx-eye) 4.5rem 4rem 4.5rem 4rem;
+}
+/* tolerant v1 idiom: a rowheader cell unioning cx-exam-eyehead(--od/--os)
+   squares into the table grid instead of reading as a stray pill */
+.cx-exam-rxrow .cx-exam-rxcell.cx-exam-eyehead {
+  width: auto;
+  border: 0;
+  border-right: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+  border-radius: 0;
+}
+/* rxva — VA quick-value row-group directly under the table: per-eye mini
+   tag + one chiprow each (the 10 VA chips LEFT the table cells). Rows:
+   M 4/row cap 3 · T 10/row · D/W one row per eye (max-width keeps chips
+   ~74px so the strip stays single-line at D+). */
+.cx-exam-rxva {
+  display: grid;
+  grid-template-columns: var(--cx-rx-eye, 2.75rem) minmax(0, 1fr);
+  gap: 4px 8px;
+  align-items: center;
+  min-width: 0;
+}
+.cx-exam-rxva-eye { display: contents; }
+.cx-exam-rxva-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  border-radius: var(--radius-md);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cx-exam-rxva-tag--od {
+  color: color-mix(in oklab, var(--exam-od) 74%, var(--foreground));
+  border: 1px solid color-mix(in oklab, var(--exam-od) 32%, var(--border));
+}
+.cx-exam-rxva-tag--os {
+  color: color-mix(in oklab, var(--exam-os) 74%, var(--foreground));
+  border: 1px solid color-mix(in oklab, var(--exam-os) 32%, var(--border));
+}
+.cx-exam-rxva .cx-exam-chiprow { max-width: 46rem; }
+/* FIX (EXV2-FIX): the band hosts ONE shared ExamVaQuick (scope strip +
+   value chiprow) beside the two static eye tags — the strip spans the
+   value column; the tags stay per-eye in column 1. */
+.cx-exam-rxva > .cx-exam-vaquick {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  min-width: 0;
+}
+/* the copy-friendly final prescription — tap to select the whole thing */
+.cx-exam-rx-final {
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 30%, var(--border));
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--exam-accent) 7%, var(--card));
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 13px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  user-select: all;
+  -webkit-user-select: all;
+  color: var(--foreground);
+}
+
+/* ==== §P7 · DUOCHROME WIDGET ==============================================
+   Two rounded halves — red (err hue) vs green (ok hue), token-mixed over
+   the card so both survive light AND dark — with the 3 answer buttons
+   below. Halves/buttons may be direct children of the widget OR wrapped in
+   plain divs; every shape lands side by side. Selection emphasis is the
+   only animation (cx-exam-pop, killed by reduced motion). The OD/OS
+   duochrome PAIR sits in a .cx-exam-grid--2 (stacked at M, side by side
+   at T+). */
+.cx-exam-duochrome {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+}
+.cx-exam-duochrome:has(> .cx-exam-duochrome-half),
+.cx-exam-duochrome:has(> .cx-exam-duochrome-btn) {
+  flex-flow: row wrap;
+  align-items: stretch;
+}
+.cx-exam-duochrome > .cx-exam-label,
+.cx-exam-duochrome > .cx-exam-help { flex: 1 1 100%; }
+.cx-exam-duochrome > .cx-exam-duochrome-half {
+  flex: 1 1 auto;
+  width: calc((100% - 8px) / 2);
+  min-width: 8rem;
+}
+.cx-exam-duochrome > .cx-exam-duochrome-btn {
+  flex: 1 1 auto;
+  width: calc((100% - 16px) / 3);
+  min-width: 6.5rem;
+}
+.cx-exam-duochrome div:not([class]) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 0;
+}
+.cx-exam-duochrome-half {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 76px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.cx-exam-duochrome-half--red {
+  border-color: color-mix(in oklab, var(--cx-err) 32%, var(--border));
+  background: color-mix(in oklab, var(--cx-err) 13%, var(--card));
+  color: color-mix(in oklab, var(--cx-err) 76%, var(--foreground));
+}
+.cx-exam-duochrome-half--green {
+  border-color: color-mix(in oklab, var(--cx-ok) 32%, var(--border));
+  background: color-mix(in oklab, var(--cx-ok) 13%, var(--card));
+  color: color-mix(in oklab, var(--cx-ok) 76%, var(--foreground));
+}
+.cx-exam-duochrome-btn {
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  border-radius: var(--radius-md);
+  background: transparent;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+.cx-exam-duochrome-btn:hover {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+  color: var(--foreground);
+}
+.cx-exam-duochrome-btn:active { transform: scale(0.97); }
+.cx-exam-duochrome-btn--sel {
+  border-color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  box-shadow: inset 0 0 0 1px var(--primary);
+  color: color-mix(in oklab, var(--primary) 72%, var(--foreground));
+  font-weight: 650;
+  animation: cx-exam-pop 150ms ease;
+}
+
+/* ==== §P8 · REVIEW + PICKER + MISC + GUARD ================================ */
+.cx-exam-review {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  scroll-margin-top: 8px;
+  animation: cx-exam-rise 180ms ease;
+}
+.cx-exam-review-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+}
+.cx-exam-review-card {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.cx-exam-review-card:hover {
+  border-color: color-mix(in oklab, var(--exam-accent) 35%, transparent);
+}
+.cx-exam-review-card:active { transform: scale(0.98); }
+/* cards with unmet hard-required fields — warn left edge via inset shadow,
+   no layout change; intentionally NOT animated (PLAN-C §7) */
+.cx-exam-review-card--missing {
+  box-shadow: inset 3px 0 0 0 color-mix(in oklab, var(--cx-warn) 70%, transparent);
+}
+.cx-exam-review-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--foreground);
+}
+.cx-exam-review-row {
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--foreground) 78%, transparent);
+  overflow-wrap: anywhere;
+}
+.cx-exam-review-missing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border: 1px solid color-mix(in oklab, var(--cx-err) 28%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--cx-err) 10%, transparent);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: color-mix(in oklab, var(--cx-err) 78%, var(--foreground));
+}
+/* picker — no-MR state: today's book + directory search */
+.cx-exam-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  scroll-margin-top: 8px;
+  animation: cx-exam-rise 180ms ease;
+}
+.cx-exam-picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.cx-exam-picker-row {
+  appearance: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.cx-exam-picker-row:hover {
+  border-color: color-mix(in oklab, var(--exam-accent) 35%, transparent);
+}
+.cx-exam-picker-row:active { transform: scale(0.98); }
+.cx-exam-picker-empty {
+  padding: 22px 12px;
+  border: 1px dashed color-mix(in oklab, var(--border) 80%, transparent);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+/* misc states */
+.cx-exam-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 26px 14px;
+  border: 1px dashed color-mix(in oklab, var(--border) 80%, transparent);
+  border-radius: var(--radius-lg);
+  scroll-margin-top: 8px;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.cx-exam-warning {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid color-mix(in oklab, var(--cx-warn) 32%, var(--border));
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--cx-warn) 9%, var(--card));
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--cx-warn) 76%, var(--foreground));
+}
+.cx-exam-infobar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: var(--radius-md);
+  scroll-margin-top: 8px;
+  background: color-mix(in oklab, var(--muted) 35%, transparent);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+/* guard — ExamDirtyGuard (PLAN-B §6.9): unsaved-workup intercept. The
+   board mounts it with cx-exam-guard cx-exam-guard--open; without --open
+   it stays inert. Fixed centered card + ::before viewport backdrop (no
+   transform on the card, so the fixed backdrop spans the real viewport). */
+.cx-exam-guard { display: none; }
+.cx-exam-guard--open {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(24rem, calc(100vw - 32px));
+  height: fit-content;
+  margin: auto;
+  padding: 16px;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 96%, transparent);
+  box-shadow: 0 18px 50px color-mix(in oklab, var(--foreground) 22%, transparent);
+  animation: cx-exam-rise 150ms ease;
+}
+.cx-exam-guard--open::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in oklab, var(--background) 58%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.cx-exam-guard--open p,
+.cx-exam-guard--open strong {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.cx-exam-guard--open > div:not([class]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+/* deliberate modal action — full 44px target at every tier */
+.cx-exam-guard--open .cx-btn {
+  flex: 1 1 auto;
+  min-height: 44px;
+}
+
+
+/* ==== §P9 · FOOTER SAVE BAR ===============================================
+   Base = STICKY frosted bar at content end (all tiers). Section navigation
+   moved up into the sticky rail (§P1) at every tier, so the footer carries
+   only the shared progress bar (data-pct fill), the data-nav="next" ghost
+   chip, the D/W keyboard hint, the primary save and the optional secondary. */
+.cx-exam-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  min-width: 0;
+  margin-top: 2px;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 92%, transparent);
+  position: static;
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -10px 30px color-mix(in oklab, var(--foreground) 16%, transparent);
+}
+.cx-exam-footer .cx-exam-progressbar { flex: 1 1 100%; }
+.cx-exam-footer-note {
+  flex: 1 1 100%;
+  min-width: 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+/* "Next section →" ghost chip (shared cx-btn primitive; data-nav hooks QA).
+   Full-height at the base contract; tiers shrink it with the saves. */
+.cx-exam-footer [data-nav="next"] { min-height: 44px; }
+/* keyboard hint — D/W only (§P10 shows it); hidden M/T and without CQ */
+.cx-exam-footer [data-kbd-hint] {
+  display: none;
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+.cx-exam-save {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1 1 10rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
+  white-space: nowrap;
+  color: var(--primary-foreground);
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+.cx-exam-save:hover {
+  background: color-mix(in oklab, var(--primary) 88%, var(--foreground));
+}
+.cx-exam-save:active { transform: scale(0.97); }
+.cx-exam-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.cx-exam-save--secondary {
+  flex: 1 1 9rem;
+  border-color: color-mix(in oklab, var(--border) 80%, transparent);
+  background: var(--card);
+  color: var(--foreground);
+  font-weight: 550;
+}
+.cx-exam-save--secondary:hover {
+  background: var(--muted);
+  border-color: var(--border);
+}
+
+
+/* ==== §P10 · RESPONSIVE — @container cxexam TIERS (PLAN-C §1) =============
+   All tier layout lives here. Tier edges are the contract's 719/1023/1439
+   applied to the pane the board occupies. Cumulative blocks (min-width)
+   carry the height/token drops so D and W inherit T; range blocks carry
+   tier-specific layout. Viewport media queries are NOT used for layout —
+   pointer/reduced-motion/safe-area stay @media (§P11–P13). */
+
+/* ---- Tier M ≤719.9 — compact phone presentation (base is mobile-first;
+        this block only re-asserts what T+ changes back) -------------------- */
+@container cxexam (max-width: 719.9px) {
+  /* a container query cannot style its own container, so tier token
+     overrides land on the token CONSUMERS (never on bare "&") */
+  .cx-exam-chiprow { --cx-chip-rows: 3; } /* VA strips: 4/row × 3 on phones */
+  .cx-exam-sub { display: none; }              /* head = title only */
+  .cx-exam-section-sub {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cx-exam-context { padding: 8px 10px; }      /* compact strip; bookstrip wraps */
+  .cx-exam-eyegrid, .cx-exam-eyerow { gap: 6px 8px; }
+  .cx-exam-eyehead { min-height: 24px; padding: 2px 8px; font-size: 9.5px; }
+  .cx-exam-eyecell .cx-exam-chiprow { --cx-chipw: 3.4rem; } /* 2 VA chip cols/eye */
+  .cx-exam-duochrome-half { min-height: 64px; }
+  .cx-exam-rxcell .cx-exam-input { font-size: 16px; } /* no iOS focus zoom */
+  /* FIX (EXV2-FIX): the 16px M-type rx numerals need a 104px track so
+     "−12.75" never clips — the row min-width chain makes the table scroll
+     horizontally (the sanctioned M pattern, sticky eye column). */
+  .cx-exam-rxtable { --cx-rx-num: 6.5rem; }
+  .cx-exam-footer { gap: 8px; }                /* buttons share the line */
+  .cx-exam-save { flex: 2 1 0; }
+  .cx-exam-save--secondary { flex: 1 1 0; }
+}
+
+/* ---- T+ cumulative — first density drop + token scale ------------------- */
+@container cxexam (min-width: 720px) {
+  .cx-exam-section {
+    --cx-sec-pad: 14px;
+    --cx-sec-pad-x: 16px;
+  }
+  .cx-exam-grid,
+  .cx-exam-grid--2,
+  .cx-exam-grid--3,
+  .cx-exam-grid--4,
+  .cx-exam-grid--pairs { --cx-grid-gap: 12px; }
+  .cx-exam-chiprow { --cx-chip-rows: 2; }      /* cap 2 rows from T on */
+  .cx-exam-sub { display: block; }             /* title + sub */
+  .cx-exam-section-sub { display: block; }
+  .cx-exam-title { font-size: 20px; }
+  .cx-exam-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cx-exam-grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cx-exam-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cx-exam-review-grid { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+  .cx-exam-input,
+  .cx-exam-select { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+  .cx-exam-textarea { min-height: 80px; font-size: 13px; }
+  .cx-exam-chip,
+  .cx-exam-normalchip,
+  .cx-exam-normals-btn,
+  .cx-exam-duochrome-btn { min-height: 32px; }
+  .cx-exam-stepper-btn { min-height: 34px; width: 2.25rem; }
+  .cx-exam-sign > .cx-exam-input { min-height: 34px; }
+  .cx-exam-save,
+  .cx-exam-save--secondary,
+  .cx-exam-footer [data-nav="next"] { min-height: 34px; }
+  .cx-exam-picker-row { min-height: 44px; }
+  .cx-exam-eyegrid, .cx-exam-eyerow { gap: 8px 12px; }
+  /* FIX (EXV2-FIX) — workup densification: the 1440 probe's capsule
+     container sits in THIS tier (740px pane), so the anterior ≤3.0
+     viewport-height budget is won here. Tighter eye rows/heads/cells,
+     slimmer copy-chip rows, denser groups. Content and help text are
+     untouched; coarse pointers re-raise the 40px contract via §P11. */
+  .cx-exam-section { --cx-row-gap: 6px; }
+  .cx-exam-field { gap: 3px; }
+  .cx-exam-eyecol, .cx-exam-eyecell { gap: 2px; }
+  .cx-exam-eyecell { min-height: 36px; }
+  .cx-exam-eyehead { min-height: 22px; padding: 2px 8px; font-size: 9.5px; }
+  .cx-exam-fieldgroup { padding: 8px; }
+  .cx-exam-normals { gap: 4px; }
+  .cx-exam-normalchip,
+  .cx-exam-normals-btn { min-height: 28px; padding: 2px 10px; }
+  /* EXV2-FIX overrides retired (EXV4): the 4rem ID floors forced 65px
+     tracks that broke "MARRIED"/"BLURRED VISION" mid-word — the grid
+     floor (5.25rem) + wrap + scrollable caps handle those strips now. */
+  .cx-exam-duochrome-half { min-height: 84px; }
+  .cx-exam-table { gap: 0; padding: 0; }
+  .cx-exam-table-head,
+  .cx-exam-table-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1.6fr; /* drug·dose·freq·dur·notes */
+    align-items: center;
+  }
+  .cx-exam-table-head {
+    background: color-mix(in oklab, var(--muted) 40%, transparent);
+  }
+  .cx-exam-table-head .cx-exam-table-cell {
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+  }
+  .cx-exam-table-row {
+    border: 0;
+    border-top: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+    border-radius: 0;
+    background: transparent;
+  }
+  .cx-exam-table-cell { padding: 6px 8px; }
+  .cx-exam-table-row--add {
+    border: 0;
+    border-top: 1px dashed color-mix(in oklab, var(--border) 80%, transparent);
+    border-radius: 0;
+  }
+  /* rx table: T tracks ≈ 28rem < 720 pane → no scroll, no row min */
+  .cx-exam-rxtable {
+    overflow-x: visible;
+    overscroll-behavior-x: auto;
+  }
+  .cx-exam-rxrow { min-width: 0; }
+  /* footer: one line — note + progress left, saves right */
+  .cx-exam-footer {
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .cx-exam-footer .cx-exam-progressbar { flex: 1 1 10rem; }
+  .cx-exam-footer-note { flex: 1 1 14rem; }
+  .cx-exam-save,
+  .cx-exam-save--secondary { flex: 0 0 auto; }
+}
+
+/* ---- D+ cumulative — workup density + field row-mode + board grid ------- */
+@container cxexam (min-width: 1024px) {
+  .cx-exam-section {
+    --cx-sec-pad: 16px;
+    --cx-sec-pad-x: 18px;
+  }
+  .cx-exam-rxtable {
+    --cx-rx-eye: 3rem;
+    --cx-rx-num: 5.5rem; /* EXV2-FIX: ≥ base need — "−12.75" at 13px = 67px text */
+    --cx-rx-va: minmax(12rem, 1fr);
+  }
+  .cx-exam-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cx-exam-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cx-exam-grid--pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cx-exam-input,
+  .cx-exam-select { min-height: 32px; }
+  .cx-exam-textarea { min-height: 72px; }
+  .cx-exam-chip,
+  .cx-exam-normalchip,
+  .cx-exam-normals-btn,
+  .cx-exam-duochrome-btn { min-height: 30px; }
+  .cx-exam-save,
+  .cx-exam-save--secondary,
+  .cx-exam-footer [data-nav="next"] { min-height: 32px; }
+  .cx-exam-eyegrid, .cx-exam-eyerow { gap: 8px 14px; }
+  /* EXV2-FIX: chiprows inside shared grid cells get a compact floor — a
+     9-option strip in a ~350px grid--2 cell otherwise wraps to 3 rows
+     (criterion C1: ≤10 options ⇒ ≤2 rows at ≥1024). EXV4 raises the floor
+     3.25rem → 5.25rem: word chips ("SEPARATED", "MARRIED") broke mid-word
+     on 52–72px tracks; 84px tracks give every clinical option word a
+     single line. C1 still holds — ≤8 options at 84px floors stay ≤2 rows
+     in a ~350px cell, and >8-option batteries are --open (uncapped) rows.
+     Flag strips keep their own --tiny 3.25rem floor. */
+  .cx-exam-grid .cx-exam-chiprow { --cx-chipw: 5.25rem; }
+  /* §P4c — field row-mode: label left, control right for short fields.
+     Textareas, chip strips and --wide blocks stay stacked; the num-unit
+     bare-div row counts as a control. NOTE: the compound is kept on ONE
+     line — a wrapped line break would read as a descendant combinator. */
+  .cx-exam-field:not(.cx-exam-field--wide):not(:has(> .cx-exam-textarea)):not(:has(> .cx-exam-chiprow)):has(> .cx-exam-input, > .cx-exam-select, > div:not([class])) {
+    display: grid;
+    grid-template-columns: minmax(8.5rem, 11rem) minmax(0, 1fr);
+    column-gap: 10px;
+    row-gap: 4px;
+    align-items: center;
+  }
+  .cx-exam-field > .cx-exam-label { align-self: center; }
+  .cx-exam-field > .cx-exam-help,
+  .cx-exam-field > .cx-exam-error { grid-column: 2; }
+  /* board grid: ONE column — sections stack in a single scroll flow
+     (panel widget excluded — it keeps its simple flex flow) */
+  &:not(.cx-exam-panel) .cx-exam-board {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
+    align-items: start;
+  }
+  /* EXV4 — the rail WRAPS instead of hiding sections behind a scroll
+     mask: at desktop widths all 27 sections are on screen at once (2–3
+     rows of tabs beat horizontal fishing for findability). Tab density
+     + state borders live in the §EXV4 tail — §U1's touch-first tabs
+     otherwise win by source order. */
+  .cx-exam-tabs-track {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    row-gap: 3px;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  /* footer becomes the frosted bar — ADDITIVE STICKY (degrades static) */
+  .cx-exam-footer {
+    position: static;
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -10px 30px color-mix(in oklab, var(--foreground) 16%, transparent);
+  }
+  .cx-exam-footer [data-kbd-hint] { display: block; } /* j/k/f/s hint */
+}
+
+/* ---- Tier W ≥1440 — no width cap: the board owns the full central pane
+     (EXV4 — the host caps are gone too; every column of the pane is
+     clinical surface, no centered gutters of dead space) ---------------- */
+@container cxexam (min-width: 1440px) {
+  .cx-exam-section {
+    --cx-sec-pad: 18px;
+    --cx-sec-pad-x: 20px;
+  }
+  .cx-exam-rxtable { --cx-rx-num: 5.5rem; } /* EXV2-FIX: W = base need */
+}
+
+/* ==== §P11 · POINTER — coarse re-raise + fine hit extensions ==============
+   @media is used ONLY for pointer features (layout tiers live in §P10).
+   The 720px lower bound mirrors the T boundary: below it the 44px base
+   already applies, so these blocks are pure re-raises/density aids.
+   They sit AFTER §P10 so equal-specificity tier drops lose to them. */
+
+/* touch devices carrying the compact tiers keep the 44px tap contract */
+@media (min-width: 720px) and (pointer: coarse) {
+  .cx-exam-input,
+  .cx-exam-select,
+  .cx-exam-textarea { min-height: 44px; font-size: 16px; }
+  .cx-exam-chip,
+  .cx-exam-chiprow .cx-exam-chip,
+  .cx-exam-normalchip,
+  .cx-exam-normals-btn,
+  .cx-exam-duochrome-btn { min-height: 40px; }
+  .cx-exam-stepper-btn { min-height: 44px; }
+  .cx-exam-save,
+  .cx-exam-save--secondary,
+  .cx-exam-footer [data-nav="next"] { min-height: 44px; }
+  .cx-exam-context .cx-btn { min-height: 44px; }
+  .cx-exam-rxcell .cx-exam-input { font-size: 16px; }
+}
+/* fine-pointer desktop: shrunk chips/buttons grow invisible hit extensions
+   so their targets still reach the 44px contract (inputs can't carry
+   pseudo-elements). Insets are sized for the D/W 30–34px controls. */
+@media (min-width: 720px) and (pointer: fine) {
+  .cx-exam-chip,
+  .cx-exam-normalchip,
+  .cx-exam-normals-btn,
+  .cx-exam-duochrome-btn,
+  .cx-exam-save,
+  .cx-exam-save--secondary,
+  .cx-exam-stepper-btn,
+  .cx-exam-tab,
+  .cx-exam-context .cx-btn { position: relative; }
+  .cx-exam-chip::after,
+  .cx-exam-normalchip::after,
+  .cx-exam-normals-btn::after,
+  .cx-exam-tab::after {
+    content: "";
+    position: absolute;
+    inset: -7px -2px;
+  }
+  .cx-exam-duochrome-btn::after {
+    content: "";
+    position: absolute;
+    inset: -7px -2px;
+  }
+  .cx-exam-stepper-btn::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+  }
+  .cx-exam-save::after,
+  .cx-exam-save--secondary::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+  }
+  /* the context Change ghost needs -5px (34px control + 10 = 44) */
+  .cx-exam-context .cx-btn::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+  }
+  /* the compact panel's action-row buttons (Open chart / Appointment
+     book) sit at the shared 34px cx-btn base on fine pointers with no hit
+     extension — extend to the same 44px effective target the coarse
+     contract gives them. & = the capsule root: .cx-exam-panel IS the
+     CapsuleSurface, so the compound form is required. */
+  &.cx-exam-panel .cx-row .cx-btn { position: relative; }
+  &.cx-exam-panel .cx-row .cx-btn::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+  }
+}
+
+/* ==== §P12 · COMPACT EXAMCTX PANEL (.cx-exam-panel) =======================
+   SidePanelEmbed mounts the exam context widget in its OWN CapsuleSurface
+   carrying className="cx-exam-panel" ON the root — a narrow rail (~290px),
+   so the §P0 container lands it in Tier M automatically. This block sits
+   AFTER the responsive tiers; its &.cx-exam-panel prefix out-specificities
+   the tier rules. The panel is display-only; the footer stays static. */
+&.cx-exam-panel {
+  font-size: 13px;
+  --cx-chip-rows: 2;
+}
+&.cx-exam-panel .cx-exam-board { gap: 8px; font-size: 13px; }
+&.cx-exam-panel .cx-exam-title { font-size: 14px; }
+&.cx-exam-panel .cx-exam-sub { display: block; font-size: 11px; }
+&.cx-exam-panel .cx-exam-context {
+  gap: 6px 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+}
+&.cx-exam-panel .cx-exam-context-id { gap: 8px; }
+&.cx-exam-panel .cx-exam-context-id [data-avatar] {
+  width: 28px;
+  height: 28px;
+  font-size: 10.5px;
+}
+&.cx-exam-panel .cx-exam-context-id strong,
+&.cx-exam-panel .cx-exam-context-id b { font-size: 12.5px; }
+&.cx-exam-panel .cx-exam-context-meta { font-size: 10.5px; }
+&.cx-exam-panel .cx-exam-badge { padding: 2px 7px; font-size: 9.5px; }
+&.cx-exam-panel .cx-exam-bookstrip { gap: 4px; padding: 6px 8px; font-size: 11px; }
+&.cx-exam-panel .cx-exam-bookchip { padding: 1px 7px; font-size: 10px; }
+/* narrow-rail guards (the widget's real DOM): identity stack tightened,
+   and the badge/book chips ellipsize instead of overflowing the rail —
+   text-overflow needs a block box, so they drop the inline-flex there */
+&.cx-exam-panel .cx-exam-context-id .cx-col { gap: 1px; }
+&.cx-exam-panel .cx-exam-badge,
+&.cx-exam-panel .cx-exam-bookchip {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+&.cx-exam-panel .cx-exam-section {
+  gap: 8px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+}
+&.cx-exam-panel .cx-exam-section-title { font-size: 13px; }
+&.cx-exam-panel .cx-exam-section-sub { font-size: 11px; }
+&.cx-exam-panel .cx-exam-grid,
+&.cx-exam-panel .cx-exam-grid--2 { gap: 6px; }
+&.cx-exam-panel .cx-exam-label { font-size: 11px; }
+&.cx-exam-panel .cx-exam-help { font-size: 10.5px; }
+&.cx-exam-panel .cx-exam-input,
+&.cx-exam-panel .cx-exam-select {
+  min-height: 34px;
+  padding: 5px 10px;
+  font-size: 13px;
+  border-radius: var(--radius-md);
+}
+&.cx-exam-panel .cx-exam-textarea {
+  min-height: 64px;
+  padding: 5px 10px;
+  font-size: 13px;
+}
+&.cx-exam-panel .cx-exam-normals { gap: 4px; }
+&.cx-exam-panel .cx-exam-chiprow { gap: 4px; }
+&.cx-exam-panel .cx-exam-chiprow .cx-exam-chip { min-height: 30px; font-size: 11px; }
+&.cx-exam-panel .cx-exam-chip,
+&.cx-exam-panel .cx-exam-normalchip,
+&.cx-exam-panel .cx-exam-normals-btn {
+  min-height: 30px;
+  padding: 2px 10px;
+  font-size: 11px;
+}
+&.cx-exam-panel .cx-exam-eyegrid,
+&.cx-exam-panel .cx-exam-eyerow { gap: 5px 6px; }
+&.cx-exam-panel .cx-exam-eyehead {
+  min-height: 22px;
+  padding: 2px 8px;
+  font-size: 9px;
+}
+&.cx-exam-panel .cx-exam-eyecell { min-height: 34px; }
+&.cx-exam-panel .cx-exam-eyecell .cx-exam-input,
+&.cx-exam-panel .cx-exam-eyecell .cx-exam-select { min-height: 34px; font-size: 13px; }
+&.cx-exam-panel .cx-exam-comp-slot { min-height: 34px; }
+&.cx-exam-panel .cx-exam-comp-tag { font-size: 9px; }
+&.cx-exam-panel .cx-exam-stepper-btn { width: 2.25rem; min-height: 34px; }
+&.cx-exam-panel .cx-exam-fieldgroup {
+  gap: 6px;
+  padding: 8px;
+  border-radius: var(--radius-md);
+}
+&.cx-exam-panel .cx-exam-fieldgroup-title { font-size: 10px; }
+&.cx-exam-panel .cx-exam-table { border-radius: var(--radius-md); }
+&.cx-exam-panel .cx-exam-table-row { padding: 6px; }
+&.cx-exam-panel .cx-exam-table-cell { padding: 4px 6px; }
+&.cx-exam-panel .cx-exam-rxtable { border-radius: var(--radius-md); }
+&.cx-exam-panel .cx-exam-rxcell { padding: 5px 8px; }
+&.cx-exam-panel .cx-exam-rxcell .cx-exam-input {
+  min-height: 34px;
+  font-size: 12.5px;
+}
+&.cx-exam-panel .cx-exam-rxva { gap: 3px 6px; }
+&.cx-exam-panel .cx-exam-rxva-tag { min-height: 22px; font-size: 9px; }
+&.cx-exam-panel .cx-exam-rx-final { padding: 8px 10px; font-size: 12px; }
+&.cx-exam-panel .cx-exam-sign > .cx-exam-input { min-height: 34px; font-size: 13px; }
+&.cx-exam-panel .cx-exam-duochrome { gap: 6px; padding: 8px; }
+&.cx-exam-panel .cx-exam-duochrome-half { min-height: 56px; font-size: 12px; }
+&.cx-exam-panel .cx-exam-duochrome-btn {
+  min-height: 30px;
+  padding: 2px 8px;
+  font-size: 11px;
+}
+&.cx-exam-panel .cx-exam-review { gap: 8px; }
+&.cx-exam-panel .cx-exam-review-grid { gap: 6px; }
+&.cx-exam-panel .cx-exam-review-card {
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+}
+&.cx-exam-panel .cx-exam-review-row { font-size: 11px; }
+&.cx-exam-panel .cx-exam-footer {
+  position: static;
+  gap: 6px;
+  padding: 8px 10px;
+  box-shadow: none;
+}
+&.cx-exam-panel .cx-exam-save,
+&.cx-exam-panel .cx-exam-save--secondary {
+  flex: 1 1 auto;
+  min-height: 34px;
+  font-size: 12.5px;
+}
+&.cx-exam-panel .cx-exam-footer-note { font-size: 10.5px; }
+&.cx-exam-panel .cx-exam-picker-row {
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+}
+&.cx-exam-panel .cx-exam-picker-empty,
+&.cx-exam-panel .cx-exam-empty { padding: 16px 10px; font-size: 11.5px; }
+&.cx-exam-panel .cx-exam-warning,
+&.cx-exam-panel .cx-exam-infobar { padding: 6px 8px; font-size: 11px; }
+/* EXV7 — the assist panel lives inside the panel scope now: keep the cards
+   compact and the jump chips panel-sized; disabled jumps (no workup open)
+   read muted, never dead-looking */
+&.cx-exam-panel .cx-exam-assist { gap: 8px; }
+&.cx-exam-panel .cx-exam-assist-card { gap: 6px; padding: 10px; border-radius: var(--radius-md); }
+&.cx-exam-panel .cx-exam-assist-pct { font-size: 19px; }
+&.cx-exam-panel .cx-exam-assist-jump {
+  min-height: 30px;
+  padding: 2px 10px;
+  font-size: 11px;
+}
+&.cx-exam-panel .cx-exam-assist-jump:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.cx-exam-assist-jump:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+/* touch devices using the panel keep the 44px tap contract */
+@media (pointer: coarse) {
+  &.cx-exam-panel .cx-exam-input,
+  &.cx-exam-panel .cx-exam-select,
+  &.cx-exam-panel .cx-exam-eyecell .cx-exam-input,
+  &.cx-exam-panel .cx-exam-rxcell .cx-exam-input {
+    min-height: 44px;
+    font-size: 16px;
+  }
+  &.cx-exam-panel .cx-exam-chip,
+  &.cx-exam-panel .cx-exam-chiprow .cx-exam-chip,
+  &.cx-exam-panel .cx-exam-normalchip,
+  &.cx-exam-panel .cx-exam-normals-btn,
+  &.cx-exam-panel .cx-exam-duochrome-btn { min-height: 40px; }
+  &.cx-exam-panel .cx-exam-stepper-btn { min-height: 44px; }
+  &.cx-exam-panel .cx-exam-save,
+  &.cx-exam-panel .cx-exam-save--secondary { min-height: 44px; }
+  &.cx-exam-panel .cx-exam-picker-row { min-height: 48px; }
+  &.cx-exam-panel .cx-row .cx-btn { min-height: 44px; }
+}
+
+/* ==== §P13 · FOCUS RINGS · TAP HYGIENE · REDUCED MOTION =================== */
+/* keyboard focus everywhere inside the capsule — 2px ring, offset 2px */
+.cx-exam-board :focus-visible,
+&.cx-exam-panel :focus-visible {
+  outline: 2px solid var(--ring, var(--primary));
+  outline-offset: 2px;
+}
+/* tap hygiene: no focus tap flash, no double-tap zoom on any control */
+& button,
+& a,
+& input,
+& select,
+& textarea {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* minimal keyframes: section enter + duochrome selection emphasis only */
+@keyframes cx-exam-rise {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cx-exam-pop {
+  from { transform: scale(0.96); }
+  to { transform: scale(1); }
+}
+/* respect reduced motion: no section rise, no pop, no transitions; every
+   new animated surface is flattened (PLAN-C §7) */
+@media (prefers-reduced-motion: reduce) {
+  .cx-exam-section,
+  .cx-exam-review,
+  .cx-exam-picker,
+  .cx-exam-guard--open,
+  .cx-exam-chip,
+  .cx-exam-normalchip,
+  .cx-exam-normals-btn,
+  .cx-exam-duochrome-btn,
+  .cx-exam-duochrome-btn--sel,
+  .cx-exam-review-card,
+  .cx-exam-review-card--missing,
+  .cx-exam-picker-row,
+  .cx-exam-save,
+  .cx-exam-save--secondary,
+  .cx-exam-input,
+  .cx-exam-select,
+  .cx-exam-textarea,
+  .cx-exam-comp-tag,
+  .cx-exam-stepper-btn,
+  .cx-exam-fieldgroup,
+  .cx-exam-table-row--add,
+  .cx-exam-progressfill,
+  .cx-exam-footer {
+    animation: none;
+    transition: none;
+  }
+  .cx-exam-chiprow { scroll-behavior: auto; }
+  .cx-exam-chip:active,
+  .cx-exam-chiprow .cx-exam-chip:active,
+  .cx-exam-normalchip:active,
+  .cx-exam-normals-btn:active,
+  .cx-exam-duochrome-btn:active,
+  .cx-exam-review-card:active,
+  .cx-exam-picker-row:active,
+  .cx-exam-stepper-btn:active,
+  .cx-exam-table-row--add:active,
+  .cx-exam-save:active,
+  .cx-exam-save--secondary:active {
+    transform: none;
+  }
+}
+
+
+
+
+/* ==== §P14 · EXAM INK SKIN — theme-matched surfaces (moved from the
+   emr-patient pack, where the v1 board was stranded; the standalone
+   ui-exam page never received it, so fields, chips, groups, stepper,
+   tables and the save bar looked off-theme. Surfaces, type and color
+   only — never layout geometry. The section rail (never covered by
+   the v1 pack) is inked here too. ================================= */
+
+/* the section rail itself (§P1) was never inked by the v1 pack — square
+   the frosted chrome, uppercase the tabs, fill the active pill */
+& .cx-exam-tabs {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-exam-tab {
+  border-radius: 0;
+  font-weight: 650;
+  /* sentence case + tight tracking keeps 29 wrapped tabs to 2–3 rows;
+     uppercase doubled their width and the rail ate 280px of viewport */
+  letter-spacing: 0.02em;
+  font-size: 12px;
+  padding: 0 10px 0 8px;
+}
+& .cx-exam-tab:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+& .cx-exam-tab--on {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-exam-tab-num {
+  border-radius: 0;
+  border-color: currentColor;
+  background: transparent;
+}
+& .cx-exam-tab[data-state="part"] .cx-exam-tab-num {
+  border-style: dashed;
+  border-color: currentColor;
+  color: inherit;
+}
+& .cx-exam-tab[data-state="done"] .cx-exam-tab-num,
+& .cx-exam-tab--on[data-state="done"] .cx-exam-tab-num {
+  border-color: currentColor;
+  background: transparent;
+  color: inherit;
+}
+& .cx-exam-progressbar {
+  border-radius: 0;
+}
+/* — the full workup board takes the square ink
+     frame — steps rail, section cards, fields, OD/OS eye heads, the Rx
+     table, duochrome halves as 2px semantic outlines, review, picker and
+     the sticky save bar. Surfaces, type and color only — layout rules
+     above and in the defaults stay untouched (never set widths/flex/
+     display/position here). — */
+
+/* board: loud uppercase head, tabular numerals for the VA/IOP/Rx values */
+& .cx-exam-board { font-variant-numeric: tabular-nums; }
+& .cx-exam-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-exam-sub {
+  letter-spacing: 0.05em;
+}
+
+/* context strip + identity: ink-framed strip, square avatar, stamp badges */
+& .cx-exam-context {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-exam-context-id [data-avatar] {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 800;
+}
+& .cx-exam-context-id strong,
+& .cx-exam-context-id b {
+  font-weight: 800;
+}
+& .cx-exam-badge {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-exam-badge--new {
+  border: 1.5px solid var(--exam-accent, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-badge--fup {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 40%, transparent);
+  background: transparent;
+  color: var(--muted-foreground);
+}
+& .cx-exam-bookstrip {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: inset 3px 0 0 0 var(--exam-accent, var(--foreground));
+}
+& .cx-exam-bookchip {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* progress: square track (the side steps menu was removed) */
+& .cx-exam-progressbar,
+& .cx-exam-progressfill {
+  border-radius: 0;
+}
+
+/* sections + normals bar: square section cards, uppercase heads, stamps */
+& .cx-exam-section {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+& .cx-exam-section-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+& .cx-exam-section-sub {
+  letter-spacing: 0.04em;
+}
+& .cx-exam-section-head {
+  border-bottom: 2px solid var(--foreground);
+  padding-bottom: 4px;
+}
+& .cx-exam-normals-btn {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-normals-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-normalchip {
+  border: 1.5px solid var(--cx-ok, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-normalchip:hover {
+  background: var(--muted);
+}
+& .cx-exam-normalchip[aria-pressed="true"] {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+
+/* fields: 2px ink inputs, uppercase labels, square chips, loud units */
+& .cx-exam-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+& .cx-exam-input,
+& .cx-exam-select,
+& .cx-exam-textarea {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-chip {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  /* 0.02em — 0.05em pushed "FEMALE" past the half-cell track and forced
+     a mid-word break at the D-tier 2-col grid */
+  letter-spacing: 0.02em;
+}
+& .cx-exam-chip:hover {
+  background: var(--muted);
+}
+& .cx-exam-chip--sel {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+& .cx-exam-unit {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+& .cx-exam-error {
+  color: var(--cx-err, var(--destructive));
+  font-weight: 700;
+}
+
+/* eye grid: OD/OS identity as 1.5px semantic outlines, wash gone */
+& .cx-exam-eyerow + .cx-exam-eyerow {
+  border-top-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-eyehead {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-eyehead--od {
+  border-color: var(--exam-od, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-eyehead--os {
+  border-color: var(--exam-os, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+
+/* rx table + final: heavy ink frame, ink rules, square summary slab */
+& .cx-exam-rxtable {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-rxrow + .cx-exam-rxrow {
+  border-top-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-rxcell + .cx-exam-rxcell {
+  border-left-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+& .cx-exam-rx-final {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+
+/* duochrome: the red/green semantics survive as 2px outlines, wash gone */
+& .cx-exam-duochrome {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-duochrome-half {
+  border-radius: 0;
+}
+& .cx-exam-duochrome-half--red {
+  border: 2px solid var(--cx-err, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-duochrome-half--green {
+  border: 2px solid var(--cx-ok, var(--foreground));
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-duochrome-btn {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+& .cx-exam-duochrome-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-duochrome-btn--sel {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+
+/* review: square cards, slab hover, missing as an err outline stamp */
+& .cx-exam-review-card {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-review-card:hover {
+  border-color: var(--foreground);
+  box-shadow: 4px 4px 0 0 color-mix(in oklab, var(--foreground) 28%, transparent);
+}
+& .cx-exam-review-title {
+  letter-spacing: 0.08em;
+}
+& .cx-exam-review-missing {
+  border: 1.5px solid var(--cx-err, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--cx-err, var(--foreground));
+  text-transform: uppercase;
+}
+
+/* footer save bar: solid square pane, ink frame, uppercase slabs */
+& .cx-exam-footer {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+& .cx-exam-save {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-save--secondary {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+& .cx-exam-save--secondary:hover {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* picker + misc: square rows, dashed empties, hue-as-outline warnings */
+& .cx-exam-picker-row {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-picker-row:hover {
+  border-color: var(--foreground);
+  background: var(--muted);
+}
+& .cx-exam-picker-empty,
+& .cx-exam-empty {
+  border: 2px dashed var(--foreground);
+  border-radius: 0;
+}
+& .cx-exam-warning {
+  border: 1.5px solid var(--cx-warn, var(--foreground));
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+}
+& .cx-exam-infobar {
+  border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  border-radius: 0;
+  background: var(--card);
+}
+
+/* compact examctx panel: the frames survive, paddings tighten */
+&.cx-exam-panel .cx-exam-context {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  padding: 6px 8px;
+}
+&.cx-exam-panel .cx-exam-section {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  padding: 8px;
+}
+&.cx-exam-panel .cx-exam-footer {
+  padding: 6px 8px;
+}
+
+/* — exam v2 rebuild (EXV2-B10): the grid chiprows, fieldgroups, comp
+     family, stepper, table family, rx VA row-group, vaquick strip, mini
+     context and sign line join the same ink system. Surfaces, type and
+     color only — the sanctioned length tokens below are the ONLY geometry
+     the pack tunes (never set widths/flex/display/position/grid here). — */
+& {
+  --cx-grid-gap: 12px; /* chunkier field grid for the loud square fields */
+}
+
+/* chiprows: the v2 grid strips get a hairline ink frame so the scroll
+   bounds read; the tiny flag rows (OD/OS, +, −, ∆) go loud like every
+   chip here */
+& .cx-exam-chiprow {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 35%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+& .cx-exam-chiprow--tiny .cx-exam-chip {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* fieldgroups: 2px ink sub-cards, uppercase micro-titles */
+& .cx-exam-fieldgroup {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-fieldgroup-title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+/* composite fields: square ink tags — comp/comp-slot carry no chrome of
+   their own and ride the shared input framing above */
+& .cx-exam-comp-tag {
+  border: 1.5px solid var(--foreground);
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* stepper: square slab buttons inside a 2px frame; no squish on tap */
+& .cx-exam-stepper {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-stepper-btn {
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-weight: 800;
+}
+& .cx-exam-stepper-btn:hover {
+  background: var(--muted);
+}
+& .cx-exam-stepper-btn:active {
+  transform: none;
+}
+
+/* table family (medications / procedures): 2px frame, square rows, dashed
+   ink add-row; the micro-type header goes uppercase-tracked */
+& .cx-exam-table {
+  border: 2px solid var(--foreground);
+  border-radius: 0;
+  background: var(--card);
+}
+& .cx-exam-table-head {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+}
+& .cx-exam-table-row {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 45%, transparent);
+  border-radius: 0;
+  background: var(--background);
+}
+& .cx-exam-table-row--add {
+  border: 1.5px dashed var(--foreground);
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+& .cx-exam-table-row--add:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* rx variants (--noVA/--kera) re-track in the defaults; the pack's job is
+   the pinned OD/OS eye column: opaque card so the phone scroll never
+   shows through the sticky stamps */
+& .cx-exam-rxcell--eye {
+  background: var(--card);
+}
+
+/* VA row-group under the rx table: square OD/OS stamps (hues ride
+   --exam-od/--exam-os); rxva-eye is a display:contents union — untouched */
+& .cx-exam-rxva-tag {
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+/* vaquick strip: hairline ink frame, square */
+& .cx-exam-vaquick {
+  border: 1.5px solid color-mix(in oklab, var(--foreground) 35%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+
+/* missing-dx review card: the warn bar survives as a hard inset stamp */
+& .cx-exam-review-card--missing {
+  box-shadow: inset 3px 0 0 0 var(--cx-warn, var(--foreground));
+}
+
+/* mini context strip: tighter but still square-framed */
+& .cx-exam-context--mini {
+  border-radius: 0;
+  padding: 4px 8px;
+}
+
+/* signature line: heavier ink rule under the signing input */
+& .cx-exam-sign > .cx-exam-input {
+  border-bottom: 1.5px solid var(--foreground);
+}
+
+/* keyboard parity with the defaults' focus-visible rules */
+& .cx-exam-stepper-btn:focus-visible,
+& .cx-exam-table-row--add:focus-visible,
+& .cx-exam-chip:focus-visible,
+& .cx-exam-normalchip:focus-visible,
+& .cx-exam-normals-btn:focus-visible,
+& .cx-exam-duochrome-btn:focus-visible,
+& .cx-exam-review-card:focus-visible,
+& .cx-exam-picker-row:focus-visible,
+& .cx-exam-save:focus-visible,
+& .cx-exam-save--secondary:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  & .cx-exam-context {
+    padding: 8px 10px;
+  }
+  & .cx-exam-section {
+    padding: 10px;
+  }
+  & .cx-exam-bookstrip {
+    padding: 6px 8px;
+  }
+  & .cx-exam-duochrome {
+    padding: 8px;
+  }
+  & .cx-exam-review-card {
+    padding: 8px 10px;
+  }
+  & .cx-exam-footer {
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  /* the pack's hover slab points off-screen on the phone — drop it */
+  & .cx-exam-review-card:hover {
+    box-shadow: none;
+  }
+}
+
+/* ==== §D1 · EYE DIAGRAM SHEET (EDX-1 · cx-exam-diag) =======================
+   The Examination workup's clinical embed of the Essential Diagrams
+   engine — the plugin registers no app chrome any more, the exam owns it.
+   `--open` reveals a fixed panel with the same viewport-backdrop trick as
+   the guard (::before spans the real viewport because the card itself
+   never transforms). The engine's .ed-* classes style the stage internals
+   (plugin-registered CSS; the host carries .ed-view); everything here is
+   sheet chrome + the label editor, theme tokens only. */
+
+.cx-exam-diag { display: none; }
+
+.cx-exam-diag--open {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: min(52rem, calc(100vw - 24px));
+  height: min(47rem, calc(100dvh - 24px));
+  margin: auto;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: 0 18px 50px color-mix(in oklab, var(--foreground) 22%, transparent);
+  overflow: hidden;
+  /* the sheet measures ITSELF for its internal layout — a wide pane with a
+     narrow sheet (or vice versa) both do the right thing */
+  container: cxdiag / inline-size;
+}
+
+.cx-exam-diag--open::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in oklab, var(--background) 58%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.cx-exam-diag-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+}
+
+.cx-exam-diag-head-text { flex: 1; min-width: 0; }
+
+.cx-exam-diag-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.cx-exam-diag-sub {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.cx-exam-diag-close {
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cx-exam-diag-close:hover { color: var(--foreground); }
+
+.cx-exam-diag-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 16px 0;
+}
+
+.cx-exam-diag-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+/* wide SHEETS (≥640px inline size): the stage column (diagram + checklist)
+   sits LEFT, the findings labels RIGHT — the diagram never drowns the sheet.
+   The preview (the note text being added) spans both columns as the closing
+   block. Narrow sheets keep the stacked flow. */
+@container cxdiag (min-width: 640px) {
+  .cx-exam-diag-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: start;
+    gap: 14px;
+  }
+  .cx-exam-diag-body .cx-exam-diag-preview { grid-column: 1 / -1; }
+}
+
+/* the engine mounts .ed-view (strip · stage · list) into the host. The
+   stage is capped to a square ≤22rem so the WHOLE diagram — canthus to
+   canthus, disc to periphery — is always on screen (the uncapped 1:1 SVG
+   used to run ~800px tall on the 982px pane and clip the eye below the
+   fold); the sheet centers it in its column. The checklist gets a touch
+   more room than the plugin's 140px default. */
+.cx-exam-diag-stage .ed-stage {
+  width: min(100%, 22rem);
+  margin-inline: auto;
+}
+.cx-exam-diag-stage .ed-list { max-height: 10rem; }
+
+.cx-exam-diag-stage { min-width: 0; }
+
+.cx-exam-diag-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 35%, transparent);
+}
+
+.cx-exam-diag-labels-title {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.cx-exam-diag-labels-empty {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.cx-exam-diag-labelgroup { display: flex; flex-direction: column; gap: 6px; }
+
+.cx-exam-diag-labelgroup-title {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.cx-exam-diag-label {
+  display: grid;
+  grid-template-columns: minmax(8.5rem, 12rem) minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.cx-exam-diag-label-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+.cx-exam-diag-label-eye {
+  flex: 0 0 auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 45%, transparent);
+  color: var(--exam-accent);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.cx-exam-diag-label-input { width: 100%; }
+
+.cx-exam-diag-preview {
+  padding: 8px 10px;
+  border: 1px dashed color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-md);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.5;
+  white-space: pre-line;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+
+.cx-exam-diag-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 16px 12px;
+  border-top: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+}
+
+.cx-exam-diag-foot .cx-btn { flex: 0 1 auto; }
+
+.cx-exam-diag-foot .cx-exam-save { flex: 1 1 auto; }
+
+/* the section-head affordance that opens the sheet — a visible tool, not a
+   whisper: accent ring + hover fill so "diagram" reads as part of the exam,
+   and the inline eye glyph ties it to the diagram sheet it opens */
+.cx-exam-diag-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 4px; }
+.cx-exam-diag-actions .cx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-color: color-mix(in oklab, var(--exam-accent) 40%, transparent);
+  color: color-mix(in oklab, var(--exam-accent) 72%, var(--foreground));
+  font-weight: 600;
+}
+.cx-exam-diag-actions .cx-btn:hover {
+  background: color-mix(in oklab, var(--exam-accent) 12%, transparent);
+}
+.cx-exam-diag-actions .cx-btn:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--ring, var(--exam-accent)) 70%, transparent);
+  outline-offset: 2px;
+}
+.cx-exam-diag-actions .cx-btn svg {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+}
+
+.cx-exam-diag-missing {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 35%, transparent);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+/* narrow SHEETS: the panel hugs the viewport, the label grid stacks */
+@container cxdiag (max-width: 639px) {
+  .cx-exam-diag--open {
+    width: calc(100vw - 16px);
+    height: calc(100dvh - 16px);
+  }
+  .cx-exam-diag-label { grid-template-columns: 1fr; }
+  .cx-exam-diag-label-name { justify-content: space-between; }
+}
+
+/* inner wrapper — the fixed sheet is the flex frame; this fills it so the
+   body's flex:1 + min-height:0 actually constrain the scroll */
+.cx-exam-diag--open .cx-exam-diag-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* ==== §T · TAP-FIRST SCALE CHIPS (EDX-3) ==================================
+   The grading scales (lids, cornea, AC, iris, lens, disc, macula…) were
+   native dropdowns — a 20-structure × 2-eye workup meant 40+ OS-wheel
+   round-trips. ≤8-option scales now render as wrap chips: every option
+   visible at a glance, ONE tap to record, tap the active chip to clear.
+   >8-option scales (lens, conjunctiva) stay native selects (PLAN-B §5b). */
+.cx-exam-scalerow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 0;
+}
+.cx-exam-scalechip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 4px 13px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  border-radius: 999px;
+  background: var(--background);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 550;
+  line-height: 1.25;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 130ms ease, background-color 130ms ease, color 130ms ease,
+    transform 100ms ease;
+}
+.cx-exam-scalechip:hover {
+  border-color: color-mix(in oklab, var(--exam-accent) 45%, var(--border));
+  color: var(--foreground);
+}
+.cx-exam-scalechip:active { transform: scale(0.96); }
+.cx-exam-scalechip:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--ring, var(--exam-accent)) 70%, transparent);
+  outline-offset: 2px;
+}
+.cx-exam-scalechip--on {
+  border-color: color-mix(in oklab, var(--exam-accent) 55%, transparent);
+  background: color-mix(in oklab, var(--exam-accent) 14%, transparent);
+  color: color-mix(in oklab, var(--exam-accent) 72%, var(--foreground));
+  font-weight: 700;
+}
+/* inside an eye column the chips keep the column rhythm and wrap tighter */
+.cx-exam-eyecell .cx-exam-scalerow { gap: 4px; }
+.cx-exam-eyecell .cx-exam-scalechip { padding: 3px 11px; font-size: 12px; }
+
+/* ==== §D2 · INLINE DIAGRAM CARD (EDX-2) ===================================
+   The eye diagram lives IN the anterior/posterior section — visible at all
+   times, not buried behind a ghost button. Tap the stage (or the button)
+   to open the full labeling sheet. The engine's .ed-* chrome styles the
+   inside; the card adds only the frame, head and foot. */
+.cx-exam-diagcard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 24%, var(--border));
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--exam-accent) 4%, var(--card));
+}
+.cx-exam-diagcard-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cx-exam-diagcard-headtext { flex: 1 1 12rem; min-width: 0; }
+.cx-exam-diagcard-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+/* the live "instrument" dot — reads as powered-on equipment, not a checkbox */
+.cx-exam-diagcard-title::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--exam-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--exam-accent) 18%, transparent);
+}
+.cx-exam-diagcard-sub {
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+/* the engine strip (sub-view chips) + stage mount here; the checklist is a
+   sheet concern — the compact card hides it */
+.cx-exam-diagcard-stage { cursor: pointer; min-width: 0; }
+.cx-exam-diagcard-stage .ed-stage {
+  width: min(100%, 20rem);
+  margin-inline: auto;
+  transition: border-color 130ms ease;
+}
+.cx-exam-diagcard-stage:hover .ed-stage {
+  border-color: color-mix(in oklab, var(--exam-accent) 50%, var(--border));
+}
+.cx-exam-diagcard-stage .ed-list { display: none; }
+.cx-exam-diagcard-stage .ed-subchip {
+  min-height: 30px;
+  padding: 4px 12px;
+  font-size: 12px;
+}
+.cx-exam-diagcard-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cx-exam-diagcard-count {
+  flex: 1 1 8rem;
+  min-width: 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+.cx-exam-diagcard-open {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 45%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--exam-accent) 12%, transparent);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: color-mix(in oklab, var(--exam-accent) 72%, var(--foreground));
+  cursor: pointer;
+  transition: background-color 130ms ease;
+}
+.cx-exam-diagcard-open:hover {
+  background: color-mix(in oklab, var(--exam-accent) 19%, transparent);
+}
+.cx-exam-diagcard-open:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--ring, var(--exam-accent)) 70%, transparent);
+  outline-offset: 2px;
+}
+.cx-exam-diagcard-missing {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 35%, transparent);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+/* ==== §D3 · SHEET CONTROLS — two stable rows, never a wrap jumble ========
+   The family tabs and the OD/OS switch both use the grid chiprow, which
+   stretched 2 chips across the full sheet and wrapped the tablist mid-way
+   on phones. Both groups go inline (auto width), each on its own row. */
+.cx-exam-diag-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  padding: 10px 16px 0;
+}
+.cx-exam-diag-controls .cx-exam-chiprow {
+  flex: 1 1 100%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: none;
+  overflow: visible;
+}
+.cx-exam-diag-controls .cx-exam-chiprow .cx-exam-chip {
+  display: inline-flex;
+  width: auto;
+  min-width: 4.5rem;
+  min-height: 38px;
+  padding: 4px 14px;
+  font-size: 12.5px;
+}
+/* same inline treatment for the card's OD/OS switch */
+.cx-exam-diagcard-head .cx-exam-chiprow {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: none;
+  overflow: visible;
+}
+.cx-exam-diagcard-head .cx-exam-chiprow .cx-exam-chip {
+  display: inline-flex;
+  width: auto;
+  min-width: 3.5rem;
+  min-height: 34px;
+  padding: 3px 12px;
+}
+
+/* ==== §U1 · TOUCH-FIRST POLISH ===========================================
+   The board must be operable at arm's length between patients: bigger
+   section tabs, thumb-scale chips, no iOS input zoom on focus. */
+.cx-exam-tab {
+  min-height: 42px;
+  gap: 8px;
+  padding: 0 14px 0 9px;
+  font-size: 13px;
+}
+.cx-exam-tab-num { width: 22px; height: 22px; font-size: 11px; }
+.cx-exam-tab--on {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--exam-accent) 42%, transparent);
+}
+/* coarse pointers (phones/tablets): every tap surface ≥ 42px, inputs stay
+   16px so iOS Safari never zooms the viewport on focus */
+@media (pointer: coarse) {
+  .cx-exam-tab { min-height: 46px; padding: 0 15px 0 10px; }
+  .cx-exam-tab-num { width: 24px; height: 24px; }
+  .cx-exam-scalechip { min-height: 42px; padding: 5px 15px; font-size: 13px; }
+  .cx-exam-chip { min-height: 42px; }
+  .cx-exam-chiprow .cx-exam-chip { min-height: 2.375rem; }
+  .cx-exam-eyehead { min-height: 30px; font-size: 10.5px; }
+  .cx-exam-save { min-height: 48px; font-size: 14px; }
+  .cx-exam-footer [data-nav="next"] { min-height: 46px; }
+  .cx-exam-input,
+  .cx-exam-select { min-height: 42px; font-size: 16px; }
+  .cx-exam-diagcard-open { min-height: 44px; }
+  .cx-exam-diagcard-stage .ed-subchip { min-height: 36px; }
+  .cx-exam-diag-controls .cx-exam-chiprow .cx-exam-chip { min-height: 42px; }
+}
+
+
+/* ==== §EXV3 · EXTENDED SECTIONS — readability + assist panel ==============
+   The 20 new sections (demographics … dispensing) reuse the whole cx-exam-*
+   inventory. This block adds: (1) --open chip rows — long symptom/condition
+   batteries render FULLY (wrapped grid, no row cap, no ellipsis, ≥44px),
+   (2) the Assist right panel (wide tier column / narrow drawer), (3) the
+   flow grid that hosts sections + assist at ≥1160px pane width. */
+
+/* ---- open chip rows: the "shrunk one-line" fix --------------------------- */
+.cx-exam-chiprow.cx-exam-chiprow--open {
+  --cx-chip-rows: 16;
+  --cx-chipw: 7.5rem;
+  max-height: none;
+  overflow: visible;
+  gap: 6px;
+}
+.cx-exam-chiprow--open .cx-exam-chip {
+  white-space: normal;
+  height: auto;
+  min-height: 44px;
+  padding: 7px 12px;
+  font-size: 13px;
+  line-height: 1.3;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  /* EXV4: undo the §P4 two-line clamp — battery phrases may need 3 lines
+     and the clamp was silently cutting their last line */
+  -webkit-line-clamp: unset;
+  display: block;
+}
+.cx-exam-chiprow--open .cx-exam-input { min-height: 44px; }
+/* coarse pointers keep the battery chips thumb-scale even when wrapped */
+@media (pointer: coarse) {
+  .cx-exam-chiprow--open .cx-exam-chip { min-height: 46px; }
+}
+
+/* ---- flow wrapper: sections + review + assist (no visual change alone) --- */
+.cx-exam-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* EXV7 — the assist is a RIGHT-PANEL citizen now (the workup flow has no
+   second column and no FAB): the wrapper is a plain block the panel scope
+   (cx-exam-panel) hosts. The body/card/fact classes below are shared. */
+.cx-exam-assist {
+  display: block;
+  min-width: 0;
+}
+.cx-exam-assist-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.cx-exam-assist-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--card) 72%, transparent);
+}
+.cx-exam-assist-id {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.cx-exam-assist-id [data-avatar="true"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--exam-accent) 18%, var(--muted));
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 650;
+  flex: none;
+}
+.cx-exam-assist-id strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cx-exam-assist-progress {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.cx-exam-assist-pct {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+.cx-exam-assist-progress-label { font-size: 11.5px; color: var(--muted-foreground); }
+.cx-exam-assist-clusters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.cx-exam-assist-cluster { display: flex; flex-direction: column; gap: 4px; }
+.cx-exam-assist-cluster-label {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.cx-exam-assist-cluster-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.cx-exam-assist-jump {
+  min-height: 34px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+}
+.cx-exam-assist-jump[data-on="true"] {
+  border-color: color-mix(in oklab, var(--exam-accent) 55%, transparent);
+  background: color-mix(in oklab, var(--exam-accent) 14%, transparent);
+  color: var(--foreground);
+}
+.cx-exam-assist-facts-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.cx-exam-assist-facts-title {
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--foreground);
+}
+.cx-exam-assist-live {
+  font-size: 10.5px;
+  color: var(--muted-foreground);
+}
+.cx-exam-assist-empty {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+.cx-exam-assist-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cx-exam-assist-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--muted);
+}
+.cx-exam-assist-fact-title {
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--foreground);
+}
+.cx-exam-assist-fact-line {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+.cx-exam-assist-fact[data-tone="hint"] {
+  border-color: color-mix(in oklab, var(--exam-accent) 38%, transparent);
+}
+.cx-exam-assist-fact[data-tone="warn"],
+.cx-exam-assist-fact[data-tone="vital"] {
+  border-color: color-mix(in oklab, var(--destructive, var(--exam-accent)) 45%, transparent);
+  background: color-mix(in oklab, var(--destructive, var(--exam-accent)) 9%, var(--muted));
+}
+.cx-exam-assist-fact[data-tone="vital"] .cx-exam-assist-fact-title {
+  color: var(--destructive, var(--exam-accent));
+}
+.cx-exam-assist-fact[data-live="true"] {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--exam-accent) 26%, transparent);
+}
+
+/* EXV7 — FAB + drawer are GONE (the assist shows only in the workspace
+   right panel; no assist option inside the exam UI). */
+
+
+/* ==== §EXV7 · PAST RECORDS =================================================
+   The user's ask: "next to patient details add Past Records — the full
+   record if the patient came earlier". Read-only visit roll next to
+   Patient Info: one calm row per earlier visit (date · ∆/baseline ·
+   headline dx · fee), expandable to the full grouped field record.
+   Tokens only — no hex/rgb literals. */
+.cx-exam-past-empty {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.cx-exam-past-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+.cx-exam-past-item {
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--muted) 18%, transparent);
+  min-width: 0;
+}
+.cx-exam-past-item[data-open="true"] {
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+  border-color: color-mix(in oklab, var(--exam-accent) 30%, var(--border));
+}
+.cx-exam-past-head {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  color: var(--foreground);
+  cursor: pointer;
+}
+.cx-exam-past-date {
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.cx-exam-past-headline {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12.5px;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cx-exam-past-headline--muted { font-style: italic; opacity: 0.75; }
+.cx-exam-past-fee {
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+.cx-exam-past-chev {
+  flex: none;
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+.cx-exam-past-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 12px 12px;
+  border-top: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+}
+.cx-exam-past-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.cx-exam-past-group-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.cx-exam-past-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+}
+@container cxexam (min-width: 720px) {
+  .cx-exam-past-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.cx-exam-past-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--muted) 26%, transparent);
+}
+.cx-exam-past-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+.cx-exam-past-value {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+/* ==== §EXV4 · WRAPPED-RAIL DENSITY AT D/W (LAST WORD) =====================
+   §U1's touch-first tabs (42px, 13px) win by source order at every tier
+   and are right for the one-row horizontal rail at M/T — but the D/W rail
+   now WRAPS (§P10) and 42px rows × 29 sections ate ~150px of sticky
+   viewport. Density overrides live here, after §U1. Number discs drop at
+   D/W (wrapped order reads left-to-right); step state moves onto the pill
+   border — solid = done, dashed = started, transparent = todo. The fine
+   pointer keeps the 44px contract via the §P11 hit extensions. */
+@container cxexam (min-width: 1024px) {
+  .cx-exam-tab {
+    min-height: 30px;
+    font-size: 11.5px;
+    padding: 0 9px 0 7px;
+    gap: 6px;
+  }
+  .cx-exam-tab-num { display: none; }
+  .cx-exam-tab[data-state="done"] {
+    border-color: color-mix(in oklab, var(--foreground) 55%, transparent);
+  }
+  .cx-exam-tab[data-state="part"] {
+    border-style: dashed;
+    border-color: color-mix(in oklab, var(--foreground) 45%, transparent);
+  }
+}
+
+/* ==== §EXV5 · UNIFIED HISTORY HUB + LIBRARY + RAIL ORGANIZATION ===========
+   The user's ask: one History section instead of six overwhelming tabs,
+   a type-to-record input with library suggestions, a purposeful right
+   panel (browsable term lists), organized tabs, and diagrams that fill
+   their cards. Tokens only — no hex/rgb literals. */
+
+/* ---- rail cluster separators ------------------------------------------- */
+.cx-exam-tabsep {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-inline: 2px;
+}
+.cx-exam-tabsep::before {
+  content: "";
+  width: 1px;
+  height: 20px;
+  background: color-mix(in oklab, var(--border) 80%, var(--foreground) 10%);
+}
+.cx-exam-tabsep > span {
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  max-width: 4.6rem;
+  line-height: 1.15;
+}
+@container cxexam (max-width: 719px) {
+  .cx-exam-tabsep > span { display: none; } /* slim divider only when narrow */
+}
+
+/* ---- the hub root ------------------------------------------------------- */
+.cx-exam-hub { gap: 12px; }
+.cx-exam-hub .cx-exam-section-head { margin-bottom: 2px; }
+
+/* typeahead — the one input that records the whole story */
+.cx-exam-hub-type { position: relative; min-width: 0; }
+.cx-exam-hub-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.cx-exam-hub-sug {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 4px);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  box-shadow: 0 10px 28px color-mix(in oklab, var(--foreground) 16%, transparent);
+}
+.cx-exam-hub-sug--empty {
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+.cx-exam-hub-sugrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  gap: 1px 8px;
+  align-items: baseline;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.cx-exam-hub-sugrow:hover,
+.cx-exam-hub-sugrow:focus-visible {
+  background: color-mix(in oklab, var(--exam-accent) 10%, transparent);
+  outline: none;
+}
+.cx-exam-hub-suglabel {
+  grid-column: 1;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.cx-exam-hub-sugcat {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 35%, transparent);
+  color: var(--exam-accent);
+  font-size: 9.5px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.cx-exam-hub-sugfact {
+  grid-column: 1;
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+}
+
+/* category cards — calm summary, tap to open the deep section */
+.cx-exam-hub-cats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 8px;
+}
+.cx-exam-hub-cat {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--card) 72%, transparent);
+  overflow: hidden;
+}
+.cx-exam-hub-cat[data-open="true"] { grid-column: 1 / -1; }
+.cx-exam-hub-catbar {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  padding: 4px;
+}
+.cx-exam-hub-cattoggle {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.cx-exam-hub-cattoggle:hover {
+  background: color-mix(in oklab, var(--exam-accent) 8%, transparent);
+}
+.cx-exam-hub-catname {
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+.cx-exam-hub-catcount {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px;
+  color: var(--muted-foreground);
+}
+.cx-exam-hub-catcount[data-state="done"] { color: var(--cx-ok); }
+.cx-exam-hub-catmark {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1;
+  color: var(--muted-foreground);
+}
+.cx-exam-hub-catsearch {
+  flex: 0 0 auto;
+  align-self: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 40%, var(--border));
+  border-radius: 9px;
+  background: color-mix(in oklab, var(--exam-accent) 10%, var(--card));
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--foreground);
+  cursor: pointer;
+}
+.cx-exam-hub-catsearch:hover {
+  border-color: var(--exam-accent);
+  background: color-mix(in oklab, var(--exam-accent) 16%, var(--card));
+}
+/* expanded member — the deep section compacts inside the hub card */
+.cx-exam-hub-member {
+  border-top: 1px solid var(--border);
+  padding: 8px;
+  background: color-mix(in oklab, var(--card) 30%, transparent);
+}
+.cx-exam-hub-member .cx-exam-section {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  animation: none;
+}
+.cx-exam-hub-member .cx-exam-section-head { margin-bottom: 4px; }
+.cx-exam-hub-member .cx-exam-section-title { font-size: 14.5px; }
+.cx-exam-hub-member .cx-exam-section-sub { display: none; }
+
+/* ---- library card (the Assist panel's purpose) --------------------------- */
+.cx-exam-lib-search { width: 100%; min-height: 40px; }
+.cx-exam-lib-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-height: 46vh;
+  overflow: auto;
+}
+.cx-exam-lib-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  min-height: 44px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.cx-exam-lib-row:hover,
+.cx-exam-lib-row:focus-visible {
+  border-color: var(--exam-accent);
+  background: color-mix(in oklab, var(--exam-accent) 8%, transparent);
+  outline: none;
+}
+.cx-exam-lib-term { font-size: 13px; font-weight: 600; color: var(--foreground); }
+.cx-exam-lib-fact { font-size: 11.5px; line-height: 1.35; color: var(--muted-foreground); }
+.cx-exam-lib-hint { margin: 0; font-size: 11px; line-height: 1.4; color: var(--muted-foreground); }
+
+/* ---- EXV5-D · diagrams fill their card, clinical token fit --------------- */
+/* bigger stages — the eye uses the card width instead of floating in it */
+.cx-exam-diagcard-stage { display: flex; justify-content: center; }
+.cx-exam-diagcard-stage .ed-stage { width: min(100%, 32rem); }
+.cx-exam-diag-stage .ed-stage { width: min(100%, 30rem); }
+@container cxexam (min-width: 1280px) {
+  .cx-exam-diagcard-stage .ed-stage { width: min(100%, 38rem); }
+}
+/* engine chrome + selection follow the theme (plugin CSS falls back to
+   literal rgba(41,121,255) blues — retarget the selection to --exam-accent) */
+.cx-exam-diagcard .ed-view,
+.cx-exam-diag .ed-view {
+  --accent-live: var(--exam-accent);
+  --ed-field: var(--card);
+  --ed-line: color-mix(in oklab, var(--foreground) 62%, transparent);
+}
+.cx-exam-diagcard .ed-view .is-sel,
+.cx-exam-diag .ed-view .is-sel {
+  stroke: var(--exam-accent);
+}
+.cx-exam-diagcard .ed-view [data-fill].is-sel,
+.cx-exam-diag .ed-view [data-fill].is-sel {
+  fill: color-mix(in oklab, var(--exam-accent) 16%, transparent);
+}
+.cx-exam-diagcard .ed-struct,
+.cx-exam-diag .ed-struct { cursor: pointer; }
+.cx-exam-diagcard .ed-struct:hover .ed-hit,
+.cx-exam-diag .ed-struct:hover .ed-hit {
+  fill: color-mix(in oklab, var(--exam-accent) 10%, transparent);
+}
+.cx-exam-diagcard-stage .ed-subchip {
+  min-height: 34px;
+  padding: 4px 12px;
+}
+
+/* ==== §EXV6 · SYSTEMIC ILLNESS COMPOSER + ICD-10 CATALOG PANEL ============
+   The user's ask: instead of a battery of illness fields, ONE composer —
+   type the illness (typeahead + full catalog on the Assist panel), how
+   long, under treatment or not, notes — and one calm card per recorded
+   illness. The panel carries the ICD-10 catalog: grouped browse, code
+   chips, live filter seeded from the composer's typing. Tokens only —
+   no hex/rgb literals; touch targets ≥44px. */
+
+/* ---- recorded entries ---------------------------------------------------- */
+.cx-exam-ill { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.cx-exam-ill-empty {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px dashed color-mix(in oklab, var(--border) 88%, var(--foreground) 8%);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.cx-exam-ill-entries { display: flex; flex-direction: column; gap: 8px; }
+.cx-exam-ill-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--card) 72%, transparent);
+}
+.cx-exam-ill-entry[data-warn="true"] {
+  border-color: color-mix(in oklab, var(--destructive, var(--exam-accent)) 40%, transparent);
+  background: color-mix(in oklab, var(--destructive, var(--exam-accent)) 7%, var(--card));
+}
+.cx-exam-ill-entry[data-none="true"] { border-style: dashed; }
+.cx-exam-ill-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cx-exam-ill-name { font-size: 13.5px; font-weight: 650; color: var(--foreground); }
+.cx-exam-ill-code {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 35%, transparent);
+  color: var(--exam-accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.cx-exam-ill-cat {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 14rem;
+}
+.cx-exam-ill-del {
+  margin-left: auto;
+  flex: 0 0 auto;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+.cx-exam-ill-del:hover,
+.cx-exam-ill-del:focus-visible {
+  color: var(--destructive, var(--exam-accent));
+  border-color: color-mix(in oklab, var(--destructive, var(--exam-accent)) 40%, transparent);
+  outline: none;
+}
+.cx-exam-ill-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.cx-exam-ill-tag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--foreground);
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+.cx-exam-ill-tag[data-rx="yes"] {
+  border: 1px solid color-mix(in oklab, var(--cx-ok, var(--exam-accent)) 40%, transparent);
+  color: var(--cx-ok, var(--foreground));
+}
+.cx-exam-ill-notes {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+
+/* ---- the composer card ---------------------------------------------------- */
+.cx-exam-ill-comp {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--exam-accent) 4%, var(--card));
+}
+.cx-exam-ill-comp-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.cx-exam-ill-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-width: 0; align-items: stretch; }
+.cx-exam-ill-row--full { grid-template-columns: 1fr; }
+/* narrow tiers stack the composer rows — the duration field never has to
+   stretch to match a tall chip stack */
+@container cxexam (max-width: 719px) {
+  .cx-exam-ill-row { grid-template-columns: 1fr; }
+  .cx-exam-ill-input { min-height: 44px; }
+}
+.cx-exam-ill-namebox { position: relative; min-width: 0; }
+.cx-exam-ill-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  font-size: 13.5px;
+  border-radius: 10px;
+}
+.cx-exam-ill-add {
+  min-height: 46px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--exam-accent);
+  color: var(--background);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cx-exam-ill-add:hover { filter: brightness(1.08); }
+.cx-exam-ill-add:disabled { opacity: 0.45; cursor: not-allowed; }
+.cx-exam-ill-quick { display: flex; flex-wrap: wrap; gap: 6px; }
+.cx-exam-ill-quickchip {
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 35%, var(--border));
+  background: color-mix(in oklab, var(--exam-accent) 8%, var(--card));
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+  cursor: pointer;
+}
+.cx-exam-ill-quickchip:hover { border-color: var(--exam-accent); }
+.cx-exam-ill-quickchip:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ---- illness-catalog browser (Assist panel) ------------------------------- */
+.cx-exam-lib-cats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 52vh;
+  overflow: auto;
+  padding-right: 2px;
+}
+.cx-exam-lib-cat { display: flex; flex-direction: column; gap: 3px; }
+.cx-exam-lib-cathead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 2px 1px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  position: sticky;
+  top: 0;
+  background: var(--background);
+  z-index: 1;
+}
+.cx-exam-lib-rowhead { display: flex; align-items: baseline; gap: 8px; width: 100%; min-width: 0; }
+.cx-exam-lib-rowhead .cx-exam-lib-term { flex: 1 1 auto; min-width: 0; }
+.cx-exam-lib-code {
+  flex: 0 0 auto;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--exam-accent) 35%, transparent);
+  color: var(--exam-accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+

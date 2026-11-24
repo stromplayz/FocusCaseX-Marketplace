@@ -1,0 +1,10 @@
+/* FocusCaseX snippet — rounded-editor
+ * Soft rounded corners and a subtle border around the editor surface.
+ */
+.fcx-snippet-rounded-editor .fcx-editor-shell {
+  margin: 8px 10px 10px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: color-mix(in oklab, var(--card) 55%, transparent);
+}

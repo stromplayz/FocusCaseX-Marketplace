@@ -1,0 +1,33 @@
+{
+  "id": "clinical-ice",
+  "name": "Clinical Ice",
+  "builtin": false,
+  "vars": {
+    "bg": "#eef2f6",
+    "bgSidebar": "#e3e9ef",
+    "bgPanel": "#f8fafc",
+    "text": "#1f2a33",
+    "textMuted": "#5c6b77",
+    "accent": "#3f6e8c",
+    "accentForeground": "#ffffff",
+    "border": "#d3dce3",
+    "radius": "8px",
+    "density": "cozy",
+    "borderWidth": "1px",
+    "shadow": "soft",
+    "buttonStyle": "soft",
+    "cardStyle": "raised",
+    "fontBody": "system",
+    "fontHeading": "grotesk",
+    "fontMono": "mono",
+    "headingWeight": "700",
+    "headingTransform": "none",
+    "tracking": "normal"
+  },
+  "description": "Cool blue-gray scrub surfaces with a steel accent — built for eight-hour shifts.",
+  "tags": [
+    "light",
+    "clinical",
+    "cool"
+  ]
+}

@@ -1,0 +1,45 @@
+name: Sync from upstream site
+
+on:
+  schedule:
+    # 03:17 UTC daily — off-the-hour to avoid the GitHub Actions rush.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mirror
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone upstream (public, no credentials)
+        run: git clone --depth 1 https://github.com/stromplayz/FocusCaseX.git /tmp/upstream
+
+      - name: Mirror contract tree
+        run: |
+          rsync -a --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'assets/motion' \
+            /tmp/upstream/ ./
+
+      - name: Restore legacy override files
+        run: git checkout HEAD -- index.html 404.html robots.txt README.md
+
+      - name: Commit and push (if changed)
+        run: |
+          git config user.name  "legacy-sync-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Upstream unchanged — nothing to do."
+          else
+            git commit -m "sync: mirror upstream FocusCaseX contract tree"
+            git push
+          fi

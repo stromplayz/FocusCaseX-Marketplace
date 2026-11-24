@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Templates — FocusCaseX Marketplace</title>
+<meta name="description" content="All 11 FocusCaseX templates — patient intake sheets, refraction notes, recall letters and clinical forms. Read the real note body of every template right here, then install it in one tap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Templates page glue — chip row + paper sheet stage + card preview intercepts. */
+  .chipbar {
+    display: flex; gap: 8px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    padding: 2px 2px 8px; margin-bottom: 16px;
+    scrollbar-width: thin;
+  }
+  .chipbar::-webkit-scrollbar { height: 6px; }
+  .chipbar::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+  .pick-chip {
+    flex: 0 0 auto;
+    font-family: var(--font-display); font-size: 12.5px; font-weight: 600;
+    padding: 8px 14px; border-radius: 999px;
+    border: 1px solid var(--line-2); background: var(--paper); color: var(--ink-2);
+    cursor: pointer; white-space: nowrap;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .pick-chip:hover { border-color: var(--blue); color: var(--blue-deep); background: var(--blue-soft); }
+  .pick-chip.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+  .tpl-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; min-width: 0; }
+  .tpl-head .tile {
+    width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--k-template-soft); color: var(--k-template);
+  }
+  .tpl-name {
+    font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -.02em;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .tpl-meta { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-top: 5px; font-size: 12px; color: var(--ink-2); }
+  .tpl-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--line-2); }
+
+  /* paper sheet: global .md-preview already paints the white page; widen it here */
+  .tpl-stage .md-preview {
+    padding: 28px 30px;
+    font-size: 14px;
+    min-height: 320px;
+    max-height: 540px;
+  }
+  .tpl-stage .md-preview td:first-child { width: 1%; white-space: nowrap; }
+
+  .stage-under {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; margin-top: 14px;
+  }
+  .install-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .install-row .code-token { font-size: 12.5px; padding: 7px 11px; letter-spacing: .1em; }
+  .install-row .chip { margin: 0; }
+  .stage-more {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--blue);
+  }
+  .stage-more:hover { color: var(--blue-deep); }
+  .stage-more svg { transition: transform .15s ease; }
+  .stage-more:hover svg { transform: translateX(3px); }
+
+  /* small "Preview" chip injected on every grid card */
+  .card-preview {
+    display: inline-flex; align-items: center; gap: 5px; align-self: flex-start;
+    font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .04em;
+    color: var(--blue); background: var(--blue-soft);
+    border: 1px solid var(--blue-line);
+    border-radius: 999px; padding: 4px 10px;
+    cursor: pointer; user-select: none;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .card-preview:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .card-preview svg { flex-shrink: 0; }
+  a.card.is-live { border-color: var(--blue); box-shadow: inset 0 0 0 1.5px var(--blue); }
+  /* at very narrow widths the injected topbar cannot fit; drop its install
+     button, then collapse search to its icon */
+  @media (max-width: 400px) {
+    #topbar-install { display: none !important; }
+  }
+  @media (max-width: 430px) {
+    .search-btn span.top-label, .search-btn kbd { display: none; }
+    .search-btn { padding: 9px 11px; }
+  }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap">
+    <section class="page-head">
+      <div class="kicker">Templates</div>
+      <h1>Templates — notes that start half-written.</h1>
+      <p class="lede">Intake sheets, refraction notes, consent and counselling checklists — pre-built for eye care. Preview the real body of every template here.</p>
+      <p class="explain"><span id="tpl-count">…</span> templates · free · lands as a ready page — you only fill in the findings</p>
+    </section>
+
+    <section class="section-tight">
+      <div class="preview-shell tpl-live" id="tpl-live" aria-live="polite">
+        <div class="chipbar" id="tpl-chips" role="tablist" aria-label="Pick a template to preview"></div>
+        <div class="tpl-head" id="tpl-head"></div>
+        <div class="tpl-stage">
+          <div class="md-preview" id="tpl-body"></div>
+        </div>
+        <div class="preview-note"><span data-icon="FileText" data-icon-size="14"></span><span>The actual note body — this exact page appears in your workspace; drop in an MR and the patient header resolves itself.</span></div>
+        <div class="stage-under">
+          <div class="install-row" id="tpl-install"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div id="template-grid"></div>
+      <p class="explain" style="margin-top: 26px;">Templates create normal workspace pages — edit them like any note, move them to any folder.</p>
+    </section>
+
+    <section class="section-tight">
+      <div class="trust">
+        <div class="t-item">
+          <span data-icon="Lock" data-icon-size="18"></span>
+          <div>
+            <b>Your records stay on your device</b>
+            <span>Templates are note layouts, not data collectors — they write pages into your own workspace and never move your clinic records anywhere.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="WifiOff" data-icon-size="18"></span>
+          <div>
+            <b>Works offline after install</b>
+            <span>Once installed, a template lives on your device — open it, fill it in and save it with no network at all.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Trash2" data-icon-size="18"></span>
+          <div>
+            <b>Remove any time under Settings</b>
+            <span>Uninstall from Settings → Marketplace whenever a template stops being useful — one tap and it is out of your catalog.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/demos-capsules.js"></script>
+<script src="assets/demos-extensions.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  document.querySelectorAll("[data-icon]").forEach((el) => {
+    el.outerHTML = FCX.icon(el.getAttribute("data-icon"), Number(el.getAttribute("data-icon-size")) || 16);
+  });
+
+  FCX.ready({ active: "marketplace" }).then(() => {
+    const templates = FCX.recommendOrder(FCX.items.filter((it) => it.kind === "template"));
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* --- head count line: filled from the catalog, never hardcoded --- */
+    document.getElementById("tpl-count").textContent = String(templates.length);
+
+    const shell = document.getElementById("tpl-live");
+    const chipsEl = document.getElementById("tpl-chips");
+    const headEl = document.getElementById("tpl-head");
+    const bodyEl = document.getElementById("tpl-body");
+    const installEl = document.getElementById("tpl-install");
+    const gridHost = document.getElementById("template-grid");
+
+    /* --- state --- */
+    let selectedId = null;
+    let renderToken = 0; /* guards against a slow fetch overwriting a newer pick */
+
+    /* --- chip row: every template, name on the chip, horizontally scrollable --- */
+    chipsEl.innerHTML = templates.map((it) =>
+      `<button type="button" role="tab" aria-selected="false" class="pick-chip" data-id="${FCX.esc(it.id)}">${FCX.esc(it.name)}</button>`
+    ).join("");
+
+    chipsEl.addEventListener("click", (ev) => {
+      const btn = ev.target.closest("[data-id]");
+      if (!btn) return;
+      select(btn.getAttribute("data-id"), { fromGrid: false });
+    });
+
+    /* --- stage: header row + real rendered body + install row --- */
+    function renderStage(id, opts) {
+      opts = opts || {};
+      const it = FCX.byId(id);
+      if (!it || it.kind !== "template") return;
+      selectedId = it.id;
+      const token = ++renderToken;
+
+      headEl.innerHTML =
+        `<span class="tile">${FCX.icon(it.icon || "FileText", 22)}</span>` +
+        `<div style="min-width:0;">` +
+          `<div class="tpl-name">${FCX.esc(it.name)}</div>` +
+          `<div class="tpl-meta">` +
+            `<span class="kindchip" style="--chip-c:var(--k-template);--chip-soft:var(--k-template-soft)">${FCX.esc(it.category || "Template")}</span>` +
+            (it.tagline ? `<span class="dot"></span><span>${FCX.esc(FCX.cleanCopy(it.tagline))}</span>` : "") +
+          `</div>` +
+        `</div>`;
+
+      bodyEl.innerHTML = `<p style="color:var(--ink-3);margin:0;">Fetching the real note body…</p>`;
+      FCX.fetchTemplateBody(it).then((body) => {
+        if (token !== renderToken) return; /* a newer pick already took the sheet */
+        bodyEl.innerHTML = FCX.renderMd(body || "A ready clinical page — open it in your workspace and edit it like any note.");
+      });
+
+      const code = FCX.installCode(it.id);
+      installEl.innerHTML =
+        `<button class="btn primary" type="button" data-open-app="${FCX.esc(it.id)}">${FCX.icon("MonitorSmartphone", 15)}<span>Install — open the app</span></button>` +
+        `<span class="code-token" title="Install code — type this inside the app">${FCX.esc(code)}</span>` +
+        `<button class="chip" type="button" data-copy="${FCX.esc(code)}" title="Copy install code">${FCX.icon("Copy", 13)}<span>Copy</span></button>` +
+        `<a class="stage-more" href="${FCX.itemUrl(it.id)}"><span>Full details</span>${FCX.icon("ArrowRight", 14)}</a>`;
+      FCX.wireDeepLinks(installEl);
+      FCX.wireCopyButtons(installEl);
+
+      chipsEl.querySelectorAll("[data-id]").forEach((b) => {
+        const on = b.getAttribute("data-id") === it.id;
+        b.classList.toggle("on", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      const active = chipsEl.querySelector(".pick-chip.on");
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest", inline: "center" });
+      }
+
+      markLiveCard();
+      if (!opts.silent) FCX.setParam("id", it.id);
+    }
+
+    function select(id, opts) {
+      renderStage(id, opts);
+      /* from the grid on a narrow layout, bring the stage into view */
+      if (opts && opts.fromGrid && window.matchMedia("(max-width: 900px)").matches) {
+        shell.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }
+    }
+
+    /* --- grid, with a Preview chip per card --- */
+    function injectPreviewChips() {
+      gridHost.querySelectorAll("a.card").forEach((card) => {
+        const m = (card.getAttribute("href") || "").match(/id=([^&]+)/);
+        const id = m ? decodeURIComponent(m[1]) : "";
+        if (!id) return;
+        const chip = document.createElement("span");
+        chip.className = "card-preview";
+        chip.setAttribute("role", "button");
+        chip.tabIndex = 0;
+        chip.setAttribute("data-preview", id);
+        chip.title = "Preview on the live sheet";
+        chip.innerHTML = `${FCX.icon("Eye", 12)}<span>Preview</span>`;
+        const meta = card.querySelector(".card-meta");
+        if (meta) meta.parentNode.insertBefore(chip, meta); else card.appendChild(chip);
+      });
+      markLiveCard();
+    }
+
+    function markLiveCard() {
+      gridHost.querySelectorAll("a.card").forEach((card) => {
+        const m = (card.getAttribute("href") || "").match(/id=([^&]+)/);
+        card.classList.toggle("is-live", !!m && decodeURIComponent(m[1]) === selectedId);
+      });
+    }
+
+    /* Preview chip selects into the stage; a plain card click keeps its
+       normal navigation to the item page */
+    function pickFromChip(ev) {
+      const chip = ev.target.closest("[data-preview]");
+      if (!chip) return false;
+      ev.preventDefault();
+      select(chip.getAttribute("data-preview"), { fromGrid: true });
+      return true;
+    }
+    gridHost.addEventListener("click", pickFromChip);
+    gridHost.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Enter" && ev.key !== " ") return;
+      pickFromChip(ev);
+    });
+
+    /* --- boot: grid + default selection (?id= preselect, else first recommended) --- */
+    gridHost.innerHTML = FCX.renderGrid(templates, { cap: 12 });
+    FCX.wireGrid(gridHost);
+    injectPreviewChips();
+
+    const fromId = FCX.getParam("id");
+    const start = templates.find((t) => t.id === fromId) || templates[0];
+    if (start) renderStage(start.id, { silent: !fromId });
+  });
+</script>
+</body>
+</html>
