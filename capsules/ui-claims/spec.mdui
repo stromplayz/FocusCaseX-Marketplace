@@ -1,0 +1,8 @@
+note: Clinic/Insurance.md
+stages:
+  - Eligibility|eligibility, eligible
+  - Pre-auth sent|pre-auth sent, preauth
+  - Approved|approved
+  - Denied|denied, rejected
+  - Billed|billed
+  - Settled|settled, paid

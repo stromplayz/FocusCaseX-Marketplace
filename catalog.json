@@ -22,6 +22,30 @@
       "name": "Rounded editor",
       "file": "snippets/rounded-editor.css",
       "description": "Soft rounded corners for the editor chrome."
+    },
+    {
+      "id": "readable-queue",
+      "name": "Readable queue",
+      "file": "snippets/readable-queue.css",
+      "description": "Taller front-desk rows with bolder patient names and calmer secondary text."
+    },
+    {
+      "id": "print-friendly",
+      "name": "Print friendly",
+      "file": "snippets/print-friendly.css",
+      "description": "Hides app chrome on paper so letters and Rx pads print clean."
+    },
+    {
+      "id": "calm-headers",
+      "name": "Calm headers",
+      "file": "snippets/calm-headers.css",
+      "description": "Softens page headers \u2014 smaller titles, lighter rules, tighter padding."
+    },
+    {
+      "id": "chairside-va",
+      "name": "Chairside VA",
+      "file": "snippets/chairside-va.css",
+      "description": "Enlarges VA and Rx numerals so values read at arm's length from the chair."
     }
   ],
   "items": [
@@ -29,8 +53,8 @@
       "id": "plugin:optomize",
       "kind": "plugin",
       "name": "Optomize",
-      "tagline": "Optometry EMR suite — compose markdown case files in the sidebar, store every follow-up visit as compact ∆-deltas (only changed values like ∆iop:OD=16 are written, the rest resolve from the prior visit) and clone a matched patient's profile with pattern=MR plus history-only deltas. Saves visits into a Bases database.",
-      "description": "Optometry EMR suite — compose markdown case files in the sidebar, store every follow-up visit as compact ∆-deltas (only changed values like ∆iop:OD=16 are written, the rest resolve from the prior visit) and clone a matched patient's profile with pattern=MR plus history-only deltas. Saves visits into a Bases database.",
+      "tagline": "Optometry EMR suite \u2014 compose markdown case files in the sidebar, store every follow-up visit as compact \u2206-deltas (only changed values like \u2206iop:OD=16 are written, the rest resolve from the prior visit) and clone a matched patient's profile with pattern=MR plus history-only deltas. Saves visits into a Bases database.",
+      "description": "Optometry EMR suite \u2014 compose markdown case files in the sidebar, store every follow-up visit as compact \u2206-deltas (only changed values like \u2206iop:OD=16 are written, the rest resolve from the prior visit) and clone a matched patient's profile with pattern=MR plus history-only deltas. Saves visits into a Bases database.",
       "author": "FocusCaseX originals",
       "version": "1.0.0",
       "category": "Clinical",
@@ -57,8 +81,8 @@
       "id": "plugin:focuslinks-navigation",
       "kind": "plugin",
       "name": "Focuslinks Navigation",
-      "tagline": "Owns the LEFT sidebar with a pure clinical navigator (Appointments, Examination, Recalls, Billing, Patients, Prescriptions, Reports, Cohorts) — v1.1.0 adds the sidebar-ownership guard: when FocusCaseX SBL (the hosted Clinic sidebar) is active, Focuslinks stands down so the workspace never stacks two navigators. Ships its own CSS.",
-      "description": "Owns the LEFT sidebar with a pure clinical navigator (Appointments, Examination, Recalls, Billing, Patients, Prescriptions, Reports, Cohorts) — v1.1.0 adds the sidebar-ownership guard: when FocusCaseX SBL (the hosted Clinic sidebar) is active, Focuslinks stands down so the workspace never stacks two navigators. Ships its own CSS.",
+      "tagline": "Owns the LEFT sidebar with a pure clinical navigator (Appointments, Examination, Recalls, Billing, Patients, Prescriptions, Reports, Cohorts) \u2014 v1.1.0 adds the sidebar-ownership guard: when FocusCaseX SBL (the hosted Clinic sidebar) is active, Focuslinks stands down so the workspace never stacks two navigators. Ships its own CSS.",
+      "description": "Owns the LEFT sidebar with a pure clinical navigator (Appointments, Examination, Recalls, Billing, Patients, Prescriptions, Reports, Cohorts) \u2014 v1.1.0 adds the sidebar-ownership guard: when FocusCaseX SBL (the hosted Clinic sidebar) is active, Focuslinks stands down so the workspace never stacks two navigators. Ships its own CSS.",
       "author": "FocusCaseX originals",
       "version": "1.1.0",
       "category": "Navigation",
@@ -85,8 +109,8 @@
       "id": "plugin:essential-diagrams",
       "kind": "plugin",
       "name": "Essential Diagrams",
-      "tagline": "Clinical-atlas eye diagrams for the Examination workup — tap-to-select anterior segment (surface, cornea & iris, lacrimal drainage) and fundus (posterior pole, retinal periphery) views for OD and OS, label each finding, and add the labeled results straight into the exam note.",
-      "description": "Clinical-atlas eye diagrams for the Examination workup — tap-to-select anterior segment (surface, cornea & iris, lacrimal drainage) and fundus (posterior pole, retinal periphery) views for OD and OS, label each finding, and add the labeled results straight into the exam note.",
+      "tagline": "Clinical-atlas eye diagrams for the Examination workup \u2014 tap-to-select anterior segment (surface, cornea & iris, lacrimal drainage) and fundus (posterior pole, retinal periphery) views for OD and OS, label each finding, and add the labeled results straight into the exam note.",
+      "description": "Clinical-atlas eye diagrams for the Examination workup \u2014 tap-to-select anterior segment (surface, cornea & iris, lacrimal drainage) and fundus (posterior pole, retinal periphery) views for OD and OS, label each finding, and add the labeled results straight into the exam note.",
       "author": "FocusCaseX originals",
       "version": "1.2.0",
       "category": "Clinical",
@@ -253,8 +277,8 @@
       "id": "plugin:update-v2-notifier",
       "kind": "plugin",
       "name": "Update v2 Notifier",
-      "tagline": "Pixel-art announcement banner for the workspace — quick patches, Extensions and Modes announced with a one-tap core updater and a PATCH READY status chip.",
-      "description": "Pixel-art announcement banner for the workspace — quick patches, Extensions and Modes announced with a one-tap core updater and a PATCH READY status chip.",
+      "tagline": "Pixel-art announcement banner for the workspace \u2014 quick patches, Extensions and Modes announced with a one-tap core updater and a PATCH READY status chip.",
+      "description": "Pixel-art announcement banner for the workspace \u2014 quick patches, Extensions and Modes announced with a one-tap core updater and a PATCH READY status chip.",
       "author": "FocusCaseX originals",
       "version": "2.2.1",
       "category": "Productivity",
@@ -310,8 +334,8 @@
       "id": "plugin:core-ui",
       "kind": "plugin",
       "name": "Core UI",
-      "tagline": "The Update v2 payload — core-UI customization through the plugin system: sidebar, panels, tabs and settings chrome restyled with live toggles.",
-      "description": "The Update v2 payload — core-UI customization through the plugin system: sidebar, panels, tabs and settings chrome restyled with live toggles.",
+      "tagline": "The Update v2 payload \u2014 core-UI customization through the plugin system: sidebar, panels, tabs and settings chrome restyled with live toggles.",
+      "description": "The Update v2 payload \u2014 core-UI customization through the plugin system: sidebar, panels, tabs and settings chrome restyled with live toggles.",
       "author": "FocusCaseX originals",
       "version": "2.0.0",
       "category": "Appearance",
@@ -342,8 +366,8 @@
       "id": "capsule:ui-appointment",
       "kind": "capsule",
       "name": "Appointment board",
-      "tagline": "The front-desk day book: live stats header (total/done/collected ₹/unpaid/visitors), workflow stepper with counselling, ",
-      "description": "The front-desk day book: live stats header (total/done/collected ₹/unpaid/visitors), workflow stepper with counselling, visitor registration (one-tap register, MR chip), payment chips (cash/card/UPI, paid or not), walk-ins, reschedule/cancel/no-show, day/week/month views — writes straight back into the book table. Slots never lock.",
+      "tagline": "The front-desk day book: live stats header (total/done/collected \u20b9/unpaid/visitors), workflow stepper with counselling, ",
+      "description": "The front-desk day book: live stats header (total/done/collected \u20b9/unpaid/visitors), workflow stepper with counselling, visitor registration (one-tap register, MR chip), payment chips (cash/card/UPI, paid or not), walk-ins, reschedule/cancel/no-show, day/week/month views \u2014 writes straight back into the book table. Slots never lock.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Boards",
@@ -373,8 +397,8 @@
       "id": "capsule:ui-patients",
       "kind": "capsule",
       "name": "Patient directory",
-      "tagline": "Tap-first directory of every patient file — live stats (total / seen today / recalls overdue / new this month), search +",
-      "description": "Tap-first directory of every patient file — live stats (total / seen today / recalls overdue / new this month), search + group filters + sorts, rows & cards views, one-tap register / book / call, inline identity & notes editing, mobile dock — writes straight back into the vault.",
+      "tagline": "Tap-first directory of every patient file \u2014 live stats (total / seen today / recalls overdue / new this month), search +",
+      "description": "Tap-first directory of every patient file \u2014 live stats (total / seen today / recalls overdue / new this month), search + group filters + sorts, rows & cards views, one-tap register / book / call, inline identity & notes editing, mobile dock \u2014 writes straight back into the vault.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Boards",
@@ -404,8 +428,8 @@
       "id": "capsule:ui-exam",
       "kind": "capsule",
       "name": "Examination workup",
-      "tagline": "The complete optometry workup as one tap-first board that pre-fills from the appointment + chart — both eyes side by sid",
-      "description": "The complete optometry workup as one tap-first board that pre-fills from the appointment + chart — both eyes side by side through the 28-section clinical flow: patient info → past records (every earlier visit's full record) → the full history battery (complaints builder, associated-symptom screen, ocular/systemic/family/birth & development/social/allergy histories, vitals) → vision → objective & subjective refraction (structured AR/RET/K/CCT/PD) → motility, BV function, sensory & pupils → adnexa, tear film, anterior segment, IOP, gonioscopy → posterior segment + special tests (OCT/VF/topo/biometry) → dispensing → plan with medications, procedures, referral, spectacles order, fee and signature. Sections push live quick-fact cards and browsable term lists (clinical library + the ICD-10 illness catalog) to the assist panel in the WORKSPACE RIGHT PANEL — typing a systemic illness opens its ICD-10-coded list there and long symptom batteries render as fully-open wrapped chip rows. Every save writes a real emr-visit block (baseline or ∆ delta follow-up) straight into the patient file, fully modifiable through its style.css.",
+      "tagline": "The complete optometry workup as one tap-first board that pre-fills from the appointment + chart \u2014 both eyes side by sid",
+      "description": "The complete optometry workup as one tap-first board that pre-fills from the appointment + chart \u2014 both eyes side by side through the 28-section clinical flow: patient info \u2192 past records (every earlier visit's full record) \u2192 the full history battery (complaints builder, associated-symptom screen, ocular/systemic/family/birth & development/social/allergy histories, vitals) \u2192 vision \u2192 objective & subjective refraction (structured AR/RET/K/CCT/PD) \u2192 motility, BV function, sensory & pupils \u2192 adnexa, tear film, anterior segment, IOP, gonioscopy \u2192 posterior segment + special tests (OCT/VF/topo/biometry) \u2192 dispensing \u2192 plan with medications, procedures, referral, spectacles order, fee and signature. Sections push live quick-fact cards and browsable term lists (clinical library + the ICD-10 illness catalog) to the assist panel in the WORKSPACE RIGHT PANEL \u2014 typing a systemic illness opens its ICD-10-coded list there and long symptom batteries render as fully-open wrapped chip rows. Every save writes a real emr-visit block (baseline or \u2206 delta follow-up) straight into the patient file, fully modifiable through its style.css.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Boards",
@@ -465,8 +489,8 @@
       "id": "capsule:ui-flow",
       "kind": "capsule",
       "name": "Workflow tracker",
-      "tagline": "Appointment→checkout funnel with per-stage patient lists and one-tap stage advance.",
-      "description": "Appointment→checkout funnel with per-stage patient lists and one-tap stage advance.",
+      "tagline": "Appointment\u2192checkout funnel with per-stage patient lists and one-tap stage advance.",
+      "description": "Appointment\u2192checkout funnel with per-stage patient lists and one-tap stage advance.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Boards",
@@ -640,8 +664,8 @@
       "id": "capsule:ui-actions",
       "kind": "capsule",
       "name": "Action buttons",
-      "tagline": "One-tap command buttons — Label | command pairs.",
-      "description": "One-tap command buttons — Label | command pairs.",
+      "tagline": "One-tap command buttons \u2014 Label | command pairs.",
+      "description": "One-tap command buttons \u2014 Label | command pairs.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Boards",
@@ -789,8 +813,8 @@
       "id": "capsule:emr-visit",
       "kind": "capsule",
       "name": "Visit record",
-      "tagline": "One stored visit — delta/pattern encoded, resolved through its chain.",
-      "description": "One stored visit — delta/pattern encoded, resolved through its chain.",
+      "tagline": "One stored visit \u2014 delta/pattern encoded, resolved through its chain.",
+      "description": "One stored visit \u2014 delta/pattern encoded, resolved through its chain.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Patient",
@@ -879,8 +903,8 @@
       "id": "capsule:ui-panel",
       "kind": "capsule",
       "name": "Right panel",
-      "tagline": "The panel a page declares for itself — booking form, pipeline, pulse or quick actions docked beside the board.",
-      "description": "The panel a page declares for itself — booking form, pipeline, pulse or quick actions docked beside the board.",
+      "tagline": "The panel a page declares for itself \u2014 booking form, pipeline, pulse or quick actions docked beside the board.",
+      "description": "The panel a page declares for itself \u2014 booking form, pipeline, pulse or quick actions docked beside the board.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Patient",
@@ -909,8 +933,8 @@
       "id": "theme:default-dark",
       "kind": "theme",
       "name": "Default Dark",
-      "tagline": "The native FocusCaseX look — no overrides, engine off.",
-      "description": "The native FocusCaseX look — no overrides, engine off. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "The native FocusCaseX look \u2014 no overrides, engine off.",
+      "description": "The native FocusCaseX look \u2014 no overrides, engine off. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1025,8 +1049,8 @@
       "id": "theme:clinical-ice",
       "kind": "theme",
       "name": "Clinical Ice",
-      "tagline": "Cool blue-gray scrub surfaces with a steel accent — built for eight-hour shifts.",
-      "description": "Cool blue-gray scrub surfaces with a steel accent — built for eight-hour shifts. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Cool blue-gray scrub surfaces with a steel accent \u2014 built for eight-hour shifts.",
+      "description": "Cool blue-gray scrub surfaces with a steel accent \u2014 built for eight-hour shifts. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1055,8 +1079,8 @@
       "id": "theme:surgical",
       "kind": "theme",
       "name": "Surgical",
-      "tagline": "Theater greens — deep green-tinted dark with a mint pulse for on-call focus.",
-      "description": "Theater greens — deep green-tinted dark with a mint pulse for on-call focus. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Theater greens \u2014 deep green-tinted dark with a mint pulse for on-call focus.",
+      "description": "Theater greens \u2014 deep green-tinted dark with a mint pulse for on-call focus. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1085,8 +1109,8 @@
       "id": "theme:nordic-fjord",
       "kind": "theme",
       "name": "Nordic Fjord",
-      "tagline": "Misted Scandinavian minimalism — pale cool surfaces, dusty blue-gray accents.",
-      "description": "Misted Scandinavian minimalism — pale cool surfaces, dusty blue-gray accents. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Misted Scandinavian minimalism \u2014 pale cool surfaces, dusty blue-gray accents.",
+      "description": "Misted Scandinavian minimalism \u2014 pale cool surfaces, dusty blue-gray accents. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1115,8 +1139,8 @@
       "id": "theme:graphite",
       "kind": "theme",
       "name": "Graphite",
-      "tagline": "Neutral graphite gray with a restrained steel-teal accent — the quiet workhorse.",
-      "description": "Neutral graphite gray with a restrained steel-teal accent — the quiet workhorse. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Neutral graphite gray with a restrained steel-teal accent \u2014 the quiet workhorse.",
+      "description": "Neutral graphite gray with a restrained steel-teal accent \u2014 the quiet workhorse. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1145,8 +1169,8 @@
       "id": "theme:ocean-breeze",
       "kind": "theme",
       "name": "Ocean Breeze",
-      "tagline": "Aqua-tinted light with fresh teal — a sea breeze through the clinic.",
-      "description": "Aqua-tinted light with fresh teal — a sea breeze through the clinic. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Aqua-tinted light with fresh teal \u2014 a sea breeze through the clinic.",
+      "description": "Aqua-tinted light with fresh teal \u2014 a sea breeze through the clinic. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1175,8 +1199,8 @@
       "id": "theme:forest-rounds",
       "kind": "theme",
       "name": "Forest Rounds",
-      "tagline": "Deep pine panels and moss green — a calm walk in the woods between patients.",
-      "description": "Deep pine panels and moss green — a calm walk in the woods between patients. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Deep pine panels and moss green \u2014 a calm walk in the woods between patients.",
+      "description": "Deep pine panels and moss green \u2014 a calm walk in the woods between patients. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1205,8 +1229,8 @@
       "id": "theme:pastel-soft",
       "kind": "theme",
       "name": "Pastel Soft",
-      "tagline": "Lavender and mint pastels with pill buttons — the gentlest chart in the cabinet.",
-      "description": "Lavender and mint pastels with pill buttons — the gentlest chart in the cabinet. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Lavender and mint pastels with pill buttons \u2014 the gentlest chart in the cabinet.",
+      "description": "Lavender and mint pastels with pill buttons \u2014 the gentlest chart in the cabinet. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1295,8 +1319,8 @@
       "id": "theme:neubrutalist",
       "kind": "theme",
       "name": "Neubrutalist",
-      "tagline": "Playful neo-brutalism — candy surfaces, thick ink borders, punchy accent.",
-      "description": "Playful neo-brutalism — candy surfaces, thick ink borders, punchy accent. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Playful neo-brutalism \u2014 candy surfaces, thick ink borders, punchy accent.",
+      "description": "Playful neo-brutalism \u2014 candy surfaces, thick ink borders, punchy accent. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1325,8 +1349,8 @@
       "id": "theme:mono-ink",
       "kind": "theme",
       "name": "Monochrome Ink",
-      "tagline": "True black-and-white dark mode — one hue removed, zero noise.",
-      "description": "True black-and-white dark mode — one hue removed, zero noise. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "True black-and-white dark mode \u2014 one hue removed, zero noise.",
+      "description": "True black-and-white dark mode \u2014 one hue removed, zero noise. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1355,8 +1379,8 @@
       "id": "theme:mono-paper",
       "kind": "theme",
       "name": "Monochrome Paper",
-      "tagline": "Ink-on-paper light mode — pure grayscale with crisp hairlines.",
-      "description": "Ink-on-paper light mode — pure grayscale with crisp hairlines. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Ink-on-paper light mode \u2014 pure grayscale with crisp hairlines.",
+      "description": "Ink-on-paper light mode \u2014 pure grayscale with crisp hairlines. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1415,8 +1439,8 @@
       "id": "theme:terminal",
       "kind": "theme",
       "name": "Terminal",
-      "tagline": "Green phosphor CRT console — mono everywhere, square corners, pure signal.",
-      "description": "Green phosphor CRT console — mono everywhere, square corners, pure signal. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Green phosphor CRT console \u2014 mono everywhere, square corners, pure signal.",
+      "description": "Green phosphor CRT console \u2014 mono everywhere, square corners, pure signal. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1445,8 +1469,8 @@
       "id": "theme:luxury-noir",
       "kind": "theme",
       "name": "Luxury Noir",
-      "tagline": "Black-tie noir — champagne ink and gold leaf, serif headlines behind glass panels.",
-      "description": "Black-tie noir — champagne ink and gold leaf, serif headlines behind glass panels. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Black-tie noir \u2014 champagne ink and gold leaf, serif headlines behind glass panels.",
+      "description": "Black-tie noir \u2014 champagne ink and gold leaf, serif headlines behind glass panels. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1475,8 +1499,8 @@
       "id": "theme:pastel-pop",
       "kind": "theme",
       "name": "Pastel Pop",
-      "tagline": "Candy-counter pastels — bubblegum surfaces, pill buttons, not a sharp edge in sight.",
-      "description": "Candy-counter pastels — bubblegum surfaces, pill buttons, not a sharp edge in sight. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Candy-counter pastels \u2014 bubblegum surfaces, pill buttons, not a sharp edge in sight.",
+      "description": "Candy-counter pastels \u2014 bubblegum surfaces, pill buttons, not a sharp edge in sight. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1505,8 +1529,8 @@
       "id": "theme:blueprint",
       "kind": "theme",
       "name": "Blueprint",
-      "tagline": "Drafting-table cyanotype — slate-blue field, cyan linework, uppercase technical labels.",
-      "description": "Drafting-table cyanotype — slate-blue field, cyan linework, uppercase technical labels. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Drafting-table cyanotype \u2014 slate-blue field, cyan linework, uppercase technical labels.",
+      "description": "Drafting-table cyanotype \u2014 slate-blue field, cyan linework, uppercase technical labels. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Dark",
@@ -1535,8 +1559,8 @@
       "id": "theme:stationery",
       "kind": "theme",
       "name": "Stationery",
-      "tagline": "Fine cream paper with sepia-ink accents and a quiet editorial serif — a notebook for charts.",
-      "description": "Fine cream paper with sepia-ink accents and a quiet editorial serif — a notebook for charts. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "tagline": "Fine cream paper with sepia-ink accents and a quiet editorial serif \u2014 a notebook for charts.",
+      "description": "Fine cream paper with sepia-ink accents and a quiet editorial serif \u2014 a notebook for charts. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
       "author": "CaseX Labs",
       "version": "1.0.0",
       "category": "Light",
@@ -1565,7 +1589,7 @@
       "id": "template:patient-intake",
       "kind": "template",
       "name": "Patient intake",
-      "tagline": "First-visit intake sheet — history, medications, goals and consent.",
+      "tagline": "First-visit intake sheet \u2014 history, medications, goals and consent.",
       "description": "A structured first-visit page: presenting complaint, ocular & medical history, current medication list, visual goals and the consent checklist. Drop the MR into the frontmatter and the patient header resolves automatically.",
       "author": "CaseX Clinical Team",
       "version": "1.0.0",
@@ -1627,7 +1651,7 @@
       "id": "template:cl-fitting",
       "kind": "template",
       "name": "Contact lens fitting",
-      "tagline": "CL assessment & trial record — keratometry, fit, power and order.",
+      "tagline": "CL assessment & trial record \u2014 keratometry, fit, power and order.",
       "description": "Contact lens workup: K-readings, dominant eye, trial lens parameters, movement/coverage grading and the ordered lens spec. Reuse one page per fitting visit so the adaptation trail stays in one place.",
       "author": "CaseX Clinical Team",
       "version": "1.0.0",
@@ -1658,7 +1682,7 @@
       "id": "template:glaucoma-workup",
       "kind": "template",
       "name": "Glaucoma workup",
-      "tagline": "IOP-driven glaucoma page — pressures, fields, OCT and target log.",
+      "tagline": "IOP-driven glaucoma page \u2014 pressures, fields, OCT and target log.",
       "description": "Chronic glaucoma management page: IOP per visit with target pressure, visual field indices, OCT RNFL notes and the treatment ladder. The trend capsule charts IOP across every stored visit.",
       "author": "CaseX Clinical Team",
       "version": "1.0.0",
@@ -1753,7 +1777,7 @@
       "kind": "template",
       "name": "Recall letter",
       "tagline": "Friendly follow-up recall with merge fields for MR and due date.",
-      "description": "A ready recall letter: merge fields for name, MR and the advised return window, plus the reason list. Print or copy into the clinic's mailer — the recall board capsule keeps track of who is due.",
+      "description": "A ready recall letter: merge fields for name, MR and the advised return window, plus the reason list. Print or copy into the clinic's mailer \u2014 the recall board capsule keeps track of who is due.",
       "author": "CaseX Clinical Team",
       "version": "1.0.0",
       "category": "Letters",
@@ -1783,8 +1807,8 @@
       "id": "template:daily-huddle",
       "kind": "template",
       "name": "Daily huddle board",
-      "tagline": "Morning meeting page — the front-desk board, funnel, recalls and cash desk, live.",
-      "description": "One page for the 10-minute morning huddle: the appointment board with its pulse header and walk-in sheet, the stage funnel, the overdue recall board and the billing desk. Every block reads and writes the book at Clinic/Appointment.md — nothing to fill in by hand.",
+      "tagline": "Morning meeting page \u2014 the front-desk board, funnel, recalls and cash desk, live.",
+      "description": "One page for the 10-minute morning huddle: the appointment board with its pulse header and walk-in sheet, the stage funnel, the overdue recall board and the billing desk. Every block reads and writes the book at Clinic/Appointment.md \u2014 nothing to fill in by hand.",
       "author": "CaseX Clinical Team",
       "version": "1.0.0",
       "category": "Dashboard",
@@ -1814,7 +1838,7 @@
       "id": "template:appointment-book",
       "kind": "template",
       "name": "Appointment book",
-      "tagline": "A ready front-desk day book — the workflow board, walk-ins and payments over the markdown table it writes into.",
+      "tagline": "A ready front-desk day book \u2014 the workflow board, walk-ins and payments over the markdown table it writes into.",
       "description": "Instantiates a complete appointment book page: the interactive board (pulse header, workflow stepper with counselling, payment chips, walk-in quick-add, day/week/month views) over the standard markdown table that is its data layer, plus the front-desk right rail (quick book, next up, unpaid list). Every action writes back into the table, so the dashboard's funnel and cash desk stay in sync.",
       "author": "CaseX Clinical Team",
       "version": "1.0.0",
@@ -1846,8 +1870,8 @@
       "id": "template:clinic-cohorts",
       "kind": "template",
       "name": "Cohort register page",
-      "tagline": "Chronic-care cohort register — keyword rules into live patient lists.",
-      "description": "A register page that groups patients into live cohorts from keyword rules: glaucoma suspects, diabetics, dry-eye, myopia control. Rules live in the page spec — edit them any time in developer mode.",
+      "tagline": "Chronic-care cohort register \u2014 keyword rules into live patient lists.",
+      "description": "A register page that groups patients into live cohorts from keyword rules: glaucoma suspects, diabetics, dry-eye, myopia control. Rules live in the page spec \u2014 edit them any time in developer mode.",
       "author": "CaseX Clinical Team",
       "version": "1.0.0",
       "category": "Dashboard",
@@ -1936,8 +1960,8 @@
       "id": "plugin:focuscasex-sbl",
       "kind": "plugin",
       "name": "FocusCaseX SBL",
-      "tagline": "Sidebar-Left clinical layout — replaces Files/Bases/EMR clutter with a Clinic navigator (Dashboard, Appointments, Patients, Exams, Prescriptions, Reports) and live Booked/Done/Patients/Revenue stats. Dashboard pages render a full clinical UI: range-aware KPIs + revenue chart, an appointment→checkout workflow tracker and Today's patients with scrollable tabs. Ships its own CSS. v1.2.0: content aligned with the v3 workspace pages — installs the exact sidebar the hosted site runs.",
-      "description": "Sidebar-Left clinical layout — replaces Files/Bases/EMR clutter with a Clinic navigator (Dashboard, Appointments, Patients, Exams, Prescriptions, Reports) and live Booked/Done/Patients/Revenue stats. Dashboard pages render a full clinical UI: range-aware KPIs + revenue chart, an appointment→checkout workflow tracker and Today's patients with scrollable tabs. Ships its own CSS. v1.2.0: content aligned with the v3 workspace pages — installs the exact sidebar the hosted site runs.",
+      "tagline": "Sidebar-Left clinical layout \u2014 replaces Files/Bases/EMR clutter with a Clinic navigator (Dashboard, Appointments, Patients, Exams, Prescriptions, Reports) and live Booked/Done/Patients/Revenue stats. Dashboard pages render a full clinical UI: range-aware KPIs + revenue chart, an appointment\u2192checkout workflow tracker and Today's patients with scrollable tabs. Ships its own CSS. v1.2.0: content aligned with the v3 workspace pages \u2014 installs the exact sidebar the hosted site runs.",
+      "description": "Sidebar-Left clinical layout \u2014 replaces Files/Bases/EMR clutter with a Clinic navigator (Dashboard, Appointments, Patients, Exams, Prescriptions, Reports) and live Booked/Done/Patients/Revenue stats. Dashboard pages render a full clinical UI: range-aware KPIs + revenue chart, an appointment\u2192checkout workflow tracker and Today's patients with scrollable tabs. Ships its own CSS. v1.2.0: content aligned with the v3 workspace pages \u2014 installs the exact sidebar the hosted site runs.",
       "author": "FocusCaseX originals",
       "version": "1.2.0",
       "category": "Productivity",
@@ -1963,8 +1987,8 @@
       "id": "plugin:utility-panel",
       "kind": "plugin",
       "name": "Utility Panel",
-      "tagline": "A clinical utility dock for the right panel — spherical equivalent, toric transposition, age from DOB, IOP with CCT correction, Snellen conversions, vertex power, presbyopia adds, keratometry, Prentice's rule, Rx summary and quick reference cards.",
-      "description": "A clinical utility dock for the right panel — spherical equivalent, toric transposition, age from DOB, IOP with CCT correction, Snellen conversions, vertex power, presbyopia adds, keratometry, Prentice's rule, Rx summary and quick reference cards.",
+      "tagline": "A clinical utility dock for the right panel \u2014 spherical equivalent, toric transposition, age from DOB, IOP with CCT correction, Snellen conversions, vertex power, presbyopia adds, keratometry, Prentice's rule, Rx summary and quick reference cards.",
+      "description": "A clinical utility dock for the right panel \u2014 spherical equivalent, toric transposition, age from DOB, IOP with CCT correction, Snellen conversions, vertex power, presbyopia adds, keratometry, Prentice's rule, Rx summary and quick reference cards.",
       "author": "FocusCaseX originals",
       "version": "1.0.0",
       "category": "Productivity",
@@ -1990,8 +2014,8 @@
       "id": "plugin:quick-actions-v2",
       "kind": "plugin",
       "name": "Quick Actions v2",
-      "tagline": "The Update v2.1 payload — completes the quick actions launcher with the clinical EMR set (examination, recalls, billing) through ctx.registerQuickAction. Auto-enabled with the core.",
-      "description": "The Update v2.1 payload — completes the quick actions launcher with the clinical EMR set (examination, recalls, billing) through ctx.registerQuickAction. Auto-enabled with the core.",
+      "tagline": "The Update v2.1 payload \u2014 completes the quick actions launcher with the clinical EMR set (examination, recalls, billing) through ctx.registerQuickAction. Auto-enabled with the core.",
+      "description": "The Update v2.1 payload \u2014 completes the quick actions launcher with the clinical EMR set (examination, recalls, billing) through ctx.registerQuickAction. Auto-enabled with the core.",
       "author": "FocusCaseX Marketplace",
       "version": "2.1.0",
       "category": "Productivity",
@@ -2018,8 +2042,8 @@
       "id": "plugin:core-cmds",
       "kind": "plugin",
       "name": "Core Commands",
-      "tagline": "Owns the user commands surface — every live command (built-ins plus each extension's contributions) listed, filterable and one-tap runnable from Settings.",
-      "description": "Owns the user commands surface — every live command (built-ins plus each extension's contributions) listed, filterable and one-tap runnable from Settings.",
+      "tagline": "Owns the user commands surface \u2014 every live command (built-ins plus each extension's contributions) listed, filterable and one-tap runnable from Settings.",
+      "description": "Owns the user commands surface \u2014 every live command (built-ins plus each extension's contributions) listed, filterable and one-tap runnable from Settings.",
       "author": "FocusCaseX originals",
       "version": "1.0.0",
       "category": "Productivity",
@@ -2045,8 +2069,8 @@
       "id": "plugin:core-modes",
       "kind": "plugin",
       "name": "Core Modes",
-      "tagline": "Owns the mode system — Clinical and Developer modes with their own extension bundles: switching a mode enables that mode's extensions, and snippets stay a developer-mode surface.",
-      "description": "Owns the mode system — Clinical and Developer modes with their own extension bundles: switching a mode enables that mode's extensions, and snippets stay a developer-mode surface.",
+      "tagline": "Owns the mode system \u2014 Clinical and Developer modes with their own extension bundles: switching a mode enables that mode's extensions, and snippets stay a developer-mode surface.",
+      "description": "Owns the mode system \u2014 Clinical and Developer modes with their own extension bundles: switching a mode enables that mode's extensions, and snippets stay a developer-mode surface.",
       "author": "FocusCaseX originals",
       "version": "1.0.0",
       "category": "Productivity",
@@ -2099,8 +2123,8 @@
       "id": "plugin:core-pages",
       "kind": "plugin",
       "name": "Core Pages",
-      "tagline": "Concrete pages that live as markdown files — a Pages section in the sidebar where every page is a real pages/<name>.md file in the vault folder, created through the permission-gated ctx.fs bridge.",
-      "description": "Concrete pages that live as markdown files — a Pages section in the sidebar where every page is a real pages/<name>.md file in the vault folder, created through the permission-gated ctx.fs bridge.",
+      "tagline": "Concrete pages that live as markdown files \u2014 a Pages section in the sidebar where every page is a real pages/<name>.md file in the vault folder, created through the permission-gated ctx.fs bridge.",
+      "description": "Concrete pages that live as markdown files \u2014 a Pages section in the sidebar where every page is a real pages/<name>.md file in the vault folder, created through the permission-gated ctx.fs bridge.",
       "author": "FocusCaseX originals",
       "version": "2.4.2",
       "category": "Productivity",
@@ -2122,6 +2146,1288 @@
         "manifest": "plugins/core-pages/manifest.json",
         "main": "plugins/core-pages/main.js"
       }
+    },
+    {
+      "id": "capsule:ui-claims",
+      "kind": "capsule",
+      "name": "Claims board",
+      "tagline": "The insurance desk: eligibility, pre-auth, denials and pending rupees.",
+      "description": "Claim / TPA tracker board for Clinic/Insurance.md \u2014 six stage pills (eligibility, pre-auth sent, approved, denied, billed, settled), a pending-rupee strip and stage filter tabs over one calm board. Rows carry patient, MR, insurer, policy and treatment, with Pre-auth/Approved/Billed/Settled \u20b9 columns read straight from the data page so the desk always sees what is still in flight.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Boards",
+      "tags": [
+        "capsule",
+        "boards",
+        "claims",
+        "insurance"
+      ],
+      "icon": "ReceiptText",
+      "rating": null,
+      "reviews": 21,
+      "downloads": 2561,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "ui-claims"
+      },
+      "files": {
+        "spec": "capsules/ui-claims/spec.mdui",
+        "style": "capsules/ui-claims/style.css"
+      }
+    },
+    {
+      "id": "capsule:ui-stock",
+      "kind": "capsule",
+      "name": "Inventory board",
+      "tagline": "Inventory board for lenses and frames with reorder flags.",
+      "description": "Lens/frames inventory board for Clinic/Inventory.md \u2014 category chips (frame, blank, CL, solution) with stock counts set against each item's reorder point. The rules flag any item whose stock dips below its reorder-at value with a calm warning tint, and out-of-stock rows tint red so the counter never misses an order.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Boards",
+      "tags": [
+        "capsule",
+        "boards",
+        "stock",
+        "inventory"
+      ],
+      "icon": "Package",
+      "rating": null,
+      "reviews": 17,
+      "downloads": 2284,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "ui-stock"
+      },
+      "files": {
+        "spec": "capsules/ui-stock/spec.mdui",
+        "style": "capsules/ui-stock/style.css"
+      }
+    },
+    {
+      "id": "capsule:ui-labjobs",
+      "kind": "capsule",
+      "name": "Lab job board",
+      "tagline": "Track every frame at the lab, promised date to pickup.",
+      "description": "A calm queue for optical lab and repair-adjustment jobs \u2014 job number, patient, item, lab and promised date on one row. Stage pills move work from at lab to delivered; delayed and overdue jobs tint amber while collected \u20b9 rolls up in the summary strip.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Boards",
+      "tags": [
+        "capsule",
+        "boards",
+        "lab",
+        "jobs"
+      ],
+      "icon": "Wrench",
+      "rating": null,
+      "reviews": 11,
+      "downloads": 1642,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "ui-labjobs"
+      },
+      "files": {
+        "spec": "capsules/ui-labjobs/spec.mdui",
+        "style": "capsules/ui-labjobs/style.css"
+      }
+    },
+    {
+      "id": "capsule:ui-orders",
+      "kind": "capsule",
+      "name": "Purchase orders",
+      "tagline": "Every supplier order, from draft to paid in one board.",
+      "description": "A dense worklist of supplier purchase orders \u2014 PO number, invoice, items and the money columns (total, paid, balance) at a glance. Stage pills walk each order through draft, ordered, shipped and paid; open balances tint amber so nothing slips before month-end.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Boards",
+      "tags": [
+        "capsule",
+        "boards",
+        "orders",
+        "suppliers"
+      ],
+      "icon": "ShoppingCart",
+      "rating": null,
+      "reviews": 9,
+      "downloads": 1487,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "ui-orders"
+      },
+      "files": {
+        "spec": "capsules/ui-orders/spec.mdui",
+        "style": "capsules/ui-orders/style.css"
+      }
+    },
+    {
+      "id": "capsule:ui-comms",
+      "kind": "capsule",
+      "name": "Comms log",
+      "tagline": "Every call, SMS and WhatsApp to or from patients.",
+      "description": "The front-desk register of every patient conversation \u2014 direction, channel, outcome and follow-up on one board, so any colleague can pick up any thread mid-stream.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Data",
+      "tags": [
+        "capsule",
+        "data",
+        "comms",
+        "calls"
+      ],
+      "icon": "MessagesSquare",
+      "rating": null,
+      "reviews": 13,
+      "downloads": 1893,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "ui-comms"
+      },
+      "files": {
+        "spec": "capsules/ui-comms/spec.mdui",
+        "style": "capsules/ui-comms/style.css"
+      }
+    },
+    {
+      "id": "capsule:ui-scan-index",
+      "kind": "capsule",
+      "name": "Scan index",
+      "tagline": "Scanned slips, field prints and prescriptions as tappable cards.",
+      "description": "Indexes a patient's scan folder as cards showing title, date, patient and tag, each linking straight to the scanned file.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Data",
+      "tags": [
+        "capsule",
+        "data",
+        "scans",
+        "index"
+      ],
+      "icon": "ScanLine",
+      "rating": null,
+      "reviews": 10,
+      "downloads": 1716,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "ui-scan-index"
+      },
+      "files": {
+        "spec": "capsules/ui-scan-index/spec.mdui",
+        "style": "capsules/ui-scan-index/style.css"
+      }
+    },
+    {
+      "id": "capsule:emr-cl-fitlog",
+      "kind": "capsule",
+      "name": "CL fitting log",
+      "tagline": "Contact-lens fitting log \u2014 trials, parameters and next review.",
+      "description": "Every fitting and trial for a patient as one readable row \u2014 brand, BC, DIA and PWR for both eyes. Trial results chip ok / tight / loose, with the ordered lens and next review up front.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Patient",
+      "tags": [
+        "capsule",
+        "patient",
+        "contact lens",
+        "fitting"
+      ],
+      "icon": "Eye",
+      "rating": null,
+      "reviews": 7,
+      "downloads": 1294,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "emr-cl-fitlog"
+      },
+      "files": {
+        "spec": "capsules/emr-cl-fitlog/spec.mdui",
+        "style": "capsules/emr-cl-fitlog/style.css"
+      }
+    },
+    {
+      "id": "capsule:emr-vf-board",
+      "kind": "capsule",
+      "name": "Visual fields",
+      "tagline": "Visual-field reliability and MD / PSD progression at a glance.",
+      "description": "Glaucoma-suspect follow-up as patient rows \u2014 fixation losses, false positives and negatives flagged per field. MD and PSD in dB chips tinted worse / stable / better, with each patient's next VF due.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Boards",
+      "tags": [
+        "capsule",
+        "boards",
+        "visual fields",
+        "progression"
+      ],
+      "icon": "Grid2x2",
+      "rating": null,
+      "reviews": 8,
+      "downloads": 1402,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "emr-vf-board"
+      },
+      "files": {
+        "spec": "capsules/emr-vf-board/spec.mdui",
+        "style": "capsules/emr-vf-board/style.css"
+      }
+    },
+    {
+      "id": "capsule:emr-iop-watch",
+      "kind": "capsule",
+      "name": "IOP watch",
+      "tagline": "Target-versus-current eye pressure watch board with trend emphasis.",
+      "description": "Watch OD and OS pressures against the 21 mmHg target with calm above/at/below chips, last three readings and a dashed target line. Compact patient rows carry medications and the next check date so glaucoma-suspect follow-ups never slip.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Boards",
+      "tags": [
+        "capsule",
+        "boards",
+        "iop",
+        "glaucoma"
+      ],
+      "icon": "Gauge",
+      "rating": null,
+      "reviews": 12,
+      "downloads": 1838,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "capsuleId": "emr-iop-watch"
+      },
+      "files": {
+        "spec": "capsules/emr-iop-watch/spec.mdui",
+        "style": "capsules/emr-iop-watch/style.css"
+      }
+    },
+    {
+      "id": "plugin:recall-campaign-runner",
+      "kind": "plugin",
+      "name": "Recall Campaigns",
+      "tagline": "Turn overdue recalls into finished outreach campaigns.",
+      "description": "Runs the recall list as dated outreach batches \u2014 call, SMS and WhatsApp passes with a per-patient outcome each time, so every due follow-up ends up contacted, answered or rebooked. Campaign progress rolls up in one strip so the desk always knows what is left to chase.",
+      "author": "FocusCaseX originals",
+      "version": "1.0.0",
+      "category": "Clinical",
+      "tags": [
+        "plugin",
+        "clinical"
+      ],
+      "icon": "BellRing",
+      "rating": null,
+      "reviews": 44,
+      "downloads": 5862,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "pluginId": "recall-campaign-runner"
+      },
+      "files": {
+        "manifest": "plugins/recall-campaign-runner/manifest.json",
+        "main": "plugins/recall-campaign-runner/main.js"
+      }
+    },
+    {
+      "id": "plugin:day-sheet-exporter",
+      "kind": "plugin",
+      "name": "Day Sheet",
+      "tagline": "A printable end-of-day summary in one tap.",
+      "description": "Builds the end-of-day page from the day's visits \u2014 totals per counter, new patients, revenue and the notes worth keeping. One tap lays it out as a clean, printable sheet the clinic can sign and file.",
+      "author": "FocusCaseX originals",
+      "version": "1.0.0",
+      "category": "Productivity",
+      "tags": [
+        "plugin",
+        "productivity"
+      ],
+      "icon": "ScrollText",
+      "rating": null,
+      "reviews": 29,
+      "downloads": 4107,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "pluginId": "day-sheet-exporter"
+      },
+      "files": {
+        "manifest": "plugins/day-sheet-exporter/manifest.json",
+        "main": "plugins/day-sheet-exporter/main.js"
+      }
+    },
+    {
+      "id": "plugin:inventory-stock-alerter",
+      "kind": "plugin",
+      "name": "Stock Alerter",
+      "tagline": "Know the moment stock dips below reorder.",
+      "description": "Watches the inventory register against each item's reorder point and raises a calm flag the moment a row dips below it, keeping today's purchase list one tap away.",
+      "author": "FocusCaseX originals",
+      "version": "1.0.0",
+      "category": "Productivity",
+      "tags": [
+        "plugin",
+        "productivity"
+      ],
+      "icon": "Package",
+      "rating": null,
+      "reviews": 33,
+      "downloads": 4725,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "pluginId": "inventory-stock-alerter"
+      },
+      "files": {
+        "manifest": "plugins/inventory-stock-alerter/manifest.json",
+        "main": "plugins/inventory-stock-alerter/main.js"
+      }
+    },
+    {
+      "id": "plugin:quick-phrases",
+      "kind": "plugin",
+      "name": "Quick Phrases",
+      "tagline": "Chairside text expander with patient variables.",
+      "description": "Drops ready clinical phrases, VA tables and plan lines straight into the note, with patient, date and chart variables filled from the active record before you look up.",
+      "author": "FocusCaseX originals",
+      "version": "1.0.0",
+      "category": "Productivity",
+      "tags": [
+        "plugin",
+        "productivity"
+      ],
+      "icon": "Zap",
+      "rating": null,
+      "reviews": 38,
+      "downloads": 5318,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "pluginId": "quick-phrases"
+      },
+      "files": {
+        "manifest": "plugins/quick-phrases/manifest.json",
+        "main": "plugins/quick-phrases/main.js"
+      }
+    },
+    {
+      "id": "plugin:referral-letter-composer",
+      "kind": "plugin",
+      "name": "Referral Composer",
+      "tagline": "Prefilled referral letters from the active chart.",
+      "description": "Drafts a colleague-ready referral letter from the active patient's chart \u2014 findings, management to date and the question being asked \u2014 then files every letter it sends under Referrals.",
+      "author": "FocusCaseX originals",
+      "version": "1.0.0",
+      "category": "Clinical",
+      "tags": [
+        "plugin",
+        "clinical"
+      ],
+      "icon": "FileText",
+      "rating": null,
+      "reviews": 26,
+      "downloads": 3944,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "pluginId": "referral-letter-composer"
+      },
+      "files": {
+        "manifest": "plugins/referral-letter-composer/manifest.json",
+        "main": "plugins/referral-letter-composer/main.js"
+      }
+    },
+    {
+      "id": "template:cl-aftercare",
+      "kind": "template",
+      "name": "CL aftercare & progress",
+      "tagline": "Contact lens aftercare visit \u2014 wear review, slit lamp, over-refraction and supply.",
+      "description": "The routine contact lens aftercare page: wear review with comfort and hours, slit lamp findings per eye (lids, bulbar, limbal, staining, neovascularization), over-refraction with VA, the supply table and the continue / modify / stop plan. One page per review keeps the wearing history in one place.",
+      "author": "CaseX Clinical Team",
+      "version": "1.0.0",
+      "category": "Clinical",
+      "tags": [
+        "template",
+        "clinical",
+        "contact lens",
+        "aftercare",
+        "progress"
+      ],
+      "icon": "Eye",
+      "rating": null,
+      "reviews": 9,
+      "downloads": 1128,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "templateId": "cl-aftercare",
+        "defaultFolder": "Clinic/ContactLens"
+      },
+      "files": {
+        "body": "templates/cl-aftercare.md"
+      }
+    },
+    {
+      "id": "template:rx-pad",
+      "kind": "template",
+      "name": "Spectacle Rx pad",
+      "tagline": "Patient prescription slip \u2014 final Rx table, PD & seg height, lens options, sign-off.",
+      "description": "A ready-to-print prescription slip: the OD/OS SPH\u2013CYL\u2013AXIS\u2013ADD\u2013VA table, PD and seg height, lens options (tint, photochromic, safety) and the clinician sign-off. Hand it to the patient or pass it straight to the dispensing desk.",
+      "author": "CaseX Clinical Team",
+      "version": "1.0.0",
+      "category": "Admin",
+      "tags": [
+        "template",
+        "admin",
+        "rx",
+        "spectacles",
+        "prescription"
+      ],
+      "icon": "Receipt",
+      "rating": null,
+      "reviews": 12,
+      "downloads": 1463,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "templateId": "rx-pad",
+        "defaultFolder": "Clinic/Dispensing"
+      },
+      "files": {
+        "body": "templates/rx-pad.md"
+      }
+    },
+    {
+      "id": "template:referral-letter",
+      "kind": "template",
+      "name": "Referral letter",
+      "tagline": "Colleague-to-colleague referral \u2014 findings, management, question and enclosures.",
+      "description": "A structured referral letter to a colleague: reason for referral, findings (VA, IOP, dilated exam, imaging), management to date, the specific question being asked, an enclosures checklist and sign-off. Merge fields pull the clinician and clinic name from the record.",
+      "author": "CaseX Clinical Team",
+      "version": "1.0.0",
+      "category": "Letters",
+      "tags": [
+        "template",
+        "letters",
+        "referral",
+        "letter",
+        "colleague"
+      ],
+      "icon": "FileText",
+      "rating": null,
+      "reviews": 11,
+      "downloads": 1347,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "templateId": "referral-letter",
+        "defaultFolder": "Clinic/Letters"
+      },
+      "files": {
+        "body": "templates/referral-letter.md"
+      }
+    },
+    {
+      "id": "template:medical-necessity-letter",
+      "kind": "template",
+      "name": "Medical necessity letter",
+      "tagline": "Payer letter for device funding \u2014 diagnosis, justification, requested device, attestation.",
+      "description": "A payer-facing medical necessity letter: payer and policy block, diagnosis with ICD-10 code, functional justification built on best-corrected VA and daily-impact statements, the requested device specification and the signed attestation.",
+      "author": "CaseX Clinical Team",
+      "version": "1.0.0",
+      "category": "Letters",
+      "tags": [
+        "template",
+        "letters",
+        "medical necessity",
+        "payer",
+        "insurance"
+      ],
+      "icon": "Stethoscope",
+      "rating": null,
+      "reviews": 6,
+      "downloads": 842,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "templateId": "medical-necessity-letter",
+        "defaultFolder": "Clinic/Letters"
+      },
+      "files": {
+        "body": "templates/medical-necessity-letter.md"
+      }
+    },
+    {
+      "id": "template:low-vision-assessment",
+      "kind": "template",
+      "name": "Low vision assessment",
+      "tagline": "Low vision workup \u2014 logMAR VA, contrast & glare, goals, device plan and training.",
+      "description": "A low vision assessment page: distance and near logMAR with working distances, contrast sensitivity and glare testing, a task-based goals checklist, the device plan (magnifier, telescope, filter) and the training / follow-up trail. Built for rehab clinics and optometry practices with a low vision service.",
+      "author": "CaseX Clinical Team",
+      "version": "1.0.0",
+      "category": "Clinical",
+      "tags": [
+        "template",
+        "clinical",
+        "low vision",
+        "logMAR",
+        "rehabilitation"
+      ],
+      "icon": "ScanEye",
+      "rating": null,
+      "reviews": 7,
+      "downloads": 963,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "templateId": "low-vision-assessment",
+        "defaultFolder": "Clinic/LowVision"
+      },
+      "files": {
+        "body": "templates/low-vision-assessment.md"
+      }
+    },
+    {
+      "id": "theme:solo-optometry",
+      "kind": "theme",
+      "name": "Solo Optometry",
+      "tagline": "Clinic-calm white paper, ink text, electric-blue actions.",
+      "description": "Clinic-calm white paper, ink text, electric-blue actions. One tap remaps fonts, colors and shapes across every surface, and it reverts to the native look just as fast.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Light",
+      "tags": [
+        "theme",
+        "light",
+        "clinic",
+        "brand"
+      ],
+      "icon": "Sun",
+      "rating": null,
+      "reviews": 16,
+      "downloads": 1988,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": false,
+      "meta": {
+        "themeId": "solo-optometry"
+      },
+      "files": {
+        "vars": "themes/solo-optometry.json"
+      }
+    },
+    {
+      "id": "workbench:solo-optometry",
+      "kind": "workbench",
+      "name": "Solo Optometrist WorkBench",
+      "tagline": "One install. A complete solo optometry EMR.",
+      "description": "The one-chair practice in one install \u2014 chairside Solo pages, claims, stock, lab and comms boards, recall and inventory automation, thirteen templates, seven snippets and the calm Solo Optometry theme. Apply it to a fresh clinic and start seeing patients.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Solo practice",
+      "tags": [
+        "workbench",
+        "solo",
+        "optometry",
+        "clinic"
+      ],
+      "icon": "Layers",
+      "rating": null,
+      "reviews": 27,
+      "downloads": 3406,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": true,
+      "meta": {
+        "workbenchId": "solo-optometry-workbench",
+        "code": "FCX-2VJD2S",
+        "contents": {
+          "extensions": 10,
+          "capsules": 28,
+          "theme": 1,
+          "templates": 13,
+          "snippets": 7,
+          "pages": 14,
+          "settings": true
+        },
+        "list": [
+          {
+            "kind": "extension",
+            "id": "optomize",
+            "name": "Optomize"
+          },
+          {
+            "kind": "extension",
+            "id": "essential-diagrams",
+            "name": "Essential Diagrams"
+          },
+          {
+            "kind": "extension",
+            "id": "utility-panel",
+            "name": "Utility Panel"
+          },
+          {
+            "kind": "extension",
+            "id": "quick-actions-v2",
+            "name": "Quick Actions v2"
+          },
+          {
+            "kind": "extension",
+            "id": "focuscasex-sbl",
+            "name": "FocusCaseX SBL"
+          },
+          {
+            "kind": "extension",
+            "id": "recall-campaign-runner",
+            "name": "Recall Campaigns"
+          },
+          {
+            "kind": "extension",
+            "id": "day-sheet-exporter",
+            "name": "Day Sheet"
+          },
+          {
+            "kind": "extension",
+            "id": "inventory-stock-alerter",
+            "name": "Stock Alerter"
+          },
+          {
+            "kind": "extension",
+            "id": "quick-phrases",
+            "name": "Quick Phrases"
+          },
+          {
+            "kind": "extension",
+            "id": "referral-letter-composer",
+            "name": "Referral Composer"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-appointment",
+            "name": "Appointment book"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-patients",
+            "name": "Patient List"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-exam",
+            "name": "Examination"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-clinic",
+            "name": "Clinic overview"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-flow",
+            "name": "Patient flow"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-today",
+            "name": "Today's patients"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-recalls",
+            "name": "Recalls & follow-ups"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-billing",
+            "name": "Billing & dispensing"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-cohorts",
+            "name": "Diagnosis cohorts"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-claims",
+            "name": "Claims"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-comms",
+            "name": "Comms log"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-labjobs",
+            "name": "Lab jobs"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-orders",
+            "name": "Purchase orders"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-scan-index",
+            "name": "Scan index"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-stock",
+            "name": "Stock"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-stats",
+            "name": "Stats"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-actions",
+            "name": "Actions"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-note-cards",
+            "name": "Notes"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-patient",
+            "name": "Patient"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-vitals",
+            "name": "Vitals"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-visits",
+            "name": "Visit history"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-visit",
+            "name": "Visit"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-trend",
+            "name": "Trend"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-cl-fitlog",
+            "name": "CL fitting log"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-iop-watch",
+            "name": "IOP watch"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-vf-board",
+            "name": "Visual fields"
+          },
+          {
+            "kind": "capsule",
+            "id": "bases-embed",
+            "name": "Base view"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-panel",
+            "name": "Side panel"
+          },
+          {
+            "kind": "theme",
+            "id": "solo-optometry",
+            "name": "Solo Optometry"
+          },
+          {
+            "kind": "template",
+            "id": "patient-intake",
+            "name": "Patient intake"
+          },
+          {
+            "kind": "template",
+            "id": "refraction-note",
+            "name": "Refraction note"
+          },
+          {
+            "kind": "template",
+            "id": "cl-fitting",
+            "name": "Contact lens fitting"
+          },
+          {
+            "kind": "template",
+            "id": "glaucoma-workup",
+            "name": "Glaucoma workup"
+          },
+          {
+            "kind": "template",
+            "id": "dispensing-order",
+            "name": "Dispensing & order"
+          },
+          {
+            "kind": "template",
+            "id": "recall-letter",
+            "name": "Recall letter"
+          },
+          {
+            "kind": "template",
+            "id": "appointment-book",
+            "name": "Appointment book"
+          },
+          {
+            "kind": "template",
+            "id": "daily-huddle",
+            "name": "Daily huddle board"
+          },
+          {
+            "kind": "template",
+            "id": "cl-aftercare",
+            "name": "CL aftercare & progress"
+          },
+          {
+            "kind": "template",
+            "id": "rx-pad",
+            "name": "Spectacle Rx pad"
+          },
+          {
+            "kind": "template",
+            "id": "referral-letter",
+            "name": "Referral letter"
+          },
+          {
+            "kind": "template",
+            "id": "medical-necessity-letter",
+            "name": "Medical necessity letter"
+          },
+          {
+            "kind": "template",
+            "id": "low-vision-assessment",
+            "name": "Low vision assessment"
+          },
+          {
+            "kind": "snippet",
+            "id": "bigger-headings",
+            "name": "Bigger headings"
+          },
+          {
+            "kind": "snippet",
+            "id": "rounded-editor",
+            "name": "Rounded editor"
+          },
+          {
+            "kind": "snippet",
+            "id": "compact-sidebar",
+            "name": "Compact sidebar"
+          },
+          {
+            "kind": "snippet",
+            "id": "readable-queue",
+            "name": "Readable queue"
+          },
+          {
+            "kind": "snippet",
+            "id": "print-friendly",
+            "name": "Print friendly"
+          },
+          {
+            "kind": "snippet",
+            "id": "calm-headers",
+            "name": "Calm headers"
+          },
+          {
+            "kind": "snippet",
+            "id": "chairside-va",
+            "name": "Chairside VA"
+          },
+          {
+            "kind": "pages",
+            "name": "14 starter pages"
+          }
+        ]
+      },
+      "files": {
+        "bundle": "workbenches/solo-optometry/workbench.json"
+      }
     }
-  ]
+  ],
+  "workbenches": [
+    {
+      "id": "workbench:solo-optometry",
+      "kind": "workbench",
+      "name": "Solo Optometrist WorkBench",
+      "tagline": "One install. A complete solo optometry EMR.",
+      "description": "The one-chair practice in one install \u2014 chairside Solo pages, claims, stock, lab and comms boards, recall and inventory automation, thirteen templates, seven snippets and the calm Solo Optometry theme. Apply it to a fresh clinic and start seeing patients.",
+      "author": "CaseX Labs",
+      "version": "1.0.0",
+      "category": "Solo practice",
+      "tags": [
+        "workbench",
+        "solo",
+        "optometry",
+        "clinic"
+      ],
+      "icon": "Layers",
+      "rating": null,
+      "reviews": 27,
+      "downloads": 3406,
+      "released": "2026-11-26",
+      "verified": true,
+      "featured": true,
+      "meta": {
+        "workbenchId": "solo-optometry-workbench",
+        "code": "FCX-2VJD2S",
+        "contents": {
+          "extensions": 10,
+          "capsules": 28,
+          "theme": 1,
+          "templates": 13,
+          "snippets": 7,
+          "pages": 14,
+          "settings": true
+        },
+        "list": [
+          {
+            "kind": "extension",
+            "id": "optomize",
+            "name": "Optomize"
+          },
+          {
+            "kind": "extension",
+            "id": "essential-diagrams",
+            "name": "Essential Diagrams"
+          },
+          {
+            "kind": "extension",
+            "id": "utility-panel",
+            "name": "Utility Panel"
+          },
+          {
+            "kind": "extension",
+            "id": "quick-actions-v2",
+            "name": "Quick Actions v2"
+          },
+          {
+            "kind": "extension",
+            "id": "focuscasex-sbl",
+            "name": "FocusCaseX SBL"
+          },
+          {
+            "kind": "extension",
+            "id": "recall-campaign-runner",
+            "name": "Recall Campaigns"
+          },
+          {
+            "kind": "extension",
+            "id": "day-sheet-exporter",
+            "name": "Day Sheet"
+          },
+          {
+            "kind": "extension",
+            "id": "inventory-stock-alerter",
+            "name": "Stock Alerter"
+          },
+          {
+            "kind": "extension",
+            "id": "quick-phrases",
+            "name": "Quick Phrases"
+          },
+          {
+            "kind": "extension",
+            "id": "referral-letter-composer",
+            "name": "Referral Composer"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-appointment",
+            "name": "Appointment book"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-patients",
+            "name": "Patient List"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-exam",
+            "name": "Examination"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-clinic",
+            "name": "Clinic overview"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-flow",
+            "name": "Patient flow"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-today",
+            "name": "Today's patients"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-recalls",
+            "name": "Recalls & follow-ups"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-billing",
+            "name": "Billing & dispensing"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-cohorts",
+            "name": "Diagnosis cohorts"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-claims",
+            "name": "Claims"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-comms",
+            "name": "Comms log"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-labjobs",
+            "name": "Lab jobs"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-orders",
+            "name": "Purchase orders"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-scan-index",
+            "name": "Scan index"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-stock",
+            "name": "Stock"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-stats",
+            "name": "Stats"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-actions",
+            "name": "Actions"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-note-cards",
+            "name": "Notes"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-patient",
+            "name": "Patient"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-vitals",
+            "name": "Vitals"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-visits",
+            "name": "Visit history"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-visit",
+            "name": "Visit"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-trend",
+            "name": "Trend"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-cl-fitlog",
+            "name": "CL fitting log"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-iop-watch",
+            "name": "IOP watch"
+          },
+          {
+            "kind": "capsule",
+            "id": "emr-vf-board",
+            "name": "Visual fields"
+          },
+          {
+            "kind": "capsule",
+            "id": "bases-embed",
+            "name": "Base view"
+          },
+          {
+            "kind": "capsule",
+            "id": "ui-panel",
+            "name": "Side panel"
+          },
+          {
+            "kind": "theme",
+            "id": "solo-optometry",
+            "name": "Solo Optometry"
+          },
+          {
+            "kind": "template",
+            "id": "patient-intake",
+            "name": "Patient intake"
+          },
+          {
+            "kind": "template",
+            "id": "refraction-note",
+            "name": "Refraction note"
+          },
+          {
+            "kind": "template",
+            "id": "cl-fitting",
+            "name": "Contact lens fitting"
+          },
+          {
+            "kind": "template",
+            "id": "glaucoma-workup",
+            "name": "Glaucoma workup"
+          },
+          {
+            "kind": "template",
+            "id": "dispensing-order",
+            "name": "Dispensing & order"
+          },
+          {
+            "kind": "template",
+            "id": "recall-letter",
+            "name": "Recall letter"
+          },
+          {
+            "kind": "template",
+            "id": "appointment-book",
+            "name": "Appointment book"
+          },
+          {
+            "kind": "template",
+            "id": "daily-huddle",
+            "name": "Daily huddle board"
+          },
+          {
+            "kind": "template",
+            "id": "cl-aftercare",
+            "name": "CL aftercare & progress"
+          },
+          {
+            "kind": "template",
+            "id": "rx-pad",
+            "name": "Spectacle Rx pad"
+          },
+          {
+            "kind": "template",
+            "id": "referral-letter",
+            "name": "Referral letter"
+          },
+          {
+            "kind": "template",
+            "id": "medical-necessity-letter",
+            "name": "Medical necessity letter"
+          },
+          {
+            "kind": "template",
+            "id": "low-vision-assessment",
+            "name": "Low vision assessment"
+          },
+          {
+            "kind": "snippet",
+            "id": "bigger-headings",
+            "name": "Bigger headings"
+          },
+          {
+            "kind": "snippet",
+            "id": "rounded-editor",
+            "name": "Rounded editor"
+          },
+          {
+            "kind": "snippet",
+            "id": "compact-sidebar",
+            "name": "Compact sidebar"
+          },
+          {
+            "kind": "snippet",
+            "id": "readable-queue",
+            "name": "Readable queue"
+          },
+          {
+            "kind": "snippet",
+            "id": "print-friendly",
+            "name": "Print friendly"
+          },
+          {
+            "kind": "snippet",
+            "id": "calm-headers",
+            "name": "Calm headers"
+          },
+          {
+            "kind": "snippet",
+            "id": "chairside-va",
+            "name": "Chairside VA"
+          },
+          {
+            "kind": "pages",
+            "name": "14 starter pages"
+          }
+        ]
+      },
+      "files": {
+        "bundle": "workbenches/solo-optometry/workbench.json"
+      }
+    }
+  ],
+  "cli": {
+    "npm": "focuscasex",
+    "repo": "https://github.com/stromplayz/FCX-NPM",
+    "install": "npm install -g github:stromplayz/FCX-NPM",
+    "version": "2.8.0"
+  }
 }

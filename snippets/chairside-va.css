@@ -1,0 +1,34 @@
+/* FocusCaseX snippet — chairside-va
+ * Enlarges VA / Rx numerals inside the EMR capsule eye cells (cx-vit-*)
+ * and in prose tables so values read at arm's length from the chair.
+ * Numerals carry one restrained electric-blue dotted tick; labels and
+ * table headers stay small and quiet.
+ */
+.fcx-snippet-chairside-va .cx-vit-num {
+  font-size: 18px;
+  font-weight: 700;
+  padding-bottom: 2px;
+  border-bottom: 2px dotted
+    color-mix(in oklab, var(--accent-live, var(--primary, #0f62fe)) 45%, transparent);
+}
+.fcx-snippet-chairside-va .cx-vit-key {
+  font-size: 13px;
+}
+
+/* the Rx strip beneath the eye cells — bigger numerals, calm labels */
+.fcx-snippet-chairside-va .cx-vit-rx {
+  font-size: 16px;
+}
+.fcx-snippet-chairside-va .cx-vit-rx-row td {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.fcx-snippet-chairside-va .cx-vit-rx-eye {
+  font-size: 13px;
+}
+
+/* prose tables (letters, Rx pads, registers) — numerals one step larger */
+.fcx-snippet-chairside-va .fcx-prose table {
+  font-size: 1.08em;
+  font-variant-numeric: tabular-nums;
+}

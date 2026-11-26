@@ -1,0 +1,7 @@
+note: Clinic/PurchaseOrders.md
+supplier: all
+stages:
+  - draft
+  - ordered
+  - shipped
+  - paid

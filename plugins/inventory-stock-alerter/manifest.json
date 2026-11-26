@@ -1,0 +1,10 @@
+{
+  "id": "inventory-stock-alerter",
+  "name": "Stock Alerter",
+  "version": "1.0.0",
+  "minAppVersion": "2.6.9",
+  "description": "Watch Clinic/Inventory stock levels and flag anything at or below its reorder point.",
+  "author": "CaseX Labs",
+  "isSample": true,
+  "permissions": { "folders": ["Clinic"] }
+}

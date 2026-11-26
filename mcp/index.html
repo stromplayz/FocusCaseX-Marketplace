@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MCP &amp; Automation — connect AI agents to FocusCaseX</title>
-<meta name="description" content="FocusCaseX hosts its own MCP server. Connect Claude, Cursor or any MCP agent to read clinic pages, search records and file drafts — only after you approve the connection inside the app. Command, approval flow, tool reference and automation recipes.">
+<title>MCP &amp; Automation — agent access to FocusCaseX, on your approval</title>
+<meta name="description" content="FocusCaseX hosts its own MCP server. Pair Claude, Cursor or any MCP agent with a 6-digit code or a QR scan, choose its read / write / build scopes, and approve every write with a human-readable diff. Tool catalog, pairing guide and agent configs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,32 +17,59 @@
   .mcp-sec h2 { margin-bottom: 6px; }
   section[id] { scroll-margin-top: 76px; }
   .mcp-lede { color: var(--ink-2); max-width: 660px; line-height: 1.65; margin-top: 10px; }
+
+  /* conn cards — pairing modes + agent configs */
   .conn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
   .conn-card { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--paper); }
   .conn-head { display: flex; align-items: center; gap: 10px; padding: 15px 18px; border-bottom: 1px solid var(--line); }
   .conn-head svg { color: var(--blue); }
   .conn-head b { font-family: var(--font-display); font-size: 14.5px; }
-  .conn-head .conn-where { margin-left: auto; font-size: 11px; color: var(--ink-3); }
+  .card-body { padding: 16px 18px 18px; }
+  .card-body > p { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin: 0; }
   .conn-card .fence { border: 0; border-radius: 0; }
   .fence.with-copy { padding-right: 88px; }
-  .fence.wrap-cmd { white-space: pre-wrap; overflow-wrap: anywhere; }
-  .recipe { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; background: var(--paper); display: flex; flex-direction: column; }
-  .recipe h3 { display: flex; align-items: center; gap: 9px; font-size: 15.5px; }
-  .recipe h3 svg { color: var(--blue); }
-  .recipe .r-tools { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
-  .recipe p { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
-  .recipe .r-prompt {
-    margin-top: 12px; font-size: 12.3px; color: var(--ink);
-    font-family: var(--font-mono); line-height: 1.6;
-    background: var(--bg-soft); border: 1px dashed var(--line-2);
-    border-radius: 9px; padding: 10px 13px;
+  .steps { margin: 14px 0 0; padding: 0; list-style: none; counter-reset: step; }
+  .steps li {
+    counter-increment: step;
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 7px 0; font-size: 13.3px; line-height: 1.5; color: var(--ink);
   }
-  .recipe .r-note {
-    display: flex; align-items: center; gap: 7px;
-    margin-top: auto; padding-top: 12px;
-    font-size: 12px; color: var(--ink-3);
+  .steps li::before {
+    content: counter(step);
+    flex-shrink: 0;
+    width: 24px; height: 24px; border-radius: 8px;
+    background: var(--blue); color: #fff;
+    font-family: var(--font-display); font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
   }
-  .recipe .r-note svg { color: var(--ok); flex-shrink: 0; }
+
+  /* tool catalog cards */
+  .tool-badge {
+    margin-left: auto;
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .tool-badge.read { color: var(--blue-deep); background: var(--blue-soft); }
+  .tool-badge.write { color: #fff; background: var(--ink); }
+  .tool-badge.build { color: var(--blue); background: rgba(5,51,255,.1); border: 1px solid var(--blue-line); }
+  .tool-list { list-style: none; margin: 14px 0 0; padding: 0; }
+  .tool-list li {
+    display: flex; gap: 14px; align-items: baseline;
+    padding: 8px 18px; border-top: 1px dashed var(--line);
+    font-size: 12.6px; color: var(--ink-2); line-height: 1.5;
+  }
+  .tool-list code { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--blue-deep); white-space: nowrap; }
+  .tool-list li span { flex: 1; }
+  .tool-list a { color: var(--blue-deep); font-weight: 600; }
+  .tool-foot {
+    margin-top: 12px; padding: 10px 18px 13px;
+    border-top: 1px solid var(--line); background: var(--bg-soft);
+    font-size: 11.8px; color: var(--ink-3); line-height: 1.55;
+  }
+
+  /* endpoint + notes */
   .endpoint-row {
     display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     background: var(--bg-soft); border: 1px solid var(--line);
@@ -55,11 +82,34 @@
     padding: 3px 9px; border-radius: 999px; white-space: nowrap;
   }
   .doc-note { font-size: 12.3px; color: var(--ink-3); margin-top: 10px; max-width: 660px; line-height: 1.55; }
-  .flowbox { margin-top: 28px; max-width: 760px; }
-  .flowbox h3 { font-size: 16px; }
-  .log-wrap { margin-top: 26px; max-width: 560px; }
+
+  /* agent setup cards — brand tile around each client's mark */
+  .agent-ic {
+    flex-shrink: 0;
+    width: 30px; height: 30px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .agent-ic svg { display: block; }
+
+  /* builder band (dark) */
+  .bc-tool {
+    display: inline-block; font-family: var(--font-mono); font-size: 11.5px;
+    color: var(--blue-bright); background: rgba(5,51,255,.18);
+    border-radius: 999px; padding: 4px 11px; margin-bottom: 10px;
+  }
+  .bc-link {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+    font-family: var(--font-display); font-size: 13px; font-weight: 600;
+    color: var(--blue-bright);
+  }
+  .bc-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* pending-actions tray mock */
+  .log-wrap { margin-top: 26px; max-width: 640px; }
   .log-cap { display: flex; align-items: center; gap: 8px; font-size: 12.3px; color: var(--ink-3); margin-bottom: 8px; }
   .log-cap svg { color: var(--blue); flex-shrink: 0; }
+  .mcp-log .lg-wait { color: #c98a12; }
+
   @media (max-width: 640px) { .mcp-sec { padding: 40px 0; } }
 </style>
 </head>
@@ -73,17 +123,18 @@
       <div class="hero-inner" style="grid-template-columns: 1fr; gap: 0; padding: 72px 0 66px;">
         <div style="max-width: 780px;">
           <div class="kicker">MCP &amp; Automation</div>
-          <h1>Connect your AI agents to FocusCaseX.<br><span class="hl">With permission, not luck.</span></h1>
-          <p class="lede" style="margin-top: 18px;">FocusCaseX speaks MCP — the Model Context Protocol, the standard way AI agents like Claude or Cursor call tools on your behalf. Point an approved agent at your workspace and it can search clinic pages, read records and file drafts. Nothing moves until you approve the connection and the agent holds a token you issued.</p>
+          <h1>An agent door into FocusCaseX.<br><span class="hl">You hold the approval layer.</span></h1>
+          <p class="lede" style="margin-top: 18px;">FocusCaseX speaks MCP — the Model Context Protocol, the standard way AI agents like Claude or Cursor call tools on your behalf. A paired agent reads your clinic freely, writes only on your confirmation — every action shows a human-readable diff before you tap Approve — and can even build capsules, Extensions and whole WorkBenches for your sign-off.</p>
           <div class="hero-cta">
-            <a class="btn primary" href="#approval" style="min-height:48px;">How approval works</a>
-            <a class="btn dark-ghost" href="#connect" style="min-height:48px;">Connect an agent</a>
+            <a class="btn primary" href="#connect" style="min-height:48px;">Connect an agent</a>
             <a class="btn dark-ghost" href="#tools" style="min-height:48px;">See the tools</a>
+            <a class="btn dark-ghost" href="#builders" style="min-height:48px;">Builder tools</a>
+            <a class="btn dark-ghost" href="#config" style="min-height:48px;">Set up your agent</a>
           </div>
           <div class="endpoint-row" style="background: var(--dark-2); border-color: var(--dark-line);">
             <span class="ep-tag" style="background: rgba(5,51,255,.2); color: var(--blue-bright);">Endpoint</span>
             <code style="color:#e8eaf6;">https://focuscasex.vercel.app/api/mcp/server</code>
-            <span style="font-size:11.5px;color:#7c8296;">or, on your device: <code style="color:#e8eaf6;">http://&lt;device-ip&gt;:8080/api/mcp/server</code></span>
+            <span style="font-size:11.5px;color:#7c8296;">or, on your device: <code style="color:#e8eaf6;">http://&lt;device-ip&gt;:8080/api/mcp/server</code> · pairing happens in the app, under Settings → MCP</span>
           </div>
         </div>
       </div>
@@ -95,61 +146,130 @@
     <div class="wrap">
       <div class="kicker">The protocol</div>
       <h2>What MCP is, in plain words.</h2>
-      <p class="mcp-lede"><b>Model Context Protocol (MCP)</b> is an open standard that lets AI agents — Claude, Cursor, anything that speaks it — call tools on your behalf. The agent thinks in its chat window; the tools run against real software: search this, read that, file this draft.</p>
-      <p class="mcp-lede" style="margin-top:12px;">FocusCaseX adds the other half: <b>your clinic records become agent-readable through a local, approved server.</b> The app hosts the MCP server itself — on-device over your own Wi-Fi, or on the web workspace at the endpoint above — so there is no middle service holding your records, and nothing is readable until you approve the connection.</p>
+      <p class="mcp-lede"><b>Model Context Protocol (MCP)</b> is an open standard that lets AI agents — Claude, Cursor, anything that speaks it — call tools on your behalf. The agent thinks in its chat window; the tools run against real software: search this, book that, install this.</p>
+      <p class="mcp-lede" style="margin-top:12px;">FocusCaseX adds the other half: <b>your clinic records become agent-accessible through a local, paired server — with a person at the approval layer.</b> The app hosts the MCP server itself, on-device over your own Wi-Fi or on the web workspace at the endpoint above. You approve every connection, set every agent's scopes, and confirm every write.</p>
       <div class="band-grid" style="margin-top: 30px;">
         <div class="t-item">
           <span data-icon="Bot"></span>
           <div>
-            <b>Your records, agent-readable</b>
-            <span>Appointment boards, recall lists, optics logs — the pages you already keep become searchable and readable to the agent you approved. It answers from your workspace, not from a copy.</span>
+            <b>Reads run free</b>
+            <span>Once paired, the agent can search patients, open records, read today's day book, check stock — all the read tools below, no approvals needed. Reading changes nothing.</span>
           </div>
         </div>
         <div class="t-item">
-          <span data-icon="PlugZap"></span>
+          <span data-icon="CircleCheckBig"></span>
           <div>
-            <b>A local, approved server</b>
-            <span>FocusCaseX hosts the MCP server itself. On-device it speaks only over your own LAN; on the web workspace it lives at the public endpoint. You approve every connection inside the app before a token exists.</span>
+            <b>Writes pass through you</b>
+            <span>Booking a visit, adding a note, installing a capsule — the agent proposes, FocusCaseX shows the change as a plain-language diff, and nothing applies until you tap Approve.</span>
           </div>
         </div>
         <div class="t-item">
-          <span data-icon="ShieldCheck"></span>
+          <span data-icon="Wrench"></span>
           <div>
-            <b>Read-mostly by design</b>
-            <span>Agents search, read, list and create pages. Editing and deleting are not in the toolset — the full reference is below, and that is the whole list.</span>
+            <b>Builders, with your sign-off</b>
+            <span>Agents don't just use the clinic — they can author for it: draft a capsule, scaffold an Extension, compose a whole WorkBench. You preview the result before anything installs.</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- APPROVAL FLOW -->
-  <section class="mcp-sec" id="approval" style="padding-top: 0;">
+  <!-- TOOL CATALOG -->
+  <section class="mcp-sec" id="tools" style="padding-top: 0;">
     <div class="wrap">
-      <div class="kicker">Approval</div>
-      <h2>No connection without you. Here is the whole flow.</h2>
-      <p class="mcp-lede">Every step below happens inside FocusCaseX, under <b>Settings → MCP &amp; Automation</b>. Follow it once per agent.</p>
+      <div class="kicker">Tool catalog</div>
+      <h2>Three kinds of tools. That's the whole catalog.</h2>
+      <p class="mcp-lede">Reads run on their own. Writes wait for your confirmation. Builds install only when you say so. The names below are exactly what a paired agent sees — anything not listed is not exposed.</p>
 
-      <div class="install flowbox">
-        <h3><span data-icon="KeyRound" data-icon-size="16"></span>From request to token</h3>
-        <ol class="steps">
-          <li><span><strong>The agent requests a connection.</strong> An MCP client pointed at your server asks to connect. An unapproved client gets one answer — <i>authorization required</i> — and a pending request is recorded.</span></li>
-          <li><span><strong>FocusCaseX shows the request</strong> in <strong>Settings → MCP &amp; Automation</strong> — with the agent's name, the device it came from and the tools it wants.</span></li>
-          <li><span><strong>You Approve or Deny.</strong> Deny and the agent stays locked out; there is no other way in.</span></li>
-          <li><span><strong>On approval, a scoped personal token is issued</strong> — <span style="font-family:var(--font-mono);">fcxt_…</span> — and shown <strong>once</strong>. Copy it now; it is never displayed again.</span></li>
-          <li><span><strong>Paste the token into the agent's configuration</strong> (the command below). From then on the agent can call <strong>only the documented tools</strong> — nothing more.</span></li>
-          <li><span><strong>Every call lands in the Activity log</strong> — the time, the agent and the tool. You can read exactly what happened, whenever you want.</span></li>
-          <li><span><strong>Revoke any time</strong> under Settings → MCP &amp; Automation. Revoking kills the token instantly — the agent is out on its next call.</span></li>
-        </ol>
+      <div class="conn-grid" style="margin-top: 26px;">
+
+        <!-- READ -->
+        <div class="conn-card">
+          <div class="conn-head"><span data-icon="ScanEye" data-icon-size="16"></span><b>Read tools</b><span class="tool-badge read">runs freely</span></div>
+          <div class="card-body"><p>The agent's eyes. It can look anything up, any time — no prompts, no approvals, and nothing it reads is changed.</p></div>
+          <ul class="tool-list">
+            <li><code>patients_search</code><span>find patients by name or MR</span></li>
+            <li><code>patients_get</code><span>open one patient file</span></li>
+            <li><code>appointments_list</code><span>browse the day book</span></li>
+            <li><code>appointments_today</code><span>today's clinic at a glance</span></li>
+            <li><code>records_get</code><span>read visit records</span></li>
+            <li><code>prescriptions_get</code><span>read prescriptions</span></li>
+            <li><code>inventory_list</code><span>frames, lenses and consumables on hand</span></li>
+            <li><code>extensions_list</code><span>installed Extensions</span></li>
+            <li><code>capsules_list</code><span>installed Capsules</span></li>
+            <li><code>themes_list</code><span>themes available to apply</span></li>
+            <li><code>templates_list</code><span>note templates on file</span></li>
+            <li><code>snippets_list</code><span>markdown snippets on file</span></li>
+            <li><code>workbenches_list</code><span>WorkBenches in the workspace</span></li>
+            <li><code>dashboard_summary</code><span>the clinic dashboard, as numbers</span></li>
+            <li><code>settings_get</code><span>read workspace settings</span></li>
+          </ul>
+        </div>
+
+        <!-- WRITE -->
+        <div class="conn-card">
+          <div class="conn-head"><span data-icon="Zap" data-icon-size="16"></span><b>Write tools</b><span class="tool-badge write">confirmation per action</span></div>
+          <div class="card-body"><p>The agent's hands. Every action opens a <b>human-readable diff</b> in the app — old value → new value — and waits for Approve or Deny. Deny, and nothing changes.</p></div>
+          <ul class="tool-list">
+            <li><code>patients_create</code><span>register a new patient</span></li>
+            <li><code>patients_update</code><span>correct a patient's details</span></li>
+            <li><code>appointments_book</code><span>book a visit</span></li>
+            <li><code>appointments_reschedule</code><span>move a visit</span></li>
+            <li><code>appointments_cancel</code><span>cancel a visit</span></li>
+            <li><code>records_add_note</code><span>append a note to a record</span></li>
+            <li><code>prescriptions_create</code><span>draft a prescription</span></li>
+            <li><code>inventory_adjust</code><span>adjust stock counts</span></li>
+            <li><code>capsule_install</code><span>install a Capsule into a page</span></li>
+            <li><code>capsule_remove</code><span>remove an installed Capsule</span></li>
+            <li><code>extension_install</code><span>install an Extension</span></li>
+            <li><code>extension_toggle</code><span>enable or disable an Extension</span></li>
+            <li><code>theme_apply</code><span>apply a theme workspace-wide</span></li>
+            <li><code>settings_update</code><span>change workspace settings</span></li>
+          </ul>
+          <div class="tool-foot">Writes always wait for you, unless you explicitly grant one agent a standing allowance — and even then every write lands in the audit log.</div>
+        </div>
+
+        <!-- BUILD -->
+        <div class="conn-card">
+          <div class="conn-head"><span data-icon="Wrench" data-icon-size="16"></span><b>Builder tools</b><span class="tool-badge build">you approve the build</span></div>
+          <div class="card-body"><p>The agent's workbench. It authors things in a sandbox, shows you the working result, and installs only what you approve.</p></div>
+          <ul class="tool-list">
+            <li><code>capsule_builder</code><span>describe a capsule → the agent drafts it, you preview it live → installs on your confirm</span></li>
+            <li><code>extension_builder</code><span>describe a feature → the agent scaffolds and validates an Extension → installs on your confirm</span></li>
+            <li><code>workbench_builder</code><span>compose a whole WorkBench — Extensions, capsules, theme, templates, snippets, starter pages, settings — into one installable · <a href="/marketplace/workbench/">see WorkBenches</a></span></li>
+          </ul>
+          <div class="tool-foot">Builders draft first and touch the workspace last — the install step is a write like any other, diff included.</div>
+        </div>
+
       </div>
+    </div>
+  </section>
 
-      <div class="log-wrap">
-        <div class="log-cap"><span data-icon="ScrollText" data-icon-size="14"></span><span>The Activity log — example entries (time, agent, tool):</span></div>
-        <div class="mcp-log">
-          <div><span class="lg-t">09:14</span><span class="lg-who">Claude Code</span><span>search_notes</span><span class="lg-ok">ok</span></div>
-          <div><span class="lg-t">09:14</span><span class="lg-who">Claude Code</span><span>read_note</span><span class="lg-ok">ok</span></div>
-          <div><span class="lg-t">09:15</span><span class="lg-who">Claude Code</span><span>create_note</span><span class="lg-ok">ok</span></div>
-          <div><span class="lg-t">09:22</span><span class="lg-who">Front-desk assistant</span><span>list_patients</span><span class="lg-ok">ok</span></div>
+  <!-- BUILDER TOOLS (black band) -->
+  <section class="band" id="builders">
+    <div class="wrap section">
+      <div class="kicker">Builder tools</div>
+      <h2>The agent doesn't just use the clinic. It can build for it.</h2>
+      <p class="lede" style="margin-top:12px; max-width:660px;">Three builder tools author real workspace artifacts. Each drafts in a sandbox, shows you the result, and installs on your confirm — never before.</p>
+      <div class="band-grid" style="margin-top: 30px;">
+        <div class="band-card">
+          <span class="bc-ic"><span data-icon="Braces" data-icon-size="18"></span></span>
+          <h3>Capsule Builder</h3>
+          <span class="bc-tool">capsule_builder</span>
+          <p>Describe the block you want — a post-op checklist, a lens-stock counter, a recall tracker — and the agent drafts a capsule: a markdown-embedded live UI block. It renders live for you to preview, then installs into your pages on your confirm.</p>
+        </div>
+        <div class="band-card">
+          <span class="bc-ic"><span data-icon="Puzzle" data-icon-size="18"></span></span>
+          <h3>Extension Builder</h3>
+          <span class="bc-tool">extension_builder</span>
+          <p>Describe the feature and the agent scaffolds a real installable Extension — manifest, code, the lot — then validates it before anything touches your workspace. You read the summary and approve the install.</p>
+        </div>
+        <div class="band-card">
+          <span class="bc-ic"><span data-icon="Package" data-icon-size="18"></span></span>
+          <h3>WorkBench Builder</h3>
+          <span class="bc-tool">workbench_builder</span>
+          <p>The big one. The agent composes a whole WorkBench — Extensions, capsules, a theme, templates, snippets, starter pages and settings — into one installable setup for a role or an entire practice.</p>
+          <a class="bc-link" href="/marketplace/workbench/">See WorkBenches on the marketplace <span data-icon="ArrowRight" data-icon-size="14"></span></a>
         </div>
       </div>
     </div>
@@ -158,125 +278,253 @@
   <!-- CONNECT -->
   <section class="mcp-sec" id="connect">
     <div class="wrap">
-      <div class="kicker">Connect</div>
-      <h2>Approve first, then one command.</h2>
-      <p class="mcp-lede">The approval flow above ends with a token — <span style="font-family:var(--font-mono);">fcxt_…</span>, shown once. Paste it wherever the configs below say <span style="font-family:var(--font-mono);">&lt;your-token&gt;</span>. The one-liner every MCP-compatible CLI takes:</p>
+      <div class="kicker">Pairing</div>
+      <h2>Connect an agent two ways. Both start in the app.</h2>
+      <p class="mcp-lede">An agent points itself at your server and asks to pair. You finish the pairing inside FocusCaseX — a 6-digit code or a QR scan — and the agent is bound to this clinic install with the scopes you chose.</p>
 
-      <div class="conn-card" style="margin-top: 26px;">
-        <div class="conn-head"><span data-icon="Terminal" data-icon-size="16"></span><b>Claude Code</b><span class="conn-where">terminal</span></div>
-        <div class="fence wrap-cmd with-copy"><button class="copy-btn" type="button" data-copy='claude mcp add --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header "Authorization: Bearer &lt;your-token&gt;"'>Copy</button><span class="cx-cmd">claude mcp add</span> --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header <span class="cx-str">"Authorization: Bearer &lt;your-token&gt;"</span></div>
+      <div class="conn-grid" style="margin-top: 26px;">
+        <div class="conn-card">
+          <div class="conn-head"><span data-icon="KeyRound" data-icon-size="16"></span><b>Code Confirmation</b><span class="conn-where">Settings → MCP</span></div>
+          <div class="card-body">
+            <p>When an unpaired agent tries to connect, FocusCaseX shows a 6-digit code in the app. If the request is one you recognize, approve it — the agent is bound to this install, with its own scopes. No code you approved, no connection.</p>
+            <ol class="steps">
+              <li><span><strong>The agent asks to pair.</strong> A pending request with its name and device appears under Settings → MCP, along with a 6-digit code.</span></li>
+              <li><span><strong>You approve.</strong> Deny and the agent stays locked out — there is no other way in.</span></li>
+              <li><span><strong>You set its scopes</strong> — read, write, build — and can change or revoke them any time.</span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="conn-card">
+          <div class="conn-head"><span data-icon="QrCode" data-icon-size="16"></span><b>Scan Mode</b><span class="conn-where">Settings → MCP</span></div>
+          <div class="card-body">
+            <p>FocusCaseX shows a QR code under Settings → MCP. Scan it from the agent's device — or from your phone — and the same pairing completes with zero typing. Same approval, same scopes, faster.</p>
+            <ol class="steps">
+              <li><span><strong>Open Settings → MCP.</strong> The QR is on screen, ready to pair.</span></li>
+              <li><span><strong>Scan it</strong> from the agent's device or your phone.</span></li>
+              <li><span><strong>Approve in the app</strong> — paired, scopes chosen, done.</span></li>
+            </ol>
+          </div>
+        </div>
       </div>
 
-      <div class="conn-grid">
+      <h3 style="margin-top: 40px; font-size: 17px;">Per-agent scopes</h3>
+      <div class="band-grid">
+        <div class="t-item">
+          <span data-icon="SlidersHorizontal"></span>
+          <div>
+            <b>Scopes chosen at pairing</b>
+            <span>Each agent gets its own read / write / build mix, set when you approve it. A front-desk assistant can read everything and write nothing; a builder agent can do all three.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="BadgeCheck"></span>
+          <div>
+            <b>Writes always confirm</b>
+            <span>Every write shows its diff and waits for Approve or Deny — unless you explicitly grant that agent a standing allowance, in which case its writes still land in the audit log.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Clock"></span>
+          <div>
+            <b>A tray for pending actions</b>
+            <span>The pending-actions tray in the app shows exactly what agents are waiting on, oldest first — the diff, the agent, the tool. Approve or Deny in one tap.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Trash2"></span>
+          <div>
+            <b>Revoke in one tap</b>
+            <span>Every paired agent can be revoked under Settings → MCP. Revoking ends its access on its next call and clears its pending actions — no restarts.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="log-wrap">
+        <div class="log-cap"><span data-icon="Clock" data-icon-size="14"></span><span>The pending-actions tray — example entries:</span></div>
+        <div class="mcp-log">
+          <div><span class="lg-t">09:14</span><span class="lg-who">Claude Code</span><span>patients_search</span><span class="lg-ok">done</span></div>
+          <div><span class="lg-t">09:15</span><span class="lg-who">Claude Code</span><span>appointments_book</span><span class="lg-wait">waiting on you</span></div>
+          <div><span class="lg-t">09:16</span><span class="lg-who">Front-desk assistant</span><span>records_add_note</span><span class="lg-wait">waiting on you</span></div>
+          <div><span class="lg-t">09:17</span><span class="lg-who">Builder agent</span><span>capsule_install</span><span class="lg-wait">waiting on you</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SET UP YOUR AGENT -->
+  <section class="mcp-sec" id="config" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="kicker">Agent setups</div>
+      <h2>Set up your agent. Every major client, one snippet each.</h2>
+      <p class="mcp-lede">Pick your client, paste its snippet where it keeps configs, and put a token in the Authorization slot. Mint one by pairing in the app — the 6-digit code or the QR — or issue a personal token under Settings → MCP. The snippets below point at the public web endpoint; an on-device install swaps in the address it shows under Settings → MCP.</p>
+
+      <div class="conn-grid" style="margin-top: 26px;">
+
         <div class="conn-card">
-          <div class="conn-head"><span data-icon="LayoutGrid" data-icon-size="16"></span><b>Cursor</b><span class="conn-where">~/.cursor/mcp.json</span></div>
+          <div class="conn-head"><span class="agent-ic" style="background:#d977571a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#d97757;"><path d="M12 2.6v6M12 15.4v6M2.6 12h6M15.4 12h6M5.1 5.1l3.9 3.9M15 15l3.9 3.9M5.1 18.9L9 15M15 9l3.9-3.9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><b>Claude Desktop</b><span class="conn-where">claude_desktop_config.json</span></div>
           <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
   "mcpServers": {
     "focuscasex": {
       "url": "https://focuscasex.vercel.app/api/mcp/server",
-      "headers": { "Authorization": "Bearer &lt;your-token&gt;" }
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
     }
   }
 }'>Copy</button>{
   <span class="cx-str">"mcpServers"</span>: {
     <span class="cx-str">"focuscasex"</span>: {
-      <span class="cx-str">"url"</span>: "https://focuscasex.vercel.app/api/mcp/server",
-      <span class="cx-str">"headers"</span>: { <span class="cx-str">"Authorization"</span>: "Bearer &lt;your-token&gt;" }
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
     }
   }
 }</div>
         </div>
-        <div class="conn-card">
-          <div class="conn-head"><span data-icon="MonitorSmartphone" data-icon-size="16"></span><b>Any MCP client</b><span class="conn-where">HTTP transport</span></div>
-          <div class="fence"><span class="cx-cmd">POST</span> /api/mcp/server
-<span class="cx-cmd">Authorization:</span> Bearer &lt;your-token&gt;
-<span class="cx-cmd">Content-Type:</span> application/json
 
-{"jsonrpc":"2.0","id":1,
- "method":"tools/list"}</div>
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#18181b1a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#18181b;"><path d="M12 2.6v6M12 15.4v6M2.6 12h6M15.4 12h6M5.1 5.1l3.9 3.9M15 15l3.9 3.9M5.1 18.9L9 15M15 9l3.9-3.9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><b>Claude Code</b><span class="conn-where">terminal command</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='claude mcp add --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header "Authorization: Bearer &lt;your-token&gt;"'>Copy</button><span class="cx-cmd">claude mcp add</span> --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header <span class="cx-str">"Authorization: Bearer &lt;your-token&gt;"</span></div>
         </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#1e1e1e1a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#1e1e1e;"><rect x="2.5" y="2.5" width="19" height="19" rx="4.5" fill="currentColor"/><path d="M12 6.4 16.6 9v5.9L12 17.6 7.4 14.9V9z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.4 9l4.6 2.6 4.6-2.6M12 11.6v6" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></svg></span><b>Cursor</b><span class="conn-where">.cursor/mcp.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#00b8d91a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#00b8d9;"><path d="M2.5 13.8C5 8.6 8.3 8.4 11.4 11.6c2.8 2.9 6.2 3.1 10.1-.9" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="M3.5 17.9c2.3-3.4 5-3.5 7.4-1 2.2 2.3 4.9 2.5 8-.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".55"/></svg></span><b>Windsurf</b><span class="conn-where">~/.codeium/windsurf/mcp_config.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#0078d41a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#0078d4;"><path fill="currentColor" fill-rule="evenodd" d="M22 4.1v15.8l-5.6 2.2-8.3-7.9-4.5 3.4L1.5 16.3V7.7l2.1-1.3 4.5 3.4 8.3-7.9zM16.4 7.5v9L10.3 12z"/></svg></span><b>VS Code (Copilot MCP)</b><span class="conn-where">.vscode/mcp.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#7048e81a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#7048e8;"><rect x="3.5" y="7.2" width="17" height="12" rx="3.4" stroke="currentColor" stroke-width="1.9"/><path d="M12 7.2V4.3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="3.1" r="1.3" fill="currentColor"/><path d="M1.2 12.2v3M22.8 12.2v3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="8.8" cy="13.2" r="1.5" fill="currentColor"/><circle cx="15.2" cy="13.2" r="1.5" fill="currentColor"/></svg></span><b>Cline</b><span class="conn-where">cline_mcp_settings.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#4796e31a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#4796e3;"><path fill="currentColor" d="M12 1.9c.75 5.55 4.55 9.35 10.1 10.1-5.55.75-9.35 4.55-10.1 10.1-.75-5.55-4.55-9.35-10.1-10.1 5.55-.75 9.35-4.55 10.1-10.1z"/></svg></span><b>Gemini CLI</b><span class="conn-where">~/.gemini/settings.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#18181b1a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#18181b;"><path d="M4.2 5.6l6.6 6.4-6.6 6.4" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.6 18.4h7.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></span><b>Codex CLI</b><span class="conn-where">~/.codex/config.toml</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='[mcp_servers.focuscasex]
+url = "https://focuscasex.vercel.app/api/mcp/server"
+http_headers = { "Authorization" = "Bearer &lt;your-token&gt;" }'>Copy</button><span class="cx-cmd">[mcp_servers.focuscasex]</span>
+url = <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>
+http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-str">"Bearer &lt;your-token&gt;"</span> }</div>
+        </div>
+
       </div>
 
       <div class="endpoint-row">
         <span class="ep-tag">On-device</span>
         <code>http://&lt;device-ip&gt;:8080/api/mcp/server</code>
         <button class="chip" type="button" data-copy="http://&lt;device-ip&gt;:8080/api/mcp/server"><span data-icon="Copy" data-icon-size="13"></span><span>Copy</span></button>
-        <span class="muted small">The app on your phone or tablet serves MCP over your own Wi-Fi — the exact address is shown under Settings → MCP &amp; Automation.</span>
+        <span class="muted small">The app on your phone or tablet serves MCP over your own Wi-Fi — the exact address is shown under Settings → MCP.</span>
       </div>
-      <p class="doc-note">Use the web endpoint when you work in the hosted workspace, the device address when the records live on the phone or tablet in the room. Both accept the same token; both log to the same Activity log.</p>
-    </div>
-  </section>
+      <p class="doc-note">Use the web endpoint when you work in the hosted workspace, the device address when the records live on the phone or tablet in the room. Both pair the same way; both log to the same audit log. Headless clients that can't show a pairing screen can use a personal token instead — Settings → MCP → Issue token — as a Bearer header, with the same scopes.</p>
 
-  <!-- TOOL REFERENCE (black band) -->
-  <section class="band" id="tools">
-    <div class="wrap section">
-      <div class="kicker">Tool reference</div>
-      <h2>Four tools. That's the whole documented set.</h2>
-      <p class="lede" style="margin-top:12px; max-width:660px;">Each tool does one job, and each card below says what it cannot do. Anything not on this list — edits, deletes, settings, billing — is not exposed to agents at all.</p>
-      <div class="tools-table-wrap">
-        <table class="tools-table">
-          <thead><tr><th>Tool</th><th>What it does</th><th>What it cannot do</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="t-name">search_notes</td>
-              <td>Search clinic pages by keyword — the same search the app itself uses. Returns <b>titles plus short snippets</b>, enough to find the right page fast.</td>
-              <td>It does not return full page text. For the whole page, the agent follows up with <span style="font-family:var(--font-mono);color:var(--blue-bright);">read_note</span>.</td>
-            </tr>
-            <tr>
-              <td class="t-name">read_note</td>
-              <td>Read one page in full, by its path — appointment board, recall list, a patient's visit page.</td>
-              <td>Nothing it reads is changed — there is no edit tool at all.</td>
-            </tr>
-            <tr>
-              <td class="t-name">create_note</td>
-              <td>Create a <b>new</b> page under a clinic section — the agent's way to file a draft where you will find it.</td>
-              <td>It cannot overwrite, edit or delete existing records. A create that lands on an existing path fails; existing pages stay yours.</td>
-            </tr>
-            <tr>
-              <td class="t-name">list_patients</td>
-              <td>List the patients in the workspace — name and MR chip, the same list you see in the app.</td>
-              <td>It returns names and identifiers, not record contents — for those the agent uses <span style="font-family:var(--font-mono);color:var(--blue-bright);">search_notes</span> and <span style="font-family:var(--font-mono);color:var(--blue-bright);">read_note</span>.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- AUTOMATION RECIPES -->
-  <section class="mcp-sec" id="automation">
-    <div class="wrap">
-      <div class="kicker">Automation recipes</div>
-      <h2>Three recipes worth wiring up on day one.</h2>
-      <p class="mcp-lede">Copy the prompt into your connected agent and it does the running around. The prompt is the whole setup — no scripts to maintain.</p>
-      <div class="conn-grid" style="margin-top: 30px;">
-        <div class="recipe">
-          <h3><span data-icon="Sun" data-icon-size="16"></span>Morning brief</h3>
-          <div class="r-tools">
-            <span class="kindchip">search_notes</span><span class="kindchip">list_patients</span><span class="kindchip">create_note</span>
-          </div>
-          <p>First thing each morning, the agent reads the appointment board, flags unpaid visits and overdue recalls, and files a short summary where you will see it.</p>
-          <div class="r-prompt">"Search today's appointment board, list unpaid visits and overdue recalls, post a summary to Today.md"</div>
-          <div class="r-note"><span data-icon="CircleCheck" data-icon-size="14"></span><span>Agent proposes; you approve where it writes.</span></div>
-        </div>
-        <div class="recipe">
-          <h3><span data-icon="RefreshCcw" data-icon-size="16"></span>Recall sweep</h3>
-          <div class="r-tools">
-            <span class="kindchip">search_notes</span><span class="kindchip">create_note</span>
-          </div>
-          <p>The agent works down the recall list, drafts a follow-up note for every patient past due, and leaves the drafts for you — nothing goes out until you say so.</p>
-          <div class="r-prompt">"Find recalls overdue 30+ days, draft a follow-up note for each, leave drafts for my approval"</div>
-          <div class="r-note"><span data-icon="CircleCheck" data-icon-size="14"></span><span>Agent proposes; you approve where it writes.</span></div>
-        </div>
-        <div class="recipe">
-          <h3><span data-icon="Package" data-icon-size="16"></span>Stock &amp; optics log</h3>
-          <div class="r-tools">
-            <span class="kindchip">read_note</span><span class="kindchip">create_note</span>
-          </div>
-          <p>Once a week the agent reads your dispensing and optics pages and drafts a lens-stock summary — ready for Friday's order, in your own words.</p>
-          <div class="r-prompt">"Read Optics/dispensing pages and draft a weekly lens-stock summary"</div>
-          <div class="r-note"><span data-icon="CircleCheck" data-icon-size="14"></span><span>Agent proposes; you approve where it writes.</span></div>
-        </div>
+      <div class="hero-cta" style="margin-top: 22px;">
+        <a class="btn primary" href="/install/" style="min-height:48px;">Try it — the install guide <span data-icon="ArrowRight" data-icon-size="15"></span></a>
+        <a class="btn ghost" href="#tools" style="min-height:48px;">Back to the tool catalog</a>
       </div>
     </div>
   </section>
@@ -284,49 +532,49 @@
   <!-- SECURITY -->
   <section class="mcp-sec" id="security" style="padding-top: 0;">
     <div class="wrap">
-      <div class="kicker">Security</div>
-      <h2>What stands between an agent and your records.</h2>
+      <div class="kicker">Security &amp; data posture</div>
+      <h2>Where your data sits, and what crosses the line.</h2>
       <div class="band-grid" style="margin-top: 30px;">
         <div class="t-item">
-          <span data-icon="KeyRound"></span>
+          <span data-icon="WifiOff"></span>
           <div>
-            <b>Approval first</b>
-            <span>A connection only exists once you approve it in Settings → MCP &amp; Automation. Without a token, an agent gets one answer: <i>authorization required</i>.</span>
+            <b>Local-first</b>
+            <span>Records live in your clinic install — on your device or your hosted workspace. Agents read from the same install you use, not from a copy held elsewhere.</span>
           </div>
         </div>
         <div class="t-item">
           <span data-icon="Lock"></span>
           <div>
-            <b>Scoped tokens</b>
-            <span>Each approved agent holds one personal token (<span style="font-family:var(--font-mono);">fcxt_…</span>), issued at approval and shown once. It grants the documented tools — nothing else.</span>
+            <b>Codes and tokens stay put</b>
+            <span>A pairing code or personal token leaves the clinic install only when you act — approve, scan, or paste it yourself. FocusCaseX never ships your credentials anywhere on its own.</span>
           </div>
         </div>
         <div class="t-item">
-          <span data-icon="Eye"></span>
+          <span data-icon="CircleCheck"></span>
           <div>
-            <b>No silent edits</b>
-            <span>The agent can create pages; it cannot change a page you already have. What it writes appears as new drafts, in plain sight.</span>
-          </div>
-        </div>
-        <div class="t-item">
-          <span data-icon="Trash2"></span>
-          <div>
-            <b>No deletes</b>
-            <span>There is no delete tool. Nothing an agent calls can remove a record.</span>
+            <b>Writes need a human</b>
+            <span>No write applies without your confirmation, shown as a plain-language diff. Standing allowances are explicit, per agent, and visible under Settings → MCP.</span>
           </div>
         </div>
         <div class="t-item">
           <span data-icon="ScrollText"></span>
           <div>
-            <b>Log everything</b>
-            <span>Every call — time, agent, tool — lands in the Activity log. One screen shows exactly what happened and when.</span>
+            <b>Full audit log</b>
+            <span>Every agent action is logged — time, agent, tool, and whether you approved it. One screen answers "what did the agent do?"</span>
           </div>
         </div>
         <div class="t-item">
-          <span data-icon="WifiOff"></span>
+          <span data-icon="Trash2"></span>
           <div>
-            <b>Your network, your terms</b>
-            <span>On-device, the MCP server answers only on your own Wi-Fi. On the web workspace, traffic runs between you and your agent — FocusCaseX never forwards your records anywhere.</span>
+            <b>Revoke anytime</b>
+            <span>One tap ends an agent's access. Pending, unapproved actions die with the pairing.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Eye"></span>
+          <div>
+            <b>Deny is a real answer</b>
+            <span>An unpaired agent gets one response — <i>authorization required</i> — and a pending request you can Deny. Nothing is exposed before you approve.</span>
           </div>
         </div>
       </div>
@@ -341,33 +589,37 @@
       <div class="faq">
         <details>
           <summary>Is my patient data sent to some cloud AI?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">No. MCP connects <i>your</i> agent to <i>your</i> workspace over your own connection. Whatever the agent does with what it reads is governed by the AI service you chose and its terms — FocusCaseX itself never forwards your records anywhere.</div>
+          <div class="faq-a">No. MCP connects <i>your</i> agent to <i>your</i> workspace over a connection you approved. Whatever the agent does with what it reads is governed by the AI service you chose and its terms — FocusCaseX itself never forwards your records anywhere.</div>
         </details>
         <details>
-          <summary>Can an agent change or delete my records?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">No. The documented tool set is four tools: <span style="font-family:var(--font-mono);">search_notes</span>, <span style="font-family:var(--font-mono);">read_note</span>, <span style="font-family:var(--font-mono);">create_note</span> and <span style="font-family:var(--font-mono);">list_patients</span>. There is no edit-in-place and no delete — and create never overwrites an existing page.</div>
+          <summary>Can an agent change my records?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Only writes you approve. Every write — bookings, notes, installs — shows a human-readable diff in the app and applies only when you tap Approve. Clinical records themselves have no delete tool; capsules and Extensions can be removed, again only on your confirmation.</div>
         </details>
         <details>
           <summary>What happens if an agent connects without approval?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">It gets a single "authorization required" response, and a pending request appears under Settings → MCP &amp; Automation showing who asked — name, device, tools. If you don't recognize it, tap Deny — and it stays locked out.</div>
+          <div class="faq-a">It gets a single "authorization required" response, and a pending request appears under Settings → MCP with its name, device and the scopes it wants — plus a 6-digit code for you to check. If you don't recognize it, tap Deny — and it stays locked out.</div>
+        </details>
+        <details>
+          <summary>What is a standing allowance?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Normally every write waits for your confirmation. A standing allowance is an explicit, per-agent grant that lets one specific agent write without asking each time — for agents you run unattended. It's visible under Settings → MCP and revocable like everything else; its writes still land in the audit log.</div>
         </details>
         <details>
           <summary>How do I switch MCP off?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Revoke the token under Settings → MCP &amp; Automation. Revoking kills the token instantly — the agent is out on its next call, no restarts, no settings changes. On a device you can also simply stop the host server.</div>
+          <div class="faq-a">Revoke agents under Settings → MCP — one tap each, effective on their next call, pending actions cleared. On a device you can also simply stop the host server.</div>
         </details>
         <details>
           <summary>Which agents can connect?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Anything that speaks MCP over HTTP: Claude Code, Cursor, custom scripts, scheduling automations, in-clinic kiosk assistants. If it can POST JSON-RPC with a header, it can ask to connect — once you approve it.</div>
+          <div class="faq-a">Anything that speaks MCP over HTTP: Claude Desktop, Claude Code, Cursor, custom scripts, scheduling automations, in-clinic kiosk assistants. If it can POST JSON-RPC, it can ask to pair — once you approve it.</div>
         </details>
       </div>
       <div class="cta-band" style="margin-top: 54px;">
         <div style="flex:1;min-width:260px;">
-          <h2>Set it up in two minutes.</h2>
-          <p>Open FocusCaseX → Settings → MCP &amp; Automation, approve your agent, paste the token into the command above.</p>
+          <h2>Pair an agent in two minutes.</h2>
+          <p>Install FocusCaseX, open Settings → MCP, scan the QR or approve the 6-digit code, and choose the agent's scopes. First read takes a second; first write waits for your tap.</p>
         </div>
         <div style="display:flex; flex-direction:column; gap:10px;">
-          <button class="btn blue-on-dark" type="button" data-copy="Settings → MCP &amp; Automation"><span data-icon="Copy" data-icon-size="15"></span><span>Copy the settings path</span></button>
-          <a class="btn dark-ghost" href="https://focuscasex.vercel.app" target="_blank" rel="noopener" style="min-height:44px;">Open the app</a>
+          <a class="btn blue-on-dark" href="/install/" style="min-height:44px;">Try it — the install guide</a>
+          <button class="btn dark-ghost" type="button" data-copy="Settings → MCP"><span data-icon="Copy" data-icon-size="15"></span><span>Copy the settings path</span></button>
         </div>
       </div>
     </div>

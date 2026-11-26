@@ -1,0 +1,12 @@
+{
+  "id": "day-sheet-exporter",
+  "name": "Day Sheet",
+  "version": "1.0.0",
+  "minAppVersion": "2.6.9",
+  "description": "Build a printable end-of-day summary note — visits, new patients and revenue in one page.",
+  "author": "CaseX Labs",
+  "isSample": true,
+  "permissions": {
+    "folders": ["Database/Patients"]
+  }
+}

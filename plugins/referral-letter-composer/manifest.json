@@ -1,0 +1,12 @@
+{
+  "id": "referral-letter-composer",
+  "name": "Referral Composer",
+  "version": "1.0.0",
+  "minAppVersion": "2.6.9",
+  "description": "Compose prefilled referral letters from the active patient's chart and file them under Referrals.",
+  "author": "CaseX Labs",
+  "isSample": true,
+  "permissions": {
+    "folders": ["Database/Patients", "Referrals"]
+  }
+}

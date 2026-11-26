@@ -1,0 +1,69 @@
+/* FocusCaseX snippet — print-friendly
+ * Letters and Rx pads print clean: app chrome (sidebar, meta rails, top
+ * bar, tab strip, banners) is hidden on paper, pages print on white with
+ * near-black ink, tables keep their borders, and cards / table rows /
+ * preformatted blocks never split across a page break. Every rule lives
+ * inside @media print — screen rendering is untouched.
+ */
+@media print {
+  /* — chrome off the paper — */
+  .fcx-snippet-print-friendly aside,
+  .fcx-snippet-print-friendly main > .fcx-chrome:first-child,
+  .fcx-snippet-print-friendly .fcx-chrome:has(> [role="tablist"]),
+  .fcx-snippet-print-friendly .fcx-core-announce,
+  .fcx-snippet-print-friendly .fcx-banner-strip {
+    display: none !important;
+  }
+
+  /* — white paper, dark ink — */
+  .fcx-snippet-print-friendly,
+  .fcx-snippet-print-friendly body {
+    background: #ffffff !important;
+    color: #171b21 !important;
+  }
+  .fcx-snippet-print-friendly main,
+  .fcx-snippet-print-friendly .fcx-reading,
+  .fcx-snippet-print-friendly .fcx-editor-shell,
+  .fcx-snippet-print-friendly .fcx-mdui-card,
+  .fcx-snippet-print-friendly .fcx-prose {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .fcx-snippet-print-friendly .fcx-mdui-card {
+    border-color: #c8cdd3 !important;
+  }
+
+  /* — keep table borders legible in ink — */
+  .fcx-snippet-print-friendly .fcx-prose table,
+  .fcx-snippet-print-friendly .fcx-mdui-card table {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .fcx-snippet-print-friendly .fcx-prose th,
+  .fcx-snippet-print-friendly .fcx-prose td,
+  .fcx-snippet-print-friendly .fcx-mdui-card table th,
+  .fcx-snippet-print-friendly .fcx-mdui-card table td,
+  .fcx-snippet-print-friendly .cx-vit-rx-row td {
+    border-color: #8b929b !important;
+  }
+
+  /* — no torn cards: keep each block on one sheet — */
+  .fcx-snippet-print-friendly .fcx-mdui-card,
+  .fcx-snippet-print-friendly .cx-appt-card,
+  .fcx-snippet-print-friendly .cx-bil-row,
+  .fcx-snippet-print-friendly .fcx-prose pre,
+  .fcx-snippet-print-friendly .fcx-prose blockquote,
+  .fcx-snippet-print-friendly .fcx-prose table tr {
+    break-inside: avoid;
+  }
+  .fcx-snippet-print-friendly .fcx-prose h1,
+  .fcx-snippet-print-friendly .fcx-prose h2,
+  .fcx-snippet-print-friendly .fcx-prose h3 {
+    break-after: avoid;
+  }
+
+  /* — calm print margins — */
+  @page {
+    margin: 16mm;
+  }
+}

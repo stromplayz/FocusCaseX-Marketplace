@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FocusCaseX Marketplace — free add-ons for your clinic workspace</title>
-<meta name="description" content="71 free add-ons for FocusCaseX — appointment boards, refraction notes, themes and more. Preview every one live on this site, then install it in one tap.">
+<title>FocusCaseX Marketplace — add-ons for your clinic workspace</title>
+<meta name="description" content="92 add-ons for FocusCaseX — appointment boards, refraction notes, themes and more. Every one is included with your plan. Preview each live on this site, then install it in one tap.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,9 +21,9 @@
     <div class="wrap">
       <div class="hero-inner">
         <div>
-          <div class="kicker">Marketplace · free add-ons for eye care</div>
+          <div class="kicker">Marketplace · add-ons for eye care</div>
           <h1>See every add-on <span class="hl">live</span>.<br>Install it in one tap.</h1>
-          <p class="lede">Boards, notes, tools and looks for your FocusCaseX workspace — appointment day-books, recall boards, refraction notes, themes. Every one is previewed live right here with its real colors and layout, then installs in one tap. Built for optometry practices; free.</p>
+          <p class="lede">Boards, notes, tools and looks for your FocusCaseX workspace — appointment day-books, recall boards, refraction notes, themes. Every one is previewed live right here with its real colors and layout, then installs in one tap. Built for optometry practices; included with every plan.</p>
           <div class="hero-cta">
             <a class="btn primary" href="#kinds" style="min-height:48px;">Browse the catalog</a>
             <a class="btn dark-ghost" href="/mcp/" style="min-height:48px;">Connect AI agents</a>
@@ -33,9 +33,9 @@
             </button>
           </div>
           <div class="hero-stats">
-            <div><b>71</b><span>add-ons</span></div>
-            <div><b>4</b><span>kinds</span></div>
-            <div><b>100%</b><span>free</span></div>
+            <div><b>92</b><span>add-ons</span></div>
+            <div><b>5</b><span>kinds</span></div>
+            <div><b>100%</b><span>included in every plan</span></div>
             <div><b>0</b><span>setup steps</span></div>
           </div>
         </div>
@@ -140,6 +140,7 @@
           </div>
         </div>
       </div>
+      <p style="margin-top:18px;font-size:12.5px;color:var(--ink-3);text-align:center;">Prefer the terminal? <a href="/install/#cli" style="color:var(--blue);font-weight:500;">Install the FCX CLI</a> — see /install/#cli.</p>
     </div>
   </section>
 
@@ -148,27 +149,27 @@
     <div class="wrap section">
       <div class="kicker">MCP &amp; Automation</div>
       <h2>Your records, your AI agents —<br>with permission, not luck.</h2>
-      <p class="lede" style="margin-top: 14px;">FocusCaseX hosts its own MCP server. Connect Claude, Cursor or any MCP agent and it can read your clinic notes, search the EMR and draft new pages — but only after you approve the connection and issue it a token. Revoke any time.</p>
+      <p class="lede" style="margin-top: 14px;">FocusCaseX hosts its own MCP server. Connect Claude, Cursor or any MCP agent — pair it with a 6-digit code or a QR scan, and it reads the clinic freely while every write shows a diff and waits for your approval. Revoke any time.</p>
       <div class="band-grid">
         <div class="band-card">
           <span class="bc-ic"><span data-icon="ShieldCheck" data-icon-size="18"></span></span>
           <h3>Approval first</h3>
-          <p>Every agent asks before it gets in. You approve the connection inside the app and FocusCaseX issues it a personal access token.</p>
+          <p>Every agent asks before it gets in — a 6-digit code shown in-app, or a QR you scan. Approve once and the agent is bound to your install with the scopes you chose.</p>
         </div>
         <div class="band-card">
           <span class="bc-ic"><span data-icon="Workflow" data-icon-size="18"></span></span>
-          <h3>Scoped tools</h3>
-          <p>Agents can list, read, search and create notes — plus browse the marketplace. No silent edits, no deletes, nothing beyond the tools you see documented.</p>
+          <h3>Read free, write on approval</h3>
+          <p>Agents read the clinic freely. Every write — bookings, notes, installs — shows a human-readable diff and applies only on your Approve, nothing beyond the tools documented on the MCP page.</p>
         </div>
         <div class="band-card">
           <span class="bc-ic"><span data-icon="ScrollText" data-icon-size="18"></span></span>
           <h3>Full log, one-tap revoke</h3>
-          <p>Every call is recorded with time, agent and tool. Under <b>Settings → MCP &amp; Automation</b> you can revoke a token the moment something looks off.</p>
+          <p>Every agent action is logged with time, agent and tool. Under <b>Settings → MCP</b> you can revoke any agent the moment something looks off.</p>
         </div>
       </div>
       <div class="hero-cta" style="margin-top: 34px;">
         <a class="btn blue-on-dark" href="/mcp/" style="min-height:48px;">Explore MCP &amp; Automation</a>
-        <button class="chip" type="button" data-copy="claude mcp add --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header &quot;Authorization: Bearer &lt;your-token&gt;&quot;"><span data-icon="Terminal" data-icon-size="13"></span><span>claude mcp add focuscasex …</span></button>
+        <button class="chip" type="button" data-copy="claude mcp add --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server"><span data-icon="Terminal" data-icon-size="13"></span><span>claude mcp add focuscasex …</span></button>
       </div>
     </div>
   </section>
@@ -245,17 +246,26 @@
     FCX.ready({ active: "marketplace" }).then(function () {
       /* --- kind entry cards --- */
       var counts = {};
-      FCX.items.forEach(function (it) { counts[it.kind] = (counts[it.kind] || 0) + 1; });
+      FCX.items.forEach(function (it) { if (it.kind !== "workbench") counts[it.kind] = (counts[it.kind] || 0) + 1; });
       document.getElementById("entries").innerHTML = FCX.KIND_ORDER.map(function (kind) {
         var k = FCX.KINDS[kind];
+        /* WorkBenches are counted from their own catalog.json array —
+           one published bundle — never from the items feed above. */
+        var n = counts[kind] || (kind === "workbench" ? 1 : 0);
         return '<a class="entry" href="' + k.page + '" style="--entry-c: ' + k.c + '">' +
-          '<span class="entry-count">' + (counts[kind] || 0) + '</span>' +
+          '<span class="entry-count"' + (kind === "workbench" ? ' id="wb-entry-count"' : "") + '>' + n + '</span>' +
           '<span class="tile">' + FCX.icon(k.icon, 19) + '</span>' +
-          '<h3>' + FCX.esc(k.label) + '</h3>' +
+          '<h3>' + FCX.esc(k.label) + (k.new ? ' <span class="kindchip" style="--chip-c:var(--blue);--chip-soft:var(--blue-soft);margin-left:7px;transform:translateY(-1px);">New</span>' : '') + '</h3>' +
           '<p>' + FCX.esc(k.one) + '</p>' +
           '<span class="go">Browse ' + FCX.esc(k.label) + ' ' + FCX.icon("ArrowRight", 14) + '</span>' +
         '</a>';
       }).join("");
+
+      /* live WorkBench count from catalog.json's workbenches array */
+      fetch("catalog.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (d) {
+        var el = document.getElementById("wb-entry-count");
+        if (el && Array.isArray(d.workbenches)) el.textContent = d.workbenches.length;
+      }).catch(function () { /* count stays at the fallback */ });
 
       /* --- hero: live theme cycle with real theme variables --- */
       var HERO_THEMES = ["blueprint", "paper-light", "midnight"];

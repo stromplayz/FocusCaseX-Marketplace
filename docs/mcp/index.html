@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCP &amp; AI agents — pairing and client setup — FocusCaseX Documentation</title>
+<meta name="description" content="Pair an AI agent with FocusCaseX over MCP: the 6-digit pairing code, the /api/mcp/pair endpoint, read / write / build scopes, and one copy-paste config for Claude Desktop, Claude Code, Cursor, Windsurf, VS Code, Cline, Gemini CLI and Codex CLI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* MCP docs — layout only; composes with the design system. */
+  section[id] { scroll-margin-top: 76px; }
+  .crumb {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12.5px; color: var(--ink-3); margin-bottom: 12px;
+  }
+  .crumb svg { flex-shrink: 0; }
+  .crumb:hover { color: var(--blue); }
+  .doc-lede { margin-top: 14px; max-width: 680px; font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+  .doc-lede + .doc-lede { margin-top: 12px; }
+  .explain a, .doc-lede a, .doc-note a, .note a { color: var(--blue); font-weight: 500; }
+  .explain a:hover, .doc-lede a:hover, .doc-note a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .explain code, .doc-lede code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+  .doc-lede code { color: var(--blue-deep); font-weight: 600; background: var(--blue-soft); border-color: var(--blue-line); }
+
+  /* pairing + agent cards — same pattern as the MCP & Automation page */
+  .conn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
+  .conn-card { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--paper); }
+  .conn-head { display: flex; align-items: center; gap: 10px; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+  .conn-head svg { color: var(--blue); }
+  .conn-head b { font-family: var(--font-display); font-size: 14.5px; }
+  .conn-card .fence { border: 0; border-radius: 0; }
+  .fence.with-copy { padding-right: 88px; }
+  .agent-ic {
+    flex-shrink: 0;
+    width: 30px; height: 30px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .agent-ic svg { display: block; }
+
+  /* endpoints + notes — same pattern as the MCP & Automation page */
+  .endpoint-row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 12px; padding: 14px 16px; margin-top: 18px;
+  }
+  .endpoint-row code { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); }
+  .endpoint-row .ep-tag {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--blue); background: var(--blue-soft);
+    padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+  }
+  .doc-note { font-size: 12.3px; color: var(--ink-3); margin-top: 18px; max-width: 660px; line-height: 1.55; }
+
+  /* blue note strips */
+  .note {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 20px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+    max-width: 680px;
+  }
+  .note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+  .note p { margin: 0; }
+  .note a { color: var(--blue-deep); font-weight: 600; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap-narrow">
+
+    <section class="page-head">
+      <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
+      <div class="kicker">Documentation</div>
+      <h1>MCP &amp; AI agents</h1>
+      <p class="lede">Pair Claude, Cursor, VS Code and friends to the clinic — pairing, endpoints, scopes, and one snippet per client.</p>
+      <p class="explain">For the protocol overview, the full tool catalog and the security story, see <a href="/mcp/">MCP &amp; Automation</a> on the main site.</p>
+    </section>
+
+    <!-- 1. WHAT MCP GIVES A CLINIC -->
+    <section class="section-tight" id="about" aria-label="What MCP gives a clinic" style="padding-top: 22px;">
+      <div class="kicker">What MCP gives a clinic</div>
+      <h2 style="margin-bottom: 6px;">Read your clinic. Write through it. Nothing moves without you.</h2>
+      <p class="doc-lede">The FocusCaseX MCP server lets AI agents — Claude, Cursor, VS Code and anything else that speaks MCP — read the clinic and write through it: patients, appointments, records, inventory, Extensions, capsules, themes. Nothing moves without the owner: agents pair before they touch anything, every agent carries its own scopes, and its writes arrive as pending requests you approve. Around 32 tools cover three kinds of work — reads, writes that wait for your confirmation, and builders (the WorkBench Builder, the Capsule Builder) that draft real add-ons for your sign-off.</p>
+      <p class="doc-lede">Your agent thinks in its chat window; the tools run against the same clinic install you use — the hosted workspace or the app on your device. You hold the approval layer for all of it.</p>
+    </section>
+
+    <!-- 2. PAIR AN AGENT -->
+    <section class="section" id="pair" aria-label="Pair an agent" style="padding-top: 36px;">
+      <div class="kicker">Pairing</div>
+      <h2 style="margin-bottom: 6px;">Pair an agent</h2>
+      <p class="explain" style="max-width: 640px;">Every connection starts in the app and ends with a token you issued.</p>
+      <ol class="steps" style="max-width: 640px;">
+        <li><span>In the app, open <strong>Settings → MCP → Connect agent</strong>. A <strong>6-digit pairing code</strong> appears — the QR beside it encodes the same pairing details.</span></li>
+        <li><span>Point the agent at the <strong>MCP server</strong> (endpoints below) and have it POST the code to the <strong>pairing endpoint</strong> with the scopes it requests: <b>read</b>, <b>write</b>, <b>build</b>.</span></li>
+        <li><span>Approve the <strong>pending request</strong> under Settings → MCP — check the agent's name and device first. Deny, and it stays locked out.</span></li>
+        <li><span>An <strong>access token</strong> is issued to the agent with exactly the scopes you chose — nothing more.</span></li>
+        <li><span>Pending requests and issued tokens are managed on the same tab — change scopes or revoke a token any time.</span></li>
+      </ol>
+      <div class="note">
+        <span data-icon="Clock" data-icon-size="17"></span>
+        <p><b>Writes wait for you.</b> Write actions never apply on their own — each one surfaces as a pending action you approve in the app. The 6-digit code expires quickly, so pairing only completes while someone is at the screen.</p>
+      </div>
+    </section>
+
+    <!-- 3. SERVER ENDPOINTS -->
+    <section class="section" id="endpoints" aria-label="Server endpoints" style="padding-top: 0;">
+      <div class="kicker">Endpoints</div>
+      <h2 style="margin-bottom: 6px;">Server endpoints</h2>
+      <p class="explain" style="max-width: 640px;">Every agent config points at the MCP server; pairing goes through its own endpoint. The on-device app serves both on its local URL.</p>
+
+      <div class="endpoint-row">
+        <span class="ep-tag">MCP server</span>
+        <code>https://focuscasex.vercel.app/api/mcp/server</code>
+        <button class="chip" type="button" data-copy="https://focuscasex.vercel.app/api/mcp/server"><span data-icon="Copy" data-icon-size="13"></span><span>Copy</span></button>
+        <span class="muted small">Every agent config below points here.</span>
+      </div>
+      <div class="endpoint-row">
+        <span class="ep-tag">Pairing</span>
+        <code>POST https://focuscasex.vercel.app/api/mcp/pair</code>
+        <button class="chip" type="button" data-copy="POST https://focuscasex.vercel.app/api/mcp/pair"><span data-icon="Copy" data-icon-size="13"></span><span>Copy</span></button>
+        <span class="muted small">The agent POSTs its 6-digit code and requested scopes here.</span>
+      </div>
+      <div class="endpoint-row">
+        <span class="ep-tag">On-device</span>
+        <code>http://&lt;device-ip&gt;:8080/api/mcp/server</code>
+        <button class="chip" type="button" data-copy="http://&lt;device-ip&gt;:8080/api/mcp/server"><span data-icon="Copy" data-icon-size="13"></span><span>Copy</span></button>
+        <span class="muted small">The app on your phone or tablet serves the same endpoints on its local URL — the exact address is shown under Settings → MCP.</span>
+      </div>
+    </section>
+
+    <!-- 4. SET UP YOUR AGENT -->
+    <section class="section" id="agents" aria-label="Set up your agent" style="padding-top: 0;">
+      <div class="kicker">Agent setups</div>
+      <h2>Set up your agent. Every major client, one snippet each.</h2>
+      <p class="doc-lede">Pick your client, paste its snippet where it keeps configs, and put a token in the Authorization slot. Mint one by pairing in the app — the 6-digit code or the QR — or issue a personal token under Settings → MCP. The snippets below point at the public web endpoint; an on-device install swaps in the address it shows under Settings → MCP.</p>
+
+      <div class="conn-grid" style="margin-top: 26px;">
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#d977571a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#d97757;"><path d="M12 2.6v6M12 15.4v6M2.6 12h6M15.4 12h6M5.1 5.1l3.9 3.9M15 15l3.9 3.9M5.1 18.9L9 15M15 9l3.9-3.9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><b>Claude Desktop</b><span class="conn-where">claude_desktop_config.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#18181b1a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#18181b;"><path d="M12 2.6v6M12 15.4v6M2.6 12h6M15.4 12h6M5.1 5.1l3.9 3.9M15 15l3.9 3.9M5.1 18.9L9 15M15 9l3.9-3.9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><b>Claude Code</b><span class="conn-where">terminal command</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='claude mcp add --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header "Authorization: Bearer &lt;your-token&gt;"'>Copy</button><span class="cx-cmd">claude mcp add</span> --transport http focuscasex https://focuscasex.vercel.app/api/mcp/server --header <span class="cx-str">"Authorization: Bearer &lt;your-token&gt;"</span></div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#1e1e1e1a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#1e1e1e;"><rect x="2.5" y="2.5" width="19" height="19" rx="4.5" fill="currentColor"/><path d="M12 6.4 16.6 9v5.9L12 17.6 7.4 14.9V9z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.4 9l4.6 2.6 4.6-2.6M12 11.6v6" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></svg></span><b>Cursor</b><span class="conn-where">.cursor/mcp.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#00b8d91a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#00b8d9;"><path d="M2.5 13.8C5 8.6 8.3 8.4 11.4 11.6c2.8 2.9 6.2 3.1 10.1-.9" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="M3.5 17.9c2.3-3.4 5-3.5 7.4-1 2.2 2.3 4.9 2.5 8-.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".55"/></svg></span><b>Windsurf</b><span class="conn-where">~/.codeium/windsurf/mcp_config.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#0078d41a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#0078d4;"><path fill="currentColor" fill-rule="evenodd" d="M22 4.1v15.8l-5.6 2.2-8.3-7.9-4.5 3.4L1.5 16.3V7.7l2.1-1.3 4.5 3.4 8.3-7.9zM16.4 7.5v9L10.3 12z"/></svg></span><b>VS Code (Copilot MCP)</b><span class="conn-where">.vscode/mcp.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#7048e81a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#7048e8;"><rect x="3.5" y="7.2" width="17" height="12" rx="3.4" stroke="currentColor" stroke-width="1.9"/><path d="M12 7.2V4.3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="3.1" r="1.3" fill="currentColor"/><path d="M1.2 12.2v3M22.8 12.2v3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="8.8" cy="13.2" r="1.5" fill="currentColor"/><circle cx="15.2" cy="13.2" r="1.5" fill="currentColor"/></svg></span><b>Cline</b><span class="conn-where">cline_mcp_settings.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#4796e31a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#4796e3;"><path fill="currentColor" d="M12 1.9c.75 5.55 4.55 9.35 10.1 10.1-5.55.75-9.35 4.55-10.1 10.1-.75-5.55-4.55-9.35-10.1-10.1 5.55-.75 9.35-4.55 10.1-10.1z"/></svg></span><b>Gemini CLI</b><span class="conn-where">~/.gemini/settings.json</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='{
+  "mcpServers": {
+    "focuscasex": {
+      "url": "https://focuscasex.vercel.app/api/mcp/server",
+      "headers": {
+        "Authorization": "Bearer &lt;your-token&gt;"
+      }
+    }
+  }
+}'>Copy</button>{
+  <span class="cx-str">"mcpServers"</span>: {
+    <span class="cx-str">"focuscasex"</span>: {
+      <span class="cx-str">"url"</span>: <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>,
+      <span class="cx-str">"headers"</span>: {
+        <span class="cx-str">"Authorization"</span>: <span class="cx-str">"Bearer &lt;your-token&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-head"><span class="agent-ic" style="background:#18181b1a;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color:#18181b;"><path d="M4.2 5.6l6.6 6.4-6.6 6.4" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.6 18.4h7.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></span><b>Codex CLI</b><span class="conn-where">~/.codex/config.toml</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy='[mcp_servers.focuscasex]
+url = "https://focuscasex.vercel.app/api/mcp/server"
+http_headers = { "Authorization" = "Bearer &lt;your-token&gt;" }'>Copy</button><span class="cx-cmd">[mcp_servers.focuscasex]</span>
+url = <span class="cx-str">"https://focuscasex.vercel.app/api/mcp/server"</span>
+http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-str">"Bearer &lt;your-token&gt;"</span> }</div>
+        </div>
+
+      </div>
+
+      <p class="doc-note">Use the web endpoint when you work in the hosted workspace, the device address when the records live on the phone or tablet in the room. Both pair the same way; both log to the same audit log. Headless clients that can't show a pairing screen can use a personal token instead — Settings → MCP → Issue token — as a Bearer header, with the same scopes.</p>
+    </section>
+
+    <!-- 5. SCOPES AND SAFETY -->
+    <section class="section" id="scopes" aria-label="Scopes and safety" style="padding-top: 0;">
+      <div class="kicker">Scopes and safety</div>
+      <h2 style="margin-bottom: 6px;">Three scopes. You hold the approval layer.</h2>
+      <div class="trust" style="margin-top: 24px;">
+        <div class="t-item">
+          <span data-icon="ScanEye" data-icon-size="20"></span>
+          <div>
+            <b>Read</b>
+            <span>Search patients, open records, list appointments, check stock. Reading changes nothing.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Zap" data-icon-size="20"></span>
+          <div>
+            <b>Write</b>
+            <span>Book visits, add notes, install capsules and Extensions. Every write shows a human-readable diff first.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Wrench" data-icon-size="20"></span>
+          <div>
+            <b>Build</b>
+            <span>Draft capsules, Extensions and whole WorkBenches with the builders — you preview the result, then approve the install.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="CircleCheckBig" data-icon-size="20"></span>
+          <div>
+            <b>Approve before run</b>
+            <span>Write actions surface as pending actions in the app. Nothing applies until you tap Approve.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Trash2" data-icon-size="20"></span>
+          <div>
+            <b>Revoke any time</b>
+            <span>Tokens are managed under Settings → MCP. Revoking ends the agent's access on its next call and clears its pending actions.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Clock" data-icon-size="20"></span>
+          <div>
+            <b>The code expires quickly</b>
+            <span>A 6-digit pairing code nobody approves simply dies — there is no way in without you at the screen.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. TRY IT -->
+    <section class="section" id="try" aria-label="Try it" style="padding-top: 0;">
+      <div class="kicker">Try it</div>
+      <h2 style="margin-bottom: 6px;">First prompts</h2>
+      <p class="explain" style="max-width: 640px;">Pair an agent, then hand it something small. A read runs on its own; a build waits for your confirm. Word the request your way — these are starting points.</p>
+
+      <div class="conn-grid" style="margin-top: 20px;">
+        <div class="conn-card">
+          <div class="conn-head"><span data-icon="ScanEye" data-icon-size="16"></span><b>Read</b><span class="conn-where">runs on its own</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy="List today's appointments.">Copy</button>List today's appointments.</div>
+        </div>
+        <div class="conn-card">
+          <div class="conn-head"><span data-icon="Wrench" data-icon-size="16"></span><b>Build</b><span class="conn-where">installs on your confirm</span></div>
+          <div class="fence with-copy"><button class="copy-btn" type="button" data-copy="Draft a WorkBench for a new optometrist: refraction note template, recall letter, the clinical-ice theme, and a day-sheet capsule. Show me the summary before installing.">Copy</button>Draft a WorkBench for a new optometrist: refraction note template, recall letter, the clinical-ice theme, and a day-sheet capsule. Show me the summary before installing.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. WHERE NEXT -->
+    <section class="section" id="next" aria-label="Where next" style="padding-top: 0;">
+      <div class="kicker">Keep reading</div>
+      <h2 style="margin-bottom: 6px;">Where next</h2>
+      <div class="entries" style="margin-top: 20px;">
+        <a class="entry" href="/docs/getting-started/">
+          <span class="tile"><span data-icon="BookOpen" data-icon-size="19"></span></span>
+          <h3>Getting started</h3>
+          <p>New to FocusCaseX? Install the app, sign in and take the workspace tour.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/docs/cli/">
+          <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
+          <h3>FCX CLI</h3>
+          <p><b>fcx mcp</b> prints pairing info and these snippets in your terminal.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/mcp/">
+          <span class="tile"><span data-icon="Bot" data-icon-size="19"></span></span>
+          <h3>MCP &amp; Automation</h3>
+          <p>The overview — pairing modes, the tool catalog, the security story.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/install/">
+          <span class="tile"><span data-icon="Download" data-icon-size="19"></span></span>
+          <h3>Install guide</h3>
+          <p>The latest Android and CLI builds, always current.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  (function () {
+    /* paint [data-icon] placeholders with real SVGs */
+    function paintIcons() {
+      document.querySelectorAll("[data-icon]").forEach(function (el) {
+        var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
+        el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
+      });
+    }
+
+    paintIcons();
+
+    FCX.ready({ active: "docs" }).catch(function () {
+      /* offline preview (file://) or catalog unreachable — paint minimal chrome */
+      var header = document.getElementById("site-header");
+      var footer = document.getElementById("site-footer");
+      if (header && !header.firstChild) {
+        header.innerHTML =
+          '<div class="top"><div class="top-inner">' +
+          '<a class="brand" href="/">' + FCX.icon("Stethoscope", 20) + '<span>FocusCaseX</span></a>' +
+          '<nav class="nav">' +
+          '<a href="/">Overview</a>' +
+          '<a href="/marketplace/">Marketplace</a>' +
+          '<a href="/pricing/">Pricing</a>' +
+          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '</nav></div></div>';
+      }
+      if (footer && !footer.firstChild) {
+        footer.innerHTML =
+          '<div class="foot"><div class="wrap foot-inner">' +
+          '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
+          '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/mcp/">MCP &amp; AI agents</a><a href="/docs/cli/">FCX CLI</a></div>' +
+          '</div></div>';
+      }
+      FCX.wireCopyButtons(document);
+    });
+  })();
+</script>
+</body>
+</html>

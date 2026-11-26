@@ -1,0 +1,9 @@
+{
+  "id": "quick-phrases",
+  "name": "Quick Phrases",
+  "version": "1.0.0",
+  "minAppVersion": "2.6.9",
+  "description": "Chairside text expander — insert VA tables, plan lines and letter snippets with {{date}} and {{patient}} variables.",
+  "author": "CaseX Labs",
+  "isSample": true
+}

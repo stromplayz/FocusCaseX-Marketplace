@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started — FocusCaseX Documentation</title>
+<meta name="description" content="Install FocusCaseX on Android, sign in, take the workspace tour and install add-ons — in-app, by FCX-XXXXXX code, or from the marketplace site. Updates, troubleshooting and how to reset.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Getting-started glue — layout only; composes with the design system. */
+  section[id] { scroll-margin-top: 76px; }
+  .crumb {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12.5px; color: var(--ink-3); margin-bottom: 12px;
+  }
+  .crumb svg { flex-shrink: 0; }
+  .crumb:hover { color: var(--blue); }
+
+  /* requirement cards */
+  .req { margin-top: 24px; }
+
+  /* the three ways to install an add-on (same pattern as the install guide) */
+  .ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 26px; }
+  .way {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .way .way-num {
+    font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .12em;
+    color: var(--blue);
+  }
+  .way h3 { font-size: 17px; }
+  .way p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; }
+  .way .steps { margin-top: 4px; }
+  .after-ways { margin-top: 18px; max-width: 660px; font-size: 13.3px; color: var(--ink-2); line-height: 1.6; }
+  .after-ways a, .tbl a { color: var(--blue); font-weight: 500; }
+
+  /* blue note strips */
+  .note {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 16px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+  }
+  .note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+  .note p { margin: 0; }
+
+  /* reference tables — workspace tour + troubleshooting */
+  .tbl-scroll {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+  }
+  .tbl { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 13px; }
+  .tbl th {
+    text-align: left; padding: 12px 16px 10px; border-bottom: 1px solid var(--line-2);
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .tbl td { padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 13px; line-height: 1.55; vertical-align: top; }
+  .tbl tr:last-child td { border-bottom: 0; }
+  .tbl td:first-child { font-family: var(--font-display); font-weight: 600; font-size: 13.3px; color: var(--ink); }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap-narrow">
+
+    <section class="page-head">
+      <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
+      <div class="kicker">Documentation</div>
+      <h1>Getting started</h1>
+      <p class="lede">Install the app, sign in, shape the workspace — your first day with FocusCaseX, in order.</p>
+      <p class="explain">Covers the Android app; the web workspace at focuscasex.vercel.app works the same unless a step says otherwise.</p>
+    </section>
+
+    <!-- 1. REQUIREMENTS -->
+    <section class="section" id="requirements" aria-label="Requirements">
+      <div class="kicker">Before you begin</div>
+      <h2 style="margin-bottom: 6px;">Requirements</h2>
+      <p class="explain" style="max-width: 640px;">Three things, depending on how you run the clinic. Two of them you already have.</p>
+      <div class="entries req">
+        <div class="entry">
+          <span class="tile"><span data-icon="Smartphone" data-icon-size="19"></span></span>
+          <h3>Android 7.0 or newer</h3>
+          <p>A phone or tablet for the app. Records live on the device, so an ordinary Android works — there is no server to rent.</p>
+        </div>
+        <div class="entry">
+          <span class="tile"><span data-icon="Globe" data-icon-size="19"></span></span>
+          <h3>A modern browser</h3>
+          <p>For the web workspace at focuscasex.vercel.app — the same clinic in a tab, nothing to install there.</p>
+        </div>
+        <div class="entry">
+          <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
+          <h3>Node 18+ (optional)</h3>
+          <p>Only if you also want the FCX CLI on a computer — the marketplace installed by npm, hosted on your own machine. See the <a href="/docs/cli/" style="color:var(--blue);font-weight:500;">FCX CLI guide</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. INSTALL THE APP -->
+    <section class="section" id="install" aria-label="Install the app">
+      <div class="kicker">First install</div>
+      <h2 style="margin-bottom: 6px;">Install the app</h2>
+      <p class="explain" style="max-width: 640px;">The install page links the latest Android build. After that, the app checks for updates on its own.</p>
+      <ol class="steps" style="max-width: 640px;">
+        <li><span>Open the <a href="/install/" style="color:var(--blue);font-weight:500;"><strong>install guide</strong></a> and download <strong>the latest build linked there</strong> — the page always points at the current one, so there is no need to keep old copies.</span></li>
+        <li><span>When Android asks, <strong>allow installs from that source</strong> — the browser or file manager that downloaded the file. It is a one-time switch per source; Android remembers it.</span></li>
+        <li><span>Open the downloaded file, then <strong>open FocusCaseX</strong> from your app list.</span></li>
+      </ol>
+      <div class="note" style="max-width: 640px;">
+        <span data-icon="RefreshCcw" data-icon-size="17"></span>
+        <p><b>Version updates.</b> New builds arrive through the app's own update check — FocusCaseX tells you when one is ready and you confirm from inside the app. There is no store page to revisit; the install guide on this site always links the latest build.</p>
+      </div>
+    </section>
+
+    <!-- 3. FIRST SIGN-IN AND THE WORKSPACE TOUR -->
+    <section class="section" id="first-run" aria-label="First sign-in and the workspace tour">
+      <div class="kicker">The first five minutes</div>
+      <h2 style="margin-bottom: 6px;">First sign-in and the workspace tour</h2>
+      <p class="explain" style="max-width: 640px;">The workspace opens after you sign in — nothing to configure first. The modules sit in the sidebar, and each holds what its name says.</p>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th scope="col">Module</th>
+              <th scope="col">What you will find there</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Patients</td><td>The directory — patient files, visit history, recalls.</td></tr>
+            <tr><td>Appointments</td><td>The day book — slots, bookings, today's list.</td></tr>
+            <tr><td>Examination</td><td>Workups — vision, refraction, findings, diagrams.</td></tr>
+            <tr><td>Billing / inventory</td><td>Orders, claims and stock.</td></tr>
+            <tr><td>Settings → Marketplace</td><td>Add-ons — Extensions, capsules, themes, templates and WorkBenches, plus <b>Install by code</b>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. INSTALLING ADD-ONS -->
+    <section class="section" id="add-ons" aria-label="Installing add-ons">
+      <div class="kicker">Extensions, Capsules, Themes, Templates, WorkBenches</div>
+      <h2 style="margin-bottom: 6px;">Installing add-ons</h2>
+      <p class="explain" style="max-width: 640px;">Three ways in — all end at the same place: you see what will be added, you confirm once, it lands.</p>
+
+      <div class="ways">
+        <div class="way">
+          <span class="way-num">WAY 1 — IN THE APP</span>
+          <h3>Browse the Marketplace</h3>
+          <p>The full catalog ships inside the app.</p>
+          <ol class="steps">
+            <li><span>Open <strong>Settings → Marketplace</strong>.</span></li>
+            <li><span>Browse <strong>Extensions</strong>, <strong>Capsules</strong>, <strong>Themes</strong>, <strong>Templates</strong> or <strong>WorkBenches</strong>.</span></li>
+            <li><span>Tap <strong>Install</strong> — it appears in your workspace right away.</span></li>
+          </ol>
+        </div>
+        <div class="way">
+          <span class="way-num">WAY 2 — BY CODE</span>
+          <h3>Install by code</h3>
+          <p>Every marketplace item carries a short code, shown on its page on this site. Works the same on any device.</p>
+          <ol class="steps">
+            <li><span>Copy the code from any item page — it looks like <strong>FCX-XXXXXX</strong>.</span></li>
+            <li><span>In the app: <strong>Settings → Marketplace → Install by code</strong>.</span></li>
+            <li><span>Type or paste it, confirm the item, tap <strong>Install</strong>.</span></li>
+          </ol>
+        </div>
+        <div class="way">
+          <span class="way-num">WAY 3 — FROM THIS SITE</span>
+          <h3>Tap Install, confirm in the app</h3>
+          <p>On any marketplace page, the install button hands the item to the FocusCaseX app on this device. The app opens on the install confirmation screen.</p>
+          <ol class="steps">
+            <li><span>Open an item page here and tap <strong>Install</strong>.</span></li>
+            <li><span>FocusCaseX opens with a screen that <strong>lists everything that will be added</strong> — every Extension, capsule, template, snippet and page.</span></li>
+            <li><span>Confirm once. The install runs with per-step progress and a final summary of everything that landed.</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="note">
+        <span data-icon="ShieldCheck" data-icon-size="17"></span>
+        <p><b>Nothing is deleted.</b> Installing an add-on changes setup only — patient records stay in the clinic vault, and removing an add-on later takes its tools and pages back out without touching them.</p>
+      </div>
+      <p class="after-ways">WorkBenches are the largest of these — one install sets up a whole workspace; the <a href="/docs/workbenches/">WorkBenches guide</a> covers switching and saving your own. If you work with AI assistants, they can find add-ons for you while the install itself stays a human decision — see <a href="/docs/mcp/">MCP &amp; AI agents</a>.</p>
+    </section>
+
+    <!-- 5. UPDATING -->
+    <section class="section" id="updating" aria-label="Updating">
+      <div class="kicker">Keeping current</div>
+      <h2 style="margin-bottom: 6px;">Updating</h2>
+      <p class="explain" style="max-width: 640px;">Three things stay current on their own — none of them needs a store page.</p>
+      <div class="trust" style="margin-top: 24px;">
+        <div class="t-item">
+          <span data-icon="RefreshCcw" data-icon-size="20"></span>
+          <div>
+            <b>The app checks for updates</b>
+            <span>When a new build ships, FocusCaseX finds it in the update check and asks from inside the app. The <a href="/install/" style="color:var(--blue);font-weight:500;">install guide</a> also always links the latest build.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Globe" data-icon-size="20"></span>
+          <div>
+            <b>The marketplace catalog refreshes itself</b>
+            <span>New add-ons and new versions appear in Settings → Marketplace on their own — nothing to reinstall.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="BellRing" data-icon-size="20"></span>
+          <div>
+            <b>New builds are announced on the site</b>
+            <span>The install guide is updated whenever a build ships, so it is the place to check what is current.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. TROUBLESHOOTING -->
+    <section class="section" id="troubleshooting" aria-label="Troubleshooting">
+      <div class="kicker">When something looks off</div>
+      <h2 style="margin-bottom: 6px;">Troubleshooting</h2>
+      <p class="explain" style="max-width: 640px;">Four things come up most; each has a short answer.</p>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th scope="col">What you see</th>
+              <th scope="col">What to do</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tapped Install on the site but the app opened without a confirmation screen</td>
+              <td>Update the app to the latest build — older builds race the page load. Until you have updated, use <a href="#add-ons">Install by code</a> instead.</td>
+            </tr>
+            <tr>
+              <td>Catalog not loading</td>
+              <td>Check the network, then reopen Settings → Marketplace.</td>
+            </tr>
+            <tr>
+              <td>Install code not found</td>
+              <td>The item may be newer than your build. Update the app, then retry the code.</td>
+            </tr>
+            <tr>
+              <td>Where did my patient records go?</td>
+              <td>They never move: WorkBenches and add-ons are setup only. Check whether a different WorkBench is applied — switching back takes one tap.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. UNINSTALL / RESET -->
+    <section class="section" id="reset" aria-label="Uninstall or reset">
+      <div class="kicker">Starting over</div>
+      <h2 style="margin-bottom: 6px;">Uninstall or reset</h2>
+      <p class="explain" style="max-width: 640px;">Add-ons come out one at a time or all at once, and your records are not part of either.</p>
+      <ol class="steps" style="max-width: 640px;">
+        <li><span><strong>Export what you need first.</strong> Patients, notes and recalls come out as plain files you keep — do this before any big change.</span></li>
+        <li><span><strong>Remove an add-on:</strong> Settings → Marketplace → Installed → tap <strong>Remove</strong>. Its tools and pages go; nothing else changes.</span></li>
+        <li><span><strong>Resetting the workspace</strong> means removing the add-ons and WorkBenches you installed — the setup goes, the records stay.</span></li>
+      </ol>
+      <div class="note" style="max-width: 640px;">
+        <span data-icon="Lock" data-icon-size="17"></span>
+        <p><b>Records live in the device vault.</b> Patient records are stored locally in the app's own vault — removing add-ons or resetting the workspace never moves them.</p>
+      </div>
+    </section>
+
+    <!-- 8. WHERE NEXT -->
+    <section class="section" id="next" aria-label="Where next">
+      <div class="kicker">Keep reading</div>
+      <h2 style="margin-bottom: 6px;">Where next</h2>
+      <div class="entries req">
+        <a class="entry" href="/docs/workbenches/">
+          <span class="tile"><span data-icon="Layers" data-icon-size="19"></span></span>
+          <h3>WorkBenches</h3>
+          <p>Bundles, switching setups like modes, saving your own.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/docs/cli/">
+          <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
+          <h3>FCX CLI</h3>
+          <p>npm install, hosting the marketplace on your own machine.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/docs/mcp/">
+          <span class="tile"><span data-icon="Bot" data-icon-size="19"></span></span>
+          <h3>MCP &amp; AI agents</h3>
+          <p>Pair Claude, Cursor, VS Code and friends to the clinic.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/install/">
+          <span class="tile"><span data-icon="Download" data-icon-size="19"></span></span>
+          <h3>Install guide</h3>
+          <p>The latest Android and CLI builds, always current.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  (function () {
+    /* paint [data-icon] placeholders with real SVGs */
+    function paintIcons() {
+      document.querySelectorAll("[data-icon]").forEach(function (el) {
+        var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
+        el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
+      });
+    }
+
+    paintIcons();
+
+    FCX.ready({ active: "docs" }).catch(function () {
+      /* offline preview (file://) or catalog unreachable — paint minimal chrome */
+      var header = document.getElementById("site-header");
+      var footer = document.getElementById("site-footer");
+      if (header && !header.firstChild) {
+        header.innerHTML =
+          '<div class="top"><div class="top-inner">' +
+          '<a class="brand" href="/">' + FCX.icon("Stethoscope", 20) + '<span>FocusCaseX</span></a>' +
+          '<nav class="nav">' +
+          '<a href="/">Overview</a>' +
+          '<a href="/marketplace/">Marketplace</a>' +
+          '<a href="/pricing/">Pricing</a>' +
+          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '</nav></div></div>';
+      }
+      if (footer && !footer.firstChild) {
+        footer.innerHTML =
+          '<div class="foot"><div class="wrap foot-inner">' +
+          '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
+          '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/install/">Install guide</a><a href="/marketplace/">Marketplace</a></div>' +
+          '</div></div>';
+      }
+    });
+  })();
+</script>
+</body>
+</html>

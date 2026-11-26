@@ -42,6 +42,8 @@
   --k-theme-soft: #fdeee4;
   --k-template: #0e7490;
   --k-template-soft: #e3f3f8;
+  --k-workbench: #7040d8;
+  --k-workbench-soft: #f0ebfc;
 
   --accent: var(--blue);
   --accent-soft: var(--blue-soft);

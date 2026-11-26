@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentation — FocusCaseX</title>
+<meta name="description" content="FocusCaseX documentation — install the clinic workspace, run it day to day, extend it with add-ons, host the marketplace with the FCX CLI and pair AI agents over MCP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Docs hub glue — layout only; composes with the design system. */
+  .docs-entries {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-top: 34px;
+  }
+  .next-band {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 18px; flex-wrap: wrap;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--bg-soft); padding: 24px 26px;
+  }
+  .next-band h2 { font-size: 20px; }
+  .next-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.55; margin-top: 7px; max-width: 560px; }
+  .next-band .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap">
+
+    <section class="page-head">
+      <div class="kicker">Documentation</div>
+      <h1>FocusCaseX documentation</h1>
+      <p class="lede">Everything about installing, running and extending the clinic workspace.</p>
+      <p class="explain">Short, specific pages — start with <a href="/docs/getting-started/" style="color:var(--blue);font-weight:500;">Getting started</a>; the rest is reference. Updated November 2026.</p>
+    </section>
+
+    <section class="section-tight" aria-label="Documentation pages" style="padding-top: 6px;">
+      <div class="entries docs-entries">
+
+        <a class="entry" href="/docs/getting-started/">
+          <span class="tile"><span data-icon="BookOpen" data-icon-size="19"></span></span>
+          <h3>Getting started</h3>
+          <p>Install the app, sign in, set up your first workspace and install your first add-ons — with fixes for the common snags.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+
+        <a class="entry" href="/docs/workbenches/">
+          <span class="tile"><span data-icon="Layers" data-icon-size="19"></span></span>
+          <h3>WorkBenches</h3>
+          <p>The full-workspace bundles — what the Solo Optometrist WorkBench sets up, switching setups like modes, saving your own.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+
+        <a class="entry" href="/docs/cli/">
+          <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
+          <h3>FCX CLI</h3>
+          <p>Install the marketplace anywhere with npm and host it on your own machine — same catalog, same install codes.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+
+        <a class="entry" href="/docs/mcp/">
+          <span class="tile"><span data-icon="Bot" data-icon-size="19"></span></span>
+          <h3>MCP &amp; AI agents</h3>
+          <p>Pair Claude, Cursor, VS Code and friends to the clinic — scoped access, every write approved by a human.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+
+        <a class="entry" href="/install/">
+          <span class="tile"><span data-icon="Download" data-icon-size="19"></span></span>
+          <h3>Install the app — Android + CLI</h3>
+          <p>The Android app and the CLI. The install page always links the latest build of each.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+
+        <a class="entry" href="/marketplace/">
+          <span class="tile"><span data-icon="LayoutGrid" data-icon-size="19"></span></span>
+          <h3>Browse the marketplace</h3>
+          <p>Every Extension, capsule, theme, template and WorkBench — each with its install code and live preview.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="next-band">
+        <div>
+          <h2>The workspace itself</h2>
+          <p>FocusCaseX is the app on your device; the web workspace is the same clinic in a browser tab. The pages above cover both — Getting started begins with the phone.</p>
+        </div>
+        <div class="cta-btns">
+          <a class="btn primary" href="https://focuscasex.vercel.app" target="_blank" rel="noopener"><span data-icon="ExternalLink" data-icon-size="15"></span><span>Open the web workspace</span></a>
+          <a class="btn ghost" href="/install/"><span data-icon="Download" data-icon-size="15"></span><span>Install guide</span></a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  (function () {
+    /* paint [data-icon] placeholders with real SVGs */
+    function paintIcons() {
+      document.querySelectorAll("[data-icon]").forEach(function (el) {
+        var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
+        el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
+      });
+    }
+
+    paintIcons();
+
+    FCX.ready({ active: "docs" }).catch(function () {
+      /* offline preview (file://) or catalog unreachable — paint minimal chrome */
+      var header = document.getElementById("site-header");
+      var footer = document.getElementById("site-footer");
+      if (header && !header.firstChild) {
+        header.innerHTML =
+          '<div class="top"><div class="top-inner">' +
+          '<a class="brand" href="/">' + FCX.icon("Stethoscope", 20) + '<span>FocusCaseX</span></a>' +
+          '<nav class="nav">' +
+          '<a href="/">Overview</a>' +
+          '<a href="/marketplace/">Marketplace</a>' +
+          '<a href="/pricing/">Pricing</a>' +
+          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '</nav></div></div>';
+      }
+      if (footer && !footer.firstChild) {
+        footer.innerHTML =
+          '<div class="foot"><div class="wrap foot-inner">' +
+          '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
+          '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/install/">Install guide</a><a href="/marketplace/">Marketplace</a></div>' +
+          '</div></div>';
+      }
+    });
+  })();
+</script>
+</body>
+</html>

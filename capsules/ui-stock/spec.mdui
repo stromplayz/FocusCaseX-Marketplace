@@ -1,0 +1,3 @@
+note: Clinic/Inventory.md
+rules:
+  - Reorder|stock-below, low stock, out of stock

@@ -1,0 +1,35 @@
+/* FocusCaseX snippet — calm-headers
+ * Quieter page headers: smaller title sizes on reading and capsule pages,
+ * softened header rules and chrome borders, reduced header padding on the
+ * appointment board toolbar and the top bar.
+ */
+.fcx-snippet-calm-headers .fcx-prose h1 {
+  font-size: 1.3em;
+  padding-bottom: 0.22em;
+  border-bottom-color: color-mix(in oklab, var(--border) 55%, transparent);
+}
+.fcx-snippet-calm-headers .fcx-prose h2 {
+  font-size: 1.18em;
+}
+
+/* capsule dashboard pages use the same prose scale via .fcx-mdui-app */
+.fcx-snippet-calm-headers .fcx-mdui-app h1 {
+  font-size: 1.3em;
+  margin: 0.3em 0 0.25em;
+}
+.fcx-snippet-calm-headers .fcx-mdui-app h2 {
+  letter-spacing: 0.06em;
+  opacity: 0.68;
+}
+
+/* muted chrome + board header rules */
+.fcx-snippet-calm-headers main > .fcx-chrome {
+  border-bottom-color: color-mix(in oklab, var(--border) 55%, transparent);
+}
+.fcx-snippet-calm-headers .cx-appt-toolbar {
+  padding: 7px 4px;
+  border-bottom-color: color-mix(in oklab, var(--border) 55%, transparent);
+}
+.fcx-snippet-calm-headers .cx-appt-monthlabel {
+  font-size: 13px;
+}

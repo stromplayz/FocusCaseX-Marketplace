@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Solo Optometrist WorkBench — full contents — FocusCaseX</title>
+<meta name="description" content="Every piece inside Solo Optometrist WorkBench: 10 extensions, 28 capsules, the Solo Optometry theme, 13 templates, 7 snippets, 14 starter pagess — with install code FCX-2VJD2S.">
+
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* ---------- single-WorkBench page ---------- */
+  .wb-hero-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+  .wb-hero-meta .kindchip { font-size: 10.5px; padding: 3px 9px; }
+  .wb-hero-meta span.meta { font-size: 12.5px; color: var(--ink-3); }
+  .wb-hero-card {
+    margin-top: 26px; padding: 20px; border: 1px solid var(--line); border-radius: 14px;
+    background: var(--bg-soft);
+  }
+  .wb-hero-card .wb-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wb-hero-card .wb-chips span {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .01em;
+    color: var(--ink-2); background: var(--bg-card, #fff);
+    border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px;
+    white-space: nowrap; line-height: 1.9; text-align: left;
+  }
+  .wb-chips .wb-group { white-space: normal; flex: 1 1 100%; }
+  .wb-chips .wb-group b { font-weight: 600; color: var(--ink); }
+  .wb-chips .wb-more { background: none; border: 0; padding: 0; color: var(--ink-3); }
+  .wb-install { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .wb-install .code-row { margin-top: 0; }
+  .wb-install .code-token { font-size: 12.5px; padding: 7px 11px; letter-spacing: .1em; }
+  .wb-note { margin-top: 20px; color: var(--ink-3); font-size: 13.5px; }
+
+  /* demo band */
+  .wb-demos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .wb-demo { margin: 0; }
+  .wb-demo-frame {
+    aspect-ratio: 16 / 10; border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; background: #101418;
+  }
+  .wb-demo-frame video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .wb-demo figcaption { display: flex; flex-direction: column; gap: 2px; padding-top: 10px; }
+  .wb-demo figcaption b { font-family: var(--font-display); font-size: 14px; }
+  .wb-demo figcaption span { font-size: 12.5px; color: var(--ink-3); }
+
+  /* detail-page piece lists */
+  .wb-list-section { margin-top: 34px; }
+  .wb-list-section h3 { font-size: 17px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .wb-list-section h3 span { font-size: 12.5px; color: var(--ink-3); font-weight: 400; }
+  .wb-piece-list { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .wb-piece {
+    display: flex; align-items: flex-start; gap: 12px;
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; background: var(--bg-card, #fff);
+  }
+  .wb-piece .tile { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex: none; margin-top: 1px; }
+  .wb-piece > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .wb-piece b { font-size: 13.5px; }
+  .wb-piece span { font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+  .wb-piece-code { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; flex: none; align-self: center; }
+
+  /* theme swatches */
+  .wb-theme { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .wb-swatch { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; background: var(--bg-card, #fff); }
+  .wb-swatch > span:first-child { width: 22px; height: 22px; border-radius: 6px; border: 1px solid rgba(0,0,0,.12); display: inline-block; }
+  .wb-swatch code { font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); }
+  .wb-swatch-wide > code { font-size: 12px; }
+  .wb-pages-tree { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-2); line-height: 2; }
+  .wb-pages-tree b { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap">
+
+    <section class="page-head">
+      <div class="kicker">WorkBench — full contents</div>
+      <h1>Solo Optometrist WorkBench</h1>
+      <p class="lede">The one-chair practice in one install — chairside Solo pages, claims, stock, lab and comms boards, recall and inventory automation, on the calm Solo Optometry theme.</p>
+      <div class="wb-hero-meta">
+        <span class="kindchip" style="--chip-c:var(--k-workbench);--chip-soft:var(--k-workbench-soft);">Solo practice</span>
+        <span class="meta">v1.0.0</span>
+        <span class="meta">·</span>
+        <span class="meta">10 extensions</span>
+        <span class="meta">·</span>
+        <span class="meta">28 capsules</span>
+        <span class="meta">·</span>
+        <span class="meta">1 theme</span>
+        <span class="meta">·</span>
+        <span class="meta">13 templates</span>
+        <span class="meta">·</span>
+        <span class="meta">7 snippets</span>
+        <span class="meta">·</span>
+        <span class="meta">14 starter pages</span>
+      </div>
+    </section>
+
+    <section class="section-tight" aria-label="Install the WorkBench">
+      <div class="wb-hero-card">
+        
+<div class="wb-install" style="">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+    <button class="btn small primary" type="button" data-wb-install="workbench:solo-optometry" data-wb-name="Solo Optometrist WorkBench" >
+      <span data-icon="MonitorSmartphone" data-icon-size="15"></span>
+      <span>Install — open the app</span>
+    </button>
+    <a class="btn small" href="/workbenches/solo-optometry/" style="text-decoration:none;">View the full contents</a>
+  </div>
+  <div class="code-row">
+    <span class="code-token" title="Install code — type this inside the app">FCX-2VJD2S</span>
+    <button class="chip" type="button" data-copy="FCX-2VJD2S" title="Copy install code"><span data-icon="Copy" data-icon-size="13"></span><span>Copy code</span></button>
+  </div>
+</div>
+        <p class="wb-note" style="margin-top:14px;">The install is confirmed inside the app: it lists every piece below, you tap Apply once, and the whole setup lands with per-step progress. Nothing is deleted; patient records are never touched. Install code works too — <b>Settings → Marketplace → Install by code</b>.</p>
+      </div>
+    </section>
+
+    <section aria-label="Every piece in the bundle">
+      
+  
+    <section class="wb-list-section">
+      <h3>Extensions · 10 pieces<span>Tools that land in the extensions folder, enabled by the bundle</span></h3>
+      <ul class="wb-piece-list">
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>optomize</b></div>
+        <code class="wb-piece-code">optomize</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>essential-diagrams</b></div>
+        <code class="wb-piece-code">essential-diagrams</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>utility-panel</b></div>
+        <code class="wb-piece-code">utility-panel</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>quick-actions-v2</b></div>
+        <code class="wb-piece-code">quick-actions-v2</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>focuscasex-sbl</b></div>
+        <code class="wb-piece-code">focuscasex-sbl</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>recall-campaign-runner</b></div>
+        <code class="wb-piece-code">recall-campaign-runner</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>day-sheet-exporter</b></div>
+        <code class="wb-piece-code">day-sheet-exporter</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>inventory-stock-alerter</b></div>
+        <code class="wb-piece-code">inventory-stock-alerter</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>quick-phrases</b></div>
+        <code class="wb-piece-code">quick-phrases</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="15"></span></span>
+        <div><b>referral-letter-composer</b></div>
+        <code class="wb-piece-code">referral-letter-composer</code>
+      </li>
+      </ul>
+    </section>
+  
+    <section class="wb-list-section">
+      <h3>Capsules · 28 pieces<span>Live boards and sections the starter pages call into</span></h3>
+      <ul class="wb-piece-list">
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Appointment board</b><span>The front-desk day book: live stats header (total/done/collected ₹/unpaid/visitors), workflow stepper with counselling, </span></div>
+        <code class="wb-piece-code">ui-appointment</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Patient directory</b><span>Tap-first directory of every patient file — live stats (total / seen today / recalls overdue / new this month), search +</span></div>
+        <code class="wb-piece-code">ui-patients</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Examination workup</b><span>The complete optometry workup as one tap-first board that pre-fills from the appointment + chart — both eyes side by sid</span></div>
+        <code class="wb-piece-code">ui-exam</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Clinic overview</b><span>Business KPIs over any range plus the clinical-load row.</span></div>
+        <code class="wb-piece-code">ui-clinic</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Workflow tracker</b><span>Appointment→checkout funnel with per-stage patient lists and one-tap stage advance.</span></div>
+        <code class="wb-piece-code">ui-flow</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Today&#39;s patients</b><span>Today&#39;s book as triage chips and patient rows.</span></div>
+        <code class="wb-piece-code">ui-today</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Recall board</b><span>The overdue follow-up safety board computed from visit advice.</span></div>
+        <code class="wb-piece-code">ui-recalls</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Billing desk</b><span>The front desk&#39;s to-bill / dispensing / unbilled worklist.</span></div>
+        <code class="wb-piece-code">ui-billing</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Diagnosis cohorts</b><span>Chronic-care registers built from keyword rules.</span></div>
+        <code class="wb-piece-code">ui-cohorts</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Claims board</b><span>The insurance desk: eligibility, pre-auth, denials and pending rupees.</span></div>
+        <code class="wb-piece-code">ui-claims</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Comms log</b><span>Every call, SMS and WhatsApp to or from patients.</span></div>
+        <code class="wb-piece-code">ui-comms</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Lab job board</b><span>Track every frame at the lab, promised date to pickup.</span></div>
+        <code class="wb-piece-code">ui-labjobs</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Purchase orders</b><span>Every supplier order, from draft to paid in one board.</span></div>
+        <code class="wb-piece-code">ui-orders</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Scan index</b><span>Scanned slips, field prints and prescriptions as tappable cards.</span></div>
+        <code class="wb-piece-code">ui-scan-index</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Inventory board</b><span>Inventory board for lenses and frames with reorder flags.</span></div>
+        <code class="wb-piece-code">ui-stock</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Stat tiles</b><span>Headline numbers from the EMR index.</span></div>
+        <code class="wb-piece-code">ui-stats</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Action buttons</b><span>One-tap command buttons — Label | command pairs.</span></div>
+        <code class="wb-piece-code">ui-actions</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Note cards</b><span>Linked notes rendered as tappable cards.</span></div>
+        <code class="wb-piece-code">ui-note-cards</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Patient header</b><span>Identity and recall status resolved from a patient file.</span></div>
+        <code class="wb-piece-code">emr-patient</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Vitals panel</b><span>VA / IOP / Rx chips for a patient&#39;s latest visit.</span></div>
+        <code class="wb-piece-code">emr-vitals</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Visit history</b><span>Every stored visit of a patient file, newest first.</span></div>
+        <code class="wb-piece-code">emr-visits</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Visit record</b><span>One stored visit — delta/pattern encoded, resolved through its chain.</span></div>
+        <code class="wb-piece-code">emr-visit</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Trend chart</b><span>A field&#39;s trend across visits as a sparkline.</span></div>
+        <code class="wb-piece-code">emr-trend</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>CL fitting log</b><span>Contact-lens fitting log — trials, parameters and next review.</span></div>
+        <code class="wb-piece-code">emr-cl-fitlog</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>IOP watch</b><span>Target-versus-current eye pressure watch board with trend emphasis.</span></div>
+        <code class="wb-piece-code">emr-iop-watch</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Visual fields</b><span>Visual-field reliability and MD / PSD progression at a glance.</span></div>
+        <code class="wb-piece-code">emr-vf-board</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Database embed</b><span>A saved Bases view rendered inside the page.</span></div>
+        <code class="wb-piece-code">bases-embed</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="15"></span></span>
+        <div><b>Right panel</b><span>The panel a page declares for itself — booking form, pipeline, pulse or quick actions docked beside the board.</span></div>
+        <code class="wb-piece-code">ui-panel</code>
+      </li>
+      </ul>
+    </section>
+  
+    <section class="wb-list-section">
+      <h3>Theme<span>Solo Optometry — Clinic-calm white paper, ink text, electric-blue actions.</span></h3>
+      <div class="wb-theme">
+        <span class="wb-swatch" title="bg"><span style="background:#f7f9fc"></span><code>#f7f9fc</code></span><span class="wb-swatch" title="bgSidebar"><span style="background:#eef2f8"></span><code>#eef2f8</code></span><span class="wb-swatch" title="bgPanel"><span style="background:#ffffff"></span><code>#ffffff</code></span><span class="wb-swatch" title="text"><span style="background:#101828"></span><code>#101828</code></span><span class="wb-swatch" title="textMuted"><span style="background:#475467"></span><code>#475467</code></span><span class="wb-swatch" title="accent"><span style="background:#0f62fe"></span><code>#0f62fe</code></span><span class="wb-swatch" title="border"><span style="background:#d0d7e2"></span><code>#d0d7e2</code></span>
+        <span class="wb-swatch wb-swatch-wide"><code>radius 8px</code></span>
+        <span class="wb-swatch wb-swatch-wide"><code>font grotesk / system</code></span>
+      </div>
+    </section>
+  
+    <section class="wb-list-section">
+      <h3>Templates · 13 pieces<span>Clinical notes and forms, filed into the page tree</span></h3>
+      <ul class="wb-piece-list">
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Patient intake</b><span>First-visit intake sheet — history, medications, goals and consent.</span></div>
+        <code class="wb-piece-code">patient-intake</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Refraction note</b><span>Subjective refraction with final Rx, VA and near add working space.</span></div>
+        <code class="wb-piece-code">refraction-note</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Contact lens fitting</b><span>CL assessment &amp; trial record — keratometry, fit, power and order.</span></div>
+        <code class="wb-piece-code">cl-fitting</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Glaucoma workup</b><span>IOP-driven glaucoma page — pressures, fields, OCT and target log.</span></div>
+        <code class="wb-piece-code">glaucoma-workup</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Dispensing &amp; order</b><span>Frame + lens order sheet with prices, pupil data and delivery state.</span></div>
+        <code class="wb-piece-code">dispensing-order</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Recall letter</b><span>Friendly follow-up recall with merge fields for MR and due date.</span></div>
+        <code class="wb-piece-code">recall-letter</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Appointment book</b><span>A ready front-desk day book — the workflow board, walk-ins and payments over the markdown table it writes into.</span></div>
+        <code class="wb-piece-code">appointment-book</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Daily huddle board</b><span>Morning meeting page — the front-desk board, funnel, recalls and cash desk, live.</span></div>
+        <code class="wb-piece-code">daily-huddle</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>CL aftercare &amp; progress</b><span>Contact lens aftercare visit — wear review, slit lamp, over-refraction and supply.</span></div>
+        <code class="wb-piece-code">cl-aftercare</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Spectacle Rx pad</b><span>Patient prescription slip — final Rx table, PD &amp; seg height, lens options, sign-off.</span></div>
+        <code class="wb-piece-code">rx-pad</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Referral letter</b><span>Colleague-to-colleague referral — findings, management, question and enclosures.</span></div>
+        <code class="wb-piece-code">referral-letter</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Medical necessity letter</b><span>Payer letter for device funding — diagnosis, justification, requested device, attestation.</span></div>
+        <code class="wb-piece-code">medical-necessity-letter</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="15"></span></span>
+        <div><b>Low vision assessment</b><span>Low vision workup — logMAR VA, contrast &amp; glare, goals, device plan and training.</span></div>
+        <code class="wb-piece-code">low-vision-assessment</code>
+      </li>
+      </ul>
+    </section>
+  
+    <section class="wb-list-section">
+      <h3>Snippets · 7 pieces<span>Small CSS touches the bundle enables</span></h3>
+      <ul class="wb-piece-list">
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Sparkle" data-icon-size="15"></span></span>
+        <div><b>Bigger Headings</b></div>
+        <code class="wb-piece-code">bigger-headings</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Sparkle" data-icon-size="15"></span></span>
+        <div><b>Rounded Editor</b></div>
+        <code class="wb-piece-code">rounded-editor</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Sparkle" data-icon-size="15"></span></span>
+        <div><b>Compact Sidebar</b></div>
+        <code class="wb-piece-code">compact-sidebar</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Sparkle" data-icon-size="15"></span></span>
+        <div><b>Readable Queue</b></div>
+        <code class="wb-piece-code">readable-queue</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Sparkle" data-icon-size="15"></span></span>
+        <div><b>Print Friendly</b></div>
+        <code class="wb-piece-code">print-friendly</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Sparkle" data-icon-size="15"></span></span>
+        <div><b>Calm Headers</b></div>
+        <code class="wb-piece-code">calm-headers</code>
+      </li>
+      <li class="wb-piece">
+        <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Sparkle" data-icon-size="15"></span></span>
+        <div><b>Chairside Va</b></div>
+        <code class="wb-piece-code">chairside-va</code>
+      </li>
+      </ul>
+    </section>
+  
+    <section class="wb-list-section">
+      <h3>Starter pages · 14 pieces<span>Created only when missing — an existing page always wins</span></h3>
+      <ul class="wb-piece-list">
+        <li class="wb-piece">
+          <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="BookOpen" data-icon-size="15"></span></span>
+          <div><b>Solo/</b><span>My day · Patient flow · Refraction &amp; exam hub · Dispensing &amp; orders · Billing &amp; day close · Chairside quick reference · Stock &amp; reorder · Weekly review · How this bench fits</span></div>
+          <code class="wb-piece-code">9 pages</code>
+        </li>
+        <li class="wb-piece">
+          <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="BookOpen" data-icon-size="15"></span></span>
+          <div><b>Clinic/</b><span>Insurance &amp; TPA · Inventory · Lab jobs · Purchase orders · Comms log</span></div>
+          <code class="wb-piece-code">5 pages</code>
+        </li>
+      </ul>
+    </section>
+    </section>
+
+    <section class="section-tight" aria-label="The bundle file">
+      <div class="inside-head">
+        <h2>The bundle file</h2>
+        <span>One JSON, portable and inspectable.</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-2);max-width:720px;line-height:1.6;">The whole WorkBench is a single JSON file — the same file the app installs and the same file <b>Save current setup as WorkBench</b> produces. Open it, diff it, share it: <a href="/workbenches/solo-optometry/workbench.json" style="color:var(--blue);font-weight:600;font-family:var(--font-mono);">workbenches/solo-optometry/workbench.json</a>.</p>
+    </section>
+
+    <!-- HOW INSTALL WORKS -->
+    <section class="section-tight" aria-label="Switching modes">
+      <div class="trust">
+        <div class="t-item">
+          <span data-icon="ArrowLeftRight" data-icon-size="18"></span>
+          <div>
+            <b>WorkBenches switch like modes</b>
+            <span>After this WorkBench is applied it appears in Marketplace → WorkBenches as the active mode. Tap another WorkBench chip to shuffle the whole workspace to that setup — extensions, capsules, theme, templates and pages re-configure in one confirmed step.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="ShieldCheck" data-icon-size="18"></span>
+          <div>
+            <b>Your records stay in the vault</b>
+            <span>WorkBenches carry setup, never data. Applying a mode never deletes anything and never reads patient records — starter pages are created only when missing.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="Package" data-icon-size="18"></span>
+          <div>
+            <b>Save your own and share it</b>
+            <span>Once the workspace is the way you want it, Settings → Marketplace → Save as WorkBench packs it into the same JSON shape — ready for a second branch or a colleague.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  document.querySelectorAll("[data-icon]").forEach((el) => {
+    el.outerHTML = FCX.icon(el.getAttribute("data-icon"), Number(el.getAttribute("data-icon-size")) || 16);
+  });
+
+  FCX.ready({ active: "marketplace" }).then(() => {
+    /* ---------- install: same fcx://install flow as the kind pages.
+       The WorkBench resolves inside the app (curated build-side), the app
+       lists every piece and asks once — the install is confirmed and runs
+       entirely in the app. Without the app, the code fallback appears. ---------- */
+    function showWbFallback(id, name) {
+      const code = "FCX-2VJD2S";
+      const el = document.createElement("div");
+      el.className = "ov open";
+      el.setAttribute("role", "dialog");
+      el.innerHTML = `
+<div class="ov-backdrop" data-fx-close></div>
+<div class="ov-panel" style="max-width:440px;">
+  <div style="padding:22px 22px 8px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="width:38px;height:38px;border-radius:10px;background:var(--k-workbench-soft);color:var(--k-workbench);display:flex;align-items:center;justify-content:center;">${FCX.icon("MonitorSmartphone", 19)}</span>
+      <div><b style="font-family:var(--font-display);font-size:15.5px;">Open this in FocusCaseX</b>
+      <div style="font-size:12px;color:var(--ink-3);">On the device that has the app installed</div></div>
+    </div>
+    <p style="margin-top:14px;font-size:13px;color:var(--ink-2);line-height:1.55;">
+      The install button hands <b>${FCX.esc(name)}</b> to the FocusCaseX app on this device, where you confirm the install.
+      If the app isn't on this device, type the code below in the app instead —
+      <b>Settings → Marketplace → Install by code</b>.
+    </p>
+  </div>
+  <div style="padding:10px 22px 6px;">
+    <div class="code-row" style="margin-top:2px;">
+      <span class="code-token">${FCX.esc(code)}</span>
+      <button class="chip" type="button" data-copy="${FCX.esc(code)}">${FCX.icon("Copy", 13)}<span>Copy code</span></button>
+    </div>
+    <div style="display:flex;gap:9px;margin:14px 0 6px;">
+      <a class="btn small primary" href="/install/">Get the app</a>
+      <button class="btn small" type="button" data-fx-close>Close</button>
+    </div>
+  </div>
+</div>`;
+      document.body.appendChild(el);
+      FCX.wireCopyButtons(el);
+      el.querySelectorAll("[data-fx-close]").forEach((x) =>
+        x.addEventListener("click", () => x.closest(".ov") && x.closest(".ov").remove()));
+    }
+
+    document.querySelectorAll("[data-wb-install]").forEach((btn) => {
+      btn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const id = btn.getAttribute("data-wb-install");
+        const name = btn.getAttribute("data-wb-name") || "Solo Optometrist WorkBench";
+        let switched = false;
+        const onHide = () => { switched = true; };
+        document.addEventListener("visibilitychange", onHide, { once: true });
+        window.addEventListener("pagehide", onHide, { once: true });
+        window.addEventListener("blur", onHide, { once: true });
+        try { location.href = FCX.deepLinkUrl(id); } catch (e) { /* blocked — fallback covers it */ }
+        setTimeout(() => {
+          if (!switched && !document.hidden) showWbFallback(id, name);
+        }, 1900);
+      });
+    });
+
+    /* lazy demo videos — load when scrolled near, pause offscreen */
+    const vids = document.querySelectorAll("video[data-src]");
+    if (vids.length) {
+      const io = new IntersectionObserver((entries) => {
+        for (const en of entries) {
+          const v = en.target;
+          if (en.isIntersecting) {
+            if (!v.src && v.dataset.src) v.src = v.dataset.src;
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        }
+      }, { rootMargin: "200px" });
+      vids.forEach((v) => io.observe(v));
+    }
+  });
+</script>
+</body>
+</html>

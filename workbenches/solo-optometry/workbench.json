@@ -1,0 +1,417 @@
+{
+  "id": "solo-optometry-workbench",
+  "name": "Solo Optometrist WorkBench",
+  "description": "The one-chair practice in one install — chairside Solo pages, claims, stock, lab and comms boards, recall and inventory automation, on the calm Solo Optometry theme.",
+  "version": "1.0.0",
+  "author": "CaseX Labs",
+  "contents": {
+    "extensions": [
+      {
+        "id": "optomize",
+        "version": "1.0.0"
+      },
+      {
+        "id": "essential-diagrams",
+        "version": "1.2.0"
+      },
+      {
+        "id": "utility-panel",
+        "version": "1.0.0"
+      },
+      {
+        "id": "quick-actions-v2",
+        "version": "2.1.0"
+      },
+      {
+        "id": "focuscasex-sbl",
+        "version": "1.3.0",
+        "enabled": false
+      },
+      {
+        "id": "recall-campaign-runner",
+        "version": "1.0.0"
+      },
+      {
+        "id": "day-sheet-exporter",
+        "version": "1.0.0"
+      },
+      {
+        "id": "inventory-stock-alerter",
+        "version": "1.0.0"
+      },
+      {
+        "id": "quick-phrases",
+        "version": "1.0.0"
+      },
+      {
+        "id": "referral-letter-composer",
+        "version": "1.0.0"
+      }
+    ],
+    "capsules": [
+      {
+        "id": "ui-appointment"
+      },
+      {
+        "id": "ui-patients"
+      },
+      {
+        "id": "ui-exam"
+      },
+      {
+        "id": "ui-clinic"
+      },
+      {
+        "id": "ui-flow"
+      },
+      {
+        "id": "ui-today"
+      },
+      {
+        "id": "ui-recalls"
+      },
+      {
+        "id": "ui-billing"
+      },
+      {
+        "id": "ui-cohorts"
+      },
+      {
+        "id": "ui-claims"
+      },
+      {
+        "id": "ui-comms"
+      },
+      {
+        "id": "ui-labjobs"
+      },
+      {
+        "id": "ui-orders"
+      },
+      {
+        "id": "ui-scan-index"
+      },
+      {
+        "id": "ui-stock"
+      },
+      {
+        "id": "ui-stats"
+      },
+      {
+        "id": "ui-actions"
+      },
+      {
+        "id": "ui-note-cards"
+      },
+      {
+        "id": "emr-patient"
+      },
+      {
+        "id": "emr-vitals"
+      },
+      {
+        "id": "emr-visits"
+      },
+      {
+        "id": "emr-visit"
+      },
+      {
+        "id": "emr-trend"
+      },
+      {
+        "id": "emr-cl-fitlog"
+      },
+      {
+        "id": "emr-iop-watch"
+      },
+      {
+        "id": "emr-vf-board"
+      },
+      {
+        "id": "bases-embed"
+      },
+      {
+        "id": "ui-panel"
+      }
+    ],
+    "theme": {
+      "id": "solo-optometry",
+      "theme": {
+        "id": "solo-optometry",
+        "name": "Solo Optometry",
+        "builtin": false,
+        "description": "Clinic-calm white paper, ink text, electric-blue actions.",
+        "tags": [
+          "light",
+          "clinic",
+          "brand"
+        ],
+        "vars": {
+          "bg": "#f7f9fc",
+          "bgSidebar": "#eef2f8",
+          "bgPanel": "#ffffff",
+          "text": "#101828",
+          "textMuted": "#475467",
+          "accent": "#0f62fe",
+          "accentForeground": "#ffffff",
+          "border": "#d0d7e2",
+          "radius": "8px",
+          "density": "cozy",
+          "borderWidth": "1px",
+          "shadow": "soft",
+          "buttonStyle": "soft",
+          "cardStyle": "raised",
+          "fontBody": "system",
+          "fontHeading": "grotesk",
+          "fontMono": "mono",
+          "headingWeight": "700",
+          "headingTransform": "none",
+          "tracking": "normal"
+        }
+      }
+    },
+    "templates": [
+      {
+        "id": "patient-intake"
+      },
+      {
+        "id": "refraction-note"
+      },
+      {
+        "id": "cl-fitting"
+      },
+      {
+        "id": "glaucoma-workup"
+      },
+      {
+        "id": "dispensing-order"
+      },
+      {
+        "id": "recall-letter"
+      },
+      {
+        "id": "appointment-book"
+      },
+      {
+        "id": "daily-huddle"
+      },
+      {
+        "id": "cl-aftercare",
+        "folder": "Clinic/ContactLens"
+      },
+      {
+        "id": "rx-pad",
+        "folder": "Clinic/Prescriptions"
+      },
+      {
+        "id": "referral-letter",
+        "folder": "Clinic/Letters"
+      },
+      {
+        "id": "medical-necessity-letter",
+        "folder": "Clinic/Letters"
+      },
+      {
+        "id": "low-vision-assessment",
+        "folder": "Clinic/LowVision"
+      }
+    ],
+    "snippets": [
+      {
+        "name": "bigger-headings"
+      },
+      {
+        "name": "rounded-editor"
+      },
+      {
+        "name": "compact-sidebar"
+      },
+      {
+        "name": "readable-queue"
+      },
+      {
+        "name": "print-friendly"
+      },
+      {
+        "name": "calm-headers"
+      },
+      {
+        "name": "chairside-va"
+      }
+    ],
+    "starterPages": [
+      {
+        "path": "Solo/Today.md",
+        "title": "My day",
+        "content": "---\nfcxui: dashboard\ntitle: My day\n---\n\n# My day\n\nThe morning cockpit — today's schedule, the overdue-recall call-in list and the quick actions that run the whole day from one screen.\n\n```ui-today\n```\n\n```ui-recalls\n```\n\n```ui-actions\nitems:\n  - Open patient flow | open-note:Solo/Flow.md\n  - Open appointment book | open-note:Clinic/Appointment.md\n  - Log a call | open-note:Clinic/CommsLog.md\n  - Command palette | open-palette\n```\n\n## Documents at a glance\n\nReports and scans land in the Scans folder — the index below keeps today's imaging one tap away, without opening a chart.\n\n```ui-scan-index\nfolder: Scans\n```\n"
+      },
+      {
+        "path": "Solo/Flow.md",
+        "title": "Patient flow",
+        "content": "---\nfcxui: dashboard\ntitle: Patient flow\n---\n\n# Patient flow\n\nThe door-to-door funnel — every patient walks **arrived → in-exam → optics → billing → done**, and a one-tap stage note records why anyone is parked.\n\n```ui-flow\n```\n\n```ui-actions\nitems:\n  - Open refraction desk | open-note:Solo/Refraction.md\n  - Open dispensing & orders | open-note:Solo/Dispensing.md\n  - Open billing & day close | open-note:Solo/Money.md\n  - Open appointment book | open-note:Clinic/Appointment.md\n```\n\n## Stage legend\n\nStatuses: **booked** · **arrived** · **in-exam** · **optics** · **billing** · **done** · **no-show**\n\n| Stage | What happens there | One-tap note convention |\n| --- | --- | --- |\n| arrived | Front desk checks in, workup starts | who is on deck, wait reason |\n| in-exam | Refraction & exam hub — history to plan | dilation, special tests, review wait |\n| optics | Frame selection, CL trials, order placed | frame / lens pick, lab promise date |\n| billing | Fee quoted, payment taken | split payments, pending approvals |\n| done | Visit closed, fee & paid current | advice handed over, recall booked |\n\n- House rules: mark **no-show** after 15 minutes; a parked row keeps its stage note so any handoff is silent; the funnel mirrors the appointment book — the book's Status column is the single truth.\n"
+      },
+      {
+        "path": "Solo/Refraction.md",
+        "title": "Refraction & exam hub",
+        "content": "---\nfcxui: dashboard\ntitle: Refraction & exam hub\n---\n\n# Refraction & exam hub\n\nThe workup desk — the exam board carries case history to plan, and the chairside tables below answer the daily refraction questions without leaving the room.\n\n```ui-exam\n```\n\n```ui-panel\ntitle: Refraction desk\n- examctx\n- action: Open patient flow | open-note:Solo/Flow.md\n```\n\n```ui-actions\nitems:\n  - Open patient flow | open-note:Solo/Flow.md\n  - Open dispensing & orders | open-note:Solo/Dispensing.md\n  - Open patient directory | open-note:Clinic/Patients.md\n  - Command palette | open-palette\n```\n\n## Contact-lens fitting log\n\nEvery cl-fitting visit's trial parameters and final Rx, newest first — the history to check before issuing the next trial.\n\n```emr-cl-fitlog\npatient:\ntype: cl-fitting\n```\n\n## Chairside quick tables\n\n### ADD-by-age guide (40 cm working distance)\n\n| Age | Typical ADD (OU) |\n| --- | --- |\n| 40–44 | +0.50 to +0.75 |\n| 45–49 | +0.75 to +1.00 |\n| 50–54 | +1.00 to +1.50 |\n| 55–59 | +1.50 to +1.75 |\n| 60–64 | +1.75 to +2.00 |\n| 65+ | +2.00 to +2.50 |\n\n- Start at the low end, refine by working-distance and comfort; never add on top of an inaccurate distance Rx.\n\n### Transposition (plus ↔ minus cylinder)\n\nNew sphere = sphere + cylinder · flip the cylinder sign · new axis = old axis ± 90.\n\n| Plus-cylinder Rx | Minus-cylinder Rx |\n| --- | --- |\n| +1.00 +0.50 x 90 | +1.50 −0.50 x 180 |\n| −2.00 −1.00 x 180 | −3.00 +1.00 x 90 |\n| +0.75 +1.25 x 45 | +2.00 −1.25 x 135 |\n\n### ±0.25 D tolerance checks (before dispense)\n\n| Check | House tolerance |\n| --- | --- |\n| Sphere | ±0.25 D |\n| Cylinder | ±0.25 D |\n| Axis | ±2° for cyl ≥ 1.00 · ±5° for low cyl |\n| Prism | ±0.25 Δ, base correct |\n| Segment height / ADD | ±0.5 mm · verify ADD against Rx |\n\n- House standard — tune to your lab's tolerance sheet and regional standards; a failed check goes back to the lab, not out the door.\n"
+      },
+      {
+        "path": "Solo/Dispensing.md",
+        "title": "Dispensing & orders",
+        "content": "---\nfcxui: dashboard\ntitle: Dispensing & orders\n---\n\n# Dispensing & orders\n\nThe optics worklist — everyone at the optics counter and everyone waiting to pay, from frame selection to pickup, with the order pipeline conventions the bench works by.\n\n```ui-billing\n```\n\n```ui-actions\nitems:\n  - Open refraction desk | open-note:Solo/Refraction.md\n  - Open lab jobs | open-note:Clinic/OpticalLab.md\n  - Open inventory | open-note:Clinic/Inventory.md\n  - Open billing & day close | open-note:Solo/Money.md\n```\n\n## Order pipeline\n\nStatuses: **selected** · **ordered** · **at lab** · **ready** · **dispensed** · **picked up** · **delayed**\n\n- One row per order in the optics worklist; **Amount** and **Paid** feed the same money counters the billing desk and day sheet show.\n- **Ready** rows are this hour's pickup calls — log the call in the **Comms log**.\n- Outsourced edging, surfacing and repairs live on **Lab jobs**; a delayed lab job means a phone call to the lab, not a silent wait.\n- Frame and lens stock draw down from **Inventory** — update the Stock column as deliveries land.\n- An order closes only when it is **picked up** and fully paid; balances stay on the worklist until then.\n"
+      },
+      {
+        "path": "Solo/Money.md",
+        "title": "Billing & day close",
+        "content": "---\nfcxui: dashboard\ntitle: Billing & day close\n---\n\n# Billing & day close\n\nThe money desk — everyone waiting to bill, then the cash-up ritual that closes the day; quote from the **Tariff** so every price is the same price.\n\n```ui-billing\n```\n\n```ui-actions\nitems:\n  - Open dispensing & orders | open-note:Solo/Dispensing.md\n  - Open day sheet | open-note:Clinic/DaySheet.md\n  - Open tariff | open-note:Clinic/Tariff.md\n  - Open expenses | open-note:Clinic/Expenses.md\n```\n\n## Cash-up checklist\n\n- [ ] Every billing-stage patient billed, or carried over with a note\n- [ ] Fee & Paid filled for today's **done** rows — no blank money columns\n- [ ] Each counter counted: **Cash** · **UPI** · **Card** · **Insurance**\n- [ ] Discounts & refunds matched to scheme vouchers or an approval note\n- [ ] Optical orders: Amount & Paid current, **Ready** orders called\n- [ ] Day sheet rows entered per counter — Net ₹ verified against the draw\n- [ ] Petty-cash vouchers logged in **Expenses**\n- [ ] Tomorrow chased: no-shows rebooked, overdue recalls queued for the call-in\n- [ ] Day close signed (Verified by) and the takings banked\n\n- House rules: modes mirror the day sheet — **Cash** · **UPI** · **Card** · **Insurance**; a row closes only when **paid**; anything that cannot be reconciled tonight gets a note, never a silent carry.\n"
+      },
+      {
+        "path": "Solo/QuickRef.md",
+        "title": "Chairside quick reference",
+        "content": "---\nfcxui: dashboard\ntitle: Chairside quick reference\n---\n\n# Chairside quick reference\n\nThe page to keep open on the exam-room screen — conversions, triage patterns and starter routines. Static reference content the clinic edits to match its own practice.\n\n## Visual acuity conversion (6 m ↔ 20 ft)\n\n| Snellen (6 m) | Snellen (20 ft) | Decimal | LogMAR |\n| --- | --- | --- | --- |\n| 6/6 | 20/20 | 1.0 | 0.0 |\n| 6/7.5 | 20/25 | 0.8 | 0.1 |\n| 6/9 | 20/30 | 0.67 | 0.18 |\n| 6/12 | 20/40 | 0.5 | 0.3 |\n| 6/18 | 20/60 | 0.33 | 0.48 |\n| 6/24 | 20/80 | 0.25 | 0.6 |\n| 6/36 | 20/120 | 0.17 | 0.78 |\n| 6/60 | 20/200 | 0.1 | 1.0 |\n| 3/60 | 20/400 | 0.05 | 1.3 |\n\nBelow 3/60: counting fingers ≈ 2/60, hand movements ≈ 1/60, then PL / NPL.\n\n- **Severe vision impairment (ICD-11)** — VA worse than 6/60 in the better eye; **blindness** — worse than 3/60.\n- **Legal blindness (US)** — best-corrected 20/200 or worse in the better eye.\n- **Driving** — most jurisdictions require 6/12 in the better eye; check local rules.\n\n## Red eye — triage patterns\n\n| Pattern | Think first | Do now |\n| --- | --- | --- |\n| Watery, itchy, bilateral, seasonal | Allergic conjunctivitis | Cold compress, antihistamine drops, avoid rubbing |\n| Sticky mucopurulent, injected, VA normal | Bacterial conjunctivitis | Lid hygiene + antibiotic drops; no patching |\n| Watering, follicles, tender preauricular node, one eye | Adenoviral keratoconjunctivitis | Hygiene & instrument disinfection; review; no steroid without slit-lamp review |\n| Ciliary flush + photophobia + deep ache + reduced VA | Anterior uveitis | Dilated slit-lamp exam; same-day referral if complicated or virgin eye |\n| Hazy cornea + halos + mid-dilated fixed pupil + hard globe | **Acute angle-closure attack** | Emergency — pressure-lowering per protocol, refer now |\n| FB sensation + staining defect, VA normal | Corneal abrasion / FB | Fluorescein stain, remove FB, antibiotic ointment, review 24–48 h |\n| Red painful eye + reduced VA in a contact-lens wearer + infiltrate | **Microbial keratitis** | Stop lens wear, refer now; fortified antibiotics only if referral will be delayed |\n| Painless bright-red wedge, clear cornea, VA normal | Subconjunctival hemorrhage | Reassure, check BP, review if recurrent |\n\n## Drop protocols — starter routines\n\nCopy into **Prescriptions** and tune to your practice.\n\n| Protocol | Starter routine |\n| --- | --- |\n| OHT / glaucoma suspect | Timolol 0.5% 1 drop OD + latanoprost 1 drop HS; screen asthma & bradycardia before beta-blockers; target IOP per staging |\n| Dry eye | Carboxymethylcellulose 0.5% QID, lid hygiene BID, omega-3 OD, 20-20-20 screen rule; punctal review if the 6-week trial fails |\n| Post-cataract routine | Moxifloxacin 0.5% QID × 2 weeks; prednisolone 1% 2-hourly × 1 week then taper over 3 weeks; IOP check at week 1 |\n| Allergic conjunctivitis | Olopatadine 0.1% BID, cold compress, avoid eye rubbing |\n| Dilation | Tropicamide 1%, repeat once after 5 min; warn 4–6 h blur, no driving, sunglasses |\n| Stye / hordeolum | Hot compresses 10 min TID; topical antibiotic if bacterial; incise if pointing; refer if cellulitis spreads |\n\n## Refer now — red flags\n\n- **Sudden painless vision loss** — detachment, vascular occlusion, optic neuropathy: same-hour referral.\n- **Red eye with reduced vision, severe pain or photophobia** — keratitis / uveitis / angle-closure territory: same-day escalation.\n- **Halos, hazy cornea, mid-dilated fixed pupil, hard globe** — acute angle-closure: emergency now.\n- **Chemical splash** — irrigate 15–30 min with lids held open, check pH, then refer.\n- **New flashes with a floater shower** — dilated peripheral exam within 24 h.\n- **Suspected penetrating injury / intraocular foreign body** — shield, nothing by mouth, no drops, no pressure.\n- **Sudden double vision, ptosis, dilated pupil with headache** — third-nerve palsy: same-day emergency.\n- **Hot swollen lids with fever, restricted eye movement** — orbital cellulitis: same-day referral.\n- **White pupillary reflex in a child** — leukocoria: urgent pediatric ophthalmology.\n- **IOP uncontrolled on maximal tolerated therapy** — glaucoma escalation referral.\n\n## Companion pages\n\n```ui-note-cards\nfolder: Solo\nlimit: 6\n```\n"
+      },
+      {
+        "path": "Solo/Stock.md",
+        "title": "Stock & reorder",
+        "content": "---\nfcxui: dashboard\ntitle: Stock & reorder\n---\n\n# Stock & reorder\n\nThe min-level reorder board — one table for everything on the shelf. Set a **Reorder at** floor per item; **Stock Alerter** watches Stock against it, and at/below-min rows become the purchase list. Update the Stock column as deliveries land and the board clears itself.\n\nCategories: **frames** · **blanks** · **CL** · **solutions**\n\n| Item | Category | Supplier | Stock | Reorder at | Cost | MRP | Updated |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n\n```ui-stock\n```\n\n```ui-actions\nitems:\n  - Open patient flow | open-note:Solo/Flow.md\n  - Open dispensing & orders | open-note:Solo/Dispensing.md\n  - Open inventory | open-note:Clinic/Inventory.md\n  - Extensions settings | open-settings\n```\n\n## Reading the board\n\n- Rows at or below **Reorder at** are the purchase list — order before the next clinic day.\n- One row per item; **frames** get a row per model/colour, **CL** a row per parameter (BC/Dia/power range), **solutions** a row per product you sell.\n- Cost and MRP are plain numbers; the board flags **Updated** going stale so prices don't drift.\n- The Stock Alerter extension raises the alert; this table is the single source it reads.\n\n## Category legend\n\n- **frames** — display and drawer stock, one row per model and colour; reorder floor ≈ two pieces per active model.\n- **blanks** — lens blanks and finished single-vision stock lenses, one row per index/design; floor ≈ one Rx batch.\n- **CL** — trial and per-order contact lenses, one row per parameter set; floor ≈ one fitting month.\n- **solutions** — CL solutions, saline, drops and counter consumables; floor ≈ two counter weeks.\n"
+      },
+      {
+        "path": "Solo/Review.md",
+        "title": "Weekly review",
+        "content": "---\nfcxui: dashboard\ntitle: Weekly review\n---\n\n# Weekly review\n\nThe solo self-audit — fifteen minutes at week's end. The overview, stats and chronic-care registers below resolve live from your records; the snapshot table is the manual record worth keeping. No fake numbers: this page fills itself as the week fills the case files.\n\n```ui-clinic\n```\n\n## This week's snapshot\n\n| Week | Booked | Arrived | No-show | Walk-in | New | Revenue ₹ |\n| --- | --- | --- | --- | --- | --- | --- |\n\n```ui-stats\npreset: clinic\n```\n\n## Chronic-care registers\n\nBuilt from each patient's latest Dx / H/O — the same rules the clinic overview runs, with overdue recall counts per program. Edit the rules to the programs this practice actually runs.\n\n```ui-cohorts\nrules:\n  - Glaucoma|poag, glaucoma, oht, ocular hypertension, suspect\n  - Dry eye|dry eye, ded, mgd\n  - Diabetic retinopathy|dm retinopathy, diabetic, dr\n  - Post-op|post-op, post op, surgery, cataract\n  - AMD|amd, macular degeneration, armd\n```\n\n## Chronic-care watch\n\nSurveillance for the registers above — visual-field progression first, then pressures against target; anyone trending the wrong way becomes this week's call.\n\n```emr-vf-board\nfolder: Database/Patients\nfield: vf\nshow: md, psd\n```\n\n```emr-iop-watch\npatient:\nfield: iop_od\ntarget: 21\n```\n\n## Registers to clear\n\n- [ ] Day sheets reconciled and signed off — every counter\n- [ ] Recall campaigns run; overdue recalls chased or parked\n- [ ] Referral register — every due report chased or returned\n- [ ] Reorder board — at/below-min items ordered from Stock Alerter's list\n- [ ] Supplier dues and pending purchase orders reviewed\n- [ ] No-shows — two attempts, then rebooked or lost\n"
+      },
+      {
+        "path": "Solo/Setup.md",
+        "title": "How this bench fits",
+        "content": "---\nfcxui: dashboard\ntitle: How this bench fits\n---\n\n# How this bench fits\n\nOne installable WorkBench bundle = a whole solo practice setup: ten Extensions, a theme, templates, snippets and the nine Solo pages. This page is the map — what landed in the workspace, what each piece does, and how to repair or re-apply it later. Setup only: patient records are never captured, created or overwritten by an install.\n\n## What's installed\n\n| Extension | What it does |\n| --- | --- |\n| Recall Campaigns | Turns the recall list into dated outreach batches — call/SMS campaigns tracked to completion |\n| Day Sheet | The close-the-day ritual — every counter's take reconciled and signed off |\n| Stock Alerter | Watches stock levels against the reorder floor and flags at/below-min items to the reorder board |\n| Quick Phrases | One-tap clinical phrases and counseling lines dropped straight into the note |\n| Referral Composer | Drafts referral letters from the exam record and logs every send |\n| Optomize | The EMR engine — markdown case files, changed-values follow-ups (store only what changed), pattern matching across patients |\n| Essential Diagrams | Tap-to-select anterior-segment and fundus diagrams in the exam; labeled findings flow into the workup |\n| Utility Panel | Right-panel calculators — spherical equivalent, toric transposition, age from DOB, IOP with pachymetry correction |\n| Quick Actions | The dockable launcher for the actions the desk actually taps, in your order |\n| Sidebar | Installed **switched off** — the Solo pages are the chrome. Enable it any time under Settings → Extensions if you want it |\n\nManage them all under **Settings → Extensions** — disable what you don't use, re-enable what you do; nothing is ever deleted.\n\n## The nine Solo pages\n\nFive clinical-loop pages carry the day, and four guide pages hold the reference layer — reference, stock, audit and this map. The cards below are always the live list of what's actually in the Solo folder.\n\n| Page | What it is |\n| --- | --- |\n| **Today** | My day — the morning cockpit: schedule, overdue-recall call-in list, quick actions |\n| **Flow** | Patient flow — the door-to-door funnel, arrived → in-exam → optics → billing → done |\n| **Refraction** | Refraction & exam hub — the workup desk, history to plan, with Essential Diagrams and chairside tables |\n| **Dispensing** | Dispensing & orders — the optics worklist, frame selection to pickup |\n| **Money** | Billing & day close — the billing worklist and the cash-up ritual |\n| **QuickRef** | Chairside quick reference — VA conversion, red-eye triage, drop protocols, refer-now red flags |\n| **Stock** | Stock & reorder — the min-level board for frames, blanks, CL and solutions |\n| **Review** | Weekly review — the self-audit: week totals, registers, stats |\n| **Setup** | This page — the onboarding map |\n\n```ui-note-cards\nfolder: Solo\nlimit: 9\n```\n\n## Where templates live\n\nTemplates install as real markdown files — consents, letters, certificates and printables, each catalog entry landing in its own folder (by default `Clinic/`, with a per-template folder override where the bundle sets one). The Templates page indexes every file with a [[wiki link]], and custom documents you add under `pages/` earn a row in the same index. Copy a template into a patient file rather than editing the master.\n\n## Re-apply from the marketplace\n\n- Open **Settings → Extensions**, switch to the **WorkBenches** tab, and find the Solo Optometrist WorkBench — or install it from its file with **Install from file**.\n- Run **Install** again any time: Extensions update in place, and starter pages are created only when missing — **an existing page always wins**, so your edits survive every re-apply.\n- Re-applying never touches patient records and never deletes anything; the install dialog shows each step as it lands.\n"
+      },
+      {
+        "path": "Clinic/Insurance.md",
+        "title": "Insurance & TPA",
+        "content": "---\nfcxui: dashboard\ntitle: Insurance & TPA\n---\n\nThe claims pipeline — cashless approvals, reimbursements and corporate tie-ups; work the money across Pre-auth ₹ / Approved ₹ / Billed ₹ / Settled ₹ and never close a row before **settled**.\n\nStatuses: **eligibility** → **pre-auth sent** → **approved** → **denied** → **billed** → **settled**\n\n| Date | Patient | MR | Insurer | Policy # | Treatment | Pre-auth ₹ | Approved ₹ | Billed ₹ | Settled ₹ | Status |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n\n```ui-claims\nstages:\n  - Eligibility|eligibility, eligible\n  - Pre-auth sent|pre-auth sent, preauth\n  - Approved|approved\n  - Denied|denied, rejected\n  - Billed|billed\n  - Settled|settled, paid\n```\n"
+      },
+      {
+        "path": "Clinic/Inventory.md",
+        "title": "Inventory",
+        "content": "---\nfcxui: dashboard\ntitle: Inventory\n---\n\nStock register for frames, blanks, contact lenses and solutions — update Stock as deliveries land and treat every flagged row as today's purchase list.\n\nCategories: **frame** · **blank** · **CL** · **solution** — flag a row the moment **Stock ≤ Reorder at**.\n\n| Item | Category | Stock | Reorder at | Supplier | Last ordered |\n| --- | --- | --- | --- | --- | --- |\n"
+      },
+      {
+        "path": "Clinic/OpticalLab.md",
+        "title": "Lab jobs",
+        "content": "---\nfcxui: dashboard\ntitle: Lab jobs\n---\n\nOutsourced edging, surfacing and frame repairs with promised dates — one row per job so nothing drifts; **delayed** rows are today's phone calls to the lab.\n\nStatuses: **at lab** → **ready** → **delivered** (+ **delayed**)\n\n| Job # | Date in | Patient | MR | Item | Lab | Promised | Status | Collected ₹ |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n\n```ui-labjobs\nstages:\n  - at lab\n  - ready\n  - delivered\n  - delayed\n```\n"
+      },
+      {
+        "path": "Clinic/PurchaseOrders.md",
+        "title": "Purchase orders",
+        "content": "---\nfcxui: dashboard\ntitle: Purchase orders\n---\n\nThe PO pipeline — draft, order, receive, pay; Balance ₹ settles from the supplier invoice and a row closes only when it is **paid**.\n\nStatuses: **draft** → **ordered** → **shipped** → **paid**\n\n| PO # | Date | Supplier | Items | Invoice # | Total ₹ | Paid ₹ | Balance ₹ | Status |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n\n```ui-orders\nsupplier: all\nstages:\n  - draft\n  - ordered\n  - shipped\n  - paid\n```\n"
+      },
+      {
+        "path": "Clinic/CommsLog.md",
+        "title": "Comms log",
+        "content": "---\nfcxui: dashboard\ntitle: Comms log\n---\n\nEvery call, SMS, WhatsApp and walk-in visit to or from a patient — one register, so any colleague can pick up any conversation mid-stream.\n\nDirection: **in** / **out** · Channels: **call** · **SMS** · **WhatsApp** · **visit** · Outcomes: **reached** · **voicemail** · **reschedule** · **no answer**\n\n| Date | Time | Patient | MR | Direction | Channel | Subject | Outcome | Follow-up |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n\n```ui-comms\n```\n"
+      }
+    ],
+    "settings": {
+      "editor": {
+        "fontSize": 16,
+        "lineHeight": 1.6,
+        "readableLineLength": true,
+        "spellcheck": true,
+        "autosaveMs": 600
+      },
+      "appearance": {
+        "accent": "#0f62fe",
+        "snippets": {
+          "bigger-headings": true,
+          "rounded-editor": true,
+          "compact-sidebar": true,
+          "readable-queue": true,
+          "print-friendly": true,
+          "calm-headers": true,
+          "chairside-va": true
+        }
+      },
+      "quickActions": {
+        "order": [
+          "qa-start-exam",
+          "qa-recalls",
+          "qa-billing",
+          "qa-book-appointment",
+          "qa-new-patient"
+        ],
+        "hidden": []
+      },
+      "plugins": {
+        "enabled": {
+          "optomize": true,
+          "essential-diagrams": true,
+          "utility-panel": true,
+          "quick-actions-v2": true,
+          "focuscasex-sbl": false,
+          "recall-campaign-runner": true,
+          "day-sheet-exporter": true,
+          "inventory-stock-alerter": true,
+          "quick-phrases": true,
+          "referral-letter-composer": true
+        }
+      }
+    }
+  },
+  "installCodes": {
+    "bundle": "FCX-2VJD2S",
+    "plugin:optomize": "FCX-84QQJD",
+    "plugin:essential-diagrams": "FCX-EJ2N7Y",
+    "plugin:utility-panel": "FCX-Y2PDRA",
+    "plugin:quick-actions-v2": "FCX-CUCAF3",
+    "plugin:focuscasex-sbl": "FCX-9FSNYD",
+    "plugin:recall-campaign-runner": "FCX-7E7DHZ",
+    "plugin:day-sheet-exporter": "FCX-XATS3Q",
+    "plugin:inventory-stock-alerter": "FCX-6FFTFQ",
+    "plugin:quick-phrases": "FCX-FDT8M2",
+    "plugin:referral-letter-composer": "FCX-BRWPUW",
+    "capsule:ui-appointment": "FCX-D2DWZM",
+    "capsule:ui-patients": "FCX-AM6Q7J",
+    "capsule:ui-exam": "FCX-WNYY4W",
+    "capsule:ui-clinic": "FCX-Q2F2VG",
+    "capsule:ui-flow": "FCX-PGFZQ9",
+    "capsule:ui-today": "FCX-G4AV4H",
+    "capsule:ui-recalls": "FCX-ENV75P",
+    "capsule:ui-billing": "FCX-DPP84D",
+    "capsule:ui-cohorts": "FCX-36GTDF",
+    "capsule:ui-claims": "FCX-35FVV4",
+    "capsule:ui-comms": "FCX-B4B68Q",
+    "capsule:ui-labjobs": "FCX-H2B552",
+    "capsule:ui-orders": "FCX-8CBW8P",
+    "capsule:ui-scan-index": "FCX-B5NKN3",
+    "capsule:ui-stock": "FCX-7SSDXG",
+    "capsule:ui-stats": "FCX-WHA9A3",
+    "capsule:ui-actions": "FCX-CYT5BF",
+    "capsule:ui-note-cards": "FCX-64UA4P",
+    "capsule:emr-patient": "FCX-R4DECY",
+    "capsule:emr-vitals": "FCX-DBKNZZ",
+    "capsule:emr-visits": "FCX-Y9Z8CE",
+    "capsule:emr-visit": "FCX-YT4WYG",
+    "capsule:emr-trend": "FCX-SDUC4B",
+    "capsule:emr-cl-fitlog": "FCX-W63Y97",
+    "capsule:emr-iop-watch": "FCX-TQXB65",
+    "capsule:emr-vf-board": "FCX-NQ8RTU",
+    "capsule:bases-embed": "FCX-P3EZ97",
+    "capsule:ui-panel": "FCX-MFMUQ7",
+    "template:patient-intake": "FCX-TSTDTJ",
+    "template:refraction-note": "FCX-W6SMZ9",
+    "template:cl-fitting": "FCX-DP2SDS",
+    "template:glaucoma-workup": "FCX-UCEUQR",
+    "template:dispensing-order": "FCX-DERFKB",
+    "template:recall-letter": "FCX-BBX6XK",
+    "template:appointment-book": "FCX-WYHB2Y",
+    "template:daily-huddle": "FCX-KYWZ3F",
+    "template:cl-aftercare": "FCX-M9YJ6Z",
+    "template:rx-pad": "FCX-DHVVDQ",
+    "template:referral-letter": "FCX-8J4Y27",
+    "template:medical-necessity-letter": "FCX-3HZV4A",
+    "template:low-vision-assessment": "FCX-TE6YZR",
+    "theme:solo-optometry": "FCX-UB9RRX",
+    "workbench:solo-optometry": "FCX-2VJD2S"
+  },
+  "createdAt": "2026-11-26T00:00:00.000Z"
+}

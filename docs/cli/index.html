@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The FCX CLI — command reference — FocusCaseX Documentation</title>
+<meta name="description" content="The fcx command line: install the FocusCaseX marketplace and WorkBenches on any computer with Node 18, host the registry on the clinic LAN, and keep both ends updated. Full command reference, serve endpoints, file locations and troubleshooting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* FCX CLI docs — layout only; composes with the design system. */
+  section[id] { scroll-margin-top: 76px; }
+  .crumb {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12.5px; color: var(--ink-3); margin-bottom: 12px;
+  }
+  .crumb svg { flex-shrink: 0; }
+  .crumb:hover { color: var(--blue); }
+  .doc-lede { margin-top: 14px; max-width: 680px; font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+  .explain a, .doc-lede a, .cli-band p a, .cli-ref td a, .note a { color: var(--blue); font-weight: 500; }
+  .explain a:hover, .doc-lede a:hover, .cli-band p a:hover, .cli-ref td a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .explain code, .doc-lede code, .note code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+
+  /* command bands — same pattern as the install guide's #cli section */
+  .cli-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; margin-top: 16px;
+  }
+  .cli-band h3 { font-size: 17px; }
+  .cli-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; margin-top: 8px; max-width: 640px; }
+  .cli-band p.cli-alt { font-size: 12.5px; color: var(--ink-3); max-width: none; }
+  .cli-band p.cli-alt code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+  .cli-band ol.steps { margin-top: 12px; }
+  .cli-cmd .code-token { letter-spacing: 0; font-size: 13.5px; font-weight: 500; padding: 10px 14px; }
+
+  /* reference tables — mono first column, like the install guide */
+  .cli-ref-scroll {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+  }
+  .cli-ref { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 13px; }
+  .cli-ref th {
+    text-align: left; padding: 12px 16px 10px; border-bottom: 1px solid var(--line-2);
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .cli-ref td { padding: 11px 16px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 13px; line-height: 1.55; vertical-align: top; }
+  .cli-ref tr:last-child td { border-bottom: 0; }
+  .cli-ref td:first-child { font-family: var(--font-mono); font-size: 12.3px; color: var(--ink); white-space: nowrap; }
+  .cli-ref td b { color: var(--ink); }
+
+  /* blue note strips */
+  .note {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 20px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+    max-width: 680px;
+  }
+  .note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+  .note p { margin: 0; }
+  .note a { color: var(--blue-deep); font-weight: 600; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap-narrow">
+
+    <section class="page-head">
+      <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
+      <div class="kicker">Documentation</div>
+      <h1>The FCX CLI</h1>
+      <p class="lede">Install the marketplace anywhere Node 18 runs, host it on your own machine, and script the catalog — every <code>fcx</code> command, in one place.</p>
+      <p class="explain">The CLI is the npm package <code>focuscasex</code> (binary <code>fcx</code>), maintained in the <a href="https://github.com/stromplayz/FCX-NPM" target="_blank" rel="noopener">FCX-NPM repo</a>. The <a href="/install/#cli">install guide</a> keeps the short version.</p>
+    </section>
+
+    <!-- 1. OVERVIEW -->
+    <section class="section-tight" id="overview" aria-label="Overview" style="padding-top: 22px;">
+      <p class="doc-lede">The FocusCaseX marketplace and its WorkBenches are installable anywhere Node 18 runs. The <code>fcx</code> command line installs from the same catalog the Android app browses — same items, same <strong>FCX-XXXXXX</strong> install codes — and it can host the registry on your own machine so every computer in the clinic LAN installs from it. Both ends update from the same pipeline, so the CLI and the app never drift apart.</p>
+    </section>
+
+    <!-- 2. INSTALL -->
+    <section class="section" id="install" aria-label="Install the CLI" style="padding-top: 36px;">
+      <div class="kicker">Install</div>
+      <h2 style="margin-bottom: 6px;">Install the CLI</h2>
+      <div class="cli-band">
+        <h3>Install once</h3>
+        <p>Node 18 or newer, then one command in a terminal — Linux, macOS or Windows:</p>
+        <div class="code-row cli-cmd">
+          <span class="code-token" title="Install command — run this in a terminal">npm install -g github:stromplayz/FCX-NPM</span>
+          <button class="chip" type="button" data-copy="npm install -g github:stromplayz/FCX-NPM" title="Copy install command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
+        </div>
+        <p class="cli-alt">Also published to npm as <code>focuscasex</code> — the GitHub install above works today. Once the npm token is configured on the repo, <code>npm install -g focuscasex</code> works too. Source and releases: <a href="https://github.com/stromplayz/FCX-NPM" target="_blank" rel="noopener">github.com/stromplayz/FCX-NPM</a>.</p>
+      </div>
+    </section>
+
+    <!-- 3. FIRST STEPS -->
+    <section class="section" id="first-steps" aria-label="First steps" style="padding-top: 0;">
+      <div class="kicker">First steps</div>
+      <h2 style="margin-bottom: 6px;">Three commands to start</h2>
+      <div class="cli-band">
+        <ol class="steps">
+          <li><span>Run <strong>fcx doctor</strong> — check Node, the workspace folder, the catalog cache and marketplace reachability.</span></li>
+          <li><span>Run <strong>fcx sync</strong> — refresh the catalog cache from the public marketplace.</span></li>
+          <li><span>Run <strong>fcx workbench list</strong> — see every WorkBench with its install code.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 4. COMMAND REFERENCE -->
+    <section class="section" id="commands" aria-label="Command reference" style="padding-top: 0;">
+      <div class="kicker">Reference</div>
+      <h2 style="margin-bottom: 6px;">Command reference</h2>
+      <p class="explain" style="max-width: 640px;">Every command with its exact syntax. Anything in brackets is optional; the quick version lives on the <a href="/install/#cli">install guide's CLI section</a>.</p>
+      <div class="cli-ref-scroll">
+        <table class="cli-ref">
+          <thead>
+            <tr>
+              <th scope="col">Command</th>
+              <th scope="col">What it does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>fcx --version</td><td>Print the CLI version — it tracks the platform release.</td></tr>
+            <tr><td>fcx doctor [--offline]</td><td>Check Node, the workspace folder, the catalog cache and marketplace reachability. With <b>--offline</b> it warns instead of failing and falls back to the cache.</td></tr>
+            <tr><td>fcx sync</td><td>Refresh the catalog cache from the public marketplace.</td></tr>
+            <tr><td>fcx catalog [kind] [--json]</td><td>List everything installable — Extensions, capsules, themes, templates — with an optional kind filter; <b>--json</b> prints the list for scripts.</td></tr>
+            <tr><td>fcx workbench list</td><td>List WorkBenches with their install codes.</td></tr>
+            <tr><td>fcx workbench show &lt;id-or-code&gt;</td><td>Print the full description and every piece inside. Accepts an item id, an FCX-XXXXXX code, or a name substring.</td></tr>
+            <tr><td>fcx workbench install &lt;id-or-code&gt; [--dir D]</td><td>Install a WorkBench into a local workspace folder — <b>--dir D</b> picks the destination — and print a per-item summary of everything that landed.</td></tr>
+            <tr><td>fcx serve [--port 4319]</td><td>Host the registry locally — health, catalog and WorkBench bundle endpoints — and print the local and LAN URLs.</td></tr>
+            <tr><td>fcx open</td><td>Open the full FocusCaseX workspace in your browser — the same features as the Android app.</td></tr>
+            <tr><td>fcx mcp</td><td>Print MCP pairing info plus ready-to-paste agent setup snippets. The full walkthrough: <a href="/docs/mcp/">MCP &amp; AI agents</a>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. HOSTING ON THE LAN -->
+    <section class="section" id="serve" aria-label="Hosting on the LAN" style="padding-top: 0;">
+      <div class="kicker">Hosting</div>
+      <h2 style="margin-bottom: 6px;">Host the registry on the clinic LAN</h2>
+      <p class="explain" style="max-width: 640px;"><strong>fcx serve</strong> turns the machine it runs on into the registry for the whole clinic. It serves the catalog and WorkBench bundles over HTTP — port 4319 by default, <strong>--port</strong> to change it — and prints two URLs when it starts: one for the machine itself and one for the LAN. Point a browser at the LAN URL from any computer on the clinic network and the same catalog is right there.</p>
+      <p class="explain" style="max-width: 640px;">What it serves comes from the local catalog cache — run <strong>fcx sync</strong> and the LAN copy refreshes from the public marketplace.</p>
+      <div class="cli-ref-scroll">
+        <table class="cli-ref">
+          <thead>
+            <tr>
+              <th scope="col">Endpoint</th>
+              <th scope="col">What it serves</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>/health</td><td>Status and version — a quick check that the server is up.</td></tr>
+            <tr><td>/api/catalog</td><td>The full catalog, in the same shape the app installs from.</td></tr>
+            <tr><td>/api/workbenches</td><td>Every WorkBench with its install code.</td></tr>
+            <tr><td>/api/workbenches/&lt;id&gt;</td><td>One WorkBench bundle, ready to install.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. WHERE THINGS LIVE -->
+    <section class="section" id="files" aria-label="Where things live" style="padding-top: 0;">
+      <div class="kicker">On disk</div>
+      <h2 style="margin-bottom: 6px;">Where things live</h2>
+      <p class="explain" style="max-width: 640px;">Two places, both under your home folder.</p>
+      <div class="cli-ref-scroll">
+        <table class="cli-ref">
+          <thead>
+            <tr>
+              <th scope="col">Path</th>
+              <th scope="col">What it is</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>~/.focuscasex/cache/catalog.json</td><td>The catalog cache — <b>fcx sync</b> refreshes it, <b>fcx serve</b> shares it, <b>fcx doctor</b> checks it.</td></tr>
+            <tr><td>~/.focuscasex/workspace/&lt;workbench-id&gt;/</td><td>One folder per installed WorkBench, with every piece inside.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. STAYING UPDATED -->
+    <section class="section" id="updates" aria-label="Staying updated" style="padding-top: 0;">
+      <div class="kicker">Updates</div>
+      <h2 style="margin-bottom: 6px;">Staying updated</h2>
+      <div class="note">
+        <span data-icon="RefreshCcw" data-icon-size="17"></span>
+        <p><b>Both ends move together.</b> A GitHub Action in the <a href="https://github.com/stromplayz/FCX-NPM" target="_blank" rel="noopener">FCX-NPM repo</a> syncs the CLI from the private source repo, rebuilds it and publishes it whenever the platform ships. To update, run the same install command again — <code>npm install -g github:stromplayz/FCX-NPM</code> — and <code>fcx --version</code> confirms the build you have.</p>
+      </div>
+    </section>
+
+    <!-- 8. TROUBLESHOOTING -->
+    <section class="section" id="troubleshooting" aria-label="Troubleshooting" style="padding-top: 0;">
+      <div class="kicker">When something's off</div>
+      <h2 style="margin-bottom: 6px;">Troubleshooting</h2>
+      <p class="explain" style="max-width: 640px;">Four things come up most; each has a short answer.</p>
+      <div class="cli-ref-scroll">
+        <table class="cli-ref">
+          <thead>
+            <tr>
+              <th scope="col">What you see</th>
+              <th scope="col">What to do</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>fcx: command not found</td><td>npm's global bin folder is not on your PATH. Add it to PATH — or reinstall with the install command and open a fresh terminal.</td></tr>
+            <tr><td>catalog fetch fails</td><td>Run <b>fcx sync</b> to refresh the cache, or check the network. <b>fcx doctor --offline</b> passes with a cached catalog, so installs keep working without the network.</td></tr>
+            <tr><td>port already in use</td><td>Start the server on another port: <b>fcx serve --port &lt;other&gt;</b>.</td></tr>
+            <tr><td>version mismatch</td><td>Reinstall with the same command — <b>npm install -g github:stromplayz/FCX-NPM</b> — then check <b>fcx --version</b>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 9. WHERE NEXT -->
+    <section class="section" id="next" aria-label="Where next" style="padding-top: 0;">
+      <div class="kicker">Keep reading</div>
+      <h2 style="margin-bottom: 6px;">Where next</h2>
+      <div class="entries" style="margin-top: 20px;">
+        <a class="entry" href="/docs/getting-started/">
+          <span class="tile"><span data-icon="BookOpen" data-icon-size="19"></span></span>
+          <h3>Getting started</h3>
+          <p>New to FocusCaseX? Install the app, sign in and take the workspace tour.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/docs/mcp/">
+          <span class="tile"><span data-icon="Bot" data-icon-size="19"></span></span>
+          <h3>MCP &amp; AI agents</h3>
+          <p>Pair Claude, Cursor, VS Code and friends to the clinic — that is what <b>fcx mcp</b> sets up.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/install/#cli">
+          <span class="tile"><span data-icon="Download" data-icon-size="19"></span></span>
+          <h3>Install guide — CLI section</h3>
+          <p>The short version of this page, next to the Android install.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="https://github.com/stromplayz/FCX-NPM" target="_blank" rel="noopener">
+          <span class="tile"><span data-icon="Github" data-icon-size="19"></span></span>
+          <h3>FCX-NPM on GitHub</h3>
+          <p>The CLI's source repo — releases, issues and the update pipeline.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  (function () {
+    /* paint [data-icon] placeholders with real SVGs */
+    function paintIcons() {
+      document.querySelectorAll("[data-icon]").forEach(function (el) {
+        var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
+        el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
+      });
+    }
+
+    paintIcons();
+
+    FCX.ready({ active: "docs" }).catch(function () {
+      /* offline preview (file://) or catalog unreachable — paint minimal chrome */
+      var header = document.getElementById("site-header");
+      var footer = document.getElementById("site-footer");
+      if (header && !header.firstChild) {
+        header.innerHTML =
+          '<div class="top"><div class="top-inner">' +
+          '<a class="brand" href="/">' + FCX.icon("Stethoscope", 20) + '<span>FocusCaseX</span></a>' +
+          '<nav class="nav">' +
+          '<a href="/">Overview</a>' +
+          '<a href="/marketplace/">Marketplace</a>' +
+          '<a href="/pricing/">Pricing</a>' +
+          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '</nav></div></div>';
+      }
+      if (footer && !footer.firstChild) {
+        footer.innerHTML =
+          '<div class="foot"><div class="wrap foot-inner">' +
+          '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
+          '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/cli/">FCX CLI</a><a href="/install/">Install guide</a></div>' +
+          '</div></div>';
+      }
+      FCX.wireCopyButtons(document);
+    });
+  })();
+</script>
+</body>
+</html>

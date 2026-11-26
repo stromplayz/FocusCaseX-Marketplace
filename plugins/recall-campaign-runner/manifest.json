@@ -1,0 +1,12 @@
+{
+  "id": "recall-campaign-runner",
+  "name": "Recall Campaigns",
+  "version": "1.0.0",
+  "minAppVersion": "2.6.9",
+  "description": "Run recall follow-through campaigns from the sidebar — track who is due, contact them, mark done.",
+  "author": "CaseX Labs",
+  "isSample": true,
+  "permissions": {
+    "folders": ["Database/Patients", "Recalls"]
+  }
+}

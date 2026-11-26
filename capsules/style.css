@@ -1,0 +1,240 @@
+/* ui-claims — Claim / TPA tracker board (CxS-1 default)
+   --cx-ok/--cx-warn/--cx-err come from the base layer; the electric
+   blue accent is pinned by the capsule spec (white paper / ink brand). */
+& {
+  --fcx-claims-accent: #0f62fe;
+}
+
+/* — stage filter pills (scrollable, no scrollbar) — */
+.fcx-claims-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  margin: 0 -4px 12px;
+  padding: 0 4px 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.fcx-claims-tabs::-webkit-scrollbar {
+  display: none;
+}
+.fcx-claims-tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--background) 40%, transparent);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.fcx-claims-tab:hover {
+  border-color: color-mix(in oklab, var(--fcx-claims-accent) 50%, transparent);
+  color: var(--foreground);
+}
+.fcx-claims-tab--on {
+  border-color: transparent;
+  background: var(--fcx-claims-accent);
+  color: var(--fcx-accent-foreground, #ffffff);
+}
+.fcx-claims-tab-count {
+  border-radius: 999px;
+  padding: 0 6px;
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+.fcx-claims-tab-count--on {
+  background: color-mix(in oklab, var(--fcx-accent-foreground, #ffffff) 22%, transparent);
+  color: inherit;
+}
+
+/* — pending money strip — rupees still in flight with the insurer,
+     one calm line above the board (mirrors the billing pulse) — */
+.fcx-claims-pulse {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--background) 50%, transparent);
+  padding: 7px 10px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+.fcx-claims-pulse-strong {
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 700;
+  color: var(--foreground);
+}
+.fcx-claims-pulse-pending {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--cx-warn);
+}
+
+/* — claim rows — */
+.fcx-claims-rows {
+  margin-top: 0; /* gap comes from .fcx-claims-tabs' margin-bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fcx-claims-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--background) 40%, transparent);
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.fcx-claims-row:hover {
+  border-color: color-mix(in oklab, var(--fcx-claims-accent) 50%, transparent);
+}
+.fcx-claims-main {
+  display: block;
+  min-width: 0;
+  flex: 1;
+}
+.fcx-claims-id-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.fcx-claims-patient {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+.fcx-claims-mr {
+  flex-shrink: 0;
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fcx-claims-accent);
+}
+.fcx-claims-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fcx-claims-sub .fcx-claims-mr {
+  color: var(--muted-foreground); /* policy numbers stay quiet in the meta line */
+}
+/* treatment column: desktop-only third line, the phone stays dense */
+.fcx-claims-treatment {
+  display: none;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  color: var(--muted-foreground);
+}
+@media (min-width: 640px) {
+  .fcx-claims-treatment {
+    display: block;
+  }
+}
+
+/* — pending rupees per claim — what has not come back yet — */
+.fcx-claims-pending {
+  flex-shrink: 0;
+  font-family: var(--fcx-font-mono, var(--font-geist-mono, ui-monospace)), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.fcx-claims-pending--warn {
+  color: var(--cx-warn);
+}
+.fcx-claims-pending--done {
+  color: var(--cx-ok);
+}
+
+/* — status pills — one variant per stage:
+     eligibility → muted · pre-auth sent → accent
+     approved → ok · denied → err · billed → warn · settled → ok solid — */
+.fcx-claims-pill {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  border: 1px solid color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+  border-radius: 999px;
+  background: var(--muted);
+  padding: 0 7px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 18px;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.fcx-claims-pill--sent {
+  border-color: color-mix(in oklab, var(--fcx-claims-accent) 45%, transparent);
+  background: color-mix(in oklab, var(--fcx-claims-accent) 12%, transparent);
+  color: var(--fcx-claims-accent);
+}
+.fcx-claims-pill--approved {
+  border-color: color-mix(in oklab, var(--cx-ok) 45%, transparent);
+  background: color-mix(in oklab, var(--cx-ok) 12%, transparent);
+  color: var(--cx-ok);
+}
+.fcx-claims-pill--denied {
+  border-color: color-mix(in oklab, var(--cx-err) 45%, transparent);
+  background: color-mix(in oklab, var(--cx-err) 12%, transparent);
+  color: var(--cx-err);
+}
+.fcx-claims-pill--billed {
+  border-color: color-mix(in oklab, var(--cx-warn) 50%, transparent);
+  background: color-mix(in oklab, var(--cx-warn) 12%, transparent);
+  color: var(--cx-warn);
+}
+.fcx-claims-pill--settled {
+  border-color: var(--cx-ok);
+  background: color-mix(in oklab, var(--cx-ok) 20%, transparent);
+  color: var(--cx-ok);
+}
+
+/* — keyboard focus — */
+.fcx-claims-tab:focus-visible,
+.fcx-claims-row:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--fcx-claims-accent) 60%, transparent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .fcx-claims-row {
+    padding: 8px 10px;
+  }
+  .fcx-claims-patient {
+    font-size: 13px;
+  }
+  .fcx-claims-pulse {
+    flex-wrap: wrap;
+    padding: 6px 8px;
+  }
+  .fcx-claims-pulse-pending {
+    margin-left: 0; /* lets the pending ₹ wrap to its own line */
+  }
+}

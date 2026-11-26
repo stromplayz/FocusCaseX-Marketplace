@@ -5,7 +5,7 @@
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing — FocusCaseX for eye-care practices</title>
-<meta name="description" content="Simple rupee pricing for FocusCaseX. Start free forever on Solo, unlock every marketplace add-on with Practice at ₹199/month, and add team, backup and automation features as your clinic grows. Offline-first, cancel anytime.">
+<meta name="description" content="FocusCaseX pricing in rupees. One product, four licence runs — Monthly ₹399, Quarterly ₹1,299, Yearly ₹4,499, or Lifetime ₹9,999 once. Every plan is the complete workspace with nothing capped. UPI, cards and net banking; taxes included.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,19 +24,6 @@
     text-align: center;
   }
   .founding svg { color: var(--blue); flex-shrink: 0; }
-
-  /* billing toggle */
-  .bill-wrap {
-    display: flex; align-items: center; justify-content: center;
-    gap: 14px; flex-wrap: wrap; margin-top: 20px;
-  }
-  .bill-note { font-size: 12.5px; color: var(--ink-3); }
-  .seg .save {
-    font-family: var(--font-body);
-    font-size: 10.5px; font-weight: 600; letter-spacing: .02em;
-    background: var(--ok-soft); color: var(--ok);
-    border-radius: 999px; padding: 2px 8px; margin-left: 7px;
-  }
 
   /* plan cards: 4-up → 2×2 → 1-col */
   .plans {
@@ -76,27 +63,32 @@
   .plan-price .per { font-family: var(--font-body); font-size: 12.5px; font-weight: 500; letter-spacing: 0; color: var(--ink-3); margin-left: 2px; }
   .plan.is-hero .plan-price .num { color: var(--blue); }
   .plan-sub { margin-top: 10px; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
-  .plan-note { margin-top: 6px; font-size: 11.5px; color: var(--ink-3); }
-
-  .plan-feats {
-    list-style: none; margin: 16px 0 0; padding: 15px 0 0;
-    border-top: 1px solid var(--line);
-    display: flex; flex-direction: column; gap: 9px;
-    flex: 1 0 auto;
-  }
-  .plan-feats li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--ink-2); line-height: 1.45; }
-  .plan-feats li > svg { color: var(--blue); flex-shrink: 0; margin-top: 2px; }
-  .plan-feats li.lead {
-    display: block; font-family: var(--font-display); font-weight: 600;
-    font-size: 12.8px; color: var(--ink); letter-spacing: .01em;
-  }
-  .plan-cta { margin-top: 18px; width: 100%; }
+  .plan-note { margin-top: 6px; margin-bottom: 16px; font-size: 11.5px; color: var(--ink-3); }
+  .plan-cta { margin-top: auto; width: 100%; }
 
   @media (max-width: 1080px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 640px) {
     .plans { grid-template-columns: 1fr; }
     .plan-badge { top: -12px; }
   }
+
+  /* shared "everything included" panel — one list, identical on every plan */
+  .included {
+    margin-top: 26px; background: var(--paper);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 24px 24px;
+  }
+  .included h3 { margin: 0; font-size: 17px; letter-spacing: -.01em; }
+  .included .inc-sub { margin-top: 5px; font-size: 12.5px; color: var(--ink-3); }
+  .included-grid {
+    list-style: none; margin: 16px 0 0; padding: 16px 0 0;
+    border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px 26px;
+  }
+  .included-grid li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--ink-2); line-height: 1.45; }
+  .included-grid li > svg { color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+  @media (max-width: 720px) { .included-grid { grid-template-columns: 1fr; } }
 
   /* honest social proof */
   .proof-note {
@@ -106,42 +98,38 @@
   }
   .proof-note svg { color: var(--blue); flex-shrink: 0; }
 
-  /* comparison table */
-  .cmp-scroll {
+  /* India-first payment strip */
+  .pay-strip {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 22px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+  }
+  .pay-strip svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+
+  /* duration table (the only comparison on the page — time, not features) */
+  .dur-scroll {
     border: 1px solid var(--line); border-radius: var(--radius);
     background: var(--paper); overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin-top: 26px;
+    margin-top: 24px; max-width: 640px;
   }
-  .cmp { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 780px; }
-  .cmp thead th { text-align: center; padding: 16px 16px 13px; border-bottom: 1px solid var(--line-2); vertical-align: bottom; }
-  .cmp thead th .th-dim {
+  .dur { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 13px; }
+  .dur th {
+    text-align: left; padding: 12px 16px 10px; border-bottom: 1px solid var(--line-2);
     font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
     letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
   }
-  .cmp thead th .th-name { display: block; font-family: var(--font-display); font-weight: 700; font-size: 14.5px; letter-spacing: -.01em; }
-  .cmp thead th .th-price { display: block; margin-top: 3px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--ink-3); }
-  .cmp thead th.h { box-shadow: inset 0 2.5px 0 var(--blue); }
-  .cmp thead th.h .th-name { color: var(--blue); }
-  .cmp tbody td { padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-  .cmp tbody tr:last-child td { border-bottom: 0; }
-  .cmp td.feat { color: var(--ink); font-size: 13.3px; }
-  .cmp td.v { text-align: center; font-size: 12.3px; color: var(--ink-2); }
-  .cmp td.v svg { margin: 0 auto; color: var(--blue); }
-  .cmp td.v .no { color: var(--ink-3); opacity: .8; }
-  .cmp td.h, .cmp th.h { background: rgba(5, 51, 255, .045); }
-  .cmp thead th:first-child, .cmp tbody td:first-child {
-    position: sticky; left: 0; z-index: 1;
-    background: var(--paper); border-right: 1px solid var(--line);
-    text-align: left;
+  .dur td { padding: 11px 16px; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+  .dur tr:last-child td { border-bottom: 0; }
+  .dur td:first-child {
+    font-family: var(--font-display); font-weight: 600; font-size: 13.3px;
+    letter-spacing: -.01em; color: var(--ink);
   }
-  .cmp tbody tr.grp td {
-    font-family: var(--font-display); font-size: 11px; font-weight: 600;
-    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
-    background: var(--bg-soft); padding: 9px 16px;
-  }
-  .cmp tbody tr.grp td:first-child { border-right: 0; }
-  .cmp-scroll { position: relative; }
+  .dur td.num, .dur th.num { text-align: right; font-family: var(--font-mono); font-size: 12px; }
+  .dur tr.h td { background: rgba(5, 51, 255, .045); }
+  .dur tr.h td:first-child { color: var(--blue); }
 
   /* final CTA buttons */
   .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -156,11 +144,11 @@
     <section class="page-head">
       <div class="kicker">Pricing</div>
       <h1>Simple pricing for Indian practices.</h1>
-      <p class="lede">Start free forever. Upgrade when your team grows — every plan is offline-first.</p>
+      <p class="lede">One product, four ways to pay for it — monthly, quarterly, yearly, or once and forever. Every plan is the complete FocusCaseX; nothing is capped or held back.</p>
     </section>
   </div>
 
-  <!-- FOUNDING STRIP + TOGGLE + CARDS -->
+  <!-- FOUNDING STRIP + CARDS -->
   <section class="section" id="plans" style="padding-top: 20px;">
     <div class="wrap">
 
@@ -169,107 +157,84 @@
         <span>Founding pricing — locked for early practices in India.</span>
       </div>
 
-      <div class="bill-wrap" role="group" aria-label="Billing period">
-        <div class="seg">
-          <button type="button" data-billing="monthly" aria-pressed="false">Monthly</button>
-          <button type="button" data-billing="annual" aria-pressed="true">Annual<span class="save">save 17%</span></button>
-        </div>
-        <p class="bill-note" aria-live="polite"
-           data-m="Billed every month. Cancel whenever."
-           data-a="Billed once a year. Practice works out to 2 months free.">Billed once a year. Practice works out to 2 months free.</p>
-      </div>
-
       <div class="plans">
 
-        <!-- SOLO -->
+        <!-- MONTHLY -->
         <article class="plan">
-          <h3 class="plan-name">Solo</h3>
-          <p class="plan-for">For a single optometrist</p>
+          <h3 class="plan-name">Monthly</h3>
+          <p class="plan-for">Licence runs one month</p>
           <div class="plan-price">
-            <span class="cur">₹</span><span class="num" data-m="0" data-a="0">0</span>
-            <span class="per">forever</span>
+            <span class="cur">₹</span><span class="num">399</span>
+            <span class="per">/month</span>
           </div>
-          <p class="plan-sub">Free forever — no card, no clock.</p>
-          <ul class="plan-feats">
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Full clinic EMR offline — patients, refraction notes, recalls</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>12+ free marketplace add-ons</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Capsules &amp; building blocks</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>LAN sharing with one device</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Community support</span></li>
-          </ul>
-          <a class="btn ghost plan-cta" href="https://focuscasex.vercel.app" target="_blank" rel="noopener">Start free</a>
+          <p class="plan-sub">Full FocusCaseX, one month at a time.</p>
+          <p class="plan-note">Billed ₹399 each month. Renew only when it suits.</p>
+          <a class="btn ghost plan-cta" href="/install/">Get Monthly</a>
         </article>
 
-        <!-- PRACTICE (hero) -->
+        <!-- QUARTERLY -->
+        <article class="plan">
+          <h3 class="plan-name">Quarterly</h3>
+          <p class="plan-for">Licence runs three months</p>
+          <div class="plan-price">
+            <span class="cur">₹</span><span class="num">1,299</span>
+            <span class="per">/quarter</span>
+          </div>
+          <p class="plan-sub">One payment covers the whole quarter.</p>
+          <p class="plan-note">≈ ₹433 / month — saves ~17% vs monthly.</p>
+          <a class="btn ghost plan-cta" href="/install/">Get Quarterly</a>
+        </article>
+
+        <!-- YEARLY -->
+        <article class="plan">
+          <h3 class="plan-name">Yearly</h3>
+          <p class="plan-for">Licence runs twelve months</p>
+          <div class="plan-price">
+            <span class="cur">₹</span><span class="num">4,499</span>
+            <span class="per">/year</span>
+          </div>
+          <p class="plan-sub">One payment covers the year.</p>
+          <p class="plan-note">≈ ₹375 / month — saves ~37% vs monthly.</p>
+          <a class="btn ghost plan-cta" href="/install/">Get Yearly</a>
+        </article>
+
+        <!-- LIFETIME (hero) -->
         <article class="plan is-hero">
-          <div class="plan-badge">Most popular</div>
-          <h3 class="plan-name">Practice</h3>
-          <p class="plan-for">For a growing practice</p>
+          <div class="plan-badge">Pay once, done forever</div>
+          <h3 class="plan-name">Lifetime</h3>
+          <p class="plan-for">Licence never expires</p>
           <div class="plan-price">
-            <span class="cur">₹</span><span class="num" data-m="199" data-a="1,999">1,999</span>
-            <span class="per" data-m="/month" data-a="/year">/year</span>
+            <span class="cur">₹</span><span class="num">9,999</span>
+            <span class="per">one-time</span>
           </div>
-          <p class="plan-sub">Less than ₹7 a day — one lens wipe.</p>
-          <p class="plan-note"
-             data-m="Annual: ₹1,999/yr — 2 months free"
-             data-a="2 months free vs paying monthly">2 months free vs paying monthly</p>
-          <ul class="plan-feats">
-            <li class="lead">Everything in Solo, plus:</li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Every marketplace add-on unlocked — all Extensions, capsules, themes &amp; templates</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Daily cloud backup</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Install codes &amp; one-tap install from the site</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Priority support</span></li>
-          </ul>
-          <a class="btn primary plan-cta" href="/install/">Go Practice</a>
+          <p class="plan-sub">Pay once, keep it forever — every future update included.</p>
+          <p class="plan-note">Never billed again. Updates ride along free, forever.</p>
+          <a class="btn primary plan-cta" href="/install/">Get Lifetime</a>
         </article>
 
-        <!-- CLINIC -->
-        <article class="plan">
-          <h3 class="plan-name">Clinic</h3>
-          <p class="plan-for">Up to 5 staff</p>
-          <div class="plan-price">
-            <span class="cur">₹</span><span class="num" data-m="599" data-a="5,990">5,990</span>
-            <span class="per" data-m="/month" data-a="/year">/year</span>
-          </div>
-          <p class="plan-sub">Less than ₹20 a day for your whole front desk.</p>
-          <p class="plan-note"
-             data-m="Annual: ₹5,990/yr"
-             data-a="Billed ₹5,990 once a year">Billed ₹5,990 once a year</p>
-          <ul class="plan-feats">
-            <li class="lead">Everything in Practice, plus:</li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Multi-staff accounts with roles</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Shared LAN workspace</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Device connection panel</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>MCP &amp; automation for agents</span></li>
-          </ul>
-          <a class="btn ghost plan-cta" href="/install/">Choose Clinic</a>
-        </article>
+      </div>
 
-        <!-- GROUP -->
-        <article class="plan">
-          <h3 class="plan-name">Group</h3>
-          <p class="plan-for">For chains &amp; hospitals</p>
-          <div class="plan-price">
-            <span class="cur">₹</span><span class="num" data-m="1,499" data-a="14,990">14,990</span>
-            <span class="per" data-m="/month" data-a="/year">/year</span>
-          </div>
-          <p class="plan-note"
-             data-m="Annual: ₹14,990/yr"
-             data-a="Billed ₹14,990 once a year">Billed ₹14,990 once a year</p>
-          <ul class="plan-feats">
-            <li class="lead">Everything in Clinic, plus:</li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Multiple workspaces</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Central template packs</span></li>
-            <li><span data-icon="Check" data-icon-size="15"></span><span>Onboarding help</span></li>
-          </ul>
-          <a class="btn ghost plan-cta" href="https://focuscasex.vercel.app" target="_blank" rel="noopener">Talk to us</a>
-        </article>
-
+      <!-- ONE SHARED LIST — identical on every plan -->
+      <div class="included">
+        <h3>Everything included, nothing capped</h3>
+        <p class="inc-sub">The same complete product on every plan — this list is identical whether you pay monthly, quarterly, yearly or once.</p>
+        <ul class="included-grid">
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited patients and records</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited examinations</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited Extensions</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited Capsules</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited themes, templates &amp; snippets</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited AI agents via MCP</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited Workbenches</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Every marketplace add-on included</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Offline-first — the clinic runs with no internet</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Updates included free — on Lifetime, forever</span></li>
+        </ul>
       </div>
 
       <p class="proof-note">
         <span data-icon="ScanEye" data-icon-size="16"></span>
-        <span>Built with a working eye-care practice in India — every feature above ships in the app today.</span>
+        <span>Built with a working eye-care practice in India — everything listed above ships in the app today.</span>
       </p>
 
       <!-- loss-aversion reassurance -->
@@ -297,152 +262,56 @@
         </div>
       </div>
 
+      <!-- India-first payment strip -->
+      <div class="pay-strip">
+        <span data-icon="Receipt" data-icon-size="18"></span>
+        <span>Pay in rupees — UPI, cards, net banking. Taxes included. No card required to try the app on your own machine.</span>
+      </div>
+
     </div>
   </section>
 
-  <!-- COMPARISON TABLE -->
-  <section class="section" id="compare" style="padding-top: 8px;">
-    <div class="wrap">
-      <div class="kicker">Compare</div>
-      <h2>What each plan includes.</h2>
+  <!-- WHY DO THE PLANS DIFFER -->
+  <section class="section" id="why" style="padding-top: 8px;">
+    <div class="wrap-narrow">
+      <div class="kicker">Fair question</div>
+      <h2>Why do the plans differ?</h2>
+      <p class="explain" style="max-width: 660px; margin-top: 14px; font-size: 14px; color: var(--ink-2); line-height: 1.6;">They don't — not in what you get. Every plan is the entire product; the only thing that changes is how long the licence runs. A longer run lowers the effective monthly cost, and Lifetime ends the billing conversation entirely: ₹9,999 once, every future update included.</p>
 
-      <div class="cmp-scroll">
-        <table class="cmp">
+      <div class="dur-scroll">
+        <table class="dur">
           <thead>
             <tr>
-              <th scope="col"><span class="th-dim">Features</span></th>
-              <th scope="col">
-                <span class="th-name">Solo</span>
-                <span class="th-price">₹0 forever</span>
-              </th>
-              <th scope="col" class="h">
-                <span class="th-name">Practice</span>
-                <span class="th-price" data-m="₹199/mo" data-a="₹1,999/yr">₹1,999/yr</span>
-              </th>
-              <th scope="col">
-                <span class="th-name">Clinic</span>
-                <span class="th-price" data-m="₹599/mo" data-a="₹5,990/yr">₹5,990/yr</span>
-              </th>
-              <th scope="col">
-                <span class="th-name">Group</span>
-                <span class="th-price" data-m="₹1,499/mo" data-a="₹14,990/yr">₹14,990/yr</span>
-              </th>
+              <th scope="col">Plan</th>
+              <th scope="col">You pay</th>
+              <th scope="col">Licence runs</th>
+              <th scope="col" class="num">Works out to</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="grp"><td colspan="5">Core EMR</td></tr>
             <tr>
-              <td class="feat">Patients, refraction notes &amp; recalls</td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v h"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
+              <td>Monthly</td>
+              <td>₹399 once a month</td>
+              <td>1 month</td>
+              <td class="num">₹399 / month</td>
             </tr>
             <tr>
-              <td class="feat">Fully offline clinic records</td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v h"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
+              <td>Quarterly</td>
+              <td>₹1,299 once a quarter</td>
+              <td>3 months</td>
+              <td class="num">≈ ₹433 / month</td>
             </tr>
             <tr>
-              <td class="feat">Capsules &amp; building blocks</td>
-              <td class="v">12+ free</td>
-              <td class="v h">Full catalog</td>
-              <td class="v">Full catalog</td>
-              <td class="v">Full catalog</td>
+              <td>Yearly</td>
+              <td>₹4,499 once a year</td>
+              <td>12 months</td>
+              <td class="num">≈ ₹375 / month</td>
             </tr>
-            <tr>
-              <td class="feat">LAN sharing</td>
-              <td class="v">1 device</td>
-              <td class="v h">1 device</td>
-              <td class="v">Shared workspace</td>
-              <td class="v">Shared workspace</td>
-            </tr>
-
-            <tr class="grp"><td colspan="5">Marketplace</td></tr>
-            <tr>
-              <td class="feat">Every extension, capsule, theme &amp; template</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-            <tr>
-              <td class="feat">Install codes &amp; one-tap install from this site</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-
-            <tr class="grp"><td colspan="5">Backup &amp; sync</td></tr>
-            <tr>
-              <td class="feat">Export everything, always</td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v h"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-            <tr>
-              <td class="feat">Daily cloud backup</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-
-            <tr class="grp"><td colspan="5">Team</td></tr>
-            <tr>
-              <td class="feat">Staff accounts</td>
-              <td class="v">Just you</td>
-              <td class="v h">Just you</td>
-              <td class="v">Up to 5, with roles</td>
-              <td class="v">Multi-branch teams</td>
-            </tr>
-            <tr>
-              <td class="feat">Shared LAN workspace &amp; device connection panel</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span class="no">—</span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-            <tr>
-              <td class="feat">Multiple workspaces</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span class="no">—</span></td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-            <tr>
-              <td class="feat">Central template packs</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span class="no">—</span></td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-            <tr>
-              <td class="feat">Onboarding help</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span class="no">—</span></td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-            </tr>
-            <tr>
-              <td class="feat">Support</td>
-              <td class="v">Community</td>
-              <td class="v h">Priority</td>
-              <td class="v">Priority</td>
-              <td class="v">Priority</td>
-            </tr>
-
-            <tr class="grp"><td colspan="5">Automation</td></tr>
-            <tr>
-              <td class="feat">MCP &amp; automation for agents</td>
-              <td class="v"><span class="no">—</span></td>
-              <td class="v h"><span class="no">—</span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
-              <td class="v"><span data-icon="Check" data-icon-size="16"></span></td>
+            <tr class="h">
+              <td>Lifetime</td>
+              <td>₹9,999 once</td>
+              <td>Forever</td>
+              <td class="num">Never billed again</td>
             </tr>
           </tbody>
         </table>
@@ -461,20 +330,24 @@
           <div class="faq-a">Yes — that is the whole idea. Patients, refraction notes, recalls and every installed add-on live on your device, so the clinic runs with no connection at all. The internet is only needed for the optional daily cloud backup and for installing add-ons from the marketplace.</div>
         </details>
         <details>
-          <summary>What happens to my data if I cancel?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Your records stay yours. Export everything whenever you like — patients, notes and recalls come out as plain files you keep. If you step down from a paid plan, your workspace keeps running on Solo, free, with the full offline EMR. Cancelling never locks or deletes your clinic records.</div>
+          <summary>Is there a free plan?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">No. Every plan is the full product — there is no feature-limited tier. Trials happen on your own machine before you buy: install FocusCaseX, load it with your own patients, and pay only when you're ready.</div>
         </details>
         <details>
-          <summary>Do plans include the marketplace add-ons?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Solo comes with 12+ free add-ons — handy Extensions, capsules and building blocks. Practice and above unlock the entire catalog: every extension, capsule, theme and template, plus install codes and one-tap install from this site.</div>
+          <summary>What's the difference between the plans?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Duration only. The product is identical on all four — same features, same marketplace catalog, nothing capped. What changes is how long the licence runs, and a longer run brings the effective monthly price down. Lifetime is billed once and never again.</div>
         </details>
         <details>
-          <summary>Is there a free trial for paid plans?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">There is no trial to sign up for, because the free tier is not a demo — Solo is the full offline EMR, free forever. Run real clinics on it while you decide, then upgrade in the app when you want the catalog unlock, daily cloud backup or team features.</div>
+          <summary>Do I pay for marketplace add-ons?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">No — the whole marketplace is part of every plan. Extensions, capsules, themes, templates, install codes and one-tap install from this site are included whether you're on Monthly or Lifetime. Nothing is gated by the duration you picked.</div>
         </details>
         <details>
-          <summary>Can I pay yearly?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Yes. Practice is ₹1,999 a year — 2 months free compared to paying monthly. Clinic is ₹5,990 a year and Group is ₹14,990. One payment, once a year, nothing to track month to month.</div>
+          <summary>What happens to my data if I stop paying?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Your records stay yours. Export everything whenever you like — patients, notes and recalls come out as plain files you keep. Cancelling never locks or deletes your clinic records; on Lifetime there is simply nothing to cancel.</div>
+        </details>
+        <details>
+          <summary>How do I pay?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">In rupees — UPI, cards or net banking, taxes included. Install the app on your own machine first and try it on real work; then choose Monthly (₹399), Quarterly (₹1,299), Yearly (₹4,499) or Lifetime (₹9,999 once).</div>
         </details>
         <details>
           <summary>What does "founding pricing" mean?<span data-icon="Plus"></span></summary>
@@ -489,8 +362,8 @@
     <div class="wrap">
       <div class="cta-band">
         <div style="flex: 1; min-width: 280px;">
-          <h2>Start free tonight.</h2>
-          <p>Install FocusCaseX, open a patient file, write your first refraction note — before the lights go off. No card, no setup call.</p>
+          <h2>Try the whole product tonight.</h2>
+          <p>Install FocusCaseX on your own machine, open a patient file, write your first refraction note — before the lights go off. No card, no signup; pay only when you pick a plan.</p>
         </div>
         <div class="cta-btns">
           <a class="btn blue-on-dark" href="https://focuscasex.vercel.app" target="_blank" rel="noopener"><span data-icon="ExternalLink" data-icon-size="15"></span><span>Open the app</span></a>
@@ -516,25 +389,7 @@
       });
     }
 
-    /* monthly / annual toggle — default annual */
-    function setBilling(mode) {
-      document.querySelectorAll("[data-m]").forEach(function (el) {
-        el.textContent = mode === "monthly" ? el.getAttribute("data-m") : el.getAttribute("data-a");
-      });
-      document.querySelectorAll("[data-billing]").forEach(function (btn) {
-        var on = btn.getAttribute("data-billing") === mode;
-        btn.classList.toggle("on", on);
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
-      });
-    }
-    document.querySelectorAll("[data-billing]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        setBilling(btn.getAttribute("data-billing"));
-      });
-    });
-
     paintIcons();
-    setBilling("annual");
 
     FCX.ready({ active: "pricing" }).catch(function () {
       /* offline preview (file://) — the catalog can't load, paint minimal chrome */
@@ -555,7 +410,7 @@
         footer.innerHTML =
           '<div class="foot"><div class="wrap foot-inner">' +
           '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX Marketplace</div>' +
-          '<div class="foot-status">Free add-ons for FocusCaseX · maintained by CaseX Labs</div></div>' +
+          '<div class="foot-status">One price, the full product · maintained by CaseX Labs</div></div>' +
           '<div class="foot-links"><a href="/marketplace/">Home</a><a href="/pricing/">Pricing</a><a href="/install/">Install guide</a></div>' +
           '</div></div>';
       }

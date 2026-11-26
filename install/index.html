@@ -5,7 +5,7 @@
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How to install — FocusCaseX Marketplace</title>
-<meta name="description" content="Install any FocusCaseX add-on three ways: search inside the app, type its install code, or tap Install on this site and let the browser hand it to the app. Free, offline after install, remove any time.">
+<meta name="description" content="Install any FocusCaseX add-on three ways: search inside the app, type its install code, or tap Install on this site and let the browser hand it to the app. Included with every plan, offline after install, remove any time.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -39,6 +39,51 @@
   .way p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; }
   .way .steps { margin-top: 4px; }
   #browser { scroll-margin-top: 76px; }
+
+  /* FCX CLI — the same marketplace on any computer */
+  #cli { scroll-margin-top: 76px; }
+  .cli-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; margin-top: 16px;
+  }
+  .cli-band h3 { font-size: 17px; }
+  .cli-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; margin-top: 8px; max-width: 640px; }
+  .cli-band p.cli-alt { font-size: 12.5px; color: var(--ink-3); max-width: none; }
+  .cli-band p.cli-alt code {
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+  .cli-cmd .code-token { letter-spacing: 0; font-size: 13.5px; font-weight: 500; padding: 10px 14px; }
+  .cli-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
+  .cli-cols .cli-band { margin-top: 0; }
+  .cli-same { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 22px; }
+  .cli-same li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+  .cli-same li svg { color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+  @media (max-width: 720px) { .cli-same { grid-template-columns: 1fr; } }
+  .cli-ref-scroll {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 16px;
+  }
+  .cli-ref { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 13px; }
+  .cli-ref th {
+    text-align: left; padding: 12px 16px 10px; border-bottom: 1px solid var(--line-2);
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .cli-ref td { padding: 11px 16px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 13px; line-height: 1.5; vertical-align: top; }
+  .cli-ref tr:last-child td { border-bottom: 0; }
+  .cli-ref td:first-child { font-family: var(--font-mono); font-size: 12.3px; color: var(--ink); white-space: nowrap; }
+  .cli-note {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 16px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+  }
+  .cli-note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
 </style>
 </head>
 <body>
@@ -49,7 +94,7 @@
     <section class="page-head">
       <div class="kicker">Install guide</div>
       <h1>How to install</h1>
-      <p class="lede">Three ways in — all free, all one tap.</p>
+      <p class="lede">Three ways in — all one tap.</p>
       <p class="explain">Everything lives inside FocusCaseX. This page shows you the doors.</p>
     </section>
 
@@ -99,6 +144,75 @@
       <div id="kind-list"></div>
     </section>
 
+    <!-- FCX CLI — the same marketplace on any computer -->
+    <section class="section" id="cli" aria-label="FCX CLI">
+      <div class="kicker">For tech people</div>
+      <h2 style="margin-bottom: 6px;">Install on any computer — the FCX CLI</h2>
+      <p class="explain" style="max-width: 680px;">The same marketplace, workbenches and MCP setup — installable anywhere Node 18 runs, hosted on your own machine.</p>
+
+      <div class="cli-band">
+        <h3>Install once</h3>
+        <p>Node 18 or newer, then one command in a terminal:</p>
+        <div class="code-row cli-cmd">
+          <span class="code-token" title="Install command — run this in a terminal">npm install -g github:stromplayz/FCX-NPM</span>
+          <button class="chip" type="button" data-copy="npm install -g github:stromplayz/FCX-NPM" title="Copy install command"><span data-icon="Copy" data-size="13"></span><span>Copy command</span></button>
+        </div>
+        <p class="cli-alt">Also published to npm as <code>focuscasex</code> — the GitHub install above works today. Once the npm token is configured on the repo, <code>npm install -g focuscasex</code> works too.</p>
+      </div>
+
+      <div class="cli-cols">
+        <div class="cli-band">
+          <h3>First steps</h3>
+          <ol class="steps">
+            <li><span>Run <strong>fcx doctor</strong> — check the environment: Node version, workspace and marketplace reachability.</span></li>
+            <li><span>Run <strong>fcx workbench list</strong> — see the marketplace's WorkBenches with their install codes.</span></li>
+            <li><span>Run <strong>fcx serve</strong> — host the registry on this machine; it prints the local and LAN URLs.</span></li>
+          </ol>
+        </div>
+        <div class="cli-band">
+          <h3>Same features as Android</h3>
+          <ul class="cli-same">
+            <li><span data-icon="Check" data-size="15"></span><span>Same catalog, same install codes — every item keeps its <b>FCX-XXXXXX</b> code.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>WorkBench install with a per-piece summary, like the app's confirm dialog.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>Local registry hosting for the clinic LAN.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>MCP agent setup helper for AI agents.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>Stays updated from the same marketplace — both ends move together.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cli-band">
+        <h3>Command reference</h3>
+        <p>Every command in one place — the canonical quick reference; the docs link here.</p>
+        <div class="cli-ref-scroll">
+          <table class="cli-ref">
+            <thead>
+              <tr>
+                <th scope="col">Command</th>
+                <th scope="col">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>fcx doctor</td><td>Check Node, workspace and marketplace reachability.</td></tr>
+              <tr><td>fcx sync</td><td>Refresh the catalog from the public marketplace.</td></tr>
+              <tr><td>fcx catalog [kind]</td><td>List everything installable (Extensions, capsules, themes, templates…).</td></tr>
+              <tr><td>fcx workbench list</td><td>List WorkBenches with install codes.</td></tr>
+              <tr><td>fcx workbench show &lt;id-or-code&gt;</td><td>Full description plus every piece a WorkBench installs.</td></tr>
+              <tr><td>fcx workbench install &lt;id-or-code&gt;</td><td>Install a WorkBench into a local workspace folder with a per-item summary.</td></tr>
+              <tr><td>fcx serve [--port 4319]</td><td>Host the registry locally — catalog and bundles over HTTP.</td></tr>
+              <tr><td>fcx open</td><td>Open the full FocusCaseX workspace — same features as the Android app.</td></tr>
+              <tr><td>fcx mcp</td><td>MCP pairing info plus ready-to-paste setup snippets for AI agents.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cli-note">
+        <span data-icon="RefreshCcw" data-size="17"></span>
+        <span><b>Requirements and updates.</b> Node 18 or newer. Updates ship from the same pipeline as the app — a GitHub Action syncs the CLI from the private source repo, builds and publishes it whenever the platform updates.</span>
+      </div>
+    </section>
+
     <section class="section-tight">
       <h2>Remove any time</h2>
       <p style="margin-top: 12px; max-width: 640px;"><strong>Settings → Marketplace → Installed</strong> → tap Remove. Installing or removing never touches your patient records.</p>
@@ -108,8 +222,8 @@
       <h2 style="margin-bottom: 6px;">Questions</h2>
       <div class="faq">
         <details>
-          <summary>Is everything here really free?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Yes. Every add-on installs at no cost, and there is nothing to buy anywhere in FocusCaseX.</div>
+          <summary>Do add-ons cost extra?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">No. Every add-on in the catalog — Extensions, capsules, themes, templates — is included with your FocusCaseX plan. There is nothing separate to buy inside the marketplace.</div>
         </details>
         <details>
           <summary>Do I need this website to install anything?<span data-icon="Plus"></span></summary>
@@ -221,7 +335,7 @@
 <div class="foot"><div class="wrap foot-inner">
   <div>
     <div class="foot-brand">${FCX.icon("Stethoscope", 17)} FocusCaseX Marketplace</div>
-    <div class="foot-status">Free add-ons for FocusCaseX · maintained by CaseX Labs</div>
+    <div class="foot-status">Add-ons included with FocusCaseX · maintained by CaseX Labs</div>
   </div>
   <div class="foot-links">
     <a href="/install/">Install guide</a>
@@ -240,6 +354,7 @@
     hydrateIcons();
     renderKinds();
     fallbackChrome();
+    FCX.wireCopyButtons(document);
   });
 </script>
 </body>

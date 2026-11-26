@@ -169,7 +169,7 @@
   document.head.appendChild(style);
 })();
 
-/* ---------------- the 19 live demo boards ---------------- */
+/* ---------------- the 28 live demo boards ---------------- */
 window.FCX_CAPSULE_DEMOS = {
 
   "ui-appointment": [
@@ -451,6 +451,103 @@ window.FCX_CAPSULE_DEMOS = {
     '    <div class="fcxd-cohort"><span class="fcxd-cohcount">12</span><div class="fcxd-cohname">Glaucoma care</div><span class="fcxd-cohrule">poag · oht</span><div class="fcxd-cohm"><span class="fcxd-mr">MR-1042</span>Arun Kumar</div><div class="fcxd-cohm"><span class="fcxd-mr">MR-1011</span>Divya Nair</div></div>',
     '    <div class="fcxd-cohort"><span class="fcxd-cohcount">21</span><div class="fcxd-cohname">Pediatric myopia</div><span class="fcxd-cohrule">under 16 · rx</span><div class="fcxd-cohm"><span class="fcxd-mr">MR-1023</span>Rahim Shaikh</div><div class="fcxd-cohm"><span class="fcxd-mr">MR-1034</span>Sneha Patil</div></div>',
     '  </div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "ui-claims": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Insurance claims</h4><p class="fcxd-sub">Claim stage read straight from the notes</p></div><span class="fcxd-chip blue">4 open</span></div>',
+    '  <div class="fcxd-tabs"><span class="fcxd-tab">Eligibility · 1</span><span class="fcxd-tab on">Pre-auth · 2</span><span class="fcxd-tab">Approved · 1</span><span class="fcxd-tab">Billed · 1</span><span class="fcxd-tab">Settled · 12</span></div>',
+    '  <div class="fcxd-stats">',
+    '    <span class="fcxd-stat is-money"><b>&#8377;23,400</b><span>Settled this month</span></span>',
+    '    <span class="fcxd-stat is-warn"><b>&#8377;4,050</b><span>Pending</span></span>',
+    '  </div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">MR-1042</span><span class="fcxd-name">Demo Patient — field test, both eyes</span><span class="fcxd-tag fcxd-t-info">Pre-auth sent</span><span class="fcxd-amt">&#8377;1,850</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">MR-1031</span><span class="fcxd-name">Demo Patient — dry eye workup</span><span class="fcxd-tag fcxd-t-warn">Denied — appeal</span><span class="fcxd-amt">&#8377;2,200</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">MR-1019</span><span class="fcxd-name">Demo Patient — refraction + frames</span><span class="fcxd-tag fcxd-t-ok">Settled · UPI</span><span class="fcxd-amt">&#8377;3,600</span></div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "ui-stock": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Stock room</h4><p class="fcxd-sub">Frames, lenses and solutions on one board</p></div><span class="fcxd-chip">86 SKUs</span></div>',
+    '  <div class="fcxd-stats">',
+    '    <span class="fcxd-stat"><b>34</b><span>Frame styles</span></span>',
+    '    <span class="fcxd-stat is-warn"><b>2</b><span>To reorder</span></span>',
+    '  </div>',
+    '  <div class="fcxd-row" style="background:var(--k-theme-soft,#fdeee4);border-radius:8px;"><span class="fcxd-time">S-118</span><span class="fcxd-name">Demo frame — matte black, 52-18</span><span class="fcxd-tag fcxd-t-warn">Reorder · 1 left</span></div>',
+    '  <div class="fcxd-row" style="background:var(--k-theme-soft,#fdeee4);border-radius:8px;"><span class="fcxd-time">L-042</span><span class="fcxd-name">Demo lens — 1.56 anti-glare, pair</span><span class="fcxd-tag fcxd-t-warn">Reorder · out</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">S-121</span><span class="fcxd-name">Demo frame — tortoise, 54-16</span><span class="fcxd-tag fcxd-t-ok">In stock · 6</span></div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "ui-labjobs": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Optical lab jobs</h4><p class="fcxd-sub">From dispensing order to pickup</p></div><span class="fcxd-chip">2 at lab</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">LB-318</span><span class="fcxd-name">Demo Patient — single vision, edging</span><span class="fcxd-tag fcxd-t-info">At lab</span><span class="fcxd-chip">Due 07 Mar</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">LB-311</span><span class="fcxd-name">Demo Patient — progressive, glazing</span><span class="fcxd-tag fcxd-t-warn">Delayed · 3 days</span><span class="fcxd-chip">Chase supplier</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">LB-309</span><span class="fcxd-name">Demo Patient — rimless mount</span><span class="fcxd-tag fcxd-t-ok">Ready</span><span class="fcxd-chip">SMS sent</span></div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "ui-orders": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Purchase orders</h4><p class="fcxd-sub">Supplier orders and what is still owed</p></div><span class="fcxd-chip blue">2 open</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">PO-2201</span><span class="fcxd-name">Demo supplier — lens blanks, 25 pairs</span><span class="fcxd-tag fcxd-t-info">Shipped</span><span class="fcxd-amt">&#8377;12,400</span><span class="fcxd-chip">Balance &#8377;4,600</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">PO-2197</span><span class="fcxd-name">Demo supplier — frames, 12 styles</span><span class="fcxd-tag fcxd-t-ok">Paid</span><span class="fcxd-amt">&#8377;8,900</span><span class="fcxd-chip">Nothing owed</span></div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "ui-comms": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Comms log</h4><p class="fcxd-sub">Every SMS and call, newest first</p></div><span class="fcxd-chip">Today</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">10:12</span><span class="fcxd-name">&#8594; Recall SMS — Demo Patient, field test due</span><span class="fcxd-tag fcxd-t-info">Sent</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">9:47</span><span class="fcxd-name">&#8592; Missed call — Demo Patient, lab job LB-311</span><span class="fcxd-tag fcxd-t-warn">Call back</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">9:05</span><span class="fcxd-name">&#8594; Appointment reminder — Demo Patient, 11:15</span><span class="fcxd-tag fcxd-t-ok">Delivered</span></div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "ui-scan-index": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Scan index</h4><p class="fcxd-sub">MR-1042 · every scan filed by type</p></div><span class="fcxd-chip">24 files</span></div>',
+    '  <div class="fcxd-cohorts">',
+    '    <div class="fcxd-cohort"><span class="fcxd-cohcount">12</span><div class="fcxd-cohname">Visual fields</div><span class="fcxd-cohrule">Scans / Fields</span><div class="fcxd-cohm">Latest 26 Feb</div></div>',
+    '    <div class="fcxd-cohort"><span class="fcxd-cohcount">8</span><div class="fcxd-cohname">OCT RNFL</div><span class="fcxd-cohrule">Scans / OCT</span><div class="fcxd-cohm">Latest 12 Feb</div></div>',
+    '    <div class="fcxd-cohort"><span class="fcxd-cohcount">4</span><div class="fcxd-cohname">Fundus photos</div><span class="fcxd-cohrule">Scans / Fundus</span><div class="fcxd-cohm">Latest 04 Nov</div></div>',
+    '  </div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "emr-cl-fitlog": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Contact lens fittings</h4><p class="fcxd-sub">Demo Patient · trial and ordered lenses</p></div><span class="fcxd-chip">2 lenses</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-avatar">DP</span><span class="fcxd-name">Daily sphere · right eye</span><span class="fcxd-chip">BC 8.5</span><span class="fcxd-chip">DIA 14.2</span><span class="fcxd-chip blue">PWR &#8722;3.25</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-avatar g">DP</span><span class="fcxd-name">Toric for astigmatism · left eye</span><span class="fcxd-chip">BC 8.6</span><span class="fcxd-chip">DIA 14.5</span><span class="fcxd-chip blue">PWR &#8722;2.75</span></div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "emr-vf-board": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">Visual field board</h4><p class="fcxd-sub">MD and PSD side by side, per eye</p></div><span class="fcxd-chip">24-2</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">26 Feb</span><span class="fcxd-name">Demo Patient · right eye</span><span class="fcxd-chip">MD &#8722;2.1 dB</span><span class="fcxd-chip">PSD 3.4 dB</span><span class="fcxd-tag fcxd-t-warn">Watch</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">26 Feb</span><span class="fcxd-name">Demo Patient · left eye</span><span class="fcxd-chip">MD &#8722;0.8 dB</span><span class="fcxd-chip">PSD 2.2 dB</span><span class="fcxd-tag fcxd-t-ok">Stable</span></div>',
+    '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
+    '</div>'
+  ].join("\n"),
+
+  "emr-iop-watch": [
+    '<div class="fcxd-board">',
+    '  <div class="fcxd-head"><div><h4 class="fcxd-h">IOP watch</h4><p class="fcxd-sub">Pressure against each eye&#8217;s target</p></div><span class="fcxd-chip blue">2 watched</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">MR-1042</span><span class="fcxd-name">Demo Patient · right eye</span><span class="fcxd-chip">16 mmHg</span><span class="fcxd-chip">Target &#8804; 21</span><span class="fcxd-tag fcxd-t-ok">Within</span></div>',
+    '  <div class="fcxd-row"><span class="fcxd-time">MR-1011</span><span class="fcxd-name">Demo Patient · left eye</span><span class="fcxd-chip">24 mmHg</span><span class="fcxd-chip">Target &#8804; 21</span><span class="fcxd-tag fcxd-t-warn">Above</span></div>',
     '  <div class="fcxd-cap">Sample data — your version reads your real records, offline.</div>',
     '</div>'
   ].join("\n"),

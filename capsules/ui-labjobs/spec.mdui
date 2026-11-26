@@ -1,0 +1,6 @@
+note: Clinic/OpticalLab.md
+stages:
+  - at lab
+  - ready
+  - delivered
+  - delayed

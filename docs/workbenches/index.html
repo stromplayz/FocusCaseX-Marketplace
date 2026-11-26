@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WorkBenches — FocusCaseX Documentation</title>
+<meta name="description" content="A WorkBench packs a whole clinic workspace into one install: extensions, capsules, a theme, templates, snippets, starter pages and a settings snapshot. What the Solo Optometrist WorkBench contains, how switching modes works, every install path, and how to build and share your own.">
+
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* ---------- docs: workbenches page ---------- */
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--blue); }
+  .wbxd-sec { padding: 44px 0; }
+  .wbxd-sec h2 { font-size: clamp(22px, 3vw, 30px); margin-bottom: 4px; }
+  .wbxd-sub { font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+  .wbxd-p { max-width: 780px; color: var(--ink-2); font-size: 14px; line-height: 1.68; margin-top: 12px; }
+  .wbxd-p b { color: var(--ink); font-weight: 600; }
+  .wbxd-p a { color: var(--blue); font-weight: 600; text-decoration: none; }
+  .wbxd-p a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .wbxd-grid { margin-top: 20px; }
+
+  /* grouped contents tables */
+  .wbxd-group h3 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 17px; margin-top: 34px; }
+  .wbxd-group h3 .n {
+    font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--ink-2);
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px;
+  }
+  .wbxd-group h3 .gsub { font-size: 12.5px; color: var(--ink-3); font-weight: 400; }
+  .wbxd-tblwrap { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--paper); margin-top: 12px; overflow-x: auto; }
+  table.wbxd-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .wbxd-tbl th {
+    text-align: left; font-size: 11.5px; font-weight: 600; color: var(--ink-3);
+    padding: 10px 16px; background: var(--bg-soft); border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .wbxd-tbl td { padding: 10px 16px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); line-height: 1.55; }
+  .wbxd-tbl tr:last-child td { border-bottom: 0; }
+  .wbxd-tbl td.wbxd-name { min-width: 200px; }
+  .wbxd-tbl td.wbxd-name b { display: block; color: var(--ink); font-size: 13.5px; }
+  .wbxd-id, .wbxd-folder {
+    display: inline-block; font-family: var(--font-mono); font-size: 10.5px; border-radius: 6px;
+    padding: 1px 7px; margin-top: 5px; white-space: nowrap;
+  }
+  .wbxd-id { color: var(--ink-3); background: var(--bg-soft); border: 1px solid var(--line); }
+  .wbxd-folder { color: var(--k-template); background: var(--k-template-soft); border: 1px solid #c9e2ec; }
+  .wbxd-count-note {
+    margin-top: 22px; padding: 14px 18px; border: 1px dashed var(--blue-line); border-radius: 12px;
+    background: var(--blue-soft); font-size: 13px; color: var(--ink-2); line-height: 1.6; max-width: 780px;
+  }
+  .wbxd-count-note b { color: var(--ink); }
+
+  /* theme swatches */
+  .wbxd-swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .wbxd-swatch { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: var(--paper); }
+  .wbxd-swatch > span:first-child { width: 18px; height: 18px; border-radius: 6px; border: 1px solid rgba(0,0,0,.12); display: inline-block; }
+  .wbxd-swatch code { font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); }
+
+  /* mode switcher sketch */
+  .wbxd-modes { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 18px; }
+  .wbxd-mode {
+    display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--line-2);
+    border-radius: 999px; padding: 9px 16px; font-size: 13px; color: var(--ink-2); background: var(--paper);
+  }
+  .wbxd-mode .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; }
+  .wbxd-mode.on { border-color: var(--blue); background: var(--blue-soft); color: var(--blue-deep); font-weight: 600; }
+  .wbxd-mode.on .dot { background: var(--blue); }
+  .wbxd-modes .wbxd-mode-cap { font-size: 12px; color: var(--ink-3); flex-basis: 100%; }
+
+  /* install paths */
+  .wbxd-paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 20px; }
+  .wbxd-path { border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--paper); }
+  .wbxd-path .wbxd-abc {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--blue-deep);
+    background: var(--blue-soft); border: 1px solid var(--blue-line); border-radius: 8px;
+    width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .wbxd-path h3 { font-size: 15.5px; margin-top: 10px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .wbxd-path p { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; margin-top: 8px; }
+  .wbxd-path p a { color: var(--blue); font-weight: 600; text-decoration: none; }
+  .wbxd-path p a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .wbxd-path .code-row { margin-top: 12px; }
+  .wbxd-path .code-row .code-token { font-size: 12.5px; padding: 7px 11px; letter-spacing: .1em; }
+
+  /* CLI block */
+  .wbxd-cli { background: var(--dark); border-radius: 12px; padding: 8px 14px; margin-top: 14px; font-family: var(--font-mono); font-size: 12.5px; }
+  .wbxd-cli .wbxd-clir { display: flex; align-items: center; gap: 12px; justify-content: space-between; padding: 7px 2px; }
+  .wbxd-cli .wbxd-clir + .wbxd-clir { border-top: 1px solid var(--dark-line); }
+  .wbxd-cli code { color: #e8eaf6; white-space: nowrap; overflow-x: auto; }
+  .wbxd-cli .wbxd-ps { color: var(--blue-bright); margin-right: 8px; }
+  .wbxd-cli button {
+    flex: none; background: transparent; border: 1px solid var(--dark-line); color: var(--dark-muted);
+    border-radius: 7px; padding: 4px 10px; font-size: 11px; font-family: var(--font-body); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .wbxd-cli button:hover { border-color: #3a4054; color: #fff; }
+
+  /* boundary callout */
+  .wbxd-boundary {
+    margin-top: 20px; border: 2px solid var(--blue); background: var(--blue-soft); border-radius: 16px;
+    padding: 22px 24px; display: flex; gap: 16px; align-items: flex-start; max-width: 860px;
+  }
+  .wbxd-boundary .wbxd-bic {
+    flex: none; width: 42px; height: 42px; border-radius: 12px; background: var(--paper); border: 1px solid var(--blue-line);
+    color: var(--blue); display: flex; align-items: center; justify-content: center;
+  }
+  .wbxd-boundary b { display: block; font-family: var(--font-display); font-size: 16.5px; color: var(--ink); }
+  .wbxd-boundary p { margin-top: 7px; font-size: 13.5px; color: var(--ink-2); line-height: 1.62; }
+
+  /* page-local install card */
+  .wbxd-install { margin-top: 22px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-soft); }
+  .wbxd-install .wbxd-inrow { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .wbxd-install .code-row { margin-top: 12px; }
+  .wbxd-note { margin-top: 14px; color: var(--ink-3); font-size: 13px; line-height: 1.6; }
+  .wbxd-note a { color: var(--blue); font-weight: 600; text-decoration: none; }
+  .wbxd-note a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* linked entries */
+  a.entry { text-decoration: none; color: inherit; }
+  a.entry .go { text-decoration: none; }
+  a.entry:hover .go { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 640px) {
+    .wbxd-tbl td.wbxd-name { min-width: 150px; }
+    .wbxd-boundary { flex-direction: column; }
+    .wbxd-cli code { white-space: normal; word-break: break-all; }
+  }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap">
+
+    <!-- PAGE HEAD -->
+    <section class="page-head">
+      <div class="kicker"><a href="/docs/">Docs</a> <span style="opacity:.5;">/</span> WorkBenches</div>
+      <h1>WorkBenches</h1>
+      <p class="lede">A whole clinic workspace in one install.</p>
+      <div class="wb-hero-meta" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;">
+        <span class="kindchip" style="--chip-c:var(--k-workbench);--chip-soft:var(--k-workbench-soft);">Setup — not patient records</span>
+        <span style="font-size:12.5px;color:var(--ink-3);">Updated 2026-11-26</span>
+      </div>
+      <p class="explain">What a WorkBench contains, the flagship Solo Optometrist WorkBench, switching WorkBenches like modes, every way to install one, and how to build and share your own.</p>
+    </section>
+
+    <!-- 1. WHAT A WORKBENCH IS -->
+    <section class="wbxd-sec" aria-label="What a WorkBench is">
+      <h2>What a WorkBench is</h2>
+      <p class="wbxd-p">A WorkBench is a fully prepared workspace setup packed into one install. Inside one bundle: <b>extensions, capsules, a theme, templates, snippets, starter pages and a settings snapshot</b>. Installing one configures the whole clinic workspace in a single step — the boards, the pages, the look, the note formats and the defaults all land together, matched to how a clinic like yours works.</p>
+      <p class="wbxd-p">Where a single extension adds one tool, a WorkBench assembles the entire setup — and it is still one confirm before anything lands. It also draws a hard line: <b>a WorkBench configures the workspace and never touches patient records</b>.</p>
+      <div class="entries wbxd-grid">
+        <div class="entry">
+          <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Puzzle" data-icon-size="19"></span></span>
+          <h3>Extensions</h3>
+          <p>Small tools that add features — automation, calculators, letters. The bundle lists every one it installs and how it starts out.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Braces" data-icon-size="19"></span></span>
+          <h3>Capsules</h3>
+          <p>Ready-made boards and sections — appointment book, recall board, claims, lab jobs — that the starter pages call into.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--k-theme-soft);color:var(--k-theme);"><span data-icon="Palette" data-icon-size="19"></span></span>
+          <h3>Theme</h3>
+          <p>A new look for the whole workspace: colors, fonts, density and shape, applied on install and reverted just as easily.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--k-template-soft);color:var(--k-template);"><span data-icon="FileText" data-icon-size="19"></span></span>
+          <h3>Templates</h3>
+          <p>Pre-written clinical notes, letters and forms — intake sheets, refraction notes, Rx pads, referral and payer letters.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--bg-soft-2);color:var(--ink-2);"><span data-icon="Sparkles" data-icon-size="19"></span></span>
+          <h3>Snippets</h3>
+          <p>Small interface tweaks — heading sizes, sidebar density, chairside numerals, print output — applied from the settings snapshot.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--blue-soft);color:var(--blue);"><span data-icon="ScrollText" data-icon-size="19"></span></span>
+          <h3>Starter pages</h3>
+          <p>Ready dashboard pages that wire the boards into a working day — the parts you actually look at while seeing patients.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="SlidersHorizontal" data-icon-size="19"></span></span>
+          <h3>Settings snapshot</h3>
+          <p>The bundle's editor, appearance, quick-actions and extension settings, applied with the rest so the workspace behaves as designed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. THE SOLO OPTOMETRIST WORKBENCH -->
+    <section class="wbxd-sec" aria-label="The Solo Optometrist WorkBench">
+      <h2>The Solo Optometrist WorkBench</h2>
+      <p class="wbxd-sub">Flagship — the curated WorkBench that ships with the platform. Built and reviewed by CaseX Labs.</p>
+      <p class="wbxd-p">The Solo Optometrist WorkBench is the complete one-chair practice in one install. Nine Solo pages carry the clinical loop — the morning cockpit, patient flow, the refraction and exam hub, dispensing and orders, billing and day close — while five Clinic boards cover the money and the suppliers: claims and TPA, inventory, lab jobs, purchase orders and the comms log. Recall campaigns, the inventory board and Stock Alerter run the follow-up and reorder automation; the chairside quick reference holds the conversion tables, triage patterns and drop protocols; and thirteen templates put the notes, letters and Rx pads a solo clinic writes every week one tap away. Everything sits on the calm Solo Optometry theme — white paper, ink text, electric-blue actions.</p>
+
+      <div class="wbxd-install">
+        <div class="wbxd-inrow">
+          <button class="btn primary" type="button" data-wb-install="workbench:solo-optometry" data-wb-name="Solo Optometrist WorkBench" style="min-height:48px;">
+            <span data-icon="MonitorSmartphone" data-icon-size="17"></span>
+            <span>Install — open the app</span>
+          </button>
+          <a class="btn" href="/workbenches/solo-optometry/" style="min-height:48px;text-decoration:none;">View the showcase page</a>
+        </div>
+        <div class="code-row">
+          <span class="code-token" title="Install code — type this inside the app">FCX-2VJD2S</span>
+          <button class="chip" type="button" data-copy="FCX-2VJD2S" title="Copy install code"><span data-icon="Copy" data-icon-size="13"></span><span>Copy code</span></button>
+        </div>
+        <p class="wb-note">The install is confirmed inside the app: it lists every piece, you tap Apply once, and the whole setup lands with per-step progress. <a href="#installing">Every install path</a> ends on the same confirmation screen.</p>
+      </div>
+
+      <!-- WHAT'S INSIDE -->
+      <div class="wbxd-group" aria-label="What is inside">
+        <h3 style="margin-top:38px;">What's inside <span class="gsub">every piece the bundle contains, quoted from the bundle data</span></h3>
+
+        <h3>Extensions <span class="n">10</span> <span class="gsub">tools that land under Settings → Extensions</span></h3>
+        <div class="wbxd-tblwrap">
+          <table class="wbxd-tbl" id="tbl-extensions">
+            <thead><tr><th scope="col">Extension</th><th scope="col">What it does</th></tr></thead>
+            <tbody>
+              <tr><td class="wbxd-name"><b>Optomize</b><code class="wbxd-id">optomize</code></td><td>The EMR engine: markdown case files in the sidebar; follow-up visits store only the changed values and resolve the rest from the prior visit; visits are saved into a Bases database.</td></tr>
+              <tr><td class="wbxd-name"><b>Essential Diagrams</b><code class="wbxd-id">essential-diagrams</code></td><td>Clinical-atlas eye diagrams for the examination — tap-to-select anterior segment and fundus views for OD and OS, with labeled findings added straight into the exam note.</td></tr>
+              <tr><td class="wbxd-name"><b>Utility Panel</b><code class="wbxd-id">utility-panel</code></td><td>Right-panel clinical calculators: spherical equivalent, toric transposition, age from DOB, IOP with CCT correction, Snellen conversions, vertex power and more.</td></tr>
+              <tr><td class="wbxd-name"><b>Quick Actions v2</b><code class="wbxd-id">quick-actions-v2</code></td><td>The dockable quick-actions launcher, completed with the clinical EMR set — examination, recalls, billing.</td></tr>
+              <tr><td class="wbxd-name"><b>FocusCaseX SBL</b><code class="wbxd-id">focuscasex-sbl</code></td><td>Sidebar-left clinical layout: a Clinic navigator plus live Booked / Done / Patients / Revenue stats. Installs switched off — the Solo pages are the chrome.</td></tr>
+              <tr><td class="wbxd-name"><b>Recall Campaigns</b><code class="wbxd-id">recall-campaign-runner</code></td><td>Runs the recall list as dated outreach batches — call, SMS and WhatsApp passes with a per-patient outcome, progress rolled up in one strip.</td></tr>
+              <tr><td class="wbxd-name"><b>Day Sheet</b><code class="wbxd-id">day-sheet-exporter</code></td><td>Builds the end-of-day page from the day's visits — totals per counter, new patients, revenue — as a clean, printable sheet to sign and file.</td></tr>
+              <tr><td class="wbxd-name"><b>Stock Alerter</b><code class="wbxd-id">inventory-stock-alerter</code></td><td>Watches the inventory register against each item's reorder point and flags at/below-min rows so the purchase list stays one tap away.</td></tr>
+              <tr><td class="wbxd-name"><b>Quick Phrases</b><code class="wbxd-id">quick-phrases</code></td><td>Chairside text expander: ready clinical phrases, VA tables and plan lines dropped into the note with patient, date and chart variables filled in.</td></tr>
+              <tr><td class="wbxd-name"><b>Referral Composer</b><code class="wbxd-id">referral-letter-composer</code></td><td>Drafts a colleague-ready referral letter from the active chart — findings, management to date, the question being asked — and files every letter it sends under Referrals.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Capsules <span class="n">28</span> <span class="gsub">live boards and sections the starter pages call into</span></h3>
+        <div class="wbxd-tblwrap">
+          <table class="wbxd-tbl" id="tbl-capsules">
+            <thead><tr><th scope="col">Capsule</th><th scope="col">What it does</th></tr></thead>
+            <tbody>
+              <tr><td class="wbxd-name"><b>Appointment board</b><code class="wbxd-id">ui-appointment</code></td><td>The front-desk day book: live stats header, workflow stepper, visitor registration, payment chips, walk-ins and day/week/month views.</td></tr>
+              <tr><td class="wbxd-name"><b>Patient directory</b><code class="wbxd-id">ui-patients</code></td><td>Tap-first directory of every patient file: live stats, search and group filters, rows and cards views, one-tap register / book / call.</td></tr>
+              <tr><td class="wbxd-name"><b>Examination workup</b><code class="wbxd-id">ui-exam</code></td><td>The complete optometry workup as one tap-first board — both eyes side by side through the clinical flow, pre-filled from the appointment and chart.</td></tr>
+              <tr><td class="wbxd-name"><b>Clinic overview</b><code class="wbxd-id">ui-clinic</code></td><td>Business KPIs over any range plus the clinical-load row.</td></tr>
+              <tr><td class="wbxd-name"><b>Workflow tracker</b><code class="wbxd-id">ui-flow</code></td><td>Appointment-to-checkout funnel with per-stage patient lists and one-tap stage advance.</td></tr>
+              <tr><td class="wbxd-name"><b>Today's patients</b><code class="wbxd-id">ui-today</code></td><td>Today's book as triage chips and patient rows.</td></tr>
+              <tr><td class="wbxd-name"><b>Recall board</b><code class="wbxd-id">ui-recalls</code></td><td>The overdue follow-up safety board computed from visit advice.</td></tr>
+              <tr><td class="wbxd-name"><b>Billing desk</b><code class="wbxd-id">ui-billing</code></td><td>The front desk's to-bill / dispensing / unbilled worklist.</td></tr>
+              <tr><td class="wbxd-name"><b>Diagnosis cohorts</b><code class="wbxd-id">ui-cohorts</code></td><td>Chronic-care registers built from keyword rules.</td></tr>
+              <tr><td class="wbxd-name"><b>Claims board</b><code class="wbxd-id">ui-claims</code></td><td>The insurance desk: six stage pills from eligibility to settled, a pending-rupee strip and stage filters over one board.</td></tr>
+              <tr><td class="wbxd-name"><b>Comms log</b><code class="wbxd-id">ui-comms</code></td><td>Every call, SMS and WhatsApp to or from patients — direction, channel, outcome and follow-up on one register.</td></tr>
+              <tr><td class="wbxd-name"><b>Lab job board</b><code class="wbxd-id">ui-labjobs</code></td><td>Optical lab and repair jobs one row each: stage pills from at lab to delivered; delayed jobs tint amber while collected rupees roll up.</td></tr>
+              <tr><td class="wbxd-name"><b>Purchase orders</b><code class="wbxd-id">ui-orders</code></td><td>Supplier purchase orders with total, paid and balance columns; stage pills walk each order through draft, ordered, shipped and paid.</td></tr>
+              <tr><td class="wbxd-name"><b>Scan index</b><code class="wbxd-id">ui-scan-index</code></td><td>A patient's scan folder as tappable cards — title, date, patient and tag — each linking straight to the scanned file.</td></tr>
+              <tr><td class="wbxd-name"><b>Inventory board</b><code class="wbxd-id">ui-stock</code></td><td>Category chips for frame, blank, CL and solution stock, counts set against each item's reorder point with calm warning tints.</td></tr>
+              <tr><td class="wbxd-name"><b>Stat tiles</b><code class="wbxd-id">ui-stats</code></td><td>Headline numbers from the EMR index.</td></tr>
+              <tr><td class="wbxd-name"><b>Action buttons</b><code class="wbxd-id">ui-actions</code></td><td>One-tap command buttons — Label / command pairs.</td></tr>
+              <tr><td class="wbxd-name"><b>Note cards</b><code class="wbxd-id">ui-note-cards</code></td><td>Linked notes rendered as tappable cards.</td></tr>
+              <tr><td class="wbxd-name"><b>Patient header</b><code class="wbxd-id">emr-patient</code></td><td>Identity and recall status resolved from a patient file.</td></tr>
+              <tr><td class="wbxd-name"><b>Vitals panel</b><code class="wbxd-id">emr-vitals</code></td><td>VA / IOP / Rx chips for a patient's latest visit.</td></tr>
+              <tr><td class="wbxd-name"><b>Visit history</b><code class="wbxd-id">emr-visits</code></td><td>Every stored visit of a patient file, newest first.</td></tr>
+              <tr><td class="wbxd-name"><b>Visit record</b><code class="wbxd-id">emr-visit</code></td><td>One stored visit, read back in full through its visit chain.</td></tr>
+              <tr><td class="wbxd-name"><b>Trend chart</b><code class="wbxd-id">emr-trend</code></td><td>A field's trend across visits as a sparkline.</td></tr>
+              <tr><td class="wbxd-name"><b>CL fitting log</b><code class="wbxd-id">emr-cl-fitlog</code></td><td>Every fitting and trial for a patient as one readable row — brand, BC, DIA and PWR for both eyes, with the ordered lens and next review up front.</td></tr>
+              <tr><td class="wbxd-name"><b>IOP watch</b><code class="wbxd-id">emr-iop-watch</code></td><td>Eye pressures watched against target: above / at / below chips, the last three readings and each patient's next check date.</td></tr>
+              <tr><td class="wbxd-name"><b>Visual fields</b><code class="wbxd-id">emr-vf-board</code></td><td>Visual-field reliability and MD / PSD progression at a glance, tinted worse / stable / better.</td></tr>
+              <tr><td class="wbxd-name"><b>Database embed</b><code class="wbxd-id">bases-embed</code></td><td>A saved Bases view rendered inside the page.</td></tr>
+              <tr><td class="wbxd-name"><b>Right panel</b><code class="wbxd-id">ui-panel</code></td><td>The panel a page declares for itself — booking form, pipeline, pulse or quick actions docked beside the board.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Theme <span class="n">1</span> <span class="gsub">the workspace look, applied on install</span></h3>
+        <div class="wbxd-tblwrap">
+          <table class="wbxd-tbl" id="tbl-theme">
+            <thead><tr><th scope="col">Theme</th><th scope="col">What it does</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="wbxd-name"><b>Solo Optometry</b><code class="wbxd-id">solo-optometry</code></td>
+                <td>Clinic-calm white paper, ink text, electric-blue actions — soft shadows, raised cards, 8px radius, cozy density.
+                  <div class="wbxd-swatches">
+                    <span class="wbxd-swatch"><span style="background:#f7f9fc;"></span><code>bg #f7f9fc</code></span>
+                    <span class="wbxd-swatch"><span style="background:#ffffff;"></span><code>panel #ffffff</code></span>
+                    <span class="wbxd-swatch"><span style="background:#101828;"></span><code>text #101828</code></span>
+                    <span class="wbxd-swatch"><span style="background:#0f62fe;"></span><code>accent #0f62fe</code></span>
+                    <span class="wbxd-swatch"><span style="background:#d0d7e2;"></span><code>border #d0d7e2</code></span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Templates <span class="n">13</span> <span class="gsub">install as real markdown files, each catalog entry in its own folder by default</span></h3>
+        <div class="wbxd-tblwrap">
+          <table class="wbxd-tbl" id="tbl-templates">
+            <thead><tr><th scope="col">Template</th><th scope="col">What it does</th></tr></thead>
+            <tbody>
+              <tr><td class="wbxd-name"><b>Patient intake</b><code class="wbxd-id">patient-intake</code></td><td>First-visit intake sheet: history, medications, goals and consent.</td></tr>
+              <tr><td class="wbxd-name"><b>Refraction note</b><code class="wbxd-id">refraction-note</code></td><td>Subjective refraction with final Rx, VA and near-add working space.</td></tr>
+              <tr><td class="wbxd-name"><b>Contact lens fitting</b><code class="wbxd-id">cl-fitting</code></td><td>CL assessment and trial record: keratometry, fit, power and the ordered lens.</td></tr>
+              <tr><td class="wbxd-name"><b>Glaucoma workup</b><code class="wbxd-id">glaucoma-workup</code></td><td>IOP-driven glaucoma page: pressures, fields, OCT and the target log.</td></tr>
+              <tr><td class="wbxd-name"><b>Dispensing &amp; order</b><code class="wbxd-id">dispensing-order</code></td><td>Frame and lens order sheet with prices, pupil data and delivery state.</td></tr>
+              <tr><td class="wbxd-name"><b>Recall letter</b><code class="wbxd-id">recall-letter</code></td><td>Friendly follow-up recall with merge fields for MR and due date.</td></tr>
+              <tr><td class="wbxd-name"><b>Appointment book</b><code class="wbxd-id">appointment-book</code></td><td>A ready front-desk day book — the interactive board over the markdown table it writes into.</td></tr>
+              <tr><td class="wbxd-name"><b>Daily huddle board</b><code class="wbxd-id">daily-huddle</code></td><td>Morning meeting page: the front-desk board, stage funnel, recalls and cash desk, live.</td></tr>
+              <tr><td class="wbxd-name"><b>CL aftercare &amp; progress</b><code class="wbxd-id">cl-aftercare</code><code class="wbxd-folder">Clinic/ContactLens</code></td><td>Aftercare visit page: wear review, slit lamp findings per eye, over-refraction, the supply table and the continue / modify / stop plan.</td></tr>
+              <tr><td class="wbxd-name"><b>Spectacle Rx pad</b><code class="wbxd-id">rx-pad</code><code class="wbxd-folder">Clinic/Prescriptions</code></td><td>Ready-to-print prescription slip: the OD/OS Rx table, PD and seg height, lens options and the clinician sign-off.</td></tr>
+              <tr><td class="wbxd-name"><b>Referral letter</b><code class="wbxd-id">referral-letter</code><code class="wbxd-folder">Clinic/Letters</code></td><td>Structured referral to a colleague: findings, management to date, the question being asked, enclosures and sign-off.</td></tr>
+              <tr><td class="wbxd-name"><b>Medical necessity letter</b><code class="wbxd-id">medical-necessity-letter</code><code class="wbxd-folder">Clinic/Letters</code></td><td>Payer-facing letter: diagnosis with ICD-10 code, functional justification, the requested device and the signed attestation.</td></tr>
+              <tr><td class="wbxd-name"><b>Low vision assessment</b><code class="wbxd-id">low-vision-assessment</code><code class="wbxd-folder">Clinic/LowVision</code></td><td>Low vision workup: distance and near logMAR, contrast and glare testing, task-based goals, the device plan and the training trail.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Snippets <span class="n">7</span> <span class="gsub">interface tweaks, all enabled by the settings snapshot</span></h3>
+        <div class="wbxd-tblwrap">
+          <table class="wbxd-tbl" id="tbl-snippets">
+            <thead><tr><th scope="col">Snippet</th><th scope="col">What it does</th></tr></thead>
+            <tbody>
+              <tr><td class="wbxd-name"><b>Bigger headings</b><code class="wbxd-id">bigger-headings</code></td><td>Upscales heading sizes across the reading view.</td></tr>
+              <tr><td class="wbxd-name"><b>Rounded editor</b><code class="wbxd-id">rounded-editor</code></td><td>Soft rounded corners for the editor chrome.</td></tr>
+              <tr><td class="wbxd-name"><b>Compact sidebar</b><code class="wbxd-id">compact-sidebar</code></td><td>Tightens sidebar paddings so more tree rows fit on screen.</td></tr>
+              <tr><td class="wbxd-name"><b>Readable queue</b><code class="wbxd-id">readable-queue</code></td><td>Taller front-desk rows with bolder patient names and calmer secondary text.</td></tr>
+              <tr><td class="wbxd-name"><b>Print friendly</b><code class="wbxd-id">print-friendly</code></td><td>Hides app chrome on paper so letters and Rx pads print clean.</td></tr>
+              <tr><td class="wbxd-name"><b>Calm headers</b><code class="wbxd-id">calm-headers</code></td><td>Softens page headers — smaller titles, lighter rules, tighter padding.</td></tr>
+              <tr><td class="wbxd-name"><b>Chairside VA</b><code class="wbxd-id">chairside-va</code></td><td>Enlarges VA and Rx numerals so values read at arm's length from the chair.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Starter pages <span class="n">14</span> <span class="gsub">nine Solo pages carry the day, five Clinic boards hold the money and the suppliers</span></h3>
+        <div class="wbxd-tblwrap">
+          <table class="wbxd-tbl" id="tbl-pages">
+            <thead><tr><th scope="col">Page</th><th scope="col">What it does</th></tr></thead>
+            <tbody>
+              <tr><td class="wbxd-name"><b>My day</b><code class="wbxd-id">Solo/Today.md</code></td><td>The morning cockpit: today's schedule, the overdue-recall call-in list, quick actions and the scan index.</td></tr>
+              <tr><td class="wbxd-name"><b>Patient flow</b><code class="wbxd-id">Solo/Flow.md</code></td><td>The door-to-door funnel — arrived, in-exam, optics, billing, done — with one-tap stage notes.</td></tr>
+              <tr><td class="wbxd-name"><b>Refraction &amp; exam hub</b><code class="wbxd-id">Solo/Refraction.md</code></td><td>The workup desk: exam board, side panel, the CL fitting log and the chairside quick tables — ADD by age, transposition, tolerance checks.</td></tr>
+              <tr><td class="wbxd-name"><b>Dispensing &amp; orders</b><code class="wbxd-id">Solo/Dispensing.md</code></td><td>The optics worklist from frame selection to pickup, with the order pipeline conventions.</td></tr>
+              <tr><td class="wbxd-name"><b>Billing &amp; day close</b><code class="wbxd-id">Solo/Money.md</code></td><td>The money desk: the billing worklist plus the cash-up checklist that closes the day.</td></tr>
+              <tr><td class="wbxd-name"><b>Chairside quick reference</b><code class="wbxd-id">Solo/QuickRef.md</code></td><td>VA conversion, red-eye triage patterns, drop protocols and refer-now red flags.</td></tr>
+              <tr><td class="wbxd-name"><b>Stock &amp; reorder</b><code class="wbxd-id">Solo/Stock.md</code></td><td>The min-level reorder board for frames, blanks, CL and solutions — the table Stock Alerter reads.</td></tr>
+              <tr><td class="wbxd-name"><b>Weekly review</b><code class="wbxd-id">Solo/Review.md</code></td><td>The weekly self-audit: snapshot table, stats, chronic-care registers and the registers to clear.</td></tr>
+              <tr><td class="wbxd-name"><b>How this bench fits</b><code class="wbxd-id">Solo/Setup.md</code></td><td>The onboarding map: what landed in the workspace, what each piece does and how to re-apply it later.</td></tr>
+              <tr><td class="wbxd-name"><b>Insurance &amp; TPA</b><code class="wbxd-id">Clinic/Insurance.md</code></td><td>The claims pipeline across eligibility, pre-auth sent, approved, denied, billed and settled.</td></tr>
+              <tr><td class="wbxd-name"><b>Inventory</b><code class="wbxd-id">Clinic/Inventory.md</code></td><td>The stock register for frames, blanks, contact lenses and solutions, flagged against reorder points.</td></tr>
+              <tr><td class="wbxd-name"><b>Lab jobs</b><code class="wbxd-id">Clinic/OpticalLab.md</code></td><td>Outsourced edging, surfacing and repairs with promised dates — delayed rows are the day's calls to the lab.</td></tr>
+              <tr><td class="wbxd-name"><b>Purchase orders</b><code class="wbxd-id">Clinic/PurchaseOrders.md</code></td><td>The PO pipeline from draft to paid, with balances settling from the supplier invoice.</td></tr>
+              <tr><td class="wbxd-name"><b>Comms log</b><code class="wbxd-id">Clinic/CommsLog.md</code></td><td>Every call, SMS, WhatsApp and walk-in visit to or from a patient, in one register any colleague can pick up.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="wbxd-count-note">
+          <b>Counts match the bundle exactly:</b> 10 extensions, 28 capsules, 1 theme, 13 templates, 7 snippets and 14 starter pages — 73 pieces in one install, plus the settings snapshot. One extension ships switched off: <b>FocusCaseX SBL</b> installs disabled because the Solo starter pages are the workspace chrome; enable it any time under Settings → Extensions if you prefer the sidebar-left layout. Re-applying the WorkBench updates extensions in place and creates starter pages only when missing — an existing page always wins, so your edits survive every re-apply.
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SWITCHING WORKBENCHES LIKE MODES -->
+    <section class="wbxd-sec" aria-label="Switching WorkBenches like modes">
+      <h2>Switching WorkBenches like modes</h2>
+      <p class="wbxd-p">Every WorkBench you install becomes a <b>mode</b> of the workspace. The app's WorkBenches tab shows each installed WorkBench as a chip, and the <b>active mode is highlighted</b> — the workspace always tells you which setup you are running. Tap another installed WorkBench and one tap switches the whole workspace to that setup: the apply dialog is <b>switch-aware</b>, says what it is about to do before you confirm, then runs with progress as each piece lands and finishes with a final per-item summary.</p>
+      <p class="wbxd-p">Switch back and forth as often as the day requires. Modes are setups, not storage: <b>nothing is deleted and your records stay put</b> no matter how many times you change mode.</p>
+      <div class="wbxd-modes">
+        <span class="wbxd-mode on"><span class="dot"></span>Solo Optometrist WorkBench — Active</span>
+        <span class="wbxd-mode"><span class="dot"></span>Your saved setup</span>
+        <span class="wbxd-mode-cap">Sketch of the WorkBenches tab — every installed WorkBench appears as a mode chip; the active one is highlighted.</span>
+      </div>
+      <div class="trust wbxd-grid">
+        <div class="t-item">
+          <span data-icon="ArrowLeftRight" data-icon-size="18"></span>
+          <div>
+            <b>One tap, whole workspace</b>
+            <span>Tapping another installed WorkBench applies that setup across the workspace — boards, pages, theme and settings move together.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="CircleCheckBig" data-icon-size="18"></span>
+          <div>
+            <b>Progress, then the summary</b>
+            <span>The switch-aware apply runs with per-step progress and closes with a final per-item summary, so you can see exactly what changed.</span>
+          </div>
+        </div>
+        <div class="t-item">
+          <span data-icon="ShieldCheck" data-icon-size="18"></span>
+          <div>
+            <b>Nothing moves</b>
+            <span>Switch back and forth freely — nothing is deleted and patient records stay exactly where they are.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. INSTALLING — EVERY PATH -->
+    <section class="wbxd-sec" id="installing" aria-label="Installing a WorkBench — every path">
+      <h2>Installing a WorkBench — every path</h2>
+      <p class="wbxd-p">Four ways in, one destination: each path ends on the app's in-app confirmation screen, which lists every piece the bundle adds before anything lands. One tap on <b>Apply</b> installs the whole setup.</p>
+      <div class="wbxd-paths">
+        <div class="wbxd-path">
+          <span class="wbxd-abc">a</span>
+          <h3>Install from the website</h3>
+          <p>Tap <b>Install</b> on a WorkBench page here — the marketplace page or the Solo Optometrist showcase. Your browser hands the WorkBench to the FocusCaseX app on this device, the app opens on the confirmation screen listing every piece, and you tap Apply.</p>
+        </div>
+        <div class="wbxd-path">
+          <span class="wbxd-abc">b</span>
+          <h3>Install by code</h3>
+          <p>In the app, open <b>Settings → Marketplace → Install by code</b> and type the code. Same confirmation screen, same one-tap Apply.</p>
+          <div class="code-row">
+            <span class="code-token" title="Install code — type this inside the app">FCX-2VJD2S</span>
+            <button class="chip" type="button" data-copy="FCX-2VJD2S" title="Copy install code"><span data-icon="Copy" data-icon-size="13"></span><span>Copy code</span></button>
+          </div>
+        </div>
+        <div class="wbxd-path">
+          <span class="wbxd-abc">c</span>
+          <h3>Install from file</h3>
+          <p>Have a <code style="font-family:var(--font-mono);font-size:12.5px;">.workbench.json</code> file — exported from another clinic or drafted by the WorkBench Builder? Open <b>Settings → Marketplace → Install from file</b>, pick the file, review the same confirmation screen and Apply.</p>
+        </div>
+        <div class="wbxd-path">
+          <span class="wbxd-abc">d</span>
+          <h3>From the CLI</h3>
+          <p>Install the FocusCaseX CLI, inspect the WorkBench, then install it:</p>
+          <div class="wbxd-cli">
+            <div class="wbxd-clir"><code><span class="wbxd-ps">$</span>npm install -g github:stromplayz/FCX-NPM</code><button type="button" data-copy="npm install -g github:stromplayz/FCX-NPM"><span data-icon="Copy" data-icon-size="12"></span>Copy</button></div>
+            <div class="wbxd-clir"><code><span class="wbxd-ps">$</span>fcx workbench show FCX-2VJD2S</code><button type="button" data-copy="fcx workbench show FCX-2VJD2S"><span data-icon="Copy" data-icon-size="12"></span>Copy</button></div>
+            <div class="wbxd-clir"><code><span class="wbxd-ps">$</span>fcx workbench install FCX-2VJD2S</code><button type="button" data-copy="fcx workbench install FCX-2VJD2S"><span data-icon="Copy" data-icon-size="12"></span>Copy</button></div>
+          </div>
+          <p style="margin-top:10px;">Full command reference: <a href="/docs/cli/">the CLI docs</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. BUILD AND SHARE YOUR OWN -->
+    <section class="wbxd-sec" aria-label="Build and share your own WorkBench">
+      <h2>Build and share your own</h2>
+      <p class="wbxd-p">Any clinic can turn its current workspace into a WorkBench. In the app, open <b>Settings → Marketplace</b> and tap <b>Save current setup as WorkBench</b>: FocusCaseX snapshots your extensions, capsules, theme, templates, snippets, pages and portable settings into one bundle. Download it and hand the file to a colleague or a second branch — they install it in one step, through any of the paths above. The snapshot is setup only; nothing from your patient records goes into the bundle.</p>
+      <div class="entries wbxd-grid">
+        <div class="entry">
+          <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Layers" data-icon-size="19"></span></span>
+          <h3>Save the snapshot</h3>
+          <p>Settings → Marketplace → Save current setup as WorkBench packs the whole setup into one bundle.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--blue-soft);color:var(--blue);"><span data-icon="Download" data-icon-size="19"></span></span>
+          <h3>Download the file</h3>
+          <p>The bundle downloads as a .workbench.json file — yours to keep, review and version.</p>
+        </div>
+        <div class="entry">
+          <span class="tile" style="background:var(--k-capsule-soft);color:var(--k-capsule);"><span data-icon="Users" data-icon-size="19"></span></span>
+          <h3>Hand it over</h3>
+          <p>A colleague or a second branch installs the same setup in one step — the whole workspace, ready to work.</p>
+        </div>
+      </div>
+      <p class="wbxd-p">Not at a workspace worth saving yet? The <b>WorkBench Builder</b> on the <a href="/docs/mcp/">MCP &amp; Automation page</a> can draft a starter bundle from a plain description of how your clinic works — how the day flows, what the desk needs to see — and you refine from there. Curated WorkBenches live in the <a href="/marketplace/workbench/">WorkBenches section of the marketplace</a>.</p>
+    </section>
+
+    <!-- 6. THE BOUNDARY -->
+    <section class="wbxd-sec" aria-label="The boundary — setup only">
+      <h2>The boundary</h2>
+      <div class="wbxd-boundary">
+        <span class="wbxd-bic"><span data-icon="ShieldCheck" data-icon-size="20"></span></span>
+        <div>
+          <b>A WorkBench is setup only.</b>
+          <p>Applying a WorkBench never deletes anything and never moves patient records. It adds tools, pages and settings; your case files, documents and history stay exactly where they are. The confirmation screen lists every piece before anything lands, and anything a WorkBench installs can be removed later under Settings, piece by piece.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED DOCS -->
+    <section class="wbxd-sec" aria-label="Keep reading">
+      <h2>Keep reading</h2>
+      <div class="entries wbxd-grid">
+        <a class="entry" href="/docs/getting-started/">
+          <span class="tile" style="background:var(--blue-soft);color:var(--blue);"><span data-icon="BookOpen" data-icon-size="19"></span></span>
+          <h3>Getting started</h3>
+          <p>First run with FocusCaseX: install the app, open your workspace, start seeing patients.</p>
+          <span class="go">Read the guide<span data-icon="ArrowRight" data-icon-size="14"></span></span>
+        </a>
+        <a class="entry" href="/docs/cli/">
+          <span class="tile" style="background:var(--bg-soft-2);color:var(--ink-2);"><span data-icon="Terminal" data-icon-size="19"></span></span>
+          <h3>CLI reference</h3>
+          <p>The fcx command line: search the catalog, inspect items and install from a terminal.</p>
+          <span class="go">Open the reference<span data-icon="ArrowRight" data-icon-size="14"></span></span>
+        </a>
+        <a class="entry" href="/docs/mcp/">
+          <span class="tile" style="background:var(--k-workbench-soft);color:var(--k-workbench);"><span data-icon="Bot" data-icon-size="19"></span></span>
+          <h3>MCP &amp; WorkBench Builder</h3>
+          <p>Pair an agent with your approval, and let it draft WorkBench bundles from a plain description.</p>
+          <span class="go">Open the page<span data-icon="ArrowRight" data-icon-size="14"></span></span>
+        </a>
+        <a class="entry" href="/workbenches/solo-optometry/">
+          <span class="tile" style="background:var(--k-extension-soft);color:var(--k-extension);"><span data-icon="Wrench" data-icon-size="19"></span></span>
+          <h3>Solo Optometrist showcase</h3>
+          <p>The flagship WorkBench piece by piece, with the workspace captured live.</p>
+          <span class="go">View the showcase<span data-icon="ArrowRight" data-icon-size="14"></span></span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- CLOSING BAND (black) -->
+  <section class="band" style="margin-top:56px;">
+    <div class="wrap section">
+      <div class="kicker">WorkBenches</div>
+      <h2>One install. A complete solo optometry EMR.</h2>
+      <p class="lede" style="margin-top:14px;max-width:720px;">Apply the Solo Optometrist WorkBench and start seeing patients — then switch modes whenever the day changes. Setup lands in one step; records never move.</p>
+      <div class="hero-cta">
+        <button class="btn blue-on-dark" type="button" data-wb-install="workbench:solo-optometry" data-wb-name="Solo Optometrist WorkBench" style="min-height:48px;">
+          <span data-icon="MonitorSmartphone" data-icon-size="17"></span>
+          <span>Install — open the app</span>
+        </button>
+        <a class="btn dark-ghost" href="/marketplace/workbench/" style="min-height:48px;">WorkBenches in the marketplace</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer id="site-footer"></footer>
+
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  document.querySelectorAll("[data-icon]").forEach((el) => {
+    el.outerHTML = FCX.icon(el.getAttribute("data-icon"), Number(el.getAttribute("data-icon-size")) || 16);
+  });
+
+  FCX.ready({ active: "docs" }).then(() => {
+    /* ---------- install: fcx:// deep link into the app; the app opens on
+       its confirmation screen listing every piece, confirmed with one Apply.
+       Without the app on this device, the code fallback appears. ---------- */
+    function showWbFallback(id, name) {
+      const code = "FCX-2VJD2S";
+      const el = document.createElement("div");
+      el.className = "ov open";
+      el.setAttribute("role", "dialog");
+      el.innerHTML = `
+<div class="ov-backdrop" data-fx-close></div>
+<div class="ov-panel" style="max-width:440px;">
+  <div style="padding:22px 22px 8px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="width:38px;height:38px;border-radius:10px;background:var(--k-workbench-soft);color:var(--k-workbench);display:flex;align-items:center;justify-content:center;">${FCX.icon("MonitorSmartphone", 19)}</span>
+      <div><b style="font-family:var(--font-display);font-size:15.5px;">Open this in FocusCaseX</b>
+      <div style="font-size:12px;color:var(--ink-3);">On the device that has the app installed</div></div>
+    </div>
+    <p style="margin-top:14px;font-size:13px;color:var(--ink-2);line-height:1.55;">
+      The install button hands <b>${FCX.esc(name)}</b> to the FocusCaseX app on this device, where you confirm the install.
+      If the app isn't on this device, type the code below in the app instead —
+      <b>Settings → Marketplace → Install by code</b>.
+    </p>
+  </div>
+  <div style="padding:10px 22px 6px;">
+    <div class="code-row" style="margin-top:2px;">
+      <span class="code-token">${FCX.esc(code)}</span>
+      <button class="chip" type="button" data-copy="${FCX.esc(code)}">${FCX.icon("Copy", 13)}<span>Copy code</span></button>
+    </div>
+    <div style="display:flex;gap:9px;margin:14px 0 6px;">
+      <a class="btn small primary" href="/install/">Get the app</a>
+      <button class="btn small" type="button" data-fx-close>Close</button>
+    </div>
+  </div>
+</div>`;
+      document.body.appendChild(el);
+      FCX.wireCopyButtons(el);
+      el.querySelectorAll("[data-fx-close]").forEach((x) =>
+        x.addEventListener("click", () => x.closest(".ov") && x.closest(".ov").remove()));
+    }
+
+    document.querySelectorAll("[data-wb-install]").forEach((btn) => {
+      btn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const id = btn.getAttribute("data-wb-install");
+        const name = btn.getAttribute("data-wb-name") || "Solo Optometrist WorkBench";
+        let switched = false;
+        const onHide = () => { switched = true; };
+        document.addEventListener("visibilitychange", onHide, { once: true });
+        window.addEventListener("pagehide", onHide, { once: true });
+        window.addEventListener("blur", onHide, { once: true });
+        try { location.href = FCX.deepLinkUrl(id); } catch (e) { /* blocked — fallback covers it */ }
+        setTimeout(() => {
+          if (!switched && !document.hidden) showWbFallback(id, name);
+        }, 1900);
+      });
+    });
+  });
+</script>
+</body>
+</html>

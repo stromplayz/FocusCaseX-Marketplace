@@ -26,8 +26,23 @@ try {
 }
 
 const problems = [];
+
+/* WorkBenches publish separately (catalog.workbenches) and ride the registry
+   as their own TOP-LEVEL key — they must never appear inside the items[] feed
+   below, so older APK builds never meet an unknown "workbench" kind. */
+const workbenches = Array.isArray(catalog.workbenches) ? catalog.workbenches : [];
+for (const wb of workbenches) {
+  if (wb.files) {
+    for (const [layer, rel] of Object.entries(wb.files)) {
+      const p = join(ROOT, rel);
+      if (!existsSync(p)) problems.push(`${wb.id}: missing ${layer} file ${rel}`);
+    }
+  }
+}
+
 const present = [];
 for (const item of catalog.items) {
+  if (item.kind === "workbench") continue;
   if (item.files) {
     for (const [layer, rel] of Object.entries(item.files)) {
       const p = join(ROOT, rel);
@@ -73,6 +88,7 @@ const registry = {
   counts,
   items: present,
   snippets: catalog.snippets ?? [],
+  workbenches,
 };
 
 writeFileSync(registryPath, JSON.stringify(registry, null, 2) + "\n");
@@ -82,4 +98,4 @@ if (problems.length > 0) {
   for (const p of problems) console.error("  -", p);
   process.exit(1);
 }
-console.log(`registry built: ${present.length} items (${JSON.stringify(counts)}) → api/registry.json`);
+console.log(`registry built: ${present.length} items + ${workbenches.length} workbenches (${JSON.stringify(counts)}) → api/registry.json`);
