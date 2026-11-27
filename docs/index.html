@@ -4,24 +4,146 @@
 <meta charset="utf-8">
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Documentation — FocusCaseX</title>
-<meta name="description" content="FocusCaseX documentation — install the clinic workspace, run it day to day, extend it with add-ons, host the marketplace with the FCX CLI and pair AI agents over MCP.">
+<title>The full FocusCaseX guide — FocusCaseX Documentation</title>
+<meta name="description" content="The complete FocusCaseX documentation on one page: what the workspace is, getting started for clinics, setting up the FCX CLI, every fcx command explained, the full Extension authoring guide, WorkBenches, security and privacy, troubleshooting and the FAQ.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="icon.svg">
 <link rel="stylesheet" href="assets/styles.css">
 <style>
-  /* Docs hub glue — layout only; composes with the design system. */
-  .docs-entries {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    margin-top: 34px;
+  /* Full guide glue — layout only; composes with the design system. */
+  section[id] { scroll-margin-top: 88px; }
+
+  /* two-column guide: sticky contents + flowing article */
+  .guide {
+    display: grid; grid-template-columns: 236px minmax(0, 1fr);
+    gap: 48px; align-items: start; padding: 10px 0 70px;
   }
+  .guide-toc { position: sticky; top: 80px; max-height: calc(100vh - 104px); overflow-y: auto; }
+  .guide-toc .toc-title {
+    display: block; font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+    padding: 4px 10px 10px; cursor: default; list-style: none;
+  }
+  .guide-toc .toc-title::-webkit-details-marker { display: none; }
+  @media (max-width: 980px) {
+    .guide-toc .toc-title { cursor: pointer; }
+    .guide-toc .toc-title::after { content: "＋"; float: right; color: var(--ink-3); font-weight: 400; }
+    .guide-toc details[open] .toc-title::after { content: "－"; }
+  }
+  .guide-toc nav { border-top: 1px solid var(--line); }
+  .guide-toc nav a {
+    display: block; padding: 7px 10px; border-left: 2px solid var(--line);
+    color: var(--ink-3); font-size: 12.8px; line-height: 1.45; text-decoration: none;
+  }
+  .guide-toc nav a:hover { color: var(--blue); }
+  .guide-toc nav a.is-active {
+    color: var(--blue-deep); border-left-color: var(--blue);
+    background: var(--blue-soft); border-radius: 0 8px 8px 0; font-weight: 600;
+  }
+  .guide-toc .toc-back {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 16px;
+    font-size: 12.5px; color: var(--ink-3); text-decoration: none; padding: 4px 10px;
+  }
+  .guide-toc .toc-back:hover { color: var(--blue); }
+  .guide-body { min-width: 0; }
+
+  /* mobile: the contents fold away */
+  @media (max-width: 980px) {
+    .guide { grid-template-columns: 1fr; gap: 0; }
+    .guide-toc { position: static; max-height: none; overflow: visible;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--paper); margin: 18px 0 8px; }
+    .guide-toc .toc-title { padding: 12px 14px; }
+    .guide-toc nav { margin: 0 6px 10px; border-top: 0; }
+  }
+
+  /* flowing sections — the doc-page patterns (doc-lede, cli-band, cli-ref, note) */
+  .doc-lede { margin-top: 14px; max-width: 680px; font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+  .explain a, .doc-lede a, .cli-band p a, .cli-ref td a, .note a { color: var(--blue); font-weight: 500; }
+  .explain a:hover, .doc-lede a:hover, .cli-band p a:hover, .cli-ref td a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .explain code, .doc-lede code, .note code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+  .guide-sec { padding: 40px 0 10px; border-top: 1px solid var(--line); }
+  .guide-sec:first-of-type { border-top: 0; }
+  .guide-sec h2 { font-size: clamp(22px, 2.6vw, 28px); margin-bottom: 4px; }
+  .guide-sec h3 { font-size: 17px; }
+  .guide-sub { margin-top: 26px; }
+  .guide-sub > h3 { margin-bottom: 2px; }
+
+  .cli-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; margin-top: 16px;
+  }
+  .cli-band h3 { font-size: 17px; }
+  .cli-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; margin-top: 8px; max-width: 640px; }
+  .cli-band p.cli-alt { font-size: 12.5px; color: var(--ink-3); max-width: none; }
+  .cli-band p.cli-alt code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+  .cli-cmd .code-token { letter-spacing: 0; font-size: 13.5px; font-weight: 500; padding: 10px 14px; }
+  .cli-cmd + .cli-cmd { margin-top: 10px; }
+
+  .cli-ref-scroll {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+  }
+  .cli-ref { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 13px; }
+  .cli-ref th {
+    text-align: left; padding: 12px 16px 10px; border-bottom: 1px solid var(--line-2);
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .cli-ref td { padding: 11px 16px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 13px; line-height: 1.55; vertical-align: top; }
+  .cli-ref tr:last-child td { border-bottom: 0; }
+  .cli-ref td:first-child { font-family: var(--font-mono); font-size: 12.3px; color: var(--ink); white-space: nowrap; }
+  .cli-ref td b { color: var(--ink); }
+  .cli-ref td.group-row {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+    background: var(--bg-soft); white-space: normal; padding: 10px 16px;
+  }
+  .cli-ref td.wrap-col { white-space: normal; min-width: 220px; }
+
+  .note {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 20px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+    max-width: 680px;
+  }
+  .note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+  .note p { margin: 0; }
+  .note a { color: var(--blue-deep); font-weight: 600; }
+
+  /* code fences for the authoring guide — the global .fence block */
+  .guide-sec .fence { margin-top: 14px; font-size: 12.6px; }
+  .guide-sec .fence.wrap-cmd { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .fence-label {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+    margin-top: 22px;
+  }
+  .fence-label + .fence { margin-top: 8px; }
+
+  .kind-list { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; max-width: 680px; }
+  .kind-list li { display: flex; gap: 9px; align-items: flex-start; font-size: 13.4px; color: var(--ink-2); line-height: 1.55; }
+  .kind-list li svg { color: var(--blue); flex-shrink: 0; margin-top: 3px; }
+
   .next-band {
     display: flex; align-items: center; justify-content: space-between;
     gap: 18px; flex-wrap: wrap;
     border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--bg-soft); padding: 24px 26px;
+    background: var(--bg-soft); padding: 24px 26px; margin-top: 40px;
   }
   .next-band h2 { font-size: 20px; }
   .next-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.55; margin-top: 7px; max-width: 560px; }
@@ -35,71 +157,495 @@
 
     <section class="page-head">
       <div class="kicker">Documentation</div>
-      <h1>FocusCaseX documentation</h1>
-      <p class="lede">Everything about installing, running and extending the clinic workspace.</p>
-      <p class="explain">Short, specific pages — start with <a href="/docs/getting-started/" style="color:var(--blue);font-weight:500;">Getting started</a>; the rest is reference. Updated November 2026.</p>
+      <h1>The full FocusCaseX guide</h1>
+      <p class="lede">Everything in one continuous page — the workspace, the CLI, authoring Extensions, WorkBenches, security, troubleshooting and the FAQ.</p>
+      <p class="explain">No cards, no teasers: scroll top to bottom, or jump with the contents. The short reference pages (<a href="/docs/getting-started/" style="color:var(--blue);font-weight:500;">Getting started</a>, <a href="/docs/cli/" style="color:var(--blue);font-weight:500;">FCX CLI</a>, <a href="/docs/security/" style="color:var(--blue);font-weight:500;">Licences and devices</a>) keep their own corners. Updated November 2026.</p>
     </section>
 
-    <section class="section-tight" aria-label="Documentation pages" style="padding-top: 6px;">
-      <div class="entries docs-entries">
+    <div class="guide">
 
-        <a class="entry" href="/docs/getting-started/">
-          <span class="tile"><span data-icon="BookOpen" data-icon-size="19"></span></span>
-          <h3>Getting started</h3>
-          <p>Install the app, sign in, set up your first workspace and install your first add-ons — with fixes for the common snags.</p>
-          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
-        </a>
+      <!-- STICKY CONTENTS -->
+      <aside class="guide-toc" aria-label="Contents">
+        <details class="toc-fold" id="toc-fold">
+          <summary class="toc-title">On this page</summary>
+          <nav id="toc-nav">
+            <a href="#what">1. What is FocusCaseX</a>
+            <a href="#getting-started">2. Getting started</a>
+            <a href="#cli-setup">3. Set up the CLI</a>
+            <a href="#commands">4. Every CLI command</a>
+            <a href="#extensions-guide">5. Create your own Extension</a>
+            <a href="#workbenches">6. WorkBenches</a>
+            <a href="#security">7. Security and privacy</a>
+            <a href="#troubleshooting">8. Troubleshooting</a>
+            <a href="#faq">9. FAQ</a>
+          </nav>
+        </details>
+        <a class="toc-back" href="/install/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>Install guide</span></a>
+        <a class="toc-back" href="/faq/"><span data-icon="CircleHelp" data-icon-size="13"></span><span>FAQ as its own page</span></a>
+      </aside>
 
-        <a class="entry" href="/docs/workbenches/">
-          <span class="tile"><span data-icon="Layers" data-icon-size="19"></span></span>
-          <h3>WorkBenches</h3>
-          <p>The full-workspace bundles — what the Solo Optometrist WorkBench sets up, switching setups like modes, saving your own.</p>
-          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
-        </a>
+      <!-- FLOWING GUIDE -->
+      <article class="guide-body">
 
-        <a class="entry" href="/docs/cli/">
-          <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
-          <h3>FCX CLI</h3>
-          <p>Install the marketplace anywhere with npm and host it on your own machine — same catalog, same install codes.</p>
-          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
-        </a>
+        <!-- 1. WHAT IS FOCUSCASEX -->
+        <section class="guide-sec" id="what" aria-label="What is FocusCaseX">
+          <div class="kicker">The short version</div>
+          <h2 style="margin-bottom: 6px;">What is FocusCaseX</h2>
+          <p class="doc-lede">FocusCaseX is an offline-first clinic workspace for eye care. It runs on your device — a phone, a tablet, a computer — and your records live there with it. There is no server to rent and nothing to host: install it, sign in once, and the clinic is open.</p>
+          <p class="doc-lede">A day in it looks like this: you register a patient and the chart file creates itself, you run the refraction and exam flows, you write notes as plain markdown, and the boards — appointments, recalls, billing, stock — read the same files and show the day at a glance. Pages stay readable and printable no matter what.</p>
+          <p class="doc-lede">Three ideas carry the design:</p>
+          <div class="cli-band">
+            <ol class="steps">
+              <li><span><strong>Pages are markdown.</strong> Every clinical page is a plain text file you can read, print and keep. No opaque database, no lock-in.</span></li>
+              <li><span><strong>Capsules are building blocks.</strong> A short block pasted into any page renders a live board — appointments, vitals, recalls.</span></li>
+              <li><span><strong>Extensions are features.</strong> Small add-ons from the marketplace — an extra panel, an automation, a quick reference — installed in one tap, removed just as easily.</span></li>
+            </ol>
+          </div>
+          <p class="doc-lede">Two ways to run it. The <strong>web workspace</strong> at <a href="https://focuscasex.vercel.app" target="_blank" rel="noopener">focuscasex.vercel.app</a> opens in any browser, anywhere — nothing to install. The <strong>Android app</strong> carries the clinic on phones and tablets, fully offline. Sharing a clinic over a local network happens only when the clinic network exists; with no clinic network, the web app still opens as usual. Both ends run under one licence — the <strong>FCX-XXXXXX</strong> code your clinic owner issued — and the <strong>FCX CLI</strong> (<code>fcx</code>) brings the same catalog to any computer with a terminal.</p>
+        </section>
 
-        <a class="entry" href="/docs/mcp/">
-          <span class="tile"><span data-icon="Bot" data-icon-size="19"></span></span>
-          <h3>MCP &amp; AI agents</h3>
-          <p>Pair Claude, Cursor, VS Code and friends to the clinic — scoped access, every write approved by a human.</p>
-          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
-        </a>
+        <!-- 2. GETTING STARTED -->
+        <section class="guide-sec" id="getting-started" aria-label="Getting started">
+          <div class="kicker">For clinics, non-technical</div>
+          <h2 style="margin-bottom: 6px;">Getting started</h2>
+          <p class="doc-lede">Seven steps from nothing to a working clinic. Nothing here needs a technical person.</p>
+          <div class="cli-band">
+            <ol class="steps">
+              <li><span><strong>Open FocusCaseX.</strong> The quickest start is the web workspace — open <a href="https://focuscasex.vercel.app" target="_blank" rel="noopener">focuscasex.vercel.app</a> in a browser. For phones and tablets, the <a href="/install/">install guide</a> links the latest Android build; download it, allow the install when Android asks, and open FocusCaseX from your app list.</span></li>
+              <li><span><strong>Sign in.</strong> Use your licence email and password — the account your licence runs on. Tick <strong>Keep me signed in</strong> and the next visit skips the form.</span></li>
+              <li><span><strong>Activate the device, once.</strong> A device the licence has not met yet asks for the <strong>FCX-XXXXXX</strong> code from your licence email. Type it once — the device is remembered from then on and never asks again.</span></li>
+              <li><span><strong>Register your first patient.</strong> Open the Patients board, tap register, and the patient file and MR number create themselves.</span></li>
+              <li><span><strong>Run the day from the boards.</strong> Appointments, examination, dispensing and billing are boards in the sidebar. Record vision, fill the workup, write the plan — everything lands in the patient's chart file.</span></li>
+              <li><span><strong>Add what your clinic needs.</strong> Open <strong>Settings → Marketplace</strong> and browse — Extensions add features, capsules add boards, themes change the look, templates drop in ready-made notes. Every install is one tap, and you see exactly what will be added before it lands.</span></li>
+              <li><span><strong>Let it update itself.</strong> The app checks for updates on its own and tells you when one is ready. The web workspace is always current. Nothing to revisit, no store page.</span></li>
+            </ol>
+          </div>
+          <div class="note">
+            <span data-icon="Info" data-icon-size="17"></span>
+            <p><b>Sharing with the front desk.</b> When your clinic has its own network, the workspace can be shared across it — <a href="/docs/cli/#serve">hosting the registry with fcx serve</a> covers it. No clinic network? The web app still opens as usual — everyone signs in at focuscasex.vercel.app from wherever they are.</p>
+          </div>
+          <p class="doc-lede">Deeper detail lives on <a href="/docs/getting-started/">the Getting started page</a> — requirements, the activation screen in full, and uninstalling.</p>
+        </section>
 
-        <a class="entry" href="/install/">
-          <span class="tile"><span data-icon="Download" data-icon-size="19"></span></span>
-          <h3>Install the app — Android + CLI</h3>
-          <p>The Android app and the CLI. The install page always links the latest build of each.</p>
-          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
-        </a>
+        <!-- 3. SET UP THE CLI -->
+        <section class="guide-sec" id="cli-setup" aria-label="Set up the CLI">
+          <div class="kicker">For computers</div>
+          <h2 style="margin-bottom: 6px;">Set up the CLI</h2>
+          <p class="doc-lede">The <code>fcx</code> command brings the marketplace, the WorkBenches and the licence flow to any computer that runs Node 18 — macOS, Linux or Windows (WSL/Git Bash).</p>
 
-        <a class="entry" href="/marketplace/">
-          <span class="tile"><span data-icon="LayoutGrid" data-icon-size="19"></span></span>
-          <h3>Browse the marketplace</h3>
-          <p>Every Extension, capsule, theme, template and WorkBench — each with its install code and live preview.</p>
-          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
-        </a>
+          <div class="guide-sub">
+            <h3>Install it — one command</h3>
+            <div class="cli-band">
+              <div class="code-row cli-cmd">
+                <span class="code-token" title="Install command — run this in a terminal">curl -fsSL https://stromplayz.github.io/FocusCaseX/install.sh | bash</span>
+                <button class="chip" type="button" data-copy="curl -fsSL https://stromplayz.github.io/FocusCaseX/install.sh | bash" title="Copy install command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
+              </div>
+              <p class="cli-alt">The installer checks Node 18+, installs the <code>fcx</code> command and wires your PATH. Open a fresh terminal afterwards. Source and releases: <a href="https://github.com/stromplayz/FCX-NPM" target="_blank" rel="noopener">github.com/stromplayz/FCX-NPM</a>.</p>
+            </div>
+          </div>
 
-      </div>
-    </section>
+          <div class="guide-sub">
+            <h3>Run the guided setup</h3>
+            <div class="cli-band">
+              <p><strong>fcx setup</strong> walks through four steps and finishes with a summary checklist:</p>
+              <ol class="steps">
+                <li><span><strong>Workspace folder</strong> — where installed items live on this machine. It checks the folder is writable before moving on.</span></li>
+                <li><span><strong>Catalog</strong> — syncs the marketplace catalog into a local cache, so browsing and installs work even when the network is slow.</span></li>
+                <li><span><strong>Sign in</strong> — your licence email, password and the FCX-XXXXXX code issued for this machine. Skippable if you want to set up first and sign in later.</span></li>
+                <li><span><strong>First WorkBench</strong> — pick a bundle and install it, or skip and browse the marketplace first.</span></li>
+              </ol>
+            </div>
+          </div>
 
-    <section class="section-tight">
-      <div class="next-band">
-        <div>
-          <h2>The workspace itself</h2>
-          <p>FocusCaseX is the app on your device; the web workspace is the same clinic in a browser tab. The pages above cover both — Getting started begins with the phone.</p>
+          <div class="guide-sub">
+            <h3>Sign in to the licence</h3>
+            <div class="cli-band">
+              <p><strong>fcx login</strong> (alias: <strong>fcx activate</strong>) asks three things: your <strong>licence email</strong>, your <strong>password</strong>, and the <strong>FCX-XXXXXX code</strong> your clinic owner issued for this machine — one code per device. When it passes, this computer becomes a <strong>trusted device</strong> under the licence and counts against the code's device limit. Trusted machines never re-enter a code: run <strong>fcx login</strong> again on a signed-in machine and it re-verifies quietly.</p>
+              <p class="cli-alt">Confirm with <strong>fcx status</strong> — it prints the licence email and how many of the device limit are in use — and <strong>fcx device</strong> for the full identity card of this machine.</p>
+            </div>
+          </div>
+
+          <div class="guide-sub">
+            <h3>First commands</h3>
+            <div class="cli-band">
+              <ol class="steps">
+                <li><span>Run <strong>fcx status</strong> — confirm the device licence.</span></li>
+                <li><span>Run <strong>fcx marketplace</strong> — browse the storefront in the terminal: categories, search, item pages, install in place.</span></li>
+                <li><span>Run <strong>fcx install &lt;id-or-code&gt;</strong> — install any catalog item directly, by item id or by its FCX-XXXXXX code.</span></li>
+              </ol>
+              <p class="cli-alt">To switch an Extension on in the app as well, install it there by the same code: <code>Settings → Marketplace → Install by code</code>. The CLI copy and the app copy are separate installs of the same catalog item.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. EVERY CLI COMMAND -->
+        <section class="guide-sec" id="commands" aria-label="Every CLI command">
+          <div class="kicker">Reference</div>
+          <h2 style="margin-bottom: 6px;">Every CLI command</h2>
+          <p class="explain" style="max-width: 640px;">One short paragraph each. Anything in brackets is optional; the full reference with exact syntax lives on the <a href="/docs/cli/">FCX CLI page</a>, and <strong>fcx help &lt;command&gt;</strong> prints it in the terminal too.</p>
+          <div class="cli-ref-scroll">
+            <table class="cli-ref">
+              <thead>
+                <tr>
+                  <th scope="col">Command</th>
+                  <th scope="col">What it does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="2" class="group-row">Getting started</td></tr>
+                <tr><td>fcx setup</td><td class="wrap-col">Guided setup in four steps — workspace folder, catalog sync, sign-in, first WorkBench — ending with a summary checklist. Flags let you skip steps or run it headless.</td></tr>
+                <tr><td>fcx (bare) / fcx menu</td><td class="wrap-col">The interactive console: the whole CLI behind arrow-key menus — account, Extensions, WorkBenches, diagnostics, keepalive. Esc goes back a level. On a piped output it prints plain help instead.</td></tr>
+                <tr><td colspan="2" class="group-row">Account and licence</td></tr>
+                <tr><td>fcx login</td><td class="wrap-col">Sign this machine in to the clinic licence — licence email, password, and the FCX-XXXXXX code issued for it (alias: <b>fcx activate</b>). A trusted machine re-verifies its stored licence instead of asking again.</td></tr>
+                <tr><td>fcx logout</td><td class="wrap-col">Remove the device licence from this machine. Stops the keepalive daemon first if it is running. The licence slot itself is freed by your clinic owner revoking the device.</td></tr>
+                <tr><td>fcx status</td><td class="wrap-col">Print this machine's saved licence card — email, device id, activated at — and re-check it with the licence registry. Exit code 1 when the device was revoked.</td></tr>
+                <tr><td>fcx whoami</td><td class="wrap-col">One line of identity: signed-in email and device id, or a hint to run fcx login when this machine has no licence.</td></tr>
+                <tr><td>fcx device</td><td class="wrap-col">The full device identity card — the same view of this machine your clinic owner has: label, system, CPU, memory, storage, runtime. No secrets in it.</td></tr>
+                <tr><td>fcx vitals [--offline]</td><td class="wrap-col">Environment health check, eight OK/WARN/FAIL lines — Node, config, licence, catalog cache, marketplace reachability, keepalive, installed items (alias: <b>fcx doctor</b>). With <b>--offline</b> it skips the network checks.</td></tr>
+                <tr><td colspan="2" class="group-row">Marketplace and catalog</td></tr>
+                <tr><td>fcx marketplace</td><td class="wrap-col">The Extensions storefront in the terminal — browse by category, press <b>/</b> to search, open an item page for its description and install code, press <b>i</b> to install (alias: <b>fcx market</b>).</td></tr>
+                <tr><td>fcx install [id-or-code]</td><td class="wrap-col">Install any catalog item — Extensions, capsules, themes, templates, snippets, WorkBenches — by exact id, FCX-XXXXXX code or a name substring. Bare <b>fcx install</b> opens the storefront; <b>fcx install list</b> shows what is installed.</td></tr>
+                <tr><td>fcx uninstall &lt;id-or-code&gt;</td><td class="wrap-col">Remove an installed item — its folder goes, the installed list is updated. Asks for confirmation on a terminal.</td></tr>
+                <tr><td>fcx catalog [kind] [--json]</td><td class="wrap-col">Quick catalog listing with install codes — every kind, or one kind as a filter. <b>--json</b> prints it for scripts. Syncs the catalog first if no cache exists yet.</td></tr>
+                <tr><td>fcx workbench list|show|install</td><td class="wrap-col">WorkBench bundles: <b>list</b> with names and install codes, <b>show</b> the full contents of one, <b>install</b> into a local workspace folder with a per-item summary of everything that landed.</td></tr>
+                <tr><td>fcx sync</td><td class="wrap-col">Refresh the local catalog cache from the marketplace and print item counts. The marketplace source can be overridden with FCX_MARKET_URL.</td></tr>
+                <tr><td colspan="2" class="group-row">System and diagnostics</td></tr>
+                <tr><td>fcx stats [--json]</td><td class="wrap-col">Local usage dashboard — commands run, installs, sign-ins, syncs, keepalive actions — plus the most-used commands and recent activity. Everything stays on the machine.</td></tr>
+                <tr><td>fcx alive start|stop|status|run</td><td class="wrap-col">Keepalive daemon — verifies the stored licence with the registry on a schedule so the licence record always shows this machine as current. The interval lives in the config, 5 to 1440 minutes.</td></tr>
+                <tr><td>fcx update</td><td class="wrap-col">Compare this build with the registry; when a newer CLI ships, print the one-line install command to bring the machine current. Says so when the build is already current.</td></tr>
+                <tr><td>fcx serve [--port 4319]</td><td class="wrap-col">Host the registry from the local cache — health, catalog and WorkBench bundle endpoints. Prints the local URL and a LAN address when a clinic network exists; with no clinic network, the web workspace remains the way in.</td></tr>
+                <tr><td>fcx open</td><td class="wrap-col">Open the full FocusCaseX workspace in the browser — the same features as the Android app.</td></tr>
+                <tr><td>fcx mcp</td><td class="wrap-col">Print MCP pairing info and ready-to-paste setup snippets for AI agents. The full walkthrough: <a href="/docs/mcp/">MCP &amp; AI agents</a>.</td></tr>
+                <tr><td>fcx config list|get|set|reset</td><td class="wrap-col">CLI settings — workspace folder, keepalive interval, appearance — read and written as dotted keys.</td></tr>
+                <tr><td>fcx help [command]</td><td class="wrap-col">Print the grouped help list, or one command in detail — <b>fcx help setup</b>, <b>fcx help serve</b>. Per-command <b>--help</b> works too, and <b>fcx version</b> prints the build.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. CREATE YOUR OWN EXTENSION -->
+        <section class="guide-sec" id="extensions-guide" aria-label="Create your own Extension">
+          <div class="kicker">Authoring</div>
+          <h2 style="margin-bottom: 6px;">Create your own Extension</h2>
+          <p class="doc-lede">Everything installable in FocusCaseX is described by one catalog entry plus a folder of small files. No build tools, no bundler — a text editor and the <code>fcx</code> command are enough. This guide walks a working Extension end to end; the same text lives on <a href="/docs/extensions/">the Extensions authoring page</a>.</p>
+
+          <div class="guide-sub">
+            <h3>The five kinds</h3>
+            <p class="doc-lede">Pick the kind that matches what you are building — the kind decides which files the installer fetches and where they land:</p>
+            <ul class="kind-list">
+              <li><span data-icon="Puzzle" data-icon-size="15"></span><span><b>Extension</b> — a tool that adds a feature: commands, panels, automations. Two files: <code>manifest.json</code> + <code>main.js</code>. (The first kind in every example below.)</span></li>
+              <li><span data-icon="Braces" data-icon-size="15"></span><span><b>Capsule</b> — a ready-made board or page section. A <code>spec.mdui</code> layout file, plus optional <code>style.css</code> and <code>logic.mdui</code>.</span></li>
+              <li><span data-icon="Palette" data-icon-size="15"></span><span><b>Theme</b> — the workspace look. One JSON file of design tokens.</span></li>
+              <li><span data-icon="ScrollText" data-icon-size="15"></span><span><b>Template</b> — a pre-written clinical note or letter. One markdown file.</span></li>
+              <li><span data-icon="Sparkle" data-icon-size="15"></span><span><b>Snippet</b> — a small interface tweak. One CSS file.</span></li>
+            </ul>
+            <p class="doc-lede">A <b>WorkBench</b> is the sixth entry kind — a bundle that installs many items at once. It is assembled from published items, so build an Extension or two first if you want to ship one.</p>
+          </div>
+
+          <div class="guide-sub">
+            <h3>What an installed item looks like</h3>
+            <p class="doc-lede">The CLI installer fetches exactly the files the catalog entry lists and writes them into a folder named after the item, one folder per kind. An Extension always lands as <code>manifest.json</code> and <code>main.js</code> (plus any extra files the entry lists); a capsule keeps its <code>spec.mdui</code>, <code>style.css</code> and <code>logic.mdui</code>; a theme its JSON; a template its markdown; a snippet its CSS. Every install is registered in the CLI's installed list, which is what <strong>fcx install list</strong> and <strong>fcx uninstall</strong> read.</p>
+          </div>
+
+          <div class="guide-sub">
+            <h3>How the catalog describes an item</h3>
+            <p class="doc-lede">A real entry from the marketplace catalog — the Heading Numbering Extension — so you can see the exact shape:</p>
+            <div class="fence wrap-cmd">{
+  "id": "plugin:heading-numbering",
+  "kind": "plugin",
+  "name": "Heading Numbering",
+  "tagline": "Auto-numbers H2/H3 headings in the reading view using an injected CSS counter (cleaned up on unload).",
+  "description": "Auto-numbers H2/H3 headings in the reading view using an injected CSS counter (cleaned up on unload).",
+  "author": "FocusCaseX originals",
+  "version": "1.0.0",
+  "category": "Writing",
+  "tags": ["plugin", "writing"],
+  "icon": "ListTree",
+  "rating": 4.1,
+  "reviews": 64,
+  "downloads": 4207,
+  "released": "2026-01-24",
+  "verified": true,
+  "featured": false,
+  "meta": { "pluginId": "heading-numbering" },
+  "files": {
+    "manifest": "plugins/heading-numbering/manifest.json",
+    "main": "plugins/heading-numbering/main.js"
+  }
+}</div>
+            <p class="doc-lede">The rules that matter:</p>
+            <ul class="kind-list">
+              <li><span data-icon="Check" data-icon-size="15"></span><span><code>id</code> is <code>kind:slug</code> — <code>plugin:hello-clinic-note</code>, <code>capsule:ui-today</code>, <code>theme:mono-ink</code>. The slug is the folder name under <code>plugins/</code>, <code>capsules/</code>, <code>themes/</code>, <code>templates/</code> or <code>snippets/</code> in the site repo.</span></li>
+              <li><span data-icon="Check" data-icon-size="15"></span><span><code>files</code> points at those paths — for an Extension the keys are <code>manifest</code> and <code>main</code>; a capsule lists <code>spec</code> (plus <code>style</code>, <code>logic</code>); a theme lists <code>vars</code>; a template lists <code>body</code>; a snippet has a top-level <code>file</code>.</span></li>
+              <li><span data-icon="Check" data-icon-size="15"></span><span><code>meta</code> carries the bare id — <code>pluginId</code>, <code>capsuleId</code>, <code>themeId</code>, <code>templateId</code> — matching the manifest's own <code>id</code>.</span></li>
+              <li><span data-icon="Check" data-icon-size="15"></span><span><code>rating</code>, <code>reviews</code>, <code>downloads</code>, <code>released</code>, <code>verified</code> and <code>featured</code> are marketplace metadata — the review fills those in; you can leave them out of a new entry.</span></li>
+            </ul>
+          </div>
+
+          <div class="guide-sub">
+            <h3>The minimal Extension — a worked example</h3>
+            <p class="doc-lede">"Hello clinic note" — one command and one small stylesheet, in the same shape as the shipped samples. Two files, nothing else.</p>
+
+            <div class="fence-label">File 1 of 2 — plugins/hello-clinic-note/manifest.json</div>
+            <div class="fence wrap-cmd">{
+  "id": "hello-clinic-note",
+  "name": "Hello clinic note",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "A first Extension — one command on the palette and a starter style for clinic notes.",
+  "author": "Your name"
+}</div>
+
+            <div class="fence-label">File 2 of 2 — plugins/hello-clinic-note/main.js</div>
+            <div class="fence wrap-cmd">/**
+ * FocusCaseX Extension — Hello clinic note.
+ * One command, one injected stylesheet, cleanup on unload — the same
+ * shape as the shipped samples (registerCss, registerCommand, showToast).
+ */
+(function (ctx) {
+  "use strict";
+
+  var css = [
+    ".clinic-note-starter {",
+    "  border: 1px solid var(--line);",
+    "  border-radius: 10px;",
+    "  padding: 14px 16px;",
+    "  color: var(--ink-2);",
+    "}"
+  ].join("\n");
+
+  ctx.registerCss(css);
+
+  ctx.registerCommand({
+    id: "hello-clinic-note",
+    title: "Hello, clinic note",
+    icon: "FileText",
+    run: function () {
+      ctx.showToast("Hello clinic note is installed and running.");
+    },
+  });
+
+  ctx.onunload = function () {
+    /* the injected stylesheet leaves with the host cleanup */
+  };
+})(ctx);</div>
+
+            <div class="fence-label">The catalog entry that publishes it</div>
+            <div class="fence wrap-cmd">{
+  "id": "plugin:hello-clinic-note",
+  "kind": "plugin",
+  "name": "Hello clinic note",
+  "tagline": "A first Extension — one command on the palette and a starter style for clinic notes.",
+  "description": "A first Extension — one command on the palette and a starter style for clinic notes.",
+  "author": "Your name",
+  "version": "1.0.0",
+  "category": "Writing",
+  "tags": ["plugin", "writing"],
+  "icon": "FileText",
+  "meta": { "pluginId": "hello-clinic-note" },
+  "files": {
+    "manifest": "plugins/hello-clinic-note/manifest.json",
+    "main": "plugins/hello-clinic-note/main.js"
+  }
+}</div>
+            <p class="doc-lede">For the other kinds the same two-part pattern holds — a folder of files plus an entry that lists them. A theme entry's <code>files.vars</code> points at a JSON of design tokens; a template's <code>files.body</code> points at a markdown note with frontmatter (<code>patient: MR-0000</code> and a type); a snippet lives in the catalog's top-level <code>snippets</code> array as <code>{ "id", "name", "file", "description" }</code> pointing at one CSS file.</p>
+          </div>
+
+          <div class="guide-sub">
+            <h3>Test it locally</h3>
+            <p class="doc-lede">The CLI reads its marketplace from a URL, so you can point it at your own machine while you build. Make a mirror folder that looks like the site:</p>
+            <div class="fence wrap-cmd">mirror/
+  catalog.json                              ← a copy of the catalog with
+                                              your entry added to "items"
+  plugins/
+    hello-clinic-note/
+      manifest.json
+      main.js</div>
+            <p class="doc-lede">Serve the folder with any static file server, then point the CLI at it and sync:</p>
+            <div class="fence wrap-cmd"><span class="cx-cmd">FCX_MARKET_URL=http://localhost:4319 fcx sync</span>
+<span class="cx-cmd">FCX_MARKET_URL=http://localhost:4319 fcx install plugin:hello-clinic-note</span></div>
+            <p class="doc-lede"><strong>fcx sync</strong> fetches <code>catalog.json</code> from that URL and caches it; <strong>fcx install</strong> resolves the item by id, install code or name and writes its files into the workspace — the output shows the folder and the install code. Install by code works too: every item's <strong>FCX-XXXXXX</strong> code is derived from its id, so once your entry is in a catalog, its code exists and resolves the same everywhere — the site, the app and the CLI.</p>
+            <div class="note">
+              <span data-icon="Link" data-icon-size="17"></span>
+              <p><b>Share the mirror with the clinic.</b> <strong>fcx serve</strong> hosts the synced cache for everyone: it prints a local URL, and a LAN address when a clinic network exists. No clinic network? The web workspace still opens as usual. Endpoints: <code>/health</code>, <code>/api/catalog</code>, <code>/api/workbenches</code>.</p>
+            </div>
+          </div>
+
+          <div class="guide-sub">
+            <h3>Submit it</h3>
+            <div class="cli-band">
+              <ol class="steps">
+                <li><span>Add your entry to <code>catalog.json</code> in the public site repo (<a href="https://github.com/stromplayz/FocusCaseX" target="_blank" rel="noopener">stromplayz/FocusCaseX</a>) — in <code>items</code>, or in the top-level <code>snippets</code> array for a snippet.</span></li>
+                <li><span>Add the files the entry points at, at exactly those paths: <code>plugins/&lt;slug&gt;/</code>, <code>capsules/&lt;slug&gt;/</code>, <code>themes/&lt;slug&gt;.json</code>, <code>templates/&lt;slug&gt;.md</code> or <code>snippets/&lt;slug&gt;.css</code>.</span></li>
+                <li><span>Open a pull request — or hand the entry and files to the FocusCaseX owner, and the review takes it from there. Review fills in the marketplace metadata and marks reviewed items.</span></li>
+              </ol>
+            </div>
+            <p class="doc-lede">After it merges, one <strong>fcx sync</strong> picks the item up on every machine, the marketplace pages list it with its install code, and installs by code work in the app and the CLI alike. Shipping an update: bump <code>version</code> in the catalog entry and your manifest — the next install overwrites the old files.</p>
+          </div>
+        </section>
+
+        <!-- 6. WORKBENCHES -->
+        <section class="guide-sec" id="workbenches" aria-label="WorkBenches">
+          <div class="kicker">Whole-workspace bundles</div>
+          <h2 style="margin-bottom: 6px;">WorkBenches</h2>
+          <p class="doc-lede">A WorkBench is a fully prepared workspace setup packed into one install: Extensions, capsules, a theme, templates, snippets, starter pages and a settings snapshot. Installing one configures the whole clinic in a single step — the boards, the pages, the look and the note formats land together, matched to how a clinic like yours works. Where a single Extension adds one tool, a WorkBench assembles the entire setup — and it is still one confirm before anything lands.</p>
+          <div class="cli-band">
+            <h3>Installing a WorkBench — every path</h3>
+            <p>Four ways in, one destination: each ends on the app's confirmation screen, which lists every piece the bundle adds before anything lands. One tap on Apply installs the whole setup.</p>
+            <ol class="steps">
+              <li><span><strong>From the website</strong> — tap Install on a WorkBench page here; the browser hands it to the app on this device and the confirmation screen opens.</span></li>
+              <li><span><strong>By code</strong> — in the app, <strong>Settings → Marketplace → Install by code</strong>, and type the WorkBench's FCX-XXXXXX code.</span></li>
+              <li><span><strong>From a file</strong> — a <code>.workbench.json</code> exported from another clinic installs under <strong>Settings → Marketplace → Install from file</strong>.</span></li>
+              <li><span><strong>From the CLI</strong> — <strong>fcx workbench list</strong>, <strong>fcx workbench show &lt;id-or-code&gt;</strong> to inspect every piece, then <strong>fcx workbench install &lt;id-or-code&gt;</strong>.</span></li>
+            </ol>
+          </div>
+          <p class="doc-lede"><strong>Switching WorkBenches like modes.</strong> Every WorkBench you install becomes a mode of the workspace — the app's WorkBenches tab shows each one as a chip, and one tap switches the whole workspace to that setup, with a switch-aware confirmation before anything moves. Switch back and forth as often as the day requires; modes are setups, not storage, and nothing is ever deleted.</p>
+          <p class="doc-lede"><strong>Saving your own.</strong> Any clinic can turn its current workspace into a WorkBench: <strong>Settings → Marketplace → Save current setup as WorkBench</strong> snapshots the setup into one <code>.workbench.json</code> bundle — yours to keep, review and hand to a colleague or a second branch, who installs it in one step. The snapshot is setup only; nothing from your patient records goes into the bundle.</p>
+          <div class="note">
+            <span data-icon="ShieldCheck" data-icon-size="17"></span>
+            <p><b>The boundary.</b> Applying a WorkBench never deletes anything and never moves patient records. It adds tools, pages and settings; your case files, documents and history stay exactly where they are. Anything it installs can be removed later under Settings, piece by piece. Full detail: <a href="/docs/workbenches/">the WorkBenches page</a>.</p>
+          </div>
+        </section>
+
+        <!-- 7. SECURITY AND PRIVACY -->
+        <section class="guide-sec" id="security" aria-label="Security and privacy">
+          <div class="kicker">Neutral by design</div>
+          <h2 style="margin-bottom: 6px;">Security and privacy</h2>
+          <p class="doc-lede"><strong>The licence.</strong> FocusCaseX is licensed per clinic, and the licence travels as a code: <strong>FCX-XXXXXX</strong>, bound to one email. At activation the code is checked against that email and tied to the device it ran on — which is why a forwarded installer is not a working app, and why every device a licence runs on is a known device.</p>
+          <p class="doc-lede"><strong>What activation sends.</strong> Hardware identity only: device model, OS version, screen metrics, app build, locale and a per-device identifier. That is the complete list — it is what tells devices apart, and it is shown back to the licence owner. Patient records never leave the device during activation, and the periodic licence check sends the same kind of identity, nothing more.</p>
+          <p class="doc-lede"><strong>Trusted devices.</strong> After activation the approval lives on the device itself — private to you. On Android it sits in the app's own internal storage, so clearing browser site data or switching browsers changes nothing; on the CLI the approval lives on the device itself, private to your user account. Deleting it — or uninstalling — is what makes a device ask for a code again. Every code carries a device limit, two devices by default; at the limit, the owner frees a slot by revoking a retired device or raises the limit.</p>
+          <p class="doc-lede"><strong>Your records.</strong> Patient data lives in the workspace on your device. Day-to-day work needs no connection at all; first activation is the only moment that does. Export anything, any time — patients, notes and recalls come out as plain files you keep.</p>
+          <p class="doc-lede"><strong>AI agents, on your terms.</strong> Agents reach the clinic only through MCP pairing — a code or QR you approve — with scopes you set, and every write shows a human-readable diff and waits for your confirmation. Revoke an agent any time. Full detail: <a href="/docs/security/">licences and devices</a> and <a href="/docs/mcp/">MCP &amp; AI agents</a>.</p>
+        </section>
+
+        <!-- 8. TROUBLESHOOTING -->
+        <section class="guide-sec" id="troubleshooting" aria-label="Troubleshooting">
+          <div class="kicker">When something's off</div>
+          <h2 style="margin-bottom: 6px;">Troubleshooting</h2>
+          <p class="explain" style="max-width: 640px;">The things that come up most, each with a short answer. Clinic-side snags live on <a href="/docs/getting-started/">Getting started</a>; CLI-side ones below and on the <a href="/docs/cli/">FCX CLI page</a>.</p>
+          <div class="cli-ref-scroll">
+            <table class="cli-ref">
+              <thead>
+                <tr>
+                  <th scope="col">What you see</th>
+                  <th scope="col">What to do</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>fcx: command not found</td><td class="wrap-col">The installer puts <b>fcx</b> in <b>~/.focuscasex/bin</b> and wires your PATH, but a terminal opened before the install will not see it. Open a fresh terminal and run <b>fcx</b> again.</td></tr>
+                <tr><td>catalog fetch fails</td><td class="wrap-col">Run <b>fcx sync</b> to refresh the cache, or check the network. <b>fcx vitals --offline</b> passes with a cached catalog, so installs keep working without the network.</td></tr>
+                <tr><td>This screen needs an interactive terminal</td><td class="wrap-col">The console and the storefront are full-screen views — run them in a real terminal, or use the plain paths: <b>fcx catalog</b>, <b>fcx install &lt;id-or-code&gt;</b>.</td></tr>
+                <tr><td>port already in use</td><td class="wrap-col">Start the registry server on another port: <b>fcx serve --port &lt;other&gt;</b>.</td></tr>
+                <tr><td>version mismatch</td><td class="wrap-col">Run <b>fcx update</b> — it prints the one-line command when a newer build ships — or re-run the install command, then check <b>fcx --version</b>.</td></tr>
+                <tr><td>the FCX- code is refused</td><td class="wrap-col">Codes are exact — paste rather than retype, and make sure it is the code issued for your licence email. If the refusal says the device limit is full, your clinic owner moves the licence: the old machine is revoked, a fresh code is issued, and this machine activates.</td></tr>
+                <tr><td>fcx serve prints no LAN address</td><td class="wrap-col">A LAN address appears only when a clinic network exists. With no clinic network, sharing over a local network is not available — the web workspace remains the way in, and it opens as usual.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 9. FAQ -->
+        <section class="guide-sec" id="faq" aria-label="FAQ">
+          <div class="kicker">Plain answers</div>
+          <h2 style="margin-bottom: 6px;">FAQ</h2>
+          <p class="explain" style="max-width: 640px;">The questions clinics ask most, in plain words. The same list lives on <a href="/faq/">the FAQ page</a>.</p>
+          <div class="faq">
+            <details>
+              <summary>Do I need the internet?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">No. FocusCaseX works offline — your records live on your device and every board, page and note opens without a connection. The web app at focuscasex.vercel.app is there whenever you want it. The only online moment is the licence check when a device first activates.</div>
+            </details>
+            <details>
+              <summary>What is FocusCaseX, in one sentence?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">An offline-first clinic workspace for eye care: register patients, run refraction and exam flows, manage optics, dispensing and billing, set recalls — all on your own device, with pages you can read and print.</div>
+            </details>
+            <details>
+              <summary>What is an Extension?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">A small add-on that adds one feature to the workspace — an extra panel, an automation, a quick reference one tap away. You install it from the marketplace in one tap and remove it just as easily.</div>
+            </details>
+            <details>
+              <summary>What is a WorkBench?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">A whole clinic setup packed into one install — boards, pages, a theme, templates and starter settings. Applying one configures the workspace in a single step, and switching between installed WorkBenches works like switching modes. Your records never move.</div>
+            </details>
+            <details>
+              <summary>What are capsules, themes, templates and snippets?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Capsules are ready-made boards you drop into any page. Themes change the look of every surface at once. Templates are pre-written clinical notes and letters. Snippets are small interface tweaks, like bigger headings.</div>
+            </details>
+            <details>
+              <summary>How do I put FocusCaseX on another computer in my clinic?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Install the fcx command with one terminal line — the <a href="/install/" style="color:var(--blue);font-weight:500;">install guide</a> has it — then run <b>fcx setup</b> and sign in with your licence email and the FCX-XXXXXX code issued for that machine. Every device counts against the licence's device limit.</div>
+            </details>
+            <details>
+              <summary>What is the FCX code my clinic owner gave me, and where do I type it?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">It is the activation code for your licence — eight characters, FCX-XXXXXX. In the app, a new device asks for it once at first launch, right after sign-in. On a computer, run <b>fcx login</b> in a terminal and answer the three prompts.</div>
+            </details>
+            <details>
+              <summary>It says my code reached its device limit — what now?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Contact your clinic owner. They free a slot by revoking a device that is retired or lost, or raise the limit for your code — then the new device activates as normal.</div>
+            </details>
+            <details>
+              <summary>I forgot my password — what now?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Ask your clinic owner — the password is reset on the licence. Nothing on your device changes, and your records stay exactly where they are.</div>
+            </details>
+            <details>
+              <summary>Does my patient data go anywhere?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">No. Records live on your device. Activation and the periodic licence check send hardware identity only — never patient records. Export anything, any time, as plain files you keep.</div>
+            </details>
+            <details>
+              <summary>How do I update the app?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">The Android app checks for updates on its own and tells you inside the app when one is ready — you confirm and it updates. The web workspace is always the current build; there is nothing to do.</div>
+            </details>
+            <details>
+              <summary>How do I update the fcx command?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Run <b>fcx update</b> — when a newer build ships, it prints the one-line install command to run. Re-running the original install command works too; <b>fcx --version</b> confirms the build afterwards.</div>
+            </details>
+            <details>
+              <summary>Can I share the app with the front desk over the clinic network?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Yes. When your clinic has its own network, <b>fcx serve</b> hosts the marketplace for every computer on it — the command prints the address to open. No clinic network? Everyone uses the web workspace — it opens as usual from anywhere.</div>
+            </details>
+            <details>
+              <summary>How do I create my own Extension?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Follow the authoring guide — <a href="/docs/extensions/" style="color:var(--blue);font-weight:500;">Create your own Extension</a>: two small files, one catalog entry, a local test with the CLI, then a pull request to the marketplace. No build tools needed.</div>
+            </details>
+            <details>
+              <summary>Is my licence tied to one device? What is a trusted device?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">The licence belongs to the clinic and carries a device limit — two devices by default. A trusted device is one that has activated once; it is remembered, and it never asks for a code again.</div>
+            </details>
+            <details>
+              <summary>How do I remove FocusCaseX from a computer?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Run the installer with <b>--uninstall</b> — the command is removed. To free that machine's slot on the licence, ask your clinic owner to revoke it.</div>
+            </details>
+            <details>
+              <summary>Can two clinics share one licence?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">No. One licence is one clinic — codes are bound to a single email, and the devices under it share one workspace. A second clinic needs its own licence and its own email.</div>
+            </details>
+            <details>
+              <summary>Does installing an add-on touch my records?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Never. Installing or removing an add-on changes the setup only — your case files, documents and history stay exactly where they are.</div>
+            </details>
+            <details>
+              <summary>What exactly works offline?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Everything you do day to day: patients, exams, notes, boards, recalls and every installed add-on. First activation on a new device needs a connection once; after that the device is trusted and the clinic runs without one.</div>
+            </details>
+            <details>
+              <summary>Who do I contact?<span data-icon="Plus"></span></summary>
+              <div class="faq-a">Your clinic owner for codes, device moves and password resets. For everything else, FocusCaseX support answers licence mail directly — the docs pages always point at the current contact.</div>
+            </details>
+          </div>
+        </section>
+
+        <div class="next-band">
+          <div>
+            <h2>Ready to install?</h2>
+            <p>The install guide links the latest Android build and the CLI one-liner — both run under the same licence and the same install codes.</p>
+          </div>
+          <div class="cta-btns">
+            <a class="btn primary" href="/install/"><span data-icon="Download" data-icon-size="15"></span><span>Install guide</span></a>
+            <a class="btn ghost" href="https://focuscasex.vercel.app" target="_blank" rel="noopener"><span data-icon="ExternalLink" data-icon-size="15"></span><span>Open the web workspace</span></a>
+          </div>
         </div>
-        <div class="cta-btns">
-          <a class="btn primary" href="https://focuscasex.vercel.app" target="_blank" rel="noopener"><span data-icon="ExternalLink" data-icon-size="15"></span><span>Open the web workspace</span></a>
-          <a class="btn ghost" href="/install/"><span data-icon="Download" data-icon-size="15"></span><span>Install guide</span></a>
-        </div>
-      </div>
-    </section>
+
+      </article>
+    </div>
 
   </div>
 </main>
@@ -117,6 +663,37 @@
     }
 
     paintIcons();
+
+    /* sticky contents: open and uninteractive on desktop, a folded panel on mobile */
+    var toc = document.getElementById("toc-fold");
+    if (toc) {
+      var mq = window.matchMedia("(min-width: 981px)");
+      var summary = toc.querySelector("summary");
+      function layoutToc() {
+        if (mq.matches) { toc.open = true; if (summary) summary.style.display = "none"; }
+        else { if (summary) summary.style.display = ""; toc.open = false; }
+      }
+      if (mq.addEventListener) mq.addEventListener("change", layoutToc);
+      else if (mq.addListener) mq.addListener(layoutToc);
+      layoutToc();
+
+      /* scroll spy — highlight the section in view */
+      var links = Array.prototype.slice.call(document.querySelectorAll("#toc-nav a"));
+      var byId = {};
+      links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+      if ("IntersectionObserver" in window) {
+        var spy = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              links.forEach(function (a) { a.classList.remove("is-active"); });
+              var a = byId[e.target.id];
+              if (a) a.classList.add("is-active");
+            }
+          });
+        }, { rootMargin: "-30% 0px -60% 0px" });
+        document.querySelectorAll("article.guide-body section[id]").forEach(function (s) { spy.observe(s); });
+      }
+    }
 
     FCX.ready({ active: "docs" }).catch(function () {
       /* offline preview (file://) or catalog unreachable — paint minimal chrome */
@@ -138,9 +715,10 @@
           '<div class="foot"><div class="wrap foot-inner">' +
           '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
           '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
-          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/install/">Install guide</a><a href="/marketplace/">Marketplace</a></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/cli/">FCX CLI</a><a href="/faq/">FAQ</a><a href="/install/">Install guide</a></div>' +
           '</div></div>';
       }
+      FCX.wireCopyButtons(document);
     });
   })();
 </script>

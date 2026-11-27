@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Licences, devices &amp; codes — FocusCaseX Documentation</title>
+<meta name="description" content="How FCX-XXXXXX codes bind a FocusCaseX licence to a device — activation on Android and the CLI, the hardware identity activation reads, trusted devices, device limits, and how codes are issued and revoked.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* FCX security docs — layout only; composes with the design system. */
+  section[id] { scroll-margin-top: 76px; }
+  .crumb {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12.5px; color: var(--ink-3); margin-bottom: 12px;
+  }
+  .crumb svg { flex-shrink: 0; }
+  .crumb:hover { color: var(--blue); }
+  .doc-lede { margin-top: 14px; max-width: 680px; font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+  .explain a, .doc-lede a, .cli-band p a, .cli-ref td a, .note a { color: var(--blue); font-weight: 500; }
+  .explain a:hover, .doc-lede a:hover, .cli-band p a:hover, .cli-ref td a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .explain code, .doc-lede code, .note code, .cli-ref td code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+
+  /* command bands — same pattern as the install guide's #cli section */
+  .cli-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; margin-top: 16px;
+  }
+  .cli-band h3 { font-size: 17px; }
+  .cli-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; margin-top: 8px; max-width: 640px; }
+  .cli-band p.cli-alt { font-size: 12.5px; color: var(--ink-3); max-width: none; }
+  .cli-band p.cli-alt code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+  .cli-band ol.steps { margin-top: 12px; }
+  .cli-cmd .code-token { letter-spacing: 0; font-size: 13.5px; font-weight: 500; padding: 10px 14px; }
+  .cli-cmd + .cli-cmd { margin-top: 10px; }
+
+  /* reference tables — mono first column, like the install guide */
+  .cli-ref-scroll {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+  }
+  .cli-ref { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 13px; }
+  .cli-ref th {
+    text-align: left; padding: 12px 16px 10px; border-bottom: 1px solid var(--line-2);
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .cli-ref td { padding: 11px 16px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 13px; line-height: 1.55; vertical-align: top; }
+  .cli-ref tr:last-child td { border-bottom: 0; }
+  .cli-ref td:first-child { font-family: var(--font-mono); font-size: 12.3px; color: var(--ink); white-space: nowrap; }
+  .cli-ref td b { color: var(--ink); }
+  .cli-ref td.group-row {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+    background: var(--bg-soft); white-space: normal; padding: 10px 16px;
+  }
+  .cli-ref.faq td:first-child { white-space: normal; min-width: 180px; }
+
+  /* blue note strips */
+  .note {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 20px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+    max-width: 680px;
+  }
+  .note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+  .note p { margin: 0; }
+  .note a { color: var(--blue-deep); font-weight: 600; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap-narrow">
+
+    <section class="page-head">
+      <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
+      <div class="kicker">Documentation</div>
+      <h1>Licences, devices &amp; codes</h1>
+      <p class="lede">Every device runs FocusCaseX under a licence, and every licence is a code — <strong>FCX-XXXXXX</strong> — bound to one email. This page covers what activation does, what it reads, where the approval lives, and how codes are issued and revoked.</p>
+      <p class="explain">Written for clinic owners on Android and anyone running the FCX CLI. For the install itself, see the <a href="/install/">install guide</a>.</p>
+    </section>
+
+    <!-- 1. WHY A LICENCE BINDS TO A DEVICE -->
+    <section class="section-tight" id="why-device" aria-label="Why a licence binds to a device" style="padding-top: 22px;">
+      <div class="kicker">The licence model</div>
+      <h2 style="margin-bottom: 6px;">Why a licence binds to a device</h2>
+      <p class="doc-lede">FocusCaseX is licensed per clinic, and the licence travels as a code: eight characters, <strong>FCX-XXXXXX</strong>, issued against one email. At activation the code is checked against that email and then tied to the hardware it ran on. From then on, the app on your device and the licence record are two views of the same fact — this code, this buyer, this machine.</p>
+      <p class="doc-lede">That binding is what makes a forwarded APK stop being a working app. An installer passed along a group chat still installs, but at first launch it asks for a code, and a code cannot cover more devices than its limit allows. To run, the new device needs a sign-in with the buyer's email and a code issued for it — neither travels with the APK.</p>
+      <p class="doc-lede">It also gives the owner a map. Every device a licence runs on registers itself the moment it activates — model, Android version, app build — so the question "which machines actually run FocusCaseX?" is a lookup, not a guess. When a tablet is sold or a phone replaced, the owner moves the licence from the old device to the new one.</p>
+    </section>
+
+    <!-- 2. HOW ACTIVATION WORKS -->
+    <section class="section" id="activation" aria-label="How activation works" style="padding-top: 0;">
+      <div class="kicker">Activation</div>
+      <h2 style="margin-bottom: 6px;">How activation works</h2>
+      <p class="doc-lede">Activation runs once per device, and it is the same five steps on every phone, whether the clinic has one device or six.</p>
+      <div class="cli-band">
+        <ol class="steps">
+          <li><span>Install the app — the <a href="/install/">install guide</a> links the latest Android build.</span></li>
+          <li><span>Open it and sign in with your licence email and password — the email the licence was issued against.</span></li>
+          <li><span>Enter the <strong>FCX-XXXXXX</strong> code issued for that email.</span></li>
+          <li><span>The device registers — it reports its hardware details, is added to the licence record, and the workspace opens.</span></li>
+          <li><span>Every later launch on that device passes without a code.</span></li>
+        </ol>
+      </div>
+      <div class="note">
+        <span data-icon="Info" data-icon-size="17"></span>
+        <p><b>The code is a first-launch thing.</b> The same person on the same device never sees it again — the approval is remembered on the device. A different device always asks for a code of its own, and a revoked device asks again at its next launch.</p>
+      </div>
+      <p class="doc-lede">If the code is refused at step three, the likely causes come in order: a typo (codes are exact — paste rather than retype), a code issued for a different licence email, or a device limit that is already full. A full limit has a specific fix, described under <a href="/docs/security/#trusted-devices">Trusted devices</a> below.</p>
+    </section>
+
+    <!-- 3. WHAT THE APP READS FROM YOUR DEVICE -->
+    <section class="section" id="device-data" aria-label="What the app reads from your device" style="padding-top: 0;">
+      <div class="kicker">What is sent</div>
+      <h2 style="margin-bottom: 6px;">What the app reads from your device</h2>
+      <p class="doc-lede">Activation reads hardware identity and nothing else. The list is short on purpose: it is what the licence record needs to tell devices apart, and it is shown back to the owner so a code never lands on an anonymous machine.</p>
+      <div class="cli-ref-scroll">
+        <table class="cli-ref">
+          <thead>
+            <tr>
+              <th scope="col">Field</th>
+              <th scope="col">Example</th>
+              <th scope="col">What it is for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Device model &amp; manufacturer</td><td>Redmi Note 12</td><td>The label shown on the licence record — how you tell two phones apart at a glance.</td></tr>
+            <tr><td>Android version + SDK</td><td>Android 13 (SDK 33)</td><td>Confirms the build supports the device; displayed alongside the model.</td></tr>
+            <tr><td>Screen size &amp; density</td><td>1080 × 2400 · 440 dpi</td><td>Display metrics only — they describe the device on the licence record.</td></tr>
+            <tr><td>App version</td><td>2.14</td><td>The build that activated, so the licence record shows which devices predate an update.</td></tr>
+            <tr><td>ANDROID_ID</td><td>3f9c2a7b81d04e55</td><td>A per-app identifier Android assigns to FocusCaseX on this device. It tells devices apart; it is not your Google account or your phone number, and it is not tied to either.</td></tr>
+            <tr><td>Locale</td><td>en-GB</td><td>Language and region, used to set date and number formats on first run.</td></tr>
+            <tr><td colspan="3" class="group-row">Sent by the FCX CLI</td></tr>
+            <tr><td>hostname</td><td>reception-desk</td><td>The machine's network name — the label shown on the licence record.</td></tr>
+            <tr><td>OS + architecture</td><td>Linux · x86_64</td><td>Which system the CLI runs on — Windows, macOS or Linux, 64-bit or ARM.</td></tr>
+            <tr><td>CPU model</td><td>Apple M1</td><td>The processor family, for a fuller picture of the machine.</td></tr>
+            <tr><td>machine id hash</td><td>6f1c8d2e4b7a9013</td><td>A hash of the machine's id — the raw value never leaves the machine.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="doc-lede">That is the complete list. Activation stores hardware identity only — patient records never leave the device during activation.</p>
+    </section>
+
+    <!-- 4. TRUSTED DEVICES -->
+    <section class="section" id="trusted-devices" aria-label="Trusted devices" style="padding-top: 0;">
+      <div class="kicker">After activation</div>
+      <h2 style="margin-bottom: 6px;">Trusted devices</h2>
+      <p class="doc-lede">A device that has activated is trusted, and the approval lives on the device itself. On Android it sits in the app's own internal storage — private to the app, not browser web storage, so clearing the browser's site data, switching browsers or signing out of Google changes nothing about it. On the CLI the approval lives on the device itself, private to your user account. Deleting it — or uninstalling — is what makes a device ask for a code again.</p>
+      <p class="doc-lede">A new device never inherits an approval. It runs the same activation as the first one — sign in, enter a code — and while the licence is under its device limit, the existing code works on it; the owner can issue a fresh one instead if that is easier to hand over.</p>
+      <p class="doc-lede">Every code carries a device limit — two devices by default, set by the owner when the code is generated and changeable at any time. At the limit, activation on a further device is refused until the owner makes room: revoke a device that is retired or lost, or raise the limit for that code. The refusal on the device names the reason, so there is no guessing about what went wrong.</p>
+      <p class="doc-lede">Moving a licence to a new device takes a minute: the old device is revoked, a fresh code is issued, and the new device activates. The old device asks for a code at its next launch and cannot pass without one the owner issues — which is the point.</p>
+    </section>
+
+    <!-- 6. ACTIVATE THE CLI -->
+    <section class="section" id="cli" aria-label="Activate the CLI" style="padding-top: 0;">
+      <div class="kicker">On the command line</div>
+      <h2 style="margin-bottom: 6px;">Activate the CLI</h2>
+      <p class="doc-lede">The CLI activates the same way the app does — same code, same licence email — and one licence covers both ends. It needs the <code>fcx</code> command installed first; the two commands below do the rest.</p>
+      <div class="cli-band">
+        <h3>Two commands</h3>
+        <p>From a terminal on the machine you want to licence:</p>
+        <div class="code-row cli-cmd">
+          <span class="code-token" title="Activation command — run this in a terminal">fcx activate</span>
+          <button class="chip" type="button" data-copy="fcx activate" title="Copy activation command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
+        </div>
+        <div class="code-row cli-cmd">
+          <span class="code-token" title="Status command — run this in a terminal">fcx status</span>
+          <button class="chip" type="button" data-copy="fcx status" title="Copy status command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
+        </div>
+        <p><strong>fcx activate</strong> asks for your licence email and the FCX-XXXXXX code, checks them against the licence and writes the approval. <strong>fcx status</strong> prints what the CLI currently holds — no changes, just the state.</p>
+        <ol class="steps">
+          <li><span>Run <strong>fcx activate</strong> — it asks for your licence email and the code issued for it.</span></li>
+          <li><span>The CLI checks the code and the machine appears on the licence record.</span></li>
+          <li><span>Run <strong>fcx status</strong> — it prints the licence email, how many of the device limit are in use, and whether the approval is current.</span></li>
+        </ol>
+      </div>
+      <p class="doc-lede">Everything else the CLI does — installing from the catalog, hosting it on the clinic LAN, <code>doctor</code>, <code>serve</code> — is documented on the <a href="/docs/cli/">FCX CLI page</a>.</p>
+    </section>
+
+    <!-- 7. QUESTIONS -->
+    <section class="section" id="questions" aria-label="Questions" style="padding-top: 0;">
+      <div class="kicker">FAQ</div>
+      <h2 style="margin-bottom: 6px;">Questions</h2>
+      <p class="doc-lede">The five questions that come up most, with short answers. If yours is not here, FocusCaseX support answers licence mail directly.</p>
+      <div class="cli-ref-scroll">
+        <table class="cli-ref faq">
+          <thead>
+            <tr>
+              <th scope="col">Situation</th>
+              <th scope="col">Answer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>I lost the code</td><td>Ask FocusCaseX support — a fresh code is issued against the same licence email in a minute. Nothing changes on devices that are already trusted; a code is only needed for a device that has to activate.</td></tr>
+            <tr><td>I bought a new phone</td><td>While the licence is under its device limit, sign in on the new phone and enter the code — or a fresh one issued for it. At the limit, the old phone is revoked and a fresh code is issued: the licence moves, and the old phone asks for a code at its next launch.</td></tr>
+            <tr><td>What happens offline</td><td>A device that is already trusted keeps working — the approval lives on the device, and day-to-day launches do not need the network. First activation is the exception: the code has to be checked once, so that one moment needs a connection.</td></tr>
+            <tr><td>Two clinics on one licence</td><td>One licence is one clinic. Codes are bound to a single email, and the devices under it share one workspace — a second clinic needs its own licence, its own email and its own codes.</td></tr>
+            <tr><td>Does revoke delete my records</td><td>Never. Records live in the device workspace, and revoking touches only the licence check — the device asks for a code at its next launch, and the data is right where it was.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 8. WHERE NEXT -->
+    <section class="section" id="next" aria-label="Where next" style="padding-top: 0;">
+      <div class="kicker">Keep reading</div>
+      <h2 style="margin-bottom: 6px;">Where next</h2>
+      <div class="entries" style="margin-top: 20px;">
+        <a class="entry" href="/docs/getting-started/">
+          <span class="tile"><span data-icon="BookOpen" data-icon-size="19"></span></span>
+          <h3>Getting started</h3>
+          <p>New to FocusCaseX? Install the app, sign in and take the workspace tour.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/faq/">
+          <span class="tile"><span data-icon="CircleHelp" data-icon-size="19"></span></span>
+          <h3>FAQ</h3>
+          <p>Plain answers on licences, devices, offline use and updates — in one place.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/docs/cli/">
+          <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
+          <h3>FCX CLI</h3>
+          <p>Install the marketplace anywhere with npm and host it on your own machine — every <b>fcx</b> command, in one place.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/install/">
+          <span class="tile"><span data-icon="Download" data-icon-size="19"></span></span>
+          <h3>Install guide</h3>
+          <p>The latest Android build and the CLI, next to the install codes they ask for.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  (function () {
+    /* paint [data-icon] placeholders with real SVGs */
+    function paintIcons() {
+      document.querySelectorAll("[data-icon]").forEach(function (el) {
+        var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
+        el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
+      });
+    }
+
+    paintIcons();
+
+    FCX.ready({ active: "docs" }).catch(function () {
+      /* offline preview (file://) or catalog unreachable — paint minimal chrome */
+      var header = document.getElementById("site-header");
+      var footer = document.getElementById("site-footer");
+      if (header && !header.firstChild) {
+        header.innerHTML =
+          '<div class="top"><div class="top-inner">' +
+          '<a class="brand" href="/">' + FCX.icon("Stethoscope", 20) + '<span>FocusCaseX</span></a>' +
+          '<nav class="nav">' +
+          '<a href="/">Overview</a>' +
+          '<a href="/marketplace/">Marketplace</a>' +
+          '<a href="/pricing/">Pricing</a>' +
+          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '</nav></div></div>';
+      }
+      if (footer && !footer.firstChild) {
+        footer.innerHTML =
+          '<div class="foot"><div class="wrap foot-inner">' +
+          '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
+          '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/cli/">FCX CLI</a><a href="/faq/">FAQ</a><a href="/install/">Install guide</a></div>' +
+          '</div></div>';
+      }
+      FCX.wireCopyButtons(document);
+    });
+  })();
+</script>
+</body>
+</html>

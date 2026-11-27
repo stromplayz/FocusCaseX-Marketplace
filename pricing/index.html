@@ -5,7 +5,7 @@
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing — FocusCaseX for eye-care practices</title>
-<meta name="description" content="FocusCaseX pricing in rupees. One product, four licence runs — Monthly ₹399, Quarterly ₹1,299, Yearly ₹4,499, or Lifetime ₹9,999 once. Every plan is the complete workspace with nothing capped. UPI, cards and net banking; taxes included.">
+<meta name="description" content="FocusCaseX pricing in rupees. One product, three licence runs — Monthly ₹399, Quarterly ₹1,299, or Yearly ₹4,499. Every plan is the complete workspace with nothing capped. UPI, cards and net banking; taxes included.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -25,9 +25,9 @@
   }
   .founding svg { color: var(--blue); flex-shrink: 0; }
 
-  /* plan cards: 4-up → 2×2 → 1-col */
+  /* plan cards: 3-up → 2+1 → 1-col */
   .plans {
-    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px; align-items: stretch;
     margin-top: 30px; padding-top: 14px;
   }
@@ -144,7 +144,7 @@
     <section class="page-head">
       <div class="kicker">Pricing</div>
       <h1>Simple pricing for Indian practices.</h1>
-      <p class="lede">One product, four ways to pay for it — monthly, quarterly, yearly, or once and forever. Every plan is the complete FocusCaseX; nothing is capped or held back.</p>
+      <p class="lede">One product, three ways to pay for it — monthly, quarterly, or yearly. Every plan is the complete FocusCaseX; nothing is capped or held back.</p>
     </section>
   </div>
 
@@ -185,8 +185,9 @@
           <a class="btn ghost plan-cta" href="/install/">Get Quarterly</a>
         </article>
 
-        <!-- YEARLY -->
-        <article class="plan">
+        <!-- YEARLY (hero) -->
+        <article class="plan is-hero">
+          <div class="plan-badge">Best value</div>
           <h3 class="plan-name">Yearly</h3>
           <p class="plan-for">Licence runs twelve months</p>
           <div class="plan-price">
@@ -195,21 +196,7 @@
           </div>
           <p class="plan-sub">One payment covers the year.</p>
           <p class="plan-note">≈ ₹375 / month — saves ~37% vs monthly.</p>
-          <a class="btn ghost plan-cta" href="/install/">Get Yearly</a>
-        </article>
-
-        <!-- LIFETIME (hero) -->
-        <article class="plan is-hero">
-          <div class="plan-badge">Pay once, done forever</div>
-          <h3 class="plan-name">Lifetime</h3>
-          <p class="plan-for">Licence never expires</p>
-          <div class="plan-price">
-            <span class="cur">₹</span><span class="num">9,999</span>
-            <span class="per">one-time</span>
-          </div>
-          <p class="plan-sub">Pay once, keep it forever — every future update included.</p>
-          <p class="plan-note">Never billed again. Updates ride along free, forever.</p>
-          <a class="btn primary plan-cta" href="/install/">Get Lifetime</a>
+          <a class="btn primary plan-cta" href="/install/">Get Yearly</a>
         </article>
 
       </div>
@@ -217,7 +204,7 @@
       <!-- ONE SHARED LIST — identical on every plan -->
       <div class="included">
         <h3>Everything included, nothing capped</h3>
-        <p class="inc-sub">The same complete product on every plan — this list is identical whether you pay monthly, quarterly, yearly or once.</p>
+        <p class="inc-sub">The same complete product on every plan — this list is identical whether you pay monthly, quarterly or yearly.</p>
         <ul class="included-grid">
           <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited patients and records</span></li>
           <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited examinations</span></li>
@@ -228,7 +215,7 @@
           <li><span data-icon="Check" data-icon-size="15"></span><span>Unlimited Workbenches</span></li>
           <li><span data-icon="Check" data-icon-size="15"></span><span>Every marketplace add-on included</span></li>
           <li><span data-icon="Check" data-icon-size="15"></span><span>Offline-first — the clinic runs with no internet</span></li>
-          <li><span data-icon="Check" data-icon-size="15"></span><span>Updates included free — on Lifetime, forever</span></li>
+          <li><span data-icon="Check" data-icon-size="15"></span><span>Updates included free — on every plan</span></li>
         </ul>
       </div>
 
@@ -276,7 +263,7 @@
     <div class="wrap-narrow">
       <div class="kicker">Fair question</div>
       <h2>Why do the plans differ?</h2>
-      <p class="explain" style="max-width: 660px; margin-top: 14px; font-size: 14px; color: var(--ink-2); line-height: 1.6;">They don't — not in what you get. Every plan is the entire product; the only thing that changes is how long the licence runs. A longer run lowers the effective monthly cost, and Lifetime ends the billing conversation entirely: ₹9,999 once, every future update included.</p>
+      <p class="explain" style="max-width: 660px; margin-top: 14px; font-size: 14px; color: var(--ink-2); line-height: 1.6;">They don't — not in what you get. Every plan is the entire product; the only thing that changes is how long the licence runs. A longer run lowers the effective monthly cost — the Yearly plan works out to about ₹375 a month.</p>
 
       <div class="dur-scroll">
         <table class="dur">
@@ -301,17 +288,11 @@
               <td>3 months</td>
               <td class="num">≈ ₹433 / month</td>
             </tr>
-            <tr>
+            <tr class="h">
               <td>Yearly</td>
               <td>₹4,499 once a year</td>
               <td>12 months</td>
               <td class="num">≈ ₹375 / month</td>
-            </tr>
-            <tr class="h">
-              <td>Lifetime</td>
-              <td>₹9,999 once</td>
-              <td>Forever</td>
-              <td class="num">Never billed again</td>
             </tr>
           </tbody>
         </table>
@@ -335,19 +316,19 @@
         </details>
         <details>
           <summary>What's the difference between the plans?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Duration only. The product is identical on all four — same features, same marketplace catalog, nothing capped. What changes is how long the licence runs, and a longer run brings the effective monthly price down. Lifetime is billed once and never again.</div>
+          <div class="faq-a">Duration only. The product is identical on all three — same features, same marketplace catalog, nothing capped. What changes is how long the licence runs, and a longer run brings the effective monthly price down.</div>
         </details>
         <details>
           <summary>Do I pay for marketplace add-ons?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">No — the whole marketplace is part of every plan. Extensions, capsules, themes, templates, install codes and one-tap install from this site are included whether you're on Monthly or Lifetime. Nothing is gated by the duration you picked.</div>
+          <div class="faq-a">No — the whole marketplace is part of every plan. Extensions, capsules, themes, templates, install codes and one-tap install from this site are included whether you're on Monthly, Quarterly or Yearly. Nothing is gated by the duration you picked.</div>
         </details>
         <details>
           <summary>What happens to my data if I stop paying?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Your records stay yours. Export everything whenever you like — patients, notes and recalls come out as plain files you keep. Cancelling never locks or deletes your clinic records; on Lifetime there is simply nothing to cancel.</div>
+          <div class="faq-a">Your records stay yours. Export everything whenever you like — patients, notes and recalls come out as plain files you keep. Cancelling never locks or deletes your clinic records.</div>
         </details>
         <details>
           <summary>How do I pay?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">In rupees — UPI, cards or net banking, taxes included. Install the app on your own machine first and try it on real work; then choose Monthly (₹399), Quarterly (₹1,299), Yearly (₹4,499) or Lifetime (₹9,999 once).</div>
+          <div class="faq-a">In rupees — UPI, cards or net banking, taxes included. Install the app on your own machine first and try it on real work; then choose Monthly (₹399), Quarterly (₹1,299) or Yearly (₹4,499).</div>
         </details>
         <details>
           <summary>What does "founding pricing" mean?<span data-icon="Plus"></span></summary>

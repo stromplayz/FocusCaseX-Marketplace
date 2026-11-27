@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/FocusCaseX/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create your own Extension — FocusCaseX Documentation</title>
+<meta name="description" content="The full FocusCaseX Extension authoring guide: the five kinds, the catalog entry and files, a worked example, testing locally with fcx and FCX_MARKET_URL, install codes, and how to submit to the marketplace.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Extensions authoring docs — layout only; composes with the design system. */
+  section[id] { scroll-margin-top: 76px; }
+  .crumb {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12.5px; color: var(--ink-3); margin-bottom: 12px;
+  }
+  .crumb svg { flex-shrink: 0; }
+  .crumb:hover { color: var(--blue); }
+  .doc-lede { margin-top: 14px; max-width: 680px; font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+  .explain a, .doc-lede a, .cli-band p a, .note a { color: var(--blue); font-weight: 500; }
+  .explain a:hover, .doc-lede a:hover, .cli-band p a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .explain code, .doc-lede code, .note code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+  .cli-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; margin-top: 16px;
+  }
+  .cli-band h3 { font-size: 17px; }
+  .cli-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; margin-top: 8px; max-width: 640px; }
+  .cli-band p.cli-alt { font-size: 12.5px; color: var(--ink-3); max-width: none; }
+  .cli-cmd .code-token { letter-spacing: 0; font-size: 13.5px; font-weight: 500; padding: 10px 14px; }
+  .cli-cmd + .cli-cmd { margin-top: 10px; }
+  .note {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 20px; padding: 15px 20px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    border-radius: var(--radius);
+    font-size: 13.5px; color: var(--blue-deep); line-height: 1.5;
+    max-width: 680px;
+  }
+  .note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+  .note p { margin: 0; }
+  .note a { color: var(--blue-deep); font-weight: 600; }
+  .kind-list { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; max-width: 680px; }
+  .kind-list li { display: flex; gap: 9px; align-items: flex-start; font-size: 13.4px; color: var(--ink-2); line-height: 1.55; }
+  .kind-list li svg { color: var(--blue); flex-shrink: 0; margin-top: 3px; }
+  .guide-sub { margin-top: 34px; }
+  .guide-sub > h3 { font-size: 19px; margin-bottom: 2px; }
+  .guide-sec { padding: 26px 0 10px; }
+  .fence-label {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+    margin-top: 22px;
+  }
+  .fence-label + .fence { margin-top: 8px; }
+  .fence { margin-top: 14px; font-size: 12.6px; }
+  .fence.wrap-cmd { white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap-narrow">
+
+    <section class="page-head">
+      <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
+      <div class="kicker">Documentation · Authoring</div>
+      <h1>Create your own Extension</h1>
+      <p class="lede">Everything installable in FocusCaseX is described by one catalog entry plus a folder of small files — no build tools, no bundler. This page is the full authoring guide; the same text lives inline in <a href="/docs/#extensions-guide" style="color:var(--blue);font-weight:500;">the full guide</a>.</p>
+      <p class="explain">A text editor and the <code>fcx</code> command are enough: build, test on your own machine, then submit to the marketplace.</p>
+    </section>
+
+    <section class="guide-sec" id="kinds" aria-label="The five kinds" style="padding-top: 14px;">
+      <h2 style="margin-bottom: 6px;">The five kinds</h2>
+      <p class="doc-lede">Pick the kind that matches what you are building — the kind decides which files the installer fetches and where they land:</p>
+      <ul class="kind-list">
+        <li><span data-icon="Puzzle" data-icon-size="15"></span><span><b>Extension</b> — a tool that adds a feature: commands, panels, automations. Two files: <code>manifest.json</code> + <code>main.js</code>. (The first kind in every example below.)</span></li>
+        <li><span data-icon="Braces" data-icon-size="15"></span><span><b>Capsule</b> — a ready-made board or page section. A <code>spec.mdui</code> layout file, plus optional <code>style.css</code> and <code>logic.mdui</code>.</span></li>
+        <li><span data-icon="Palette" data-icon-size="15"></span><span><b>Theme</b> — the workspace look. One JSON file of design tokens.</span></li>
+        <li><span data-icon="ScrollText" data-icon-size="15"></span><span><b>Template</b> — a pre-written clinical note or letter. One markdown file.</span></li>
+        <li><span data-icon="Sparkle" data-icon-size="15"></span><span><b>Snippet</b> — a small interface tweak. One CSS file.</span></li>
+      </ul>
+      <p class="doc-lede">A <b>WorkBench</b> is the sixth entry kind — a bundle that installs many items at once. It is assembled from published items, so build an Extension or two first if you want to ship one.</p>
+    </section>
+
+    <section class="guide-sec" id="on-disk" aria-label="What an installed item looks like" style="padding-top: 10px;">
+      <h2 style="margin-bottom: 6px;">What an installed item looks like</h2>
+      <p class="doc-lede">The CLI installer fetches exactly the files the catalog entry lists and writes them into a folder named after the item, one folder per kind. An Extension always lands as <code>manifest.json</code> and <code>main.js</code> (plus any extra files the entry lists); a capsule keeps its <code>spec.mdui</code>, <code>style.css</code> and <code>logic.mdui</code>; a theme its JSON; a template its markdown; a snippet its CSS. Every install is registered in the CLI's installed list, which is what <strong>fcx install list</strong> and <strong>fcx uninstall</strong> read.</p>
+    </section>
+
+    <section class="guide-sec" id="catalog-entry" aria-label="How the catalog describes an item" style="padding-top: 10px;">
+      <h2 style="margin-bottom: 6px;">How the catalog describes an item</h2>
+      <p class="doc-lede">A real entry from the marketplace catalog — the Heading Numbering Extension — so you can see the exact shape:</p>
+      <div class="fence wrap-cmd">{
+  "id": "plugin:heading-numbering",
+  "kind": "plugin",
+  "name": "Heading Numbering",
+  "tagline": "Auto-numbers H2/H3 headings in the reading view using an injected CSS counter (cleaned up on unload).",
+  "description": "Auto-numbers H2/H3 headings in the reading view using an injected CSS counter (cleaned up on unload).",
+  "author": "FocusCaseX originals",
+  "version": "1.0.0",
+  "category": "Writing",
+  "tags": ["plugin", "writing"],
+  "icon": "ListTree",
+  "rating": 4.1,
+  "reviews": 64,
+  "downloads": 4207,
+  "released": "2026-01-24",
+  "verified": true,
+  "featured": false,
+  "meta": { "pluginId": "heading-numbering" },
+  "files": {
+    "manifest": "plugins/heading-numbering/manifest.json",
+    "main": "plugins/heading-numbering/main.js"
+  }
+}</div>
+      <p class="doc-lede">The rules that matter:</p>
+      <ul class="kind-list">
+        <li><span data-icon="Check" data-icon-size="15"></span><span><code>id</code> is <code>kind:slug</code> — <code>plugin:hello-clinic-note</code>, <code>capsule:ui-today</code>, <code>theme:mono-ink</code>. The slug is the folder name under <code>plugins/</code>, <code>capsules/</code>, <code>themes/</code>, <code>templates/</code> or <code>snippets/</code> in the site repo.</span></li>
+        <li><span data-icon="Check" data-icon-size="15"></span><span><code>files</code> points at those paths — for an Extension the keys are <code>manifest</code> and <code>main</code>; a capsule lists <code>spec</code> (plus <code>style</code>, <code>logic</code>); a theme lists <code>vars</code>; a template lists <code>body</code>; a snippet has a top-level <code>file</code>.</span></li>
+        <li><span data-icon="Check" data-icon-size="15"></span><span><code>meta</code> carries the bare id — <code>pluginId</code>, <code>capsuleId</code>, <code>themeId</code>, <code>templateId</code> — matching the manifest's own <code>id</code>.</span></li>
+        <li><span data-icon="Check" data-icon-size="15"></span><span><code>rating</code>, <code>reviews</code>, <code>downloads</code>, <code>released</code>, <code>verified</code> and <code>featured</code> are marketplace metadata — the review fills those in; you can leave them out of a new entry.</span></li>
+      </ul>
+    </section>
+
+    <section class="guide-sec" id="example" aria-label="The minimal Extension — a worked example" style="padding-top: 10px;">
+      <h2 style="margin-bottom: 6px;">The minimal Extension — a worked example</h2>
+      <p class="doc-lede">"Hello clinic note" — one command and one small stylesheet, in the same shape as the shipped samples. Two files, nothing else.</p>
+
+      <div class="fence-label">File 1 of 2 — plugins/hello-clinic-note/manifest.json</div>
+      <div class="fence wrap-cmd">{
+  "id": "hello-clinic-note",
+  "name": "Hello clinic note",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "A first Extension — one command on the palette and a starter style for clinic notes.",
+  "author": "Your name"
+}</div>
+
+      <div class="fence-label">File 2 of 2 — plugins/hello-clinic-note/main.js</div>
+      <div class="fence wrap-cmd">/**
+ * FocusCaseX Extension — Hello clinic note.
+ * One command, one injected stylesheet, cleanup on unload — the same
+ * shape as the shipped samples (registerCss, registerCommand, showToast).
+ */
+(function (ctx) {
+  "use strict";
+
+  var css = [
+    ".clinic-note-starter {",
+    "  border: 1px solid var(--line);",
+    "  border-radius: 10px;",
+    "  padding: 14px 16px;",
+    "  color: var(--ink-2);",
+    "}"
+  ].join("\n");
+
+  ctx.registerCss(css);
+
+  ctx.registerCommand({
+    id: "hello-clinic-note",
+    title: "Hello, clinic note",
+    icon: "FileText",
+    run: function () {
+      ctx.showToast("Hello clinic note is installed and running.");
+    },
+  });
+
+  ctx.onunload = function () {
+    /* the injected stylesheet leaves with the host cleanup */
+  };
+})(ctx);</div>
+
+      <div class="fence-label">The catalog entry that publishes it</div>
+      <div class="fence wrap-cmd">{
+  "id": "plugin:hello-clinic-note",
+  "kind": "plugin",
+  "name": "Hello clinic note",
+  "tagline": "A first Extension — one command on the palette and a starter style for clinic notes.",
+  "description": "A first Extension — one command on the palette and a starter style for clinic notes.",
+  "author": "Your name",
+  "version": "1.0.0",
+  "category": "Writing",
+  "tags": ["plugin", "writing"],
+  "icon": "FileText",
+  "meta": { "pluginId": "hello-clinic-note" },
+  "files": {
+    "manifest": "plugins/hello-clinic-note/manifest.json",
+    "main": "plugins/hello-clinic-note/main.js"
+  }
+}</div>
+      <p class="doc-lede">For the other kinds the same two-part pattern holds — a folder of files plus an entry that lists them. A theme entry's <code>files.vars</code> points at a JSON of design tokens; a template's <code>files.body</code> points at a markdown note with frontmatter (<code>patient: MR-0000</code> and a type); a snippet lives in the catalog's top-level <code>snippets</code> array as <code>{ "id", "name", "file", "description" }</code> pointing at one CSS file.</p>
+    </section>
+
+    <section class="guide-sec" id="local-test" aria-label="Test it locally" style="padding-top: 10px;">
+      <h2 style="margin-bottom: 6px;">Test it locally</h2>
+      <p class="doc-lede">The CLI reads its marketplace from a URL, so you can point it at your own machine while you build. Make a mirror folder that looks like the site:</p>
+      <div class="fence wrap-cmd">mirror/
+  catalog.json                              ← a copy of the catalog with
+                                              your entry added to "items"
+  plugins/
+    hello-clinic-note/
+      manifest.json
+      main.js</div>
+      <p class="doc-lede">Serve the folder with any static file server, then point the CLI at it and sync:</p>
+      <div class="fence wrap-cmd"><span class="cx-cmd">FCX_MARKET_URL=http://localhost:4319 fcx sync</span>
+<span class="cx-cmd">FCX_MARKET_URL=http://localhost:4319 fcx install plugin:hello-clinic-note</span></div>
+      <p class="doc-lede"><strong>fcx sync</strong> fetches <code>catalog.json</code> from that URL and caches it; <strong>fcx install</strong> resolves the item by id, install code or name and writes its files into the workspace — the output shows the folder and the install code. Install by code works too: every item's <strong>FCX-XXXXXX</strong> code is derived from its id, so once your entry is in a catalog, its code exists and resolves the same everywhere — the site, the app and the CLI.</p>
+      <div class="note">
+        <span data-icon="Link" data-icon-size="17"></span>
+        <p><b>Share the mirror with the clinic.</b> <strong>fcx serve</strong> hosts the synced cache for everyone: it prints a local URL, and a LAN address when a clinic network exists. No clinic network? The web workspace still opens as usual. Endpoints: <code>/health</code>, <code>/api/catalog</code>, <code>/api/workbenches</code>.</p>
+      </div>
+    </section>
+
+    <section class="guide-sec" id="submit" aria-label="Submit it" style="padding-top: 10px;">
+      <h2 style="margin-bottom: 6px;">Submit it</h2>
+      <div class="cli-band">
+        <ol class="steps">
+          <li><span>Add your entry to <code>catalog.json</code> in the public site repo (<a href="https://github.com/stromplayz/FocusCaseX" target="_blank" rel="noopener">stromplayz/FocusCaseX</a>) — in <code>items</code>, or in the top-level <code>snippets</code> array for a snippet.</span></li>
+          <li><span>Add the files the entry points at, at exactly those paths: <code>plugins/&lt;slug&gt;/</code>, <code>capsules/&lt;slug&gt;/</code>, <code>themes/&lt;slug&gt;.json</code>, <code>templates/&lt;slug&gt;.md</code> or <code>snippets/&lt;slug&gt;.css</code>.</span></li>
+          <li><span>Open a pull request — or hand the entry and files to the FocusCaseX owner, and the review takes it from there. Review fills in the marketplace metadata and marks reviewed items.</span></li>
+        </ol>
+      </div>
+      <p class="doc-lede">After it merges, one <strong>fcx sync</strong> picks the item up on every machine, the marketplace pages list it with its install code, and installs by code work in the app and the CLI alike. Shipping an update: bump <code>version</code> in the catalog entry and your manifest — the next install overwrites the old files.</p>
+    </section>
+
+    <!-- WHERE NEXT -->
+    <section class="guide-sec" id="next" aria-label="Where next" style="padding-top: 18px;">
+      <div class="kicker">Keep reading</div>
+      <h2 style="margin-bottom: 6px;">Where next</h2>
+      <div class="entries" style="margin-top: 20px;">
+        <a class="entry" href="/docs/">
+          <span class="tile"><span data-icon="Workflow" data-icon-size="19"></span></span>
+          <h3>The full guide</h3>
+          <p>Everything on one page — the app, every fcx command, WorkBenches, security and the FAQ.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/docs/cli/">
+          <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
+          <h3>FCX CLI</h3>
+          <p>Every <b>fcx</b> command in one place — sync, install and serve are the ones this guide uses.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/marketplace/">
+          <span class="tile"><span data-icon="LayoutGrid" data-icon-size="19"></span></span>
+          <h3>Browse the marketplace</h3>
+          <p>Every published item, with live previews — the shape your own entry joins.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/icons.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  (function () {
+    /* paint [data-icon] placeholders with real SVGs */
+    function paintIcons() {
+      document.querySelectorAll("[data-icon]").forEach(function (el) {
+        var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
+        el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
+      });
+    }
+
+    paintIcons();
+
+    FCX.ready({ active: "docs" }).catch(function () {
+      /* offline preview (file://) or catalog unreachable — paint minimal chrome */
+      var header = document.getElementById("site-header");
+      var footer = document.getElementById("site-footer");
+      if (header && !header.firstChild) {
+        header.innerHTML =
+          '<div class="top"><div class="top-inner">' +
+          '<a class="brand" href="/">' + FCX.icon("Stethoscope", 20) + '<span>FocusCaseX</span></a>' +
+          '<nav class="nav">' +
+          '<a href="/">Overview</a>' +
+          '<a href="/marketplace/">Marketplace</a>' +
+          '<a href="/pricing/">Pricing</a>' +
+          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '</nav></div></div>';
+      }
+      if (footer && !footer.firstChild) {
+        footer.innerHTML =
+          '<div class="foot"><div class="wrap foot-inner">' +
+          '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
+          '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/extensions/">Extensions</a><a href="/faq/">FAQ</a><a href="/install/">Install guide</a></div>' +
+          '</div></div>';
+      }
+      FCX.wireCopyButtons(document);
+    });
+  })();
+</script>
+</body>
+</html>

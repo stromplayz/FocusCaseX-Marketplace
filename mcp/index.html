@@ -134,7 +134,7 @@
           <div class="endpoint-row" style="background: var(--dark-2); border-color: var(--dark-line);">
             <span class="ep-tag" style="background: rgba(5,51,255,.2); color: var(--blue-bright);">Endpoint</span>
             <code style="color:#e8eaf6;">https://focuscasex.vercel.app/api/mcp/server</code>
-            <span style="font-size:11.5px;color:#7c8296;">or, on your device: <code style="color:#e8eaf6;">http://&lt;device-ip&gt;:8080/api/mcp/server</code> · pairing happens in the app, under Settings → MCP</span>
+            <span style="font-size:11.5px;color:#7c8296;">or, on your device: <code style="color:#e8eaf6;">http://&lt;device-ip&gt;:8080/api/mcp/server</code> · pairing happens in the app, under Settings → MCP &amp; Automation</span>
           </div>
         </div>
       </div>
@@ -147,7 +147,7 @@
       <div class="kicker">The protocol</div>
       <h2>What MCP is, in plain words.</h2>
       <p class="mcp-lede"><b>Model Context Protocol (MCP)</b> is an open standard that lets AI agents — Claude, Cursor, anything that speaks it — call tools on your behalf. The agent thinks in its chat window; the tools run against real software: search this, book that, install this.</p>
-      <p class="mcp-lede" style="margin-top:12px;">FocusCaseX adds the other half: <b>your clinic records become agent-accessible through a local, paired server — with a person at the approval layer.</b> The app hosts the MCP server itself, on-device over your own Wi-Fi or on the web workspace at the endpoint above. You approve every connection, set every agent's scopes, and confirm every write.</p>
+      <p class="mcp-lede" style="margin-top:12px;">FocusCaseX adds the other half: <b>your clinic records become agent-accessible through a local, paired server — with a person at the approval layer.</b> The app hosts the MCP server itself — on-device over your clinic network when one exists, or on the web workspace at the endpoint above. You approve every connection, set every agent's scopes, and confirm every write.</p>
       <div class="band-grid" style="margin-top: 30px;">
         <div class="t-item">
           <span data-icon="Bot"></span>
@@ -188,6 +188,11 @@
           <div class="conn-head"><span data-icon="ScanEye" data-icon-size="16"></span><b>Read tools</b><span class="tool-badge read">runs freely</span></div>
           <div class="card-body"><p>The agent's eyes. It can look anything up, any time — no prompts, no approvals, and nothing it reads is changed.</p></div>
           <ul class="tool-list">
+            <li><code>fcx_status</code><span>workspace snapshot — version, note count, folders</span></li>
+            <li><code>fcx_list_notes</code><span>list clinic notes, newest first</span></li>
+            <li><code>fcx_search_notes</code><span>full-text search across the workspace</span></li>
+            <li><code>fcx_get_note</code><span>read one note in full by its path</span></li>
+            <li><code>fcx_list_market</code><span>browse the Marketplace catalog and install codes</span></li>
             <li><code>patients_search</code><span>find patients by name or MR</span></li>
             <li><code>patients_get</code><span>open one patient file</span></li>
             <li><code>appointments_list</code><span>browse the day book</span></li>
@@ -211,6 +216,7 @@
           <div class="conn-head"><span data-icon="Zap" data-icon-size="16"></span><b>Write tools</b><span class="tool-badge write">confirmation per action</span></div>
           <div class="card-body"><p>The agent's hands. Every action opens a <b>human-readable diff</b> in the app — old value → new value — and waits for Approve or Deny. Deny, and nothing changes.</p></div>
           <ul class="tool-list">
+            <li><code>fcx_create_note</code><span>create a new note — never overwrites an existing one</span></li>
             <li><code>patients_create</code><span>register a new patient</span></li>
             <li><code>patients_update</code><span>correct a patient's details</span></li>
             <li><code>appointments_book</code><span>book a visit</span></li>
@@ -284,22 +290,22 @@
 
       <div class="conn-grid" style="margin-top: 26px;">
         <div class="conn-card">
-          <div class="conn-head"><span data-icon="KeyRound" data-icon-size="16"></span><b>Code Confirmation</b><span class="conn-where">Settings → MCP</span></div>
+          <div class="conn-head"><span data-icon="KeyRound" data-icon-size="16"></span><b>Code Confirmation</b><span class="conn-where">Settings → MCP &amp; Automation</span></div>
           <div class="card-body">
             <p>When an unpaired agent tries to connect, FocusCaseX shows a 6-digit code in the app. If the request is one you recognize, approve it — the agent is bound to this install, with its own scopes. No code you approved, no connection.</p>
             <ol class="steps">
-              <li><span><strong>The agent asks to pair.</strong> A pending request with its name and device appears under Settings → MCP, along with a 6-digit code.</span></li>
+              <li><span><strong>The agent asks to pair.</strong> A pending request with its name and device appears under Settings → MCP &amp; Automation, along with a 6-digit code.</span></li>
               <li><span><strong>You approve.</strong> Deny and the agent stays locked out — there is no other way in.</span></li>
               <li><span><strong>You set its scopes</strong> — read, write, build — and can change or revoke them any time.</span></li>
             </ol>
           </div>
         </div>
         <div class="conn-card">
-          <div class="conn-head"><span data-icon="QrCode" data-icon-size="16"></span><b>Scan Mode</b><span class="conn-where">Settings → MCP</span></div>
+          <div class="conn-head"><span data-icon="QrCode" data-icon-size="16"></span><b>Scan Mode</b><span class="conn-where">Settings → MCP &amp; Automation</span></div>
           <div class="card-body">
-            <p>FocusCaseX shows a QR code under Settings → MCP. Scan it from the agent's device — or from your phone — and the same pairing completes with zero typing. Same approval, same scopes, faster.</p>
+            <p>FocusCaseX shows a QR code under Settings → MCP &amp; Automation. Scan it from the agent's device — or from your phone — and the same pairing completes with zero typing. Same approval, same scopes, faster.</p>
             <ol class="steps">
-              <li><span><strong>Open Settings → MCP.</strong> The QR is on screen, ready to pair.</span></li>
+              <li><span><strong>Open Settings → MCP &amp; Automation.</strong> The QR is on screen, ready to pair.</span></li>
               <li><span><strong>Scan it</strong> from the agent's device or your phone.</span></li>
               <li><span><strong>Approve in the app</strong> — paired, scopes chosen, done.</span></li>
             </ol>
@@ -334,7 +340,7 @@
           <span data-icon="Trash2"></span>
           <div>
             <b>Revoke in one tap</b>
-            <span>Every paired agent can be revoked under Settings → MCP. Revoking ends its access on its next call and clears its pending actions — no restarts.</span>
+            <span>Every paired agent can be revoked under Settings → MCP &amp; Automation. Revoking ends its access on its next call and clears its pending actions — no restarts.</span>
           </div>
         </div>
       </div>
@@ -356,7 +362,7 @@
     <div class="wrap">
       <div class="kicker">Agent setups</div>
       <h2>Set up your agent. Every major client, one snippet each.</h2>
-      <p class="mcp-lede">Pick your client, paste its snippet where it keeps configs, and put a token in the Authorization slot. Mint one by pairing in the app — the 6-digit code or the QR — or issue a personal token under Settings → MCP. The snippets below point at the public web endpoint; an on-device install swaps in the address it shows under Settings → MCP.</p>
+      <p class="mcp-lede">Pick your client, paste its snippet where it keeps configs, and put a token in the Authorization slot. Mint one by pairing in the app — the 6-digit code or the QR — or issue a personal token under Settings → MCP &amp; Automation. The snippets below point at the public web endpoint; an on-device install swaps in the address it shows under Settings → MCP &amp; Automation.</p>
 
       <div class="conn-grid" style="margin-top: 26px;">
 
@@ -518,9 +524,9 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
         <span class="ep-tag">On-device</span>
         <code>http://&lt;device-ip&gt;:8080/api/mcp/server</code>
         <button class="chip" type="button" data-copy="http://&lt;device-ip&gt;:8080/api/mcp/server"><span data-icon="Copy" data-icon-size="13"></span><span>Copy</span></button>
-        <span class="muted small">The app on your phone or tablet serves MCP over your own Wi-Fi — the exact address is shown under Settings → MCP.</span>
+        <span class="muted small">The app on your phone or tablet serves MCP over your clinic network when one exists — the exact address is shown under Settings → MCP &amp; Automation. No clinic network? The web workspace endpoint above works as usual, from anywhere.</span>
       </div>
-      <p class="doc-note">Use the web endpoint when you work in the hosted workspace, the device address when the records live on the phone or tablet in the room. Both pair the same way; both log to the same audit log. Headless clients that can't show a pairing screen can use a personal token instead — Settings → MCP → Issue token — as a Bearer header, with the same scopes.</p>
+      <p class="doc-note">Use the web endpoint when you work in the hosted workspace, the device address when the records live on the phone or tablet in the room. Both pair the same way; both log to the same audit log. Headless clients that can't show a pairing screen can use a personal token instead — Settings → MCP &amp; Automation → Create token — as a Bearer header, with the same scopes.</p>
 
       <div class="hero-cta" style="margin-top: 22px;">
         <a class="btn primary" href="/install/" style="min-height:48px;">Try it — the install guide <span data-icon="ArrowRight" data-icon-size="15"></span></a>
@@ -553,7 +559,7 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
           <span data-icon="CircleCheck"></span>
           <div>
             <b>Writes need a human</b>
-            <span>No write applies without your confirmation, shown as a plain-language diff. Standing allowances are explicit, per agent, and visible under Settings → MCP.</span>
+            <span>No write applies without your confirmation, shown as a plain-language diff. Standing allowances are explicit, per agent, and visible under Settings → MCP &amp; Automation.</span>
           </div>
         </div>
         <div class="t-item">
@@ -593,19 +599,19 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
         </details>
         <details>
           <summary>Can an agent change my records?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Only writes you approve. Every write — bookings, notes, installs — shows a human-readable diff in the app and applies only when you tap Approve. Clinical records themselves have no delete tool; capsules and Extensions can be removed, again only on your confirmation.</div>
+          <div class="faq-a">Only writes you approve. Every write — bookings, notes, installs — shows a human-readable diff in the app and applies only when you tap Approve. Clinical records themselves have no delete tool; capsules can be removed and Extensions switched off, again only on your confirmation.</div>
         </details>
         <details>
           <summary>What happens if an agent connects without approval?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">It gets a single "authorization required" response, and a pending request appears under Settings → MCP with its name, device and the scopes it wants — plus a 6-digit code for you to check. If you don't recognize it, tap Deny — and it stays locked out.</div>
+          <div class="faq-a">It gets a single "authorization required" response, and a pending request appears under Settings → MCP &amp; Automation with its name, device and the scopes it wants — plus a 6-digit code for you to check. If you don't recognize it, tap Deny — and it stays locked out.</div>
         </details>
         <details>
           <summary>What is a standing allowance?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Normally every write waits for your confirmation. A standing allowance is an explicit, per-agent grant that lets one specific agent write without asking each time — for agents you run unattended. It's visible under Settings → MCP and revocable like everything else; its writes still land in the audit log.</div>
+          <div class="faq-a">Normally every write waits for your confirmation. A standing allowance is an explicit, per-agent grant that lets one specific agent write without asking each time — for agents you run unattended. It's visible under Settings → MCP &amp; Automation and revocable like everything else; its writes still land in the audit log.</div>
         </details>
         <details>
           <summary>How do I switch MCP off?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Revoke agents under Settings → MCP — one tap each, effective on their next call, pending actions cleared. On a device you can also simply stop the host server.</div>
+          <div class="faq-a">Revoke agents under Settings → MCP &amp; Automation — one tap each, effective on their next call, pending actions cleared. On a device you can also simply stop the host server.</div>
         </details>
         <details>
           <summary>Which agents can connect?<span data-icon="Plus"></span></summary>
@@ -615,11 +621,11 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
       <div class="cta-band" style="margin-top: 54px;">
         <div style="flex:1;min-width:260px;">
           <h2>Pair an agent in two minutes.</h2>
-          <p>Install FocusCaseX, open Settings → MCP, scan the QR or approve the 6-digit code, and choose the agent's scopes. First read takes a second; first write waits for your tap.</p>
+          <p>Install FocusCaseX, open Settings → MCP &amp; Automation, scan the QR or approve the 6-digit code, and choose the agent's scopes. First read takes a second; first write waits for your tap.</p>
         </div>
         <div style="display:flex; flex-direction:column; gap:10px;">
           <a class="btn blue-on-dark" href="/install/" style="min-height:44px;">Try it — the install guide</a>
-          <button class="btn dark-ghost" type="button" data-copy="Settings → MCP"><span data-icon="Copy" data-icon-size="15"></span><span>Copy the settings path</span></button>
+          <button class="btn dark-ghost" type="button" data-copy="Settings → MCP &amp; Automation"><span data-icon="Copy" data-icon-size="15"></span><span>Copy the settings path</span></button>
         </div>
       </div>
     </div>

@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How to install — FocusCaseX Marketplace</title>
-<meta name="description" content="Install any FocusCaseX add-on three ways: search inside the app, type its install code, or tap Install on this site and let the browser hand it to the app. Included with every plan, offline after install, remove any time.">
+<title>How to install — FocusCaseX</title>
+<meta name="description" content="Install FocusCaseX today: one terminal command puts the FocusCaseX registry and the fcx CLI on any computer with Node 18, and the Android app carries the clinic on phones and tablets. Desktop and iOS are on the way. Every add-on is included with every plan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -40,6 +40,75 @@
   .way .steps { margin-top: 4px; }
   #browser { scroll-margin-top: 76px; }
 
+  /* Choose your platform — four cards, the terminal one featured */
+  .platforms {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px; align-items: stretch;
+    margin-top: 30px; padding-top: 14px;
+  }
+  @media (max-width: 1080px) { .platforms { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .platforms { grid-template-columns: 1fr; } }
+  .plat {
+    position: relative; display: flex; flex-direction: column; gap: 10px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px;
+    transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .plat:hover { border-color: var(--blue-line); transform: translateY(-2px); box-shadow: var(--shadow-1); }
+  .plat.is-hero {
+    border: 1.5px solid var(--blue);
+    background: rgba(5, 51, 255, .03);
+    box-shadow: var(--shadow-2);
+  }
+  .plat.is-hero:hover { border-color: var(--blue); }
+  .plat-badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--blue); color: #fff;
+    font-family: var(--font-display); font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 999px; white-space: nowrap;
+    box-shadow: 0 10px 20px -8px rgba(5, 51, 255, .7);
+  }
+  .plat-head { display: flex; align-items: center; gap: 11px; }
+  .plat-head .tile {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--blue-soft); color: var(--blue);
+  }
+  .plat-head h3 { font-size: 17.5px; }
+  .plat p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; margin: 0; }
+  .plat-soon-chip {
+    align-self: flex-start;
+    font-family: var(--font-display); font-size: 11px; font-weight: 600;
+    letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-3); background: var(--bg-soft);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 12px;
+  }
+  .plat.is-soon { background: var(--bg-soft); }
+  .plat.is-soon .plat-head .tile { background: var(--paper); color: var(--ink-3); border: 1px solid var(--line); }
+  .plat.is-soon .plat-head h3 { color: var(--ink-2); }
+  .plat.is-soon p { color: var(--ink-3); }
+  .plat .code-row { margin-top: 2px; }
+  .plat .code-token {
+    flex: 1 1 auto; min-width: 0;
+    font-size: 11.5px; font-weight: 500; letter-spacing: 0;
+    padding: 9px 12px; line-height: 1.55;
+    overflow-wrap: anywhere; white-space: normal; text-align: left;
+  }
+  .plat-mini {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-3); margin-top: 6px;
+  }
+  .plat-list { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 7px; }
+  .plat-list li { display: flex; gap: 8px; align-items: flex-start; font-size: 12.6px; color: var(--ink-2); line-height: 1.5; }
+  .plat-list li svg { color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+  .plat.is-soon .plat-list li svg { color: var(--ink-3); }
+  .plat-foot { margin-top: auto; padding-top: 10px; font-size: 12.8px; }
+  .plat-foot a { color: var(--blue); font-weight: 600; text-decoration: none; }
+  .plat-foot a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
   /* FCX CLI — the same marketplace on any computer */
   #cli { scroll-margin-top: 76px; }
   .cli-band {
@@ -54,7 +123,7 @@
     background: var(--bg-soft); border: 1px solid var(--line);
     border-radius: 5px; padding: 1px 6px;
   }
-  .cli-cmd .code-token { letter-spacing: 0; font-size: 13.5px; font-weight: 500; padding: 10px 14px; }
+  .cli-cmd .code-token { letter-spacing: 0; font-size: 13.5px; font-weight: 500; padding: 10px 14px; overflow-wrap: anywhere; }
   .cli-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
   .cli-cols .cli-band { margin-top: 0; }
   .cli-same { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 22px; }
@@ -89,16 +158,179 @@
 <body>
 <header id="site-header"></header>
 <main>
-  <div class="wrap-narrow">
 
+  <!-- PAGE HEAD -->
+  <div class="wrap-narrow">
     <section class="page-head">
       <div class="kicker">Install guide</div>
       <h1>How to install</h1>
-      <p class="lede">Three ways in — all one tap.</p>
-      <p class="explain">Everything lives inside FocusCaseX. This page shows you the doors.</p>
+      <p class="lede">Three ways in today — the terminal registry and the Android app, with desktop and iOS on the way.</p>
+      <p class="explain">One command puts the FocusCaseX registry on any computer; the Android app carries the clinic in your pocket; this site installs add-ons straight into the app.</p>
+    </section>
+  </div>
+
+  <!-- CHOOSE YOUR PLATFORM -->
+  <section class="section-tight" id="platforms" aria-label="Choose your platform" style="padding-top: 14px;">
+    <div class="wrap">
+      <div class="kicker">Platforms</div>
+      <h2 style="margin-bottom: 6px;">Choose your platform</h2>
+      <p class="explain" style="max-width: 680px;">Two supported installs today — both open the same clinic, with the same catalog and the same FCX- install codes.</p>
+
+      <div class="platforms">
+
+        <!-- TERMINAL (featured) -->
+        <article class="plat is-hero">
+          <div class="plat-badge">Recommended</div>
+          <div class="plat-head">
+            <span class="tile" aria-hidden="true"><span data-icon="Terminal" data-icon-size="19"></span></span>
+            <h3>Terminal</h3>
+          </div>
+          <div class="code-row">
+            <span class="code-token" title="Install command — run this in a terminal">curl -fsSL https://stromplayz.github.io/FocusCaseX/install.sh | bash</span>
+            <button class="chip" type="button" data-copy="curl -fsSL https://stromplayz.github.io/FocusCaseX/install.sh | bash" title="Copy install command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy</span></button>
+          </div>
+          <p>Any machine with Node 18 — macOS, Linux, or Windows via WSL/Git Bash. Installs the <strong>fcx</strong> command, the marketplace and the clinic registry host.</p>
+          <div class="plat-mini">What it does</div>
+          <ul class="plat-list">
+            <li><span data-icon="Check" data-icon-size="14"></span><span>Checks for Node 18 or newer before anything else.</span></li>
+            <li><span data-icon="Check" data-icon-size="14"></span><span>Installs the fcx command to <b>~/.focuscasex/bin</b>.</span></li>
+            <li><span data-icon="Check" data-icon-size="14"></span><span>Wires that folder into your PATH for future terminals.</span></li>
+          </ul>
+          <p class="plat-foot"><a href="#cli">First steps and the command reference</a></p>
+        </article>
+
+        <!-- ANDROID -->
+        <article class="plat">
+          <div class="plat-head">
+            <span class="tile" aria-hidden="true"><span data-icon="Download" data-icon-size="19"></span></span>
+            <h3>Android</h3>
+          </div>
+          <p>The clinic app for phones and tablets. Sign in with your <strong>licence email and password</strong>; a new device asks once for the <strong>FCX- device code</strong> from your licence email.</p>
+          <ol class="steps">
+            <li><span>Download the latest FocusCaseX build — the <a href="/download/FocusCaseX-v2.9.0.apk">FocusCaseX v2.9.0 APK</a> — to the device.</span></li>
+            <li><span>When Android asks, <strong>allow installs from that source</strong> — a one-time switch the system remembers.</span></li>
+            <li><span>Open the downloaded file, then <strong>open FocusCaseX</strong> from your app list.</span></li>
+          </ol>
+          <p class="plat-foot"><a href="/download/FocusCaseX-v2.9.0.apk">Download the APK (v2.9.0)</a> · <a href="/docs/getting-started/">Full Android setup guide</a></p>
+        </article>
+
+        <!-- DESKTOP (coming soon) -->
+        <article class="plat is-soon">
+          <div class="plat-head">
+            <span class="tile" aria-hidden="true"><span data-icon="MonitorSmartphone" data-icon-size="19"></span></span>
+            <h3>Desktop</h3>
+          </div>
+          <span class="plat-soon-chip">Coming soon</span>
+          <p>A native desktop app for macOS, Windows and Linux. In the works — the terminal install is today's desktop path.</p>
+        </article>
+
+        <!-- iOS (coming soon) -->
+        <article class="plat is-soon">
+          <div class="plat-head">
+            <span class="tile" aria-hidden="true"><span data-icon="Smartphone" data-icon-size="19"></span></span>
+            <h3>iOS</h3>
+          </div>
+          <span class="plat-soon-chip">Coming soon</span>
+          <p>An iPhone and iPad app is planned. Android and the terminal registry are the supported installs today.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap-narrow">
+
+    <!-- FCX CLI — the same marketplace on any computer -->
+    <section class="section" id="cli" aria-label="FCX CLI" style="padding-top: 28px;">
+      <div class="kicker">For tech people</div>
+      <h2 style="margin-bottom: 6px;">Install on any computer — the FCX CLI</h2>
+      <p class="explain" style="max-width: 680px;">The same marketplace, workbenches and MCP setup — installable anywhere Node 18 runs, hosted on your own machine.</p>
+
+      <div class="cli-band">
+        <h3>Install once</h3>
+        <p>Node 18 or newer, then one command in a terminal:</p>
+        <div class="code-row cli-cmd">
+          <span class="code-token" title="Install command — run this in a terminal">curl -fsSL https://stromplayz.github.io/FocusCaseX/install.sh | bash</span>
+          <button class="chip" type="button" data-copy="curl -fsSL https://stromplayz.github.io/FocusCaseX/install.sh | bash" title="Copy install command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
+        </div>
+        <p class="cli-alt">Run the same command again to update — it replaces the binary in place. To remove it, run the installer with <code>--uninstall</code>; your data under <code>~/.focuscasex</code> stays.</p>
+      </div>
+
+      <div class="cli-cols">
+        <div class="cli-band">
+          <h3>First steps</h3>
+          <ol class="steps">
+            <li><span>Run <strong>fcx setup</strong> — guided setup: pick the workspace folder, sync the catalog, sign in.</span></li>
+            <li><span>Run <strong>fcx marketplace</strong> — browse and install Extensions from the terminal.</span></li>
+            <li><span>Run <strong>fcx status</strong> — confirm the device licence.</span></li>
+          </ol>
+        </div>
+        <div class="cli-band">
+          <h3>Same features as Android</h3>
+          <ul class="cli-same">
+            <li><span data-icon="Check" data-size="15"></span><span>Same catalog, same install codes — every item keeps its <b>FCX-XXXXXX</b> code.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>WorkBench install with a per-piece summary, like the app's confirm dialog.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>Local registry hosting for the clinic LAN.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>MCP agent setup helper for AI agents.</span></li>
+            <li><span data-icon="Check" data-size="15"></span><span>Stays updated from the same marketplace — both ends move together.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cli-band">
+        <h3>Command reference</h3>
+        <p>Every command in one place — the canonical quick reference; the docs link here.</p>
+        <div class="cli-ref-scroll">
+          <table class="cli-ref">
+            <thead>
+              <tr>
+                <th scope="col">Command</th>
+                <th scope="col">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2" style="font-family:var(--font-display);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);background:var(--bg-soft);">Console and setup</td></tr>
+              <tr><td>fcx (bare) / fcx menu</td><td>The interactive console — every menu, arrow keys. Running bare <b>fcx</b> in a terminal opens it too.</td></tr>
+              <tr><td>fcx setup</td><td>Guided setup: pick the workspace folder, sync the catalog, sign in, install a first WorkBench.</td></tr>
+              <tr><td colspan="2" style="font-family:var(--font-display);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);background:var(--bg-soft);">Account and licence</td></tr>
+              <tr><td>fcx login</td><td>Sign in with your licence email, password and the owner-issued FCX-XXXXXX code (alias: <b>fcx activate</b>).</td></tr>
+              <tr><td>fcx logout</td><td>Remove the device licence from this machine.</td></tr>
+              <tr><td>fcx status</td><td>Print the device licence card and re-check it with the registry.</td></tr>
+              <tr><td>fcx device</td><td>The full device identity card — the same view of this machine your clinic owner has.</td></tr>
+              <tr><td>fcx whoami</td><td>One-line identity — signed-in email and device id.</td></tr>
+              <tr><td>fcx vitals</td><td>Environment health check, eight checks (alias: <b>fcx doctor</b>).</td></tr>
+              <tr><td colspan="2" style="font-family:var(--font-display);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);background:var(--bg-soft);">Marketplace and catalog</td></tr>
+              <tr><td>fcx marketplace</td><td>The Extensions storefront in the terminal — categories, search, item detail, install in place (alias: <b>fcx market</b>).</td></tr>
+              <tr><td>fcx install [id-or-code]</td><td>Install any catalog item — Extensions, capsules, themes, templates, snippets, WorkBenches. Bare <b>fcx install</b> opens the marketplace; <b>fcx install list</b> shows installed items.</td></tr>
+              <tr><td>fcx uninstall &lt;id-or-code&gt;</td><td>Remove an installed item.</td></tr>
+              <tr><td>fcx catalog [kind]</td><td>Quick catalog listing — every kind, with install codes.</td></tr>
+              <tr><td>fcx workbench list|show|install</td><td>WorkBench bundles — list with install codes, inspect every piece, install locally.</td></tr>
+              <tr><td>fcx sync</td><td>Refresh the catalog cache from the public marketplace.</td></tr>
+              <tr><td colspan="2" style="font-family:var(--font-display);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);background:var(--bg-soft);">System and diagnostics</td></tr>
+              <tr><td>fcx stats</td><td>Local usage dashboard — commands run, installs, recent activity.</td></tr>
+              <tr><td>fcx alive start|stop|status|run</td><td>Keepalive daemon — pings the licence registry on a schedule so the licence record shows this machine as current.</td></tr>
+              <tr><td>fcx config list|get|set|reset</td><td>CLI settings — workspace folder, keepalive interval, appearance.</td></tr>
+              <tr><td>fcx update</td><td>Check versions — prints the one-line install command when a newer CLI ships.</td></tr>
+              <tr><td>fcx serve [--port 4319]</td><td>Host the registry locally — catalog and bundles over HTTP.</td></tr>
+              <tr><td>fcx open</td><td>Open the full FocusCaseX workspace — same features as the Android app.</td></tr>
+              <tr><td>fcx mcp</td><td>MCP pairing info plus ready-to-paste setup snippets for AI agents.</td></tr>
+              <tr><td>fcx version / --version / --help</td><td>Version and help.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cli-note">
+        <span data-icon="RefreshCcw" data-size="17"></span>
+        <span><b>Requirements and updates.</b> Node 18 or newer. Updates ship from the same pipeline as the app — when the platform ships, the registry bundle is rebuilt, and running the install command again brings your machine current. <code style="font-family:var(--font-mono);font-size:12.5px;">fcx --version</code> confirms the build you have.</span>
+      </div>
     </section>
 
+    <!-- INSIDE THE APP — ADD-ONS -->
     <section class="section-tight">
+      <h2 style="margin-bottom: 4px;">Inside the app — three ways to install an add-on</h2>
+      <p class="explain" style="max-width: 640px;">Once FocusCaseX runs on a device, every add-on lands the same three ways — all one tap, and the FCX- install code works on every platform.</p>
+
       <div class="ways">
         <div class="way">
           <span class="way-num">WAY 1 — IN THE APP</span>
@@ -144,75 +376,6 @@
       <div id="kind-list"></div>
     </section>
 
-    <!-- FCX CLI — the same marketplace on any computer -->
-    <section class="section" id="cli" aria-label="FCX CLI">
-      <div class="kicker">For tech people</div>
-      <h2 style="margin-bottom: 6px;">Install on any computer — the FCX CLI</h2>
-      <p class="explain" style="max-width: 680px;">The same marketplace, workbenches and MCP setup — installable anywhere Node 18 runs, hosted on your own machine.</p>
-
-      <div class="cli-band">
-        <h3>Install once</h3>
-        <p>Node 18 or newer, then one command in a terminal:</p>
-        <div class="code-row cli-cmd">
-          <span class="code-token" title="Install command — run this in a terminal">npm install -g github:stromplayz/FCX-NPM</span>
-          <button class="chip" type="button" data-copy="npm install -g github:stromplayz/FCX-NPM" title="Copy install command"><span data-icon="Copy" data-size="13"></span><span>Copy command</span></button>
-        </div>
-        <p class="cli-alt">Also published to npm as <code>focuscasex</code> — the GitHub install above works today. Once the npm token is configured on the repo, <code>npm install -g focuscasex</code> works too.</p>
-      </div>
-
-      <div class="cli-cols">
-        <div class="cli-band">
-          <h3>First steps</h3>
-          <ol class="steps">
-            <li><span>Run <strong>fcx doctor</strong> — check the environment: Node version, workspace and marketplace reachability.</span></li>
-            <li><span>Run <strong>fcx workbench list</strong> — see the marketplace's WorkBenches with their install codes.</span></li>
-            <li><span>Run <strong>fcx serve</strong> — host the registry on this machine; it prints the local and LAN URLs.</span></li>
-          </ol>
-        </div>
-        <div class="cli-band">
-          <h3>Same features as Android</h3>
-          <ul class="cli-same">
-            <li><span data-icon="Check" data-size="15"></span><span>Same catalog, same install codes — every item keeps its <b>FCX-XXXXXX</b> code.</span></li>
-            <li><span data-icon="Check" data-size="15"></span><span>WorkBench install with a per-piece summary, like the app's confirm dialog.</span></li>
-            <li><span data-icon="Check" data-size="15"></span><span>Local registry hosting for the clinic LAN.</span></li>
-            <li><span data-icon="Check" data-size="15"></span><span>MCP agent setup helper for AI agents.</span></li>
-            <li><span data-icon="Check" data-size="15"></span><span>Stays updated from the same marketplace — both ends move together.</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="cli-band">
-        <h3>Command reference</h3>
-        <p>Every command in one place — the canonical quick reference; the docs link here.</p>
-        <div class="cli-ref-scroll">
-          <table class="cli-ref">
-            <thead>
-              <tr>
-                <th scope="col">Command</th>
-                <th scope="col">What it does</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>fcx doctor</td><td>Check Node, workspace and marketplace reachability.</td></tr>
-              <tr><td>fcx sync</td><td>Refresh the catalog from the public marketplace.</td></tr>
-              <tr><td>fcx catalog [kind]</td><td>List everything installable (Extensions, capsules, themes, templates…).</td></tr>
-              <tr><td>fcx workbench list</td><td>List WorkBenches with install codes.</td></tr>
-              <tr><td>fcx workbench show &lt;id-or-code&gt;</td><td>Full description plus every piece a WorkBench installs.</td></tr>
-              <tr><td>fcx workbench install &lt;id-or-code&gt;</td><td>Install a WorkBench into a local workspace folder with a per-item summary.</td></tr>
-              <tr><td>fcx serve [--port 4319]</td><td>Host the registry locally — catalog and bundles over HTTP.</td></tr>
-              <tr><td>fcx open</td><td>Open the full FocusCaseX workspace — same features as the Android app.</td></tr>
-              <tr><td>fcx mcp</td><td>MCP pairing info plus ready-to-paste setup snippets for AI agents.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="cli-note">
-        <span data-icon="RefreshCcw" data-size="17"></span>
-        <span><b>Requirements and updates.</b> Node 18 or newer. Updates ship from the same pipeline as the app — a GitHub Action syncs the CLI from the private source repo, builds and publishes it whenever the platform updates.</span>
-      </div>
-    </section>
-
     <section class="section-tight">
       <h2>Remove any time</h2>
       <p style="margin-top: 12px; max-width: 640px;"><strong>Settings → Marketplace → Installed</strong> → tap Remove. Installing or removing never touches your patient records.</p>
@@ -228,6 +391,10 @@
         <details>
           <summary>Do I need this website to install anything?<span data-icon="Plus"></span></summary>
           <div class="faq-a">No — the full catalog is inside the app under Marketplace. This site is for browsing ahead of time, previewing items live, and sharing links with your team.</div>
+        </details>
+        <details>
+          <summary>How do I update or remove the terminal install?<span data-icon="Plus"></span></summary>
+          <div class="faq-a">Run the install command again — it replaces the fcx command in place with the current build. To remove it, run the installer with <b>--uninstall</b>: the command and the PATH entry go, and your data under <b>~/.focuscasex</b> stays.</div>
         </details>
         <details>
           <summary>Will it work offline, like the rest of FocusCaseX?<span data-icon="Plus"></span></summary>
@@ -262,12 +429,20 @@
 <script>
   function hydrateIcons() {
     document.querySelectorAll("[data-icon]").forEach((el) => {
-      el.innerHTML = FCX.icon(el.getAttribute("data-icon"), Number(el.getAttribute("data-size")) || 16);
+      const size = Number(el.getAttribute("data-size") || el.getAttribute("data-icon-size")) || 16;
+      el.innerHTML = FCX.icon(el.getAttribute("data-icon"), size);
     });
   }
 
-  // The four kinds: labels, icons and one-liners come straight from FCX.KINDS.
+  // The five kinds: labels, icons and one-liners come straight from FCX.KINDS.
   const FEEL = {
+    workbench: {
+      feel: "A WorkBench is a whole pre-configured EMR in one bundle — appointment boards, examination pages, dispensing and billing views, a theme and starter pages, laid out to work together. Install one code and every piece lands with a per-item summary, the same confirm dialog the app shows for any install. Switching WorkBenches later is a one-tap switch, not a rebuild.",
+      steps: [
+        `Install the WorkBench with its <strong>FCX-XXXXXX code</strong> — the app lists every piece and asks once.`,
+        `Preview first: each WorkBench page on this site shows everything it installs.`,
+      ],
+    },
     plugin: {
       feel: "An extension switches on the moment you install it — a new button in your toolbar, an extra panel beside your notes, a quick reference one tap away. You never leave the page you were on; the feature simply appears where you already work.",
       steps: [
@@ -302,6 +477,7 @@
     document.getElementById("kind-list").innerHTML = FCX.KIND_ORDER.map((kind) => {
       const k = FCX.KINDS[kind];
       const f = FEEL[kind];
+      if (!k || !f) return ""; // skip kinds this guide does not describe
       return `
 <article class="kind" style="--card-c:${k.c};--card-soft:${k.soft}">
   <div class="kind-head">
@@ -345,7 +521,7 @@
     }
   }
 
-  FCX.ready({ active: "marketplace" }).then(() => {
+  FCX.ready({ active: "install" }).then(() => {
     hydrateIcons();
     renderKinds();
     FCX.wireDeepLinks(document);

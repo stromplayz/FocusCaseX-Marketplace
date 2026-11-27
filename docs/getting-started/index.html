@@ -50,6 +50,16 @@
   }
   .note svg { color: var(--blue); flex-shrink: 0; margin-top: 1px; }
   .note p { margin: 0; }
+  .note a { color: var(--blue-deep); font-weight: 600; }
+
+  /* activation band — the same .cli-band pattern the CLI guide uses */
+  .cli-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 22px; margin-top: 20px;
+  }
+  .cli-band h3 { font-size: 17px; }
+  .cli-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.6; margin-top: 8px; max-width: 640px; }
+  .cli-band ol.steps { margin-top: 12px; }
 
   /* reference tables — workspace tour + troubleshooting */
   .tbl-scroll {
@@ -101,7 +111,7 @@
         <div class="entry">
           <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
           <h3>Node 18+ (optional)</h3>
-          <p>Only if you also want the FCX CLI on a computer — the marketplace installed by npm, hosted on your own machine. See the <a href="/docs/cli/" style="color:var(--blue);font-weight:500;">FCX CLI guide</a>.</p>
+          <p>Only if you also want the FCX CLI on a computer — one curl command installs it from this site's registry. See the <a href="/docs/cli/" style="color:var(--blue);font-weight:500;">FCX CLI guide</a>.</p>
         </div>
       </div>
     </section>
@@ -126,7 +136,20 @@
     <section class="section" id="first-run" aria-label="First sign-in and the workspace tour">
       <div class="kicker">The first five minutes</div>
       <h2 style="margin-bottom: 6px;">First sign-in and the workspace tour</h2>
-      <p class="explain" style="max-width: 640px;">The workspace opens after you sign in — nothing to configure first. The modules sit in the sidebar, and each holds what its name says.</p>
+      <p class="explain" style="max-width: 640px;">The workspace opens after you sign in — nothing to configure first. On a device the licence has not met yet, one screen sits in between: activating the device. The modules sit in the sidebar, and each holds what its name says.</p>
+      <div class="cli-band">
+        <h3>Activate this device</h3>
+        <p>The first minutes, in order: the app checks workspace access, the sign-in screen asks for your licence email and password, and a device the licence does not know yet shows one more screen — Activate this device — before the workspace opens.</p>
+        <ol class="steps">
+          <li><span>Sign in with your <strong>licence email and password</strong> — the account your licence runs on. <strong>Keep me signed in on this device</strong> is ticked by default, so the next visit skips the form.</span></li>
+          <li><span>When the app shows <strong>Activate this device</strong>, type the <strong>FCX-XXXXXX code</strong> from your licence email — one code per licence email, and it covers every device you run the clinic on.</span></li>
+          <li><span>The device is <strong>remembered from then on</strong> — the same device never asks again, a new phone or tablet simply asks once the same way, and a device the owner revoked asks again at next launch.</span></li>
+        </ol>
+      </div>
+      <div class="note">
+        <span data-icon="ShieldCheck" data-icon-size="17"></span>
+        <p><b>Devices and revocation.</b> Activation ties each device to your licence, and revoking a device frees its slot. <a href="/docs/security/">How codes, devices and revocation work — the full guide</a>.</p>
+      </div>
       <div class="tbl-scroll">
         <table class="tbl">
           <thead>
@@ -287,7 +310,7 @@
         <a class="entry" href="/docs/cli/">
           <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
           <h3>FCX CLI</h3>
-          <p>npm install, hosting the marketplace on your own machine.</p>
+          <p>One curl command, hosting the marketplace on your own machine.</p>
           <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
         </a>
         <a class="entry" href="/docs/mcp/">

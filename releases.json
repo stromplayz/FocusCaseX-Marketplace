@@ -1,12 +1,60 @@
 {
   "schema": "fcx.market.releases.v1",
-  "updatedAt": "2026-11-22T20:45:00.000Z",
+  "updatedAt": "2026-11-26T18:15:00.000Z",
   "app": {
     "name": "FocusCaseXDroid",
     "repo": "stromplayz/FocusCaseX",
     "catalogUrl": "https://stromplayz.github.io/FocusCaseX/catalog.json"
   },
   "releases": [
+    {
+      "version": "2.9.0",
+      "versionCode": 39,
+      "core": "2.2.4",
+      "date": "2026-11-26",
+      "apk": "FocusCaseX-v2.9.0.apk",
+      "notes": [
+        "Admin OTP licence system — devices activate with an owner-issued FCX code, same device is remembered, the owner manages codes and devices",
+        "Own registry install: curl -fsSL stromplayz.github.io/FocusCaseX/install.sh | bash installs the fcx CLI (activate / status / update included)",
+        "Install page rebuilt — Terminal, Android, Desktop (coming soon) and iOS (coming soon)"
+      ]
+    },
+    {
+      "version": "2.8.0",
+      "versionCode": 38,
+      "core": "2.2.4",
+      "date": "2026-11-26",
+      "apk": "FocusCaseX-v2.8.0.apk",
+      "notes": [
+        "Install confirmation lands every time — deep-link ACK protocol between the host and the workspace",
+        "MCP setup agent grid — 8 agents with icons, install commands and config snippets",
+        "WorkBench deep links open the full install confirmation dialog directly"
+      ]
+    },
+    {
+      "version": "2.7.0",
+      "versionCode": 37,
+      "core": "2.2.4",
+      "date": "2026-11-25",
+      "apk": "FocusCaseX-v2.7.0.apk",
+      "notes": [
+        "Solo Optometrist WorkBench — one install sets up the complete EMR (extensions, capsules, templates, snippets, theme)",
+        "WorkBench mode switcher — shuffle between setups like modes, active mode tracked everywhere",
+        "Deep-link install race fixed"
+      ]
+    },
+    {
+      "version": "2.6.9",
+      "versionCode": 36,
+      "core": "2.2.4",
+      "date": "2026-11-25",
+      "apk": "FocusCaseX-v2.6.9.apk",
+      "notes": [
+        "MCP expansion — 32 tools across read / write-on-confirmation / builders",
+        "Code + QR pairing with per-agent scopes and a pending-action tray",
+        "WorkBench feature introduced — one-install full EMR bundles"
+      ]
+    },
     {
       "version": "2.5.0",
       "versionCode": 27,

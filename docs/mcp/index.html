@@ -91,7 +91,7 @@
     <section class="section-tight" id="about" aria-label="What MCP gives a clinic" style="padding-top: 22px;">
       <div class="kicker">What MCP gives a clinic</div>
       <h2 style="margin-bottom: 6px;">Read your clinic. Write through it. Nothing moves without you.</h2>
-      <p class="doc-lede">The FocusCaseX MCP server lets AI agents — Claude, Cursor, VS Code and anything else that speaks MCP — read the clinic and write through it: patients, appointments, records, inventory, Extensions, capsules, themes. Nothing moves without the owner: agents pair before they touch anything, every agent carries its own scopes, and its writes arrive as pending requests you approve. Around 32 tools cover three kinds of work — reads, writes that wait for your confirmation, and builders (the WorkBench Builder, the Capsule Builder) that draft real add-ons for your sign-off.</p>
+      <p class="doc-lede">The FocusCaseX MCP server lets AI agents — Claude, Cursor, VS Code and anything else that speaks MCP — read the clinic and write through it: patients, appointments, records, inventory, Extensions, capsules, themes. Nothing moves without the owner: agents pair before they touch anything, every agent carries its own scopes, and its writes arrive as pending requests you approve. 38 tools cover three kinds of work — reads, writes that wait for your confirmation, and builders (the WorkBench, Capsule and Extension Builders) that draft real add-ons for your sign-off.</p>
       <p class="doc-lede">Your agent thinks in its chat window; the tools run against the same clinic install you use — the hosted workspace or the app on your device. You hold the approval layer for all of it.</p>
     </section>
 
@@ -101,9 +101,9 @@
       <h2 style="margin-bottom: 6px;">Pair an agent</h2>
       <p class="explain" style="max-width: 640px;">Every connection starts in the app and ends with a token you issued.</p>
       <ol class="steps" style="max-width: 640px;">
-        <li><span>In the app, open <strong>Settings → MCP → Connect agent</strong>. A <strong>6-digit pairing code</strong> appears — the QR beside it encodes the same pairing details.</span></li>
+        <li><span>In the app, open <strong>Settings → MCP &amp; Automation → Connect agent</strong>. A <strong>6-digit pairing code</strong> appears — the QR beside it encodes the same pairing details.</span></li>
         <li><span>Point the agent at the <strong>MCP server</strong> (endpoints below) and have it POST the code to the <strong>pairing endpoint</strong> with the scopes it requests: <b>read</b>, <b>write</b>, <b>build</b>.</span></li>
-        <li><span>Approve the <strong>pending request</strong> under Settings → MCP — check the agent's name and device first. Deny, and it stays locked out.</span></li>
+        <li><span>Approve the <strong>pending request</strong> under Settings → MCP &amp; Automation — check the agent's name and device first. Deny, and it stays locked out.</span></li>
         <li><span>An <strong>access token</strong> is issued to the agent with exactly the scopes you chose — nothing more.</span></li>
         <li><span>Pending requests and issued tokens are managed on the same tab — change scopes or revoke a token any time.</span></li>
       </ol>
@@ -135,7 +135,7 @@
         <span class="ep-tag">On-device</span>
         <code>http://&lt;device-ip&gt;:8080/api/mcp/server</code>
         <button class="chip" type="button" data-copy="http://&lt;device-ip&gt;:8080/api/mcp/server"><span data-icon="Copy" data-icon-size="13"></span><span>Copy</span></button>
-        <span class="muted small">The app on your phone or tablet serves the same endpoints on its local URL — the exact address is shown under Settings → MCP.</span>
+        <span class="muted small">The app on your phone or tablet serves the same endpoints on its local URL — the exact address is shown under Settings → MCP &amp; Automation.</span>
       </div>
     </section>
 
@@ -143,7 +143,7 @@
     <section class="section" id="agents" aria-label="Set up your agent" style="padding-top: 0;">
       <div class="kicker">Agent setups</div>
       <h2>Set up your agent. Every major client, one snippet each.</h2>
-      <p class="doc-lede">Pick your client, paste its snippet where it keeps configs, and put a token in the Authorization slot. Mint one by pairing in the app — the 6-digit code or the QR — or issue a personal token under Settings → MCP. The snippets below point at the public web endpoint; an on-device install swaps in the address it shows under Settings → MCP.</p>
+      <p class="doc-lede">Pick your client, paste its snippet where it keeps configs, and put a token in the Authorization slot. Mint one by pairing in the app — the 6-digit code or the QR — or issue a personal token under Settings → MCP &amp; Automation. The snippets below point at the public web endpoint; an on-device install swaps in the address it shows under Settings → MCP &amp; Automation.</p>
 
       <div class="conn-grid" style="margin-top: 26px;">
 
@@ -301,7 +301,7 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
 
       </div>
 
-      <p class="doc-note">Use the web endpoint when you work in the hosted workspace, the device address when the records live on the phone or tablet in the room. Both pair the same way; both log to the same audit log. Headless clients that can't show a pairing screen can use a personal token instead — Settings → MCP → Issue token — as a Bearer header, with the same scopes.</p>
+      <p class="doc-note">Use the web endpoint when you work in the hosted workspace, the device address when the records live on the phone or tablet in the room. Both pair the same way; both log to the same audit log. Headless clients that can't show a pairing screen can use a personal token instead — Settings → MCP &amp; Automation → Create token — as a Bearer header, with the same scopes.</p>
     </section>
 
     <!-- 5. SCOPES AND SAFETY -->
@@ -341,7 +341,7 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
           <span data-icon="Trash2" data-icon-size="20"></span>
           <div>
             <b>Revoke any time</b>
-            <span>Tokens are managed under Settings → MCP. Revoking ends the agent's access on its next call and clears its pending actions.</span>
+            <span>Tokens are managed under Settings → MCP &amp; Automation. Revoking ends the agent's access on its next call and clears its pending actions.</span>
           </div>
         </div>
         <div class="t-item">

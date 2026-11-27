@@ -793,6 +793,7 @@
     <a href="/pricing/">Pricing</a>
     <a href="/mcp/">MCP &amp; Automation</a>
     <a href="/docs/">Docs</a>
+    <a href="/faq/">FAQ</a>
     <a href="/install/">Install guide</a>
     <a href="/api/">For developers</a>
     <a href="https://github.com/stromplayz/FocusCaseX" target="_blank" rel="noopener">GitHub</a>
