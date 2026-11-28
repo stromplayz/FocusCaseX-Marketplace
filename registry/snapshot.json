@@ -1,0 +1,42 @@
+{
+  "v": 1,
+  "registry": "focuscasex",
+  "generatedAt": "2026-11-28T03:50:56.889Z",
+  "plans": {
+    "currency": "INR",
+    "updatedAt": "2026-11-28T00:00:00.000Z",
+    "tiers": [
+      {
+        "id": "solo",
+        "name": "Solo Clinic",
+        "priceInr": 399,
+        "deviceLimit": 1,
+        "codeExpiryDays": 30,
+        "blurb": "One practitioner, one device — the full workspace for a single chair."
+      },
+      {
+        "id": "practice",
+        "name": "Practice",
+        "priceInr": 1299,
+        "deviceLimit": 3,
+        "codeExpiryDays": 180,
+        "blurb": "A small clinic team — up to three devices on one licence."
+      },
+      {
+        "id": "network",
+        "name": "Network",
+        "priceInr": 4499,
+        "deviceLimit": 10,
+        "codeExpiryDays": 365,
+        "blurb": "Multiple branches or a college lab — up to ten devices, longest code life."
+      }
+    ]
+  },
+  "stats": {
+    "devicesActive": 1,
+    "devicesRevoked": 0,
+    "codesActive": 2,
+    "requestsPending": 0
+  },
+  "enforce": "native-cli"
+}

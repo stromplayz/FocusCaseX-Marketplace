@@ -193,7 +193,7 @@
       }
 
       markLiveCard();
-      if (!opts.silent) FCX.setParam("id", id);
+      if (!opts.quiet) FCX.setParam("id", id);
     }
 
     function select(id, opts) {
@@ -216,7 +216,7 @@
       if (cycleTimer || reduceMotion || userTouched || themes.length < 2 || !varsList.length) return;
       cycleTimer = setInterval(() => {
         cycleIdx = (cycleIdx + 1) % themes.length;
-        renderStage(themes[cycleIdx].id, { silent: true });
+        renderStage(themes[cycleIdx].id, { quiet: true });
       }, 4500);
     }
     function stopCycle() { if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; } }
@@ -316,7 +316,7 @@
       const initialId = (pendingId && themes.some((t) => t.id === pendingId))
         ? pendingId
         : (startIt ? startIt.id : themes[0].id);
-      renderStage(initialId, { silent: !pendingId });
+      renderStage(initialId, { quiet: !pendingId });
       startCycle();
     });
   });

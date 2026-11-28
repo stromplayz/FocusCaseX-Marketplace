@@ -93,45 +93,45 @@
       <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
       <div class="kicker">Documentation</div>
       <h1>Licences, devices &amp; codes</h1>
-      <p class="lede">Every device runs FocusCaseX under a licence, and every licence is a code — <strong>FCX-XXXXXX</strong> — bound to one email. This page covers what activation does, what it reads, where the approval lives, and how codes are issued and revoked.</p>
-      <p class="explain">Written for clinic owners on Android and anyone running the FCX CLI. For the install itself, see the <a href="/install/">install guide</a>.</p>
+      <p class="lede">Every device runs FocusCaseX under a licence, and every licence is a code — <strong>FCX-XXXXXX</strong> — bound to one email, with the clinic owner issuing a code per device. This page covers what activation does, what it sends, how trusted devices stay current, and how codes are issued and revoked.</p>
+      <p class="explain">Written for clinic owners and their teams on Android, and anyone running the FCX CLI. The one-page guide keeps a short recap in its <a href="/docs/#security">security section</a>; for the install itself, see the <a href="/install/">install guide</a>.</p>
     </section>
 
     <!-- 1. WHY A LICENCE BINDS TO A DEVICE -->
     <section class="section-tight" id="why-device" aria-label="Why a licence binds to a device" style="padding-top: 22px;">
       <div class="kicker">The licence model</div>
       <h2 style="margin-bottom: 6px;">Why a licence binds to a device</h2>
-      <p class="doc-lede">FocusCaseX is licensed per clinic, and the licence travels as a code: eight characters, <strong>FCX-XXXXXX</strong>, issued against one email. At activation the code is checked against that email and then tied to the hardware it ran on. From then on, the app on your device and the licence record are two views of the same fact — this code, this buyer, this machine.</p>
-      <p class="doc-lede">That binding is what makes a forwarded APK stop being a working app. An installer passed along a group chat still installs, but at first launch it asks for a code, and a code cannot cover more devices than its limit allows. To run, the new device needs a sign-in with the buyer's email and a code issued for it — neither travels with the APK.</p>
-      <p class="doc-lede">It also gives the owner a map. Every device a licence runs on registers itself the moment it activates — model, Android version, app build — so the question "which machines actually run FocusCaseX?" is a lookup, not a guess. When a tablet is sold or a phone replaced, the owner moves the licence from the old device to the new one.</p>
+      <p class="doc-lede">FocusCaseX is licensed per clinic, and the licence belongs to the clinic. It travels as a code: eight characters, <strong>FCX-XXXXXX</strong>, issued against one email. At activation the code is checked against that email and then tied to the device it ran on. From then on, the app on your device and the licence record are two views of the same fact — this code, this clinic, this machine.</p>
+      <p class="doc-lede">That binding is what makes a forwarded installer stop being a working app. An app passed along a group chat still installs, but at first launch it asks for a code, and a code cannot cover more devices than its limit allows. To run, the new device needs a sign-in with the licence email and a code issued for it — neither travels with the installer.</p>
+      <p class="doc-lede">It also gives the owner a map. Every device a licence runs on registers itself the moment it activates — model, Android version, app build — so the question "which machines actually run FocusCaseX?" is a lookup on the admin Devices page, not a guess. When a tablet is sold or a phone replaced, the owner moves the licence from the old device to the new one; the steps are under <a href="#moving">Moving a licence</a> below.</p>
     </section>
 
     <!-- 2. HOW ACTIVATION WORKS -->
     <section class="section" id="activation" aria-label="How activation works" style="padding-top: 0;">
       <div class="kicker">Activation</div>
       <h2 style="margin-bottom: 6px;">How activation works</h2>
-      <p class="doc-lede">Activation runs once per device, and it is the same five steps on every phone, whether the clinic has one device or six.</p>
+      <p class="doc-lede">Activation happens once per device, and it is the same five steps on every phone, whether the clinic has one device or six. The owner issues a code for each device as it joins — for a phone added later, that can be the existing code or a fresh one, whichever is easier to hand over.</p>
       <div class="cli-band">
         <ol class="steps">
           <li><span>Install the app — the <a href="/install/">install guide</a> links the latest Android build.</span></li>
           <li><span>Open it and sign in with your licence email and password — the email the licence was issued against.</span></li>
-          <li><span>Enter the <strong>FCX-XXXXXX</strong> code issued for that email.</span></li>
+          <li><span>Enter the <strong>FCX-XXXXXX</strong> code issued for this device.</span></li>
           <li><span>The device registers — it reports its hardware details, is added to the licence record, and the workspace opens.</span></li>
           <li><span>Every later launch on that device passes without a code.</span></li>
         </ol>
       </div>
       <div class="note">
         <span data-icon="Info" data-icon-size="17"></span>
-        <p><b>The code is a first-launch thing.</b> The same person on the same device never sees it again — the approval is remembered on the device. A different device always asks for a code of its own, and a revoked device asks again at its next launch.</p>
+        <p><b>The code is a first-launch thing.</b> A device asks once; from then on it is trusted and never asks again. A different device always asks for a code of its own, and a revoked device asks again at its next launch.</p>
       </div>
-      <p class="doc-lede">If the code is refused at step three, the likely causes come in order: a typo (codes are exact — paste rather than retype), a code issued for a different licence email, or a device limit that is already full. A full limit has a specific fix, described under <a href="/docs/security/#trusted-devices">Trusted devices</a> below.</p>
+      <p class="doc-lede">If the code is refused at step three, the likely causes come in order: a typo (codes are exact — paste rather than retype), a code issued for a different licence email, or a device limit that is already full. A full limit has a specific fix, described under <a href="#trusted-devices">Trusted devices</a> below. New to the app? The full guide's <a href="/docs/#quickstart">quickstart</a> walks a first device from box to workspace.</p>
     </section>
 
     <!-- 3. WHAT THE APP READS FROM YOUR DEVICE -->
     <section class="section" id="device-data" aria-label="What the app reads from your device" style="padding-top: 0;">
       <div class="kicker">What is sent</div>
       <h2 style="margin-bottom: 6px;">What the app reads from your device</h2>
-      <p class="doc-lede">Activation reads hardware identity and nothing else. The list is short on purpose: it is what the licence record needs to tell devices apart, and it is shown back to the owner so a code never lands on an anonymous machine.</p>
+      <p class="doc-lede">Activation reads hardware identity and nothing else. The list is short on purpose: it is what the licence record needs to tell devices apart, and it is shown back to the owner, so a code never lands on an anonymous machine.</p>
       <div class="cli-ref-scroll">
         <table class="cli-ref">
           <thead>
@@ -146,60 +146,77 @@
             <tr><td>Android version + SDK</td><td>Android 13 (SDK 33)</td><td>Confirms the build supports the device; displayed alongside the model.</td></tr>
             <tr><td>Screen size &amp; density</td><td>1080 × 2400 · 440 dpi</td><td>Display metrics only — they describe the device on the licence record.</td></tr>
             <tr><td>App version</td><td>2.14</td><td>The build that activated, so the licence record shows which devices predate an update.</td></tr>
-            <tr><td>ANDROID_ID</td><td>3f9c2a7b81d04e55</td><td>A per-app identifier Android assigns to FocusCaseX on this device. It tells devices apart; it is not your Google account or your phone number, and it is not tied to either.</td></tr>
+            <tr><td>Per-device identifier</td><td>Unique to this device</td><td>How the licence record tells devices apart. It is not your Google account or your phone number, and it is not tied to either.</td></tr>
             <tr><td>Locale</td><td>en-GB</td><td>Language and region, used to set date and number formats on first run.</td></tr>
             <tr><td colspan="3" class="group-row">Sent by the FCX CLI</td></tr>
             <tr><td>hostname</td><td>reception-desk</td><td>The machine's network name — the label shown on the licence record.</td></tr>
             <tr><td>OS + architecture</td><td>Linux · x86_64</td><td>Which system the CLI runs on — Windows, macOS or Linux, 64-bit or ARM.</td></tr>
             <tr><td>CPU model</td><td>Apple M1</td><td>The processor family, for a fuller picture of the machine.</td></tr>
-            <tr><td>machine id hash</td><td>6f1c8d2e4b7a9013</td><td>A hash of the machine's id — the raw value never leaves the machine.</td></tr>
+            <tr><td>Per-device identifier</td><td>Unique to this machine</td><td>How the licence record tells machines apart — the same role the per-device identifier plays on a phone.</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="doc-lede">That is the complete list. Activation stores hardware identity only — patient records never leave the device during activation.</p>
+      <p class="doc-lede">That is the complete list — hardware identity only, never patient records. Patient data lives in the workspace on the device and does not leave it during activation. The periodic re-check described below sends the same kind of identity, nothing more.</p>
     </section>
 
     <!-- 4. TRUSTED DEVICES -->
     <section class="section" id="trusted-devices" aria-label="Trusted devices" style="padding-top: 0;">
       <div class="kicker">After activation</div>
       <h2 style="margin-bottom: 6px;">Trusted devices</h2>
-      <p class="doc-lede">A device that has activated is trusted, and the approval lives on the device itself. On Android it sits in the app's own internal storage — private to the app, not browser web storage, so clearing the browser's site data, switching browsers or signing out of Google changes nothing about it. On the CLI the approval lives on the device itself, private to your user account. Deleting it — or uninstalling — is what makes a device ask for a code again.</p>
+      <p class="doc-lede">A device that has activated is trusted, and the approval lives on the device itself. On Android it is private to the app, so clearing the browser's site data, switching browsers or signing out of Google changes nothing about it. It is never printed, never synced, and there is no file you can copy to move it somewhere else. On the CLI the same holds: the approval lives on the machine, private to your user account. Deleting it — or uninstalling — is what makes a device ask for a code again.</p>
       <p class="doc-lede">A new device never inherits an approval. It runs the same activation as the first one — sign in, enter a code — and while the licence is under its device limit, the existing code works on it; the owner can issue a fresh one instead if that is easier to hand over.</p>
-      <p class="doc-lede">Every code carries a device limit — two devices by default, set by the owner when the code is generated and changeable at any time. At the limit, activation on a further device is refused until the owner makes room: revoke a device that is retired or lost, or raise the limit for that code. The refusal on the device names the reason, so there is no guessing about what went wrong.</p>
-      <p class="doc-lede">Moving a licence to a new device takes a minute: the old device is revoked, a fresh code is issued, and the new device activates. The old device asks for a code at its next launch and cannot pass without one the owner issues — which is the point.</p>
+      <p class="doc-lede">Every code carries a device limit — two devices by default, set by the owner when the code is generated and changeable at any time. At the limit, activation on a further device is refused until the owner makes room on the admin Devices page: revoke a device that is retired or lost, or raise the limit for that code. The refusal on the device names the reason, so there is no guessing about what went wrong.</p>
+      <div class="cli-band" id="moving">
+        <h3>Moving a licence to a new device</h3>
+        <p>The approval cannot be handed over, and copying files will not move it — a new machine earns trust the same way the first one did, by activating. Three steps, all in the open:</p>
+        <ol class="steps">
+          <li><span><strong>Free the slot</strong> — the clinic owner revokes the lost or retired device on the admin Devices page.</span></li>
+          <li><span><strong>Activate the new device</strong> — sign in with the licence email and enter the FCX-XXXXXX code. While the licence is under its device limit, the existing code works; the owner can issue a fresh one if that is easier to hand over.</span></li>
+          <li><span><strong>The old device stops</strong> — it asks for a code at its next launch and cannot pass without one the owner issues. Revoking touches the licence check only: the records on that machine are right where they were.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5. STAYING CURRENT -->
+    <section class="section" id="keepalive" aria-label="Staying current" style="padding-top: 0;">
+      <div class="kicker">In the background</div>
+      <h2 style="margin-bottom: 6px;">Staying current</h2>
+      <p class="doc-lede">A trusted device re-checks its licence on a schedule. The check-in sends the same hardware identity activation sent — nothing more — and its whole job is to keep the owner's admin Devices page showing the machine as current. Daily work never waits on it: a trusted device keeps working with or without a connection at that moment.</p>
+      <p class="doc-lede">The re-check runs while you are signed in and stops on sign-out; signing in again starts it again. It needs nothing from you — no code, no prompts — and signing out is a local step only: it stops the check-in but does not free the device's slot. Slots are freed by the owner, by revoking on the admin Devices page.</p>
+      <p class="doc-lede">On the CLI the check-in is its own small job: <strong>fcx alive start</strong> starts it, <strong>fcx alive status</strong> shows whether it is running, and <strong>fcx alive stop</strong> stops it. How often it runs is a CLI setting — anywhere from 5 to 1440 minutes, ten by default — changed with <strong>fcx config</strong> or with <strong>--interval</strong> when the check-in starts. The <a href="/docs/cli/">FCX CLI page</a> lists the commands in full.</p>
     </section>
 
     <!-- 6. ACTIVATE THE CLI -->
     <section class="section" id="cli" aria-label="Activate the CLI" style="padding-top: 0;">
       <div class="kicker">On the command line</div>
       <h2 style="margin-bottom: 6px;">Activate the CLI</h2>
-      <p class="doc-lede">The CLI activates the same way the app does — same code, same licence email — and one licence covers both ends. It needs the <code>fcx</code> command installed first; the two commands below do the rest.</p>
+      <p class="doc-lede">The CLI activates the same way the app does — same licence email, same code, one licence covering both ends. It needs the <code>fcx</code> command installed first; the two commands below do the rest.</p>
       <div class="cli-band">
         <h3>Two commands</h3>
         <p>From a terminal on the machine you want to licence:</p>
         <div class="code-row cli-cmd">
-          <span class="code-token" title="Activation command — run this in a terminal">fcx activate</span>
-          <button class="chip" type="button" data-copy="fcx activate" title="Copy activation command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
+          <span class="code-token" title="Sign-in command — run this in a terminal">fcx login</span>
+          <button class="chip" type="button" data-copy="fcx login" title="Copy login command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
         </div>
         <div class="code-row cli-cmd">
           <span class="code-token" title="Status command — run this in a terminal">fcx status</span>
           <button class="chip" type="button" data-copy="fcx status" title="Copy status command"><span data-icon="Copy" data-icon-size="13"></span><span>Copy command</span></button>
         </div>
-        <p><strong>fcx activate</strong> asks for your licence email and the FCX-XXXXXX code, checks them against the licence and writes the approval. <strong>fcx status</strong> prints what the CLI currently holds — no changes, just the state.</p>
+        <p><strong>fcx login</strong> asks for your licence email, password and the FCX-XXXXXX code, checks them against the licence and signs the machine in — the older name <strong>fcx activate</strong> does exactly the same thing. <strong>fcx status</strong> prints what the CLI currently holds — no changes, just the state.</p>
         <ol class="steps">
-          <li><span>Run <strong>fcx activate</strong> — it asks for your licence email and the code issued for it.</span></li>
-          <li><span>The CLI checks the code and the machine appears on the licence record.</span></li>
+          <li><span>Run <strong>fcx login</strong> — it asks for your licence email, password and the code issued for this machine.</span></li>
+          <li><span>The code is checked and the machine appears on the licence record, counting against the code's device limit.</span></li>
           <li><span>Run <strong>fcx status</strong> — it prints the licence email, how many of the device limit are in use, and whether the approval is current.</span></li>
         </ol>
       </div>
-      <p class="doc-lede">Everything else the CLI does — installing from the catalog, hosting it on the clinic LAN, <code>doctor</code>, <code>serve</code> — is documented on the <a href="/docs/cli/">FCX CLI page</a>.</p>
+      <p class="doc-lede">Trusted machines never re-enter a code: running <strong>fcx login</strong> again re-verifies the licence instead of asking. The full guide's <a href="/docs/#cli-account">account section</a> covers the six account commands — including <strong>fcx device</strong>, which prints the same view of this machine the owner has on the admin Devices page — and everything else the CLI does, from the marketplace to hosting on the clinic LAN, is documented on the <a href="/docs/cli/">FCX CLI page</a>.</p>
     </section>
 
     <!-- 7. QUESTIONS -->
     <section class="section" id="questions" aria-label="Questions" style="padding-top: 0;">
       <div class="kicker">FAQ</div>
       <h2 style="margin-bottom: 6px;">Questions</h2>
-      <p class="doc-lede">The five questions that come up most, with short answers. If yours is not here, FocusCaseX support answers licence mail directly.</p>
+      <p class="doc-lede">The questions that come up most, with short answers. The <a href="/updates/">Updates</a> collects the licence and data questions in one place, and FocusCaseX support answers licence mail directly.</p>
       <div class="cli-ref-scroll">
         <table class="cli-ref faq">
           <thead>
@@ -210,9 +227,10 @@
           </thead>
           <tbody>
             <tr><td>I lost the code</td><td>Ask FocusCaseX support — a fresh code is issued against the same licence email in a minute. Nothing changes on devices that are already trusted; a code is only needed for a device that has to activate.</td></tr>
+            <tr><td>I forgot the password</td><td>Ask your clinic owner — the password is reset on the licence, by the owner. Nothing on your device changes, and your records stay exactly where they are.</td></tr>
             <tr><td>I bought a new phone</td><td>While the licence is under its device limit, sign in on the new phone and enter the code — or a fresh one issued for it. At the limit, the old phone is revoked and a fresh code is issued: the licence moves, and the old phone asks for a code at its next launch.</td></tr>
             <tr><td>What happens offline</td><td>A device that is already trusted keeps working — the approval lives on the device, and day-to-day launches do not need the network. First activation is the exception: the code has to be checked once, so that one moment needs a connection.</td></tr>
-            <tr><td>Two clinics on one licence</td><td>One licence is one clinic. Codes are bound to a single email, and the devices under it share one workspace — a second clinic needs its own licence, its own email and its own codes.</td></tr>
+            <tr><td>Two clinics on one licence</td><td>No — one licence is one clinic. Codes are bound to a single email, and the devices under it share one workspace. A second clinic needs its own licence, its own email and its own codes.</td></tr>
             <tr><td>Does revoke delete my records</td><td>Never. Records live in the device workspace, and revoking touches only the licence check — the device asks for a code at its next launch, and the data is right where it was.</td></tr>
           </tbody>
         </table>
@@ -230,10 +248,10 @@
           <p>New to FocusCaseX? Install the app, sign in and take the workspace tour.</p>
           <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
         </a>
-        <a class="entry" href="/faq/">
+        <a class="entry" href="/docs/#troubleshooting">
           <span class="tile"><span data-icon="CircleHelp" data-icon-size="19"></span></span>
-          <h3>FAQ</h3>
-          <p>Plain answers on licences, devices, offline use and updates — in one place.</p>
+          <h3>Questions, in the guide</h3>
+          <p>Plain answers on licences, devices, offline use and updates — in the full guide.</p>
           <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
         </a>
         <a class="entry" href="/docs/cli/">
@@ -258,7 +276,7 @@
 <script src="assets/app.js"></script>
 <script>
   (function () {
-    /* paint [data-icon] placeholders with real SVGs */
+    /* paint [data-icon] marks with real SVGs */
     function paintIcons() {
       document.querySelectorAll("[data-icon]").forEach(function (el) {
         var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
@@ -280,7 +298,8 @@
           '<a href="/">Overview</a>' +
           '<a href="/marketplace/">Marketplace</a>' +
           '<a href="/pricing/">Pricing</a>' +
-          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '<a href="/docs/">Docs</a>' +
+          '<a href="/updates/">Updates</a>' +
           '</nav></div></div>';
       }
       if (footer && !footer.firstChild) {
@@ -288,7 +307,7 @@
           '<div class="foot"><div class="wrap foot-inner">' +
           '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
           '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
-          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/cli/">FCX CLI</a><a href="/faq/">FAQ</a><a href="/install/">Install guide</a></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/cli/">FCX CLI</a><a href="/updates/">Updates</a><a href="/install/">Install guide</a></div>' +
           '</div></div>';
       }
       FCX.wireCopyButtons(document);

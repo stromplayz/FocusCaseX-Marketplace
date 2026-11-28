@@ -233,7 +233,7 @@
       }
 
       markLiveCard();
-      if (!opts.silent) FCX.setParam("id", it.id);
+      if (!opts.quiet) FCX.setParam("id", it.id);
     }
 
     function select(id, opts) {
@@ -292,7 +292,7 @@
 
     const fromId = FCX.getParam("id");
     const start = templates.find((t) => t.id === fromId) || templates[0];
-    if (start) renderStage(start.id, { silent: !fromId });
+    if (start) renderStage(start.id, { quiet: !fromId });
   });
 </script>
 </body>

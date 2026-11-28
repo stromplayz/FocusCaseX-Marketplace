@@ -84,7 +84,7 @@
       <div class="kicker">Documentation</div>
       <h1>MCP &amp; AI agents</h1>
       <p class="lede">Pair Claude, Cursor, VS Code and friends to the clinic — pairing, endpoints, scopes, and one snippet per client.</p>
-      <p class="explain">For the protocol overview, the full tool catalog and the security story, see <a href="/mcp/">MCP &amp; Automation</a> on the main site.</p>
+      <p class="explain">For the protocol overview, the three tool kinds and the security story, see <a href="/docs/#cli-mcp">MCP and AI agents in the full guide</a>.</p>
     </section>
 
     <!-- 1. WHAT MCP GIVES A CLINIC -->
@@ -411,7 +411,7 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
 <script src="assets/app.js"></script>
 <script>
   (function () {
-    /* paint [data-icon] placeholders with real SVGs */
+    /* paint [data-icon] marks with real SVGs */
     function paintIcons() {
       document.querySelectorAll("[data-icon]").forEach(function (el) {
         var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
@@ -433,7 +433,8 @@ http_headers = { <span class="cx-str">"Authorization"</span> = <span class="cx-s
           '<a href="/">Overview</a>' +
           '<a href="/marketplace/">Marketplace</a>' +
           '<a href="/pricing/">Pricing</a>' +
-          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '<a href="/docs/">Docs</a>' +
+          '<a href="/updates/">Updates</a>' +
           '</nav></div></div>';
       }
       if (footer && !footer.firstChild) {

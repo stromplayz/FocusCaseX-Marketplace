@@ -5,7 +5,7 @@
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Getting started — FocusCaseX Documentation</title>
-<meta name="description" content="Install FocusCaseX on Android, sign in, take the workspace tour and install add-ons — in-app, by FCX-XXXXXX code, or from the marketplace site. Updates, troubleshooting and how to reset.">
+<meta name="description" content="Start FocusCaseX three ways — the web workspace in a browser, the Android app, or a computer with the FCX CLI. Sign in, activate a device, take the workspace tour, install Extensions and one-file packs, and keep everything current. Troubleshooting and how to reset.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
   /* requirement cards */
   .req { margin-top: 24px; }
 
-  /* the three ways to install an add-on (same pattern as the install guide) */
+  /* the ways to install an item (same pattern as the install guide) */
   .ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 26px; }
   .way {
     border: 1px solid var(--line); border-radius: var(--radius);
@@ -88,39 +88,39 @@
       <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
       <div class="kicker">Documentation</div>
       <h1>Getting started</h1>
-      <p class="lede">Install the app, sign in, shape the workspace — your first day with FocusCaseX, in order.</p>
-      <p class="explain">Covers the Android app; the web workspace at focuscasex.vercel.app works the same unless a step says otherwise.</p>
+      <p class="lede">Sign in, shape the workspace, install your first Extensions — your first day with FocusCaseX, in order.</p>
+      <p class="explain">The workspace works three ways, and they all open the same clinic: the <strong>web workspace</strong> in a browser, the <strong>Android app</strong> on phones and tablets, and a <strong>computer with the FCX CLI</strong>. This page walks the first day on each. The <a href="/docs/" style="color:var(--blue);font-weight:500;">full guide</a> covers everything in depth — its <a href="/docs/#quickstart" style="color:var(--blue);font-weight:500;">quickstart</a> is the short version of this page.</p>
     </section>
 
     <!-- 1. REQUIREMENTS -->
     <section class="section" id="requirements" aria-label="Requirements">
       <div class="kicker">Before you begin</div>
       <h2 style="margin-bottom: 6px;">Requirements</h2>
-      <p class="explain" style="max-width: 640px;">Three things, depending on how you run the clinic. Two of them you already have.</p>
+      <p class="explain" style="max-width: 640px;">Pick the way that fits the room — the ways mix freely, since the same catalog and the same install codes wait inside every one of them: the web on the front-desk computer, the app in the testing room, the CLI wherever a keyboard is quicker.</p>
       <div class="entries req">
+        <div class="entry">
+          <span class="tile"><span data-icon="Globe" data-icon-size="19"></span></span>
+          <h3>A modern browser</h3>
+          <p>For the web workspace at focuscasex.vercel.app — the whole clinic in a tab, nothing to install there, and the way in from anywhere.</p>
+        </div>
         <div class="entry">
           <span class="tile"><span data-icon="Smartphone" data-icon-size="19"></span></span>
           <h3>Android 7.0 or newer</h3>
           <p>A phone or tablet for the app. Records live on the device, so an ordinary Android works — there is no server to rent.</p>
         </div>
         <div class="entry">
-          <span class="tile"><span data-icon="Globe" data-icon-size="19"></span></span>
-          <h3>A modern browser</h3>
-          <p>For the web workspace at focuscasex.vercel.app — the same clinic in a tab, nothing to install there.</p>
-        </div>
-        <div class="entry">
           <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
           <h3>Node 18+ (optional)</h3>
-          <p>Only if you also want the FCX CLI on a computer — one curl command installs it from this site's registry. See the <a href="/docs/cli/" style="color:var(--blue);font-weight:500;">FCX CLI guide</a>.</p>
+          <p>Only for the third way — the FCX CLI on a computer: macOS, Linux, or Windows through WSL or Git Bash. One curl command installs it; the <a href="/docs/#cli-install" style="color:var(--blue);font-weight:500;">guide's install walk-through</a> and the <a href="/docs/cli/" style="color:var(--blue);font-weight:500;">FCX CLI page</a> have the details.</p>
         </div>
       </div>
     </section>
 
     <!-- 2. INSTALL THE APP -->
     <section class="section" id="install" aria-label="Install the app">
-      <div class="kicker">First install</div>
+      <div class="kicker">First install — Android</div>
       <h2 style="margin-bottom: 6px;">Install the app</h2>
-      <p class="explain" style="max-width: 640px;">The install page links the latest Android build. After that, the app checks for updates on its own.</p>
+      <p class="explain" style="max-width: 640px;">The install page links the latest Android build. After that, the app checks for updates on its own. The web workspace needs none of this — open focuscasex.vercel.app and sign in.</p>
       <ol class="steps" style="max-width: 640px;">
         <li><span>Open the <a href="/install/" style="color:var(--blue);font-weight:500;"><strong>install guide</strong></a> and download <strong>the latest build linked there</strong> — the page always points at the current one, so there is no need to keep old copies.</span></li>
         <li><span>When Android asks, <strong>allow installs from that source</strong> — the browser or file manager that downloaded the file. It is a one-time switch per source; Android remembers it.</span></li>
@@ -130,6 +130,7 @@
         <span data-icon="RefreshCcw" data-icon-size="17"></span>
         <p><b>Version updates.</b> New builds arrive through the app's own update check — FocusCaseX tells you when one is ready and you confirm from inside the app. There is no store page to revisit; the install guide on this site always links the latest build.</p>
       </div>
+      <p class="after-ways">The <a href="/docs/#android">Android chapter of the full guide</a> goes deeper on the app — first run, packs on the go, and what works offline.</p>
     </section>
 
     <!-- 3. FIRST SIGN-IN AND THE WORKSPACE TOUR -->
@@ -142,13 +143,13 @@
         <p>The first minutes, in order: the app checks workspace access, the sign-in screen asks for your licence email and password, and a device the licence does not know yet shows one more screen — Activate this device — before the workspace opens.</p>
         <ol class="steps">
           <li><span>Sign in with your <strong>licence email and password</strong> — the account your licence runs on. <strong>Keep me signed in on this device</strong> is ticked by default, so the next visit skips the form.</span></li>
-          <li><span>When the app shows <strong>Activate this device</strong>, type the <strong>FCX-XXXXXX code</strong> from your licence email — one code per licence email, and it covers every device you run the clinic on.</span></li>
+          <li><span>When the app shows <strong>Activate this device</strong>, type the <strong>FCX-XXXXXX code</strong> the clinic owner issued for this device — it counts against the licence's device limit, two devices by default.</span></li>
           <li><span>The device is <strong>remembered from then on</strong> — the same device never asks again, a new phone or tablet simply asks once the same way, and a device the owner revoked asks again at next launch.</span></li>
         </ol>
       </div>
       <div class="note">
         <span data-icon="ShieldCheck" data-icon-size="17"></span>
-        <p><b>Devices and revocation.</b> Activation ties each device to your licence, and revoking a device frees its slot. <a href="/docs/security/">How codes, devices and revocation work — the full guide</a>.</p>
+        <p><b>Devices and revocation.</b> Activation ties each device to your licence, and revoking a device frees its slot. <a href="/docs/#security">How codes, devices and revocation work — the full guide</a>.</p>
       </div>
       <div class="tbl-scroll">
         <table class="tbl">
@@ -160,20 +161,56 @@
           </thead>
           <tbody>
             <tr><td>Patients</td><td>The directory — patient files, visit history, recalls.</td></tr>
-            <tr><td>Appointments</td><td>The day book — slots, bookings, today's list.</td></tr>
+            <tr><td>Appointments</td><td>The day book — slots, bookings, walk-ins, today's list.</td></tr>
             <tr><td>Examination</td><td>Workups — vision, refraction, findings, diagrams.</td></tr>
+            <tr><td>Notes</td><td>Every clinical page is a plain markdown file — readable, printable, yours.</td></tr>
             <tr><td>Billing / inventory</td><td>Orders, claims and stock.</td></tr>
-            <tr><td>Settings → Marketplace</td><td>Add-ons — Extensions, capsules, themes, templates and WorkBenches, plus <b>Install by code</b>.</td></tr>
+            <tr><td>Settings → Marketplace</td><td>Extensions, capsules, themes, templates and WorkBenches, plus <b>Install by code</b>.</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="after-ways">That is the shape of it. The <a href="/docs/#tour">tour of the workspace</a> in the full guide walks every board in order, one clinic day open to close.</p>
     </section>
 
-    <!-- 4. INSTALLING ADD-ONS -->
-    <section class="section" id="add-ons" aria-label="Installing add-ons">
+    <!-- 4. THE WORKSPACE ON A COMPUTER -->
+    <section class="section" id="computer" aria-label="The workspace on a computer">
+      <div class="kicker">Third way — the FCX CLI</div>
+      <h2 style="margin-bottom: 6px;">The workspace on a computer</h2>
+      <p class="explain" style="max-width: 640px;">The FCX CLI brings the same clinic to any computer that runs Node 18 — the same marketplace, the same WorkBenches, the same licence flow. One command installs it, and a short wizard does the rest.</p>
+      <div class="cli-band">
+        <h3>One command, then the wizard</h3>
+        <p>Paste the install line from the <a href="/install/" style="color:var(--blue);font-weight:500;">install guide</a> into a terminal and the installer runs: it checks Node 18+, puts the <strong>fcx</strong> command in place and wires your PATH, then prints a short, plain summary of what it did — no storage paths, nothing to write down. Open a fresh terminal afterwards so the new command is picked up.</p>
+        <ol class="steps">
+          <li><span>Run <strong>fcx setup</strong> — the wizard asks step by step: where the workspace lives on this machine (it checks the folder is writable before moving on), a first <strong>fcx sync</strong> of the marketplace catalog, signing in, and a first WorkBench. The four steps in full: <a href="/docs/#cli-setup" style="color:var(--blue);font-weight:500;">the guide's CLI setup chapter</a>.</span></li>
+          <li><span>Run <strong>fcx login</strong> if you skipped sign-in — your licence email, your password, and the <strong>FCX-XXXXXX code</strong> issued for this machine. One code per device; a trusted machine never asks again. <a href="/docs/#cli-account" style="color:var(--blue);font-weight:500;">The licence flow, in full</a>.</span></li>
+          <li><span>Run <strong>fcx install</strong> — any catalog item straight from the terminal, by name or by its FCX-XXXXXX code, with a summary of everything that landed.</span></li>
+        </ol>
+        <div class="term" data-title="fcx setup"><div class="term-cmd">fcx setup</div><div class="term-note"># the wizard asks step by step — arrow keys move, enter picks</div></div>
+        <div class="term" data-title="fcx login">
+          <div class="term-cmd">fcx login</div>
+          <div class="term-note"># asks for your licence email, password and this machine's FCX-XXXXXX code — a trusted machine re-verifies quietly</div>
+        </div>
+      </div>
+      <div class="cli-band">
+        <h3>The workspace page, from the machine itself</h3>
+        <p><strong>fcx open</strong> serves the workspace page on the machine itself — no internet needed. Everything it shows — licence status, installed items, the synced catalog, WorkBench bundles — is answered by the computer you run it on, and the page opens in the browser by itself.</p>
+        <p>On a clinic network, it also answers on the LAN address — printed right under the Local line — so the front desk or the testing room can open the very same page from another computer on that network. With no clinic network it still works locally, and the <strong>web workspace</strong> at focuscasex.vercel.app remains the way in from anywhere. The full walk-through: <a href="/docs/#cli-web" style="color:var(--blue);font-weight:500;">the guide's local-workspace chapter</a>.</p>
+        <div class="term" data-title="fcx open">
+          <div class="term-cmd">fcx open</div>
+          <div class="term-note"># serves the workspace page from this machine and opens the browser — Ctrl+C stops it</div>
+        </div>
+      </div>
+      <div class="note">
+        <span data-icon="ShieldCheck" data-icon-size="17"></span>
+        <p><b>One licence covers the computers too.</b> Every machine activated with the CLI counts against the licence's device limit — the same limit the tablets already share. <a href="/docs/#security">Devices, codes and revocation — the full guide</a>.</p>
+      </div>
+    </section>
+
+    <!-- 5. INSTALLING EXTENSIONS -->
+    <section class="section" id="extensions" aria-label="Installing Extensions">
       <div class="kicker">Extensions, Capsules, Themes, Templates, WorkBenches</div>
-      <h2 style="margin-bottom: 6px;">Installing add-ons</h2>
-      <p class="explain" style="max-width: 640px;">Three ways in — all end at the same place: you see what will be added, you confirm once, it lands.</p>
+      <h2 style="margin-bottom: 6px;">Installing Extensions</h2>
+      <p class="explain" style="max-width: 640px;">The catalog holds five kinds — Extensions add features, capsules add ready-made boards, themes change the look, templates drop in pre-written notes, snippets tweak the interface, and a WorkBench installs a whole setup at once. However an item arrives, it ends the same way: you see exactly what will be added, you confirm once, it lands.</p>
 
       <div class="ways">
         <div class="way">
@@ -206,20 +243,30 @@
             <li><span>Confirm once. The install runs with per-step progress and a final summary of everything that landed.</span></li>
           </ol>
         </div>
+        <div class="way">
+          <span class="way-num">WAY 4 — FROM A FILE</span>
+          <h3>Packs install straight from the file</h3>
+          <p>A pack is one single file — an item zipped and given its pack extension. It installs straight from the file itself: no marketplace round trip, nothing fetched.</p>
+          <ol class="steps">
+            <li><span>Receive the pack — by email, on a USB stick, or from a shared clinic folder.</span></li>
+            <li><span>Open the file on the device, or hand it to <strong>fcx install</strong> on a computer — either way, the file itself is the installer.</span></li>
+            <li><span>The confirmation screen lists every piece before anything is applied — confirm once and it lands.</span></li>
+          </ol>
+        </div>
       </div>
 
       <div class="note">
         <span data-icon="ShieldCheck" data-icon-size="17"></span>
-        <p><b>Nothing is deleted.</b> Installing an add-on changes setup only — patient records stay in the clinic vault, and removing an add-on later takes its tools and pages back out without touching them.</p>
+        <p><b>Nothing is deleted.</b> Installing an item changes setup only — patient records stay on your device, and removing it later takes its tools and pages back out without touching them.</p>
       </div>
-      <p class="after-ways">WorkBenches are the largest of these — one install sets up a whole workspace; the <a href="/docs/workbenches/">WorkBenches guide</a> covers switching and saving your own. If you work with AI assistants, they can find add-ons for you while the install itself stays a human decision — see <a href="/docs/mcp/">MCP &amp; AI agents</a>.</p>
+      <p class="after-ways">WorkBenches are the largest of these — one install sets up a whole workspace; the <a href="/docs/workbenches/">WorkBenches guide</a> covers switching and saving your own. What a pack holds and how to make one is in the full guide, under <a href="/docs/#packs">one-file packs</a>. If you work with AI assistants, they can find items for you while the install itself stays a human decision — see <a href="/docs/mcp/">MCP &amp; AI agents</a>.</p>
     </section>
 
-    <!-- 5. UPDATING -->
+    <!-- 6. UPDATING -->
     <section class="section" id="updating" aria-label="Updating">
       <div class="kicker">Keeping current</div>
       <h2 style="margin-bottom: 6px;">Updating</h2>
-      <p class="explain" style="max-width: 640px;">Three things stay current on their own — none of them needs a store page.</p>
+      <p class="explain" style="max-width: 640px;">Three things stay current on their own — none of them needs a store page. The web workspace is always current; a browser refresh is all it takes.</p>
       <div class="trust" style="margin-top: 24px;">
         <div class="t-item">
           <span data-icon="RefreshCcw" data-icon-size="20"></span>
@@ -232,7 +279,7 @@
           <span data-icon="Globe" data-icon-size="20"></span>
           <div>
             <b>The marketplace catalog refreshes itself</b>
-            <span>New add-ons and new versions appear in Settings → Marketplace on their own — nothing to reinstall.</span>
+            <span>New Extensions and new versions appear in Settings → Marketplace on their own — nothing to reinstall.</span>
           </div>
         </div>
         <div class="t-item">
@@ -245,11 +292,11 @@
       </div>
     </section>
 
-    <!-- 6. TROUBLESHOOTING -->
+    <!-- 7. TROUBLESHOOTING -->
     <section class="section" id="troubleshooting" aria-label="Troubleshooting">
       <div class="kicker">When something looks off</div>
       <h2 style="margin-bottom: 6px;">Troubleshooting</h2>
-      <p class="explain" style="max-width: 640px;">Four things come up most; each has a short answer.</p>
+      <p class="explain" style="max-width: 640px;">The things that come up most, each with a short answer. Plain-language questions of every other kind — where records live, what happens offline, who sees what — have short answers in the <a href="/docs/#troubleshooting" style="color:var(--blue);font-weight:500;">troubleshooting section of the full guide</a>.</p>
       <div class="tbl-scroll">
         <table class="tbl">
           <thead>
@@ -261,7 +308,7 @@
           <tbody>
             <tr>
               <td>Tapped Install on the site but the app opened without a confirmation screen</td>
-              <td>Update the app to the latest build — older builds race the page load. Until you have updated, use <a href="#add-ons">Install by code</a> instead.</td>
+              <td>Update the app to the latest build — older builds race the page load. Until you have updated, use <a href="#extensions">Install by code</a> instead.</td>
             </tr>
             <tr>
               <td>Catalog not loading</td>
@@ -273,34 +320,48 @@
             </tr>
             <tr>
               <td>Where did my patient records go?</td>
-              <td>They never move: WorkBenches and add-ons are setup only. Check whether a different WorkBench is applied — switching back takes one tap.</td>
+              <td>They never move: WorkBenches and Extensions are setup only. Check whether a different WorkBench is applied — switching back takes one tap.</td>
+            </tr>
+            <tr>
+              <td>fcx: command not found</td>
+              <td>The terminal was open before the install; a fresh terminal picks up the new command. If something else on the computer looks off, run <b>fcx vitals</b> — a short health check that reports what is fine and what needs attention.</td>
+            </tr>
+            <tr>
+              <td>No LAN address under fcx open</td>
+              <td>Normal when there is no clinic network — the page still works on the machine itself, and the web workspace remains the way in from anywhere.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- 7. UNINSTALL / RESET -->
+    <!-- 8. UNINSTALL / RESET -->
     <section class="section" id="reset" aria-label="Uninstall or reset">
       <div class="kicker">Starting over</div>
       <h2 style="margin-bottom: 6px;">Uninstall or reset</h2>
-      <p class="explain" style="max-width: 640px;">Add-ons come out one at a time or all at once, and your records are not part of either.</p>
+      <p class="explain" style="max-width: 640px;">Items come out one at a time or all at once, and your records are not part of either.</p>
       <ol class="steps" style="max-width: 640px;">
         <li><span><strong>Export what you need first.</strong> Patients, notes and recalls come out as plain files you keep — do this before any big change.</span></li>
-        <li><span><strong>Remove an add-on:</strong> Settings → Marketplace → Installed → tap <strong>Remove</strong>. Its tools and pages go; nothing else changes.</span></li>
-        <li><span><strong>Resetting the workspace</strong> means removing the add-ons and WorkBenches you installed — the setup goes, the records stay.</span></li>
+        <li><span><strong>Remove an item:</strong> Settings → Marketplace → Installed → tap <strong>Remove</strong>. Its tools and pages go; nothing else changes.</span></li>
+        <li><span><strong>Resetting the workspace</strong> means removing the Extensions and WorkBenches you installed — the setup goes, the records stay.</span></li>
       </ol>
       <div class="note" style="max-width: 640px;">
         <span data-icon="Lock" data-icon-size="17"></span>
-        <p><b>Records live in the device vault.</b> Patient records are stored locally in the app's own vault — removing add-ons or resetting the workspace never moves them.</p>
+        <p><b>Records live on your device.</b> Patient records stay in the workspace on the device — removing items or resetting the workspace never moves them.</p>
       </div>
     </section>
 
-    <!-- 8. WHERE NEXT -->
+    <!-- 9. WHERE NEXT -->
     <section class="section" id="next" aria-label="Where next">
       <div class="kicker">Keep reading</div>
       <h2 style="margin-bottom: 6px;">Where next</h2>
       <div class="entries req">
+        <a class="entry" href="/docs/">
+          <span class="tile"><span data-icon="BookOpen" data-icon-size="19"></span></span>
+          <h3>The full guide</h3>
+          <p>Every chapter in one place — quickstart, the board-by-board tour, the CLI, packs and security.</p>
+          <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
         <a class="entry" href="/docs/workbenches/">
           <span class="tile"><span data-icon="Layers" data-icon-size="19"></span></span>
           <h3>WorkBenches</h3>
@@ -310,7 +371,7 @@
         <a class="entry" href="/docs/cli/">
           <span class="tile"><span data-icon="Terminal" data-icon-size="19"></span></span>
           <h3>FCX CLI</h3>
-          <p>One curl command, hosting the marketplace on your own machine.</p>
+          <p>One curl command, the workspace page served from the machine itself.</p>
           <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
         </a>
         <a class="entry" href="/docs/mcp/">
@@ -318,6 +379,12 @@
           <h3>MCP &amp; AI agents</h3>
           <p>Pair Claude, Cursor, VS Code and friends to the clinic.</p>
           <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
+        </a>
+        <a class="entry" href="/docs/#troubleshooting">
+          <span class="tile"><span data-icon="CircleHelp" data-icon-size="19"></span></span>
+          <h3>Questions, in the guide</h3>
+          <p>Where records live, what happens offline, who sees what — short answers.</p>
+          <span class="go">Open<span data-icon="ArrowUpRight" data-icon-size="15"></span></span>
         </a>
         <a class="entry" href="/install/">
           <span class="tile"><span data-icon="Download" data-icon-size="19"></span></span>
@@ -333,9 +400,10 @@
 <footer id="site-footer"></footer>
 <script src="assets/icons.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/term-demo.js"></script>
 <script>
   (function () {
-    /* paint [data-icon] placeholders with real SVGs */
+    /* paint [data-icon] marks with real SVGs */
     function paintIcons() {
       document.querySelectorAll("[data-icon]").forEach(function (el) {
         var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
@@ -357,7 +425,8 @@
           '<a href="/">Overview</a>' +
           '<a href="/marketplace/">Marketplace</a>' +
           '<a href="/pricing/">Pricing</a>' +
-          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '<a href="/docs/">Docs</a>' +
+          '<a href="/updates/">Updates</a>' +
           '</nav></div></div>';
       }
       if (footer && !footer.firstChild) {

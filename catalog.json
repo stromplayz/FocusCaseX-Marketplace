@@ -3429,6 +3429,7 @@
     "install": "curl -fsSL https://stromplayz.github.io/FocusCaseX/install.sh | bash",
     "registry": "https://stromplayz.github.io/FocusCaseX/install.sh",
     "requires": "Node 18+",
-    "version": "3.0.1"
+    "version": "3.2.0",
+    "flows": "GitHub-native: fcx login requests activation and waits for the owner drop; fcx admin is the owner console"
   }
 }

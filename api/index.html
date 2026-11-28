@@ -109,8 +109,8 @@
   <section class="section" id="codes">
     <div class="wrap">
       <h2>Install codes</h2>
-      <p class="muted" style="margin:12px 0 8px; max-width:680px;">Every item id maps to a short, deterministic install code — <strong>FCX-XXXXXX</strong>. It is a 32-bit FNV-1a hash of the item id, rendered as six characters from an alphabet with no look-alikes: the digits <code>0</code>/<code>1</code> and the letters <code>O</code>, <code>I</code>, <code>L</code> never appear.</p>
-      <p style="margin:14px 0 0; max-width:680px;">Same id, same code, everywhere — there is no lookup table to keep in sync. The identical algorithm runs inside the app, so a code typed under <strong>Settings → Marketplace → Install by code</strong> always resolves to the same item. Codes are accepted with or without the <code>FCX-</code> prefix.</p>
+      <p class="muted" style="margin:12px 0 8px; max-width:680px;">Every item id maps to a short, deterministic install code — <strong>FCX-XXXXXX</strong> — six characters from an alphabet with no look-alikes: the digits <code>0</code>/<code>1</code> and the letters <code>O</code>, <code>I</code>, <code>L</code> never appear.</p>
+      <p style="margin:14px 0 0; max-width:680px;">Same id, same code, everywhere — there is no lookup table to keep in sync. The app accepts the same codes, so a code typed under <strong>Settings → Marketplace → Install by code</strong> always resolves to the same item. Codes are accepted with or without the <code>FCX-</code> prefix.</p>
       <div class="endpoint-row">
         <span class="ep-tag">Example</span>
         <code>plugin:optomize</code>
@@ -164,7 +164,7 @@
           <h2>Building for agents instead?</h2>
           <p>FocusCaseX hosts its own MCP server — approved agents can search clinic pages, read records and file drafts. The connection command and the documented tool list live on the MCP &amp; Automation page.</p>
         </div>
-        <a class="btn blue-on-dark" href="/mcp/">MCP &amp; Automation</a>
+        <a class="btn blue-on-dark" href="/docs/#cli-mcp">MCP &amp; Automation</a>
       </div>
     </div>
   </section>

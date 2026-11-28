@@ -5,7 +5,7 @@
 <base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Create your own Extension — FocusCaseX Documentation</title>
-<meta name="description" content="The full FocusCaseX Extension authoring guide: the five kinds, the catalog entry and files, a worked example, testing locally with fcx and FCX_MARKET_URL, install codes, and how to submit to the marketplace.">
+<meta name="description" content="The full FocusCaseX Extension authoring guide: the five kinds, the catalog entry and files, a worked example, testing locally with fcx and FCX_MARKET_URL, install codes, one-file packs, and how to submit to the marketplace.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -73,8 +73,8 @@
       <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
       <div class="kicker">Documentation · Authoring</div>
       <h1>Create your own Extension</h1>
-      <p class="lede">Everything installable in FocusCaseX is described by one catalog entry plus a folder of small files — no build tools, no bundler. This page is the full authoring guide; the same text lives inline in <a href="/docs/#extensions-guide" style="color:var(--blue);font-weight:500;">the full guide</a>.</p>
-      <p class="explain">A text editor and the <code>fcx</code> command are enough: build, test on your own machine, then submit to the marketplace.</p>
+      <p class="lede">Everything installable in FocusCaseX is described by one catalog entry plus a folder of small files — no build tools, no bundler. This page is the full authoring guide; <a href="/docs/#extensions-guide" style="color:var(--blue);font-weight:500;">the full guide</a> carries the same walkthrough in its Extensions section.</p>
+      <p class="explain">A text editor and the <code>fcx</code> command are enough: build, test on your own machine, then submit to the marketplace — or zip the folder and ship it as one file.</p>
     </section>
 
     <section class="guide-sec" id="kinds" aria-label="The five kinds" style="padding-top: 14px;">
@@ -212,10 +212,35 @@
       <p class="doc-lede">Serve the folder with any static file server, then point the CLI at it and sync:</p>
       <div class="fence wrap-cmd"><span class="cx-cmd">FCX_MARKET_URL=http://localhost:4319 fcx sync</span>
 <span class="cx-cmd">FCX_MARKET_URL=http://localhost:4319 fcx install plugin:hello-clinic-note</span></div>
-      <p class="doc-lede"><strong>fcx sync</strong> fetches <code>catalog.json</code> from that URL and caches it; <strong>fcx install</strong> resolves the item by id, install code or name and writes its files into the workspace — the output shows the folder and the install code. Install by code works too: every item's <strong>FCX-XXXXXX</strong> code is derived from its id, so once your entry is in a catalog, its code exists and resolves the same everywhere — the site, the app and the CLI.</p>
+      <p class="doc-lede"><strong>fcx sync</strong> fetches <code>catalog.json</code> from that URL and caches it; <strong>fcx install</strong> resolves the item by id, install code or name and writes its files into the workspace — the output shows the folder and the install code. Every install prints the same shape; here it is for the Heading Numbering item quoted above, installed from the marketplace:</p>
+      <div class="term" data-title="fcx install">
+        <div class="term-cmd">fcx install plugin:heading-numbering</div>
+        <div class="term-out">OK    manifest.json
+OK    main.js
+
+╭─────────────────────────────────────────────────────────────────╮
+│ Installed Heading Numbering v1.0.0                              │
+│ Code  FCX-NX338Z                                                │
+│ Where …/workspace/extensions/heading-numbering │
+╰─────────────────────────────────────────────────────────────────╯
+Enable it in the app: Settings → Extensions → install by code FCX-NX338Z</div>
+      </div>
+      <p class="doc-lede">The install lands in the CLI's installed list — the list <strong>fcx install list</strong> prints and <strong>fcx uninstall</strong> edits:</p>
+      <div class="term" data-title="fcx install list">
+        <div class="term-cmd">fcx install list</div>
+        <div class="term-out">╭────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Name               Kind       Version  Code        Directory                                       │
+│ Heading Numbering  extension  1.0.0    FCX-NX338Z  …/workspace/extensions/headin… │
+│ Midnight Plus      theme      1.0.0    FCX-XKPJSD  …/workspace/themes/midnight-p… │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+2 items installed
+fcx uninstall &lt;id-or-code&gt; removes one.</div>
+      </div>
+      <p class="doc-lede">Install by code works too: every item's <strong>FCX-XXXXXX</strong> code is derived from its id, so once your entry is in a catalog, its code exists and <a href="/docs/#cli-market" style="color:var(--blue);font-weight:500;">resolves the same everywhere</a> — the site, the app and the CLI.</p>
       <div class="note">
         <span data-icon="Link" data-icon-size="17"></span>
-        <p><b>Share the mirror with the clinic.</b> <strong>fcx serve</strong> hosts the synced cache for everyone: it prints a local URL, and a LAN address when a clinic network exists. No clinic network? The web workspace still opens as usual. Endpoints: <code>/health</code>, <code>/api/catalog</code>, <code>/api/workbenches</code>.</p>
+        <p><b>Share the mirror with the clinic.</b> <strong>fcx serve</strong> hosts the synced cache for everyone: it prints a local URL, and a LAN address when a clinic network exists. No clinic network? The web workspace still opens as usual.</p>
       </div>
     </section>
 
@@ -228,7 +253,24 @@
           <li><span>Open a pull request — or hand the entry and files to the FocusCaseX owner, and the review takes it from there. Review fills in the marketplace metadata and marks reviewed items.</span></li>
         </ol>
       </div>
-      <p class="doc-lede">After it merges, one <strong>fcx sync</strong> picks the item up on every machine, the marketplace pages list it with its install code, and installs by code work in the app and the CLI alike. Shipping an update: bump <code>version</code> in the catalog entry and your manifest — the next install overwrites the old files.</p>
+      <p class="doc-lede">After it merges, one <strong>fcx sync</strong> picks the item up on every machine, the <a href="/marketplace/" style="color:var(--blue);font-weight:500;">marketplace pages</a> list it with its install code, and installs by code work in the app and the CLI alike. Shipping an update: bump <code>version</code> in the catalog entry and your manifest — the next install overwrites the old files.</p>
+    </section>
+
+    <!-- SHIP AS ONE FILE -->
+    <section class="guide-sec" id="pack" aria-label="Ship it as one file" style="padding-top: 10px;">
+      <h2 style="margin-bottom: 6px;">Ship it as one file</h2>
+      <p class="doc-lede">The marketplace is one way to publish; the same folder can also skip it entirely. Zip it, rename the zip to <code>.fcxext</code>, and the file itself is the installer — a pack. Send it by email, hand it over on a USB stick or drop it in a shared clinic folder, and whoever receives it runs one command. Nothing is fetched from a catalog and no network is needed — no marketplace round trip.</p>
+      <div class="fence wrap-cmd">hello-clinic-note/
+  manifest.json   ← id, kind, name, version
+  main.js
+
+zip the folder → hello-clinic-note.zip → rename it → hello-clinic-note.fcxext</div>
+      <p class="doc-lede">One file does the naming: <code>manifest.json</code> sits at the top of the archive — the same manifest the folder already carries, with the <code>.fcxext</code> extension on the file telling the installer the kind. If the zip was made with right-click → compress, everything usually lands in one wrapper folder, like <code>hello-clinic-note/manifest.json</code>; when every file shares that single wrapper, the installer strips it automatically and the pack installs flat. Both store and deflate compression read fine, so any zip tool works. Pack support is built into <code>fcx install</code> in FocusCaseX 3.1.0.</p>
+      <p class="doc-lede">Installing is the one command: <code>fcx install hello-clinic-note.fcxext</code> installs straight from the file itself. The files land in the workspace folder for their kind, next to anything installed from the marketplace; the install shows up in <strong>fcx install list</strong> like any other, and <strong>fcx uninstall</strong> removes it the same way. Every other kind travels the same recipe — <code>.fcxtheme</code>, <code>.fcxcapsule</code>, <code>.fcxwb</code>, <code>.fcxtemplate</code>, <code>.fcxsnippet</code> — and the full pack-format specification, every manifest field included, lives at <a href="/docs/#packs" style="color:var(--blue);font-weight:500;">one-file packs</a> in the full guide, with the install shown as a demo under <a href="/docs/#cli-pack" style="color:var(--blue);font-weight:500;">the CLI's own pack section</a>.</p>
+      <div class="note">
+        <span data-icon="Link" data-icon-size="17"></span>
+        <p><b><a href="/docs/#cli-market">Two copies, one code.</a></b> The command prints an <strong>FCX-XXXXXX</strong> install code for the pack — enter it in the app under <strong>Settings → Extensions → install by code</strong> and the identical item is enabled there. The pack and the marketplace install of the same id are the same item, so the printed code matches the one on the marketplace page too.</p>
+      </div>
     </section>
 
     <!-- WHERE NEXT -->
@@ -239,7 +281,7 @@
         <a class="entry" href="/docs/">
           <span class="tile"><span data-icon="Workflow" data-icon-size="19"></span></span>
           <h3>The full guide</h3>
-          <p>Everything on one page — the app, every fcx command, WorkBenches, security and the FAQ.</p>
+          <p>Everything on one page — the app, every fcx command, one-file packs, WorkBenches, security and the FAQ.</p>
           <span class="go">Open<span data-icon="ArrowRight" data-icon-size="15"></span></span>
         </a>
         <a class="entry" href="/docs/cli/">
@@ -262,9 +304,10 @@
 <footer id="site-footer"></footer>
 <script src="assets/icons.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/term-demo.js"></script>
 <script>
   (function () {
-    /* paint [data-icon] placeholders with real SVGs */
+    /* paint [data-icon] marks with real SVGs */
     function paintIcons() {
       document.querySelectorAll("[data-icon]").forEach(function (el) {
         var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
@@ -286,7 +329,8 @@
           '<a href="/">Overview</a>' +
           '<a href="/marketplace/">Marketplace</a>' +
           '<a href="/pricing/">Pricing</a>' +
-          '<a href="/mcp/">MCP &amp; Automation</a>' +
+          '<a href="/docs/">Docs</a>' +
+          '<a href="/updates/">Updates</a>' +
           '</nav></div></div>';
       }
       if (footer && !footer.firstChild) {
@@ -294,7 +338,7 @@
           '<div class="foot"><div class="wrap foot-inner">' +
           '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
           '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
-          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/extensions/">Extensions</a><a href="/faq/">FAQ</a><a href="/install/">Install guide</a></div>' +
+          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/docs/extensions/">Extensions</a><a href="/updates/">Updates</a><a href="/install/">Install guide</a></div>' +
           '</div></div>';
       }
       FCX.wireCopyButtons(document);

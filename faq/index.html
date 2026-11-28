@@ -2,223 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<base href="/FocusCaseX/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FAQ — plain answers for clinics — FocusCaseX</title>
-<meta name="description" content="FocusCaseX FAQ for clinics, in plain words: offline use, Extensions and WorkBenches, adding computers, the FCX code, device limits, passwords, patient data, updates, sharing over the clinic network, and removing the app.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="icon.svg">
-<link rel="stylesheet" href="assets/styles.css">
+<title>FAQ moved into the guide — FocusCaseX</title>
+<meta name="description" content="The FocusCaseX FAQ has been folded into the full guide — plain answers about offline use, licences and devices, packs, data, updates and sharing live in the docs now.">
+<meta http-equiv="refresh" content="0; url=/FocusCaseX/docs/#troubleshooting">
+<link rel="canonical" href="/FocusCaseX/docs/">
+<link rel="icon" href="/FocusCaseX/icon.svg">
 <style>
-  /* FAQ page — layout only; composes with the design system. */
-  .crumb {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-size: 12.5px; color: var(--ink-3); margin-bottom: 12px;
-  }
-  .crumb svg { flex-shrink: 0; }
-  .crumb:hover { color: var(--blue); }
-  .doc-lede { margin-top: 14px; max-width: 680px; font-size: 14px; color: var(--ink-2); line-height: 1.65; }
-  .doc-lede a, .explain a { color: var(--blue); font-weight: 500; }
-  .doc-lede a:hover, .explain a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .faq-group { padding-top: 26px; }
-  .faq-group h2 { font-size: 20px; margin-bottom: 4px; }
-  .faq { margin-top: 14px; border-top: 1px solid var(--line); }
-  .faq details { border-bottom: 1px solid var(--line); }
-  .faq summary { font-size: 14.5px; }
-  .faq .faq-a code {
-    font-family: var(--font-mono); font-size: 12px; color: var(--ink);
-    background: var(--bg-soft); border: 1px solid var(--line);
-    border-radius: 5px; padding: 1px 6px;
-  }
-  .more-band {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 18px; flex-wrap: wrap;
-    border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--bg-soft); padding: 24px 26px; margin-top: 40px;
-  }
-  .more-band h2 { font-size: 20px; }
-  .more-band p { font-size: 13.3px; color: var(--ink-2); line-height: 1.55; margin-top: 7px; max-width: 560px; }
-  .more-band .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #060609; color: #e8ebf4; font-family: Inter, system-ui, sans-serif; }
+  .box { text-align: center; padding: 40px; }
+  a { color: #7c9bff; text-decoration: none; font-weight: 600; }
+  p { color: #9aa1b5; font-size: 14px; line-height: 1.6; max-width: 460px; }
+  h1 { font-size: 20px; margin: 0 0 12px; }
 </style>
 </head>
 <body>
-<header id="site-header"></header>
-<main>
-  <div class="wrap-narrow">
-
-    <section class="page-head">
-      <a class="crumb" href="/docs/"><span data-icon="ArrowLeft" data-icon-size="13"></span><span>All documentation</span></a>
-      <div class="kicker">Documentation</div>
-      <h1>FAQ — plain answers for clinics</h1>
-      <p class="lede">The questions optometry clinics ask most, answered without jargon. The same list lives inline in <a href="/docs/#faq" style="color:var(--blue);font-weight:500;">the full guide</a>.</p>
-    </section>
-
-    <section class="faq-group" id="basics" aria-label="The basics" style="padding-top: 14px;">
-      <div class="kicker">The basics</div>
-      <div class="faq">
-        <details>
-          <summary>Do I need the internet?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">No. FocusCaseX works offline — your records live on your device and every board, page and note opens without a connection. The web app at focuscasex.vercel.app is there whenever you want it. The only online moment is the licence check when a device first activates.</div>
-        </details>
-        <details>
-          <summary>What is FocusCaseX, in one sentence?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">An offline-first clinic workspace for eye care: register patients, run refraction and exam flows, manage optics, dispensing and billing, set recalls — all on your own device, with pages you can read and print.</div>
-        </details>
-        <details>
-          <summary>What is an Extension?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">A small add-on that adds one feature to the workspace — an extra panel, an automation, a quick reference one tap away. You install it from the marketplace in one tap and remove it just as easily.</div>
-        </details>
-        <details>
-          <summary>What is a WorkBench?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">A whole clinic setup packed into one install — boards, pages, a theme, templates and starter settings. Applying one configures the workspace in a single step, and switching between installed WorkBenches works like switching modes. Your records never move.</div>
-        </details>
-        <details>
-          <summary>What are capsules, themes, templates and snippets?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Capsules are ready-made boards you drop into any page. Themes change the look of every surface at once. Templates are pre-written clinical notes and letters. Snippets are small interface tweaks, like bigger headings.</div>
-        </details>
-        <details>
-          <summary>How do I create my own Extension?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Follow the authoring guide — <a href="/docs/extensions/" style="color:var(--blue);font-weight:500;">Create your own Extension</a>: two small files, one catalog entry, a local test with the CLI, then a pull request to the marketplace. No build tools needed.</div>
-        </details>
-      </div>
-    </section>
-
-    <section class="faq-group" id="licences" aria-label="Licences and devices">
-      <div class="kicker">Licences and devices</div>
-      <div class="faq">
-        <details>
-          <summary>How do I put FocusCaseX on another computer in my clinic?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Install the fcx command with one terminal line — the <a href="/install/" style="color:var(--blue);font-weight:500;">install guide</a> has it — then run <code>fcx setup</code> and sign in with your licence email and the FCX-XXXXXX code issued for that machine. Every device counts against the licence's device limit.</div>
-        </details>
-        <details>
-          <summary>What is the FCX code my clinic owner gave me, and where do I type it?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">It is the activation code for your licence — eight characters, FCX-XXXXXX. In the app, a new device asks for it once at first launch, right after sign-in. On a computer, run <code>fcx login</code> in a terminal and answer the three prompts.</div>
-        </details>
-        <details>
-          <summary>It says my code reached its device limit — what now?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Contact your clinic owner. They free a slot by revoking a device that is retired or lost, or raise the limit for your code — then the new device activates as normal.</div>
-        </details>
-        <details>
-          <summary>I forgot my password — what now?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Ask your clinic owner — the password is reset on the licence. Nothing on your device changes, and your records stay exactly where they are.</div>
-        </details>
-        <details>
-          <summary>Is my licence tied to one device? What is a trusted device?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">The licence belongs to the clinic and carries a device limit — two devices by default. A trusted device is one that has activated once; it is remembered, and it never asks for a code again.</div>
-        </details>
-        <details>
-          <summary>How do I remove FocusCaseX from a computer?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Run the installer with <code>--uninstall</code> — the command is removed. To free that machine's slot on the licence, ask your clinic owner to revoke it.</div>
-        </details>
-        <details>
-          <summary>Can two clinics share one licence?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">No. One licence is one clinic — codes are bound to a single email, and the devices under it share one workspace. A second clinic needs its own licence and its own email.</div>
-        </details>
-      </div>
-    </section>
-
-    <section class="faq-group" id="data" aria-label="Your data">
-      <div class="kicker">Your data</div>
-      <div class="faq">
-        <details>
-          <summary>Does my patient data go anywhere?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">No. Records live on your device. Activation and the periodic licence check send hardware identity only — never patient records. Export anything, any time, as plain files you keep.</div>
-        </details>
-        <details>
-          <summary>Does installing an add-on touch my records?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Never. Installing or removing an add-on changes the setup only — your case files, documents and history stay exactly where they are.</div>
-        </details>
-        <details>
-          <summary>What exactly works offline?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Everything you do day to day: patients, exams, notes, boards, recalls and every installed add-on. First activation on a new device needs a connection once; after that the device is trusted and the clinic runs without one.</div>
-        </details>
-      </div>
-    </section>
-
-    <section class="faq-group" id="updates" aria-label="Updates and sharing">
-      <div class="kicker">Updates and sharing</div>
-      <div class="faq">
-        <details>
-          <summary>How do I update the app?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">The Android app checks for updates on its own and tells you inside the app when one is ready — you confirm and it updates. The web workspace is always the current build; there is nothing to do.</div>
-        </details>
-        <details>
-          <summary>How do I update the fcx command?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Run <code>fcx update</code> — when a newer build ships, it prints the one-line install command to run. Re-running the original install command works too; <code>fcx --version</code> confirms the build afterwards.</div>
-        </details>
-        <details>
-          <summary>Can I share the app with the front desk over the clinic network?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Yes. When your clinic has its own network, <code>fcx serve</code> hosts the marketplace for every computer on it — the command prints the address to open. No clinic network? Everyone uses the web workspace — it opens as usual from anywhere.</div>
-        </details>
-      </div>
-    </section>
-
-    <section class="faq-group" id="contact" aria-label="Contact">
-      <div class="kicker">Contact</div>
-      <div class="faq">
-        <details>
-          <summary>Who do I contact?<span data-icon="Plus"></span></summary>
-          <div class="faq-a">Your clinic owner for codes, device moves and password resets. For everything else, FocusCaseX support answers licence mail directly — the docs pages always point at the current contact.</div>
-        </details>
-      </div>
-    </section>
-
-    <div class="more-band">
-      <div>
-        <h2>Still stuck?</h2>
-        <p>The full guide covers everything end to end — the app, every fcx command, authoring Extensions, WorkBenches, security and troubleshooting.</p>
-      </div>
-      <div class="cta-btns">
-        <a class="btn primary" href="/docs/"><span data-icon="BookOpen" data-icon-size="15"></span><span>Read the full guide</span></a>
-        <a class="btn ghost" href="/install/"><span data-icon="Download" data-icon-size="15"></span><span>Install guide</span></a>
-      </div>
-    </div>
-
-  </div>
-</main>
-<footer id="site-footer"></footer>
-<script src="assets/icons.js"></script>
-<script src="assets/app.js"></script>
-<script>
-  (function () {
-    /* paint [data-icon] placeholders with real SVGs */
-    function paintIcons() {
-      document.querySelectorAll("[data-icon]").forEach(function (el) {
-        var size = parseInt(el.getAttribute("data-icon-size") || el.getAttribute("data-size") || "16", 10);
-        el.outerHTML = FCX.icon(el.getAttribute("data-icon"), size);
-      });
-    }
-
-    paintIcons();
-
-    FCX.ready({ active: "docs" }).catch(function () {
-      /* offline preview (file://) or catalog unreachable — paint minimal chrome */
-      var header = document.getElementById("site-header");
-      var footer = document.getElementById("site-footer");
-      if (header && !header.firstChild) {
-        header.innerHTML =
-          '<div class="top"><div class="top-inner">' +
-          '<a class="brand" href="/">' + FCX.icon("Stethoscope", 20) + '<span>FocusCaseX</span></a>' +
-          '<nav class="nav">' +
-          '<a href="/">Overview</a>' +
-          '<a href="/marketplace/">Marketplace</a>' +
-          '<a href="/pricing/">Pricing</a>' +
-          '<a href="/mcp/">MCP &amp; Automation</a>' +
-          '</nav></div></div>';
-      }
-      if (footer && !footer.firstChild) {
-        footer.innerHTML =
-          '<div class="foot"><div class="wrap foot-inner">' +
-          '<div><div class="foot-brand">' + FCX.icon("Stethoscope", 17) + ' FocusCaseX</div>' +
-          '<div class="foot-status">FocusCaseX documentation · maintained by CaseX Labs</div></div>' +
-          '<div class="foot-links"><a href="/docs/">Documentation</a><a href="/faq/">FAQ</a><a href="/install/">Install guide</a></div>' +
-          '</div></div>';
-      }
-      FCX.wireCopyButtons(document);
-    });
-  })();
-</script>
+<div class="box">
+  <h1>The FAQ now lives inside the guide</h1>
+  <p>Everything the FAQ answered — offline use, licences and devices, packs, data, updates and sharing — is part of the full FocusCaseX guide now, under Troubleshooting and Security. Taking you there.</p>
+  <p><a href="/FocusCaseX/docs/#troubleshooting">Open the guide</a></p>
+</div>
+<script>location.replace("/FocusCaseX/docs/#troubleshooting");</script>
 </body>
 </html>
